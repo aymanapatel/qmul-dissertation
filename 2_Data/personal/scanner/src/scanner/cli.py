@@ -1,11 +1,13 @@
+import asyncio
 import csv
 import json
+import re
 from pathlib import Path
 from typing import Optional
 
 import typer
-from playwright.sync_api import sync_playwright
-from axe_playwright_python.sync_playwright import Axe
+from playwright.async_api import async_playwright
+from axe_playwright_python.async_playwright import Axe as AsyncAxe
 from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TaskProgressColumn
 from rich.table import Table
@@ -13,20 +15,29 @@ from rich.table import Table
 app = typer.Typer(help="Web accessibility scanner using axe-core + Playwright")
 console = Console()
 
+LOGS_DIR = Path("logs")
+PLAYWRIGHT_LOGS = LOGS_DIR / "playwright"
+AXE_CORE_LOGS = LOGS_DIR / "axe-core-result"
 
-def _scan_domain(domain: str, axe: Axe, playwright) -> Optional[dict]:
-    url = f"https://{domain}"
-    browser = playwright.chromium.launch()
-    page = browser.new_page()
-    try:
-        page.goto(url, timeout=30000, wait_until="networkidle")
-        axe_result = axe.run(page)
-        return axe_result.response
-    except Exception as e:
-        console.print(f"[red]Error scanning {domain}: {e}[/red]")
-        return None
-    finally:
-        browser.close()
+CSV_COLUMNS = [
+    "popularity_rank",
+    "domain",
+    "Populated",
+    "Number_of_accessibility_errors_detected",
+    "WCAG_2_A/AA_failure_detected",
+    "Number_of_page_elements",
+    "Error_density_Percentage",
+    "Top_error_types_detected",
+]
+
+
+def _safe_filename(domain: str, rank: str = "") -> str:
+    if rank:
+        padded = rank.zfill(7)
+    else:
+        padded = ""
+    clean = re.sub(r"[^\w\-.]", "_", domain)
+    return f"{padded}_{clean}" if padded else clean
 
 
 def _extract_row(result: Optional[dict], domain: str) -> dict:
@@ -62,16 +73,62 @@ def _extract_row(result: Optional[dict], domain: str) -> dict:
     }
 
 
-CSV_COLUMNS = [
-    "popularity_rank",
-    "domain",
-    "Populated",
-    "Number_of_accessibility_errors_detected",
-    "WCAG_2_A/AA_failure_detected",
-    "Number_of_page_elements",
-    "Error_density_Percentage",
-    "Top_error_types_detected",
-]
+async def _scan_single(domain: str, browser, semaphore, rank: str = "") -> Optional[dict]:
+    url = f"https://{domain}"
+    safe_name = _safe_filename(domain, rank)
+
+    async with semaphore:
+        page = await browser.new_page()
+        try:
+            await page.goto(url, timeout=45000, wait_until="domcontentloaded")
+            await page.wait_for_timeout(2000)
+
+            axe = AsyncAxe()
+            axe_result = await axe.run(page)
+            result = axe_result.response
+
+            PLAYWRIGHT_LOGS.mkdir(parents=True, exist_ok=True)
+            AXE_CORE_LOGS.mkdir(parents=True, exist_ok=True)
+
+            try:
+                html = await page.content()
+                (PLAYWRIGHT_LOGS / f"{safe_name}.html").write_text(html, encoding="utf-8")
+            except Exception as e:
+                console.print(f"[yellow]Could not save HTML for {domain}: {e}[/yellow]")
+
+            try:
+                (AXE_CORE_LOGS / f"{safe_name}.json").write_text(
+                    json.dumps(result, indent=2), encoding="utf-8"
+                )
+            except Exception as e:
+                console.print(f"[yellow]Could not save axe result for {domain}: {e}[/yellow]")
+
+            return result
+
+        except Exception as e:
+            console.print(f"[red]Error scanning {domain}: {e}[/red]")
+            return None
+        finally:
+            await page.close()
+
+
+async def _run_scan(rows: list[dict], workers: int):
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        semaphore = asyncio.Semaphore(workers)
+
+        tasks = []
+        for row in rows:
+            domain = row.get("domain", "").strip()
+            if not domain:
+                continue
+            rank = row.get("popularity_rank", "")
+            tasks.append((row, _scan_single(domain, browser, semaphore, rank=rank)))
+
+        results = await asyncio.gather(*[t[1] for t in tasks], return_exceptions=True)
+
+        await browser.close()
+        return [(tasks[i][0], r if not isinstance(r, Exception) else None) for i, r in enumerate(results)]
 
 
 @app.command()
@@ -81,7 +138,7 @@ def scan(
     limit: int = typer.Option(None, "-n", "--limit", help="Limit number of domains to scan"),
     start: int = typer.Option(None, "-s", "--start", help="Start from this row number (1-based)"),
     skip_populated: bool = typer.Option(False, "--skip-populated", help="Skip rows already populated"),
-    json_report: bool = typer.Option(False, "--json", help="Also save raw axe results as JSON"),
+    workers: int = typer.Option(5, "-w", "--workers", help="Number of parallel browser tabs"),
 ):
     """Scan domains from a CSV for accessibility violations using axe-core."""
     if not csv_path.exists():
@@ -102,61 +159,79 @@ def scan(
     if limit:
         rows = rows[:limit]
 
-    console.print(f"[bold]Scanning {len(rows)} domains[/bold]")
+    if skip_populated:
+        rows = [r for r in rows if r.get("Populated", "").strip().lower() != "yes"]
 
-    axe = Axe()
-    results_data = []
-    raw_results = []
+    rows = [r for r in rows if r.get("domain", "").strip()]
 
-    with sync_playwright() as p:
-        with Progress(
-            SpinnerColumn(),
-            TextColumn("[progress.description]{task.description}"),
-            BarColumn(),
-            TaskProgressColumn(),
-            console=console,
-        ) as progress:
-            task = progress.add_task("Scanning...", total=len(rows))
-            for row in rows:
+    console.print(f"[bold]Scanning {len(rows)} domains with {workers} workers[/bold]")
+    console.print(f"[dim]Playwright HTML logs: {PLAYWRIGHT_LOGS.resolve()}[/dim]")
+    console.print(f"[dim]Axe-core result logs:  {AXE_CORE_LOGS.resolve()}[/dim]")
+
+    file = open(output, "w", newline="", encoding="utf-8")
+    writer = csv.DictWriter(file, fieldnames=CSV_COLUMNS)
+    writer.writeheader()
+    file.flush()
+
+    console.print(f"[dim]Writing results incrementally to {output}[/dim]")
+
+    async def _scan_batch(batch: list[dict]):
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            semaphore = asyncio.Semaphore(workers)
+
+            tasks = []
+            for row in batch:
                 domain = row.get("domain", "").strip()
-                if not domain:
-                    progress.advance(task)
-                    continue
-                if skip_populated and row.get("Populated", "").strip().lower() == "yes":
-                    progress.advance(task)
-                    continue
+                rank = row.get("popularity_rank", "")
+                tasks.append(_scan_single(domain, browser, semaphore, rank=rank))
 
-                progress.update(task, description=f"[cyan]{domain}[/cyan]")
-                result = _scan_domain(domain, axe, p)
+            results = await asyncio.gather(*tasks, return_exceptions=True)
 
-                extracted = _extract_row(result, domain)
-                extracted["popularity_rank"] = row.get("popularity_rank", "")
-                extracted["Populated"] = "Yes" if result else "No"
-                results_data.append(extracted)
+            await browser.close()
 
-                if json_report and result:
-                    raw_results.append({"domain": domain, "result": result})
+        for i, result in enumerate(results):
+            row = batch[i]
+            domain = row.get("domain", "").strip()
+            r = result if not isinstance(result, Exception) else None
+            extracted = _extract_row(r if isinstance(r, dict) else None, domain)
+            extracted["popularity_rank"] = row.get("popularity_rank", "")
+            extracted["Populated"] = "Yes" if r and not isinstance(r, Exception) else "No"
+            writer.writerow(extracted)
 
-                progress.advance(task)
+        file.flush()
 
-    with open(output, "w", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
-        writer.writeheader()
-        for rd in results_data:
-            writer.writerow(rd)
+    batch_size = workers * 2
+    total = len(rows)
+    completed = 0
 
+    with Progress(
+        SpinnerColumn(),
+        TextColumn("[progress.description]{task.description}"),
+        BarColumn(),
+        TaskProgressColumn(),
+        console=console,
+    ) as progress:
+        task = progress.add_task("Scanning...", total=total)
+
+        for i in range(0, total, batch_size):
+            batch = rows[i:i + batch_size]
+            asyncio.run(_scan_batch(batch))
+            completed += len(batch)
+            progress.update(task, completed=completed)
+
+    file.close()
     console.print(f"\n[green]Results saved to {output}[/green]")
 
-    if json_report:
-        json_path = output.with_suffix(".json")
-        with open(json_path, "w", encoding="utf-8") as f:
-            json.dump(raw_results, f, indent=2)
-        console.print(f"[green]Raw results saved to {json_path}[/green]")
-
-    _print_summary(results_data)
+    _print_summary_from_csv(output)
 
 
-def _print_summary(results: list[dict]):
+def _print_summary_from_csv(output: Path):
+    results = []
+    with open(output, newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
     table = Table(title="Scan Summary")
     table.add_column("Domain", style="cyan", max_width=30)
     table.add_column("Violations", justify="right")
@@ -165,7 +240,7 @@ def _print_summary(results: list[dict]):
     table.add_column("Error %", justify="right")
     table.add_column("Top Errors", max_width=40)
 
-    for r in results[:20]:
+    for r in rows[:20]:
         table.add_row(
             r.get("domain", ""),
             str(r.get("Number_of_accessibility_errors_detected", "")),
@@ -176,8 +251,8 @@ def _print_summary(results: list[dict]):
         )
 
     console.print(table)
-    if len(results) > 20:
-        console.print(f"... and {len(results) - 20} more. See output CSV for full results.")
+    if len(rows) > 20:
+        console.print(f"... and {len(rows) - 20} more. See output CSV for full results.")
 
 
 @app.command()
@@ -191,19 +266,53 @@ def single(
 
     console.print(f"[bold]Scanning {url}[/bold]")
 
-    axe = Axe()
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        try:
-            page.goto(url, timeout=30000, wait_until="networkidle")
-            axe_result = axe.run(page)
-            result = axe_result.response
-        except Exception as e:
-            console.print(f"[red]Error: {e}[/red]")
-            raise typer.Exit(1)
-        finally:
-            browser.close()
+    async def _run():
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            page = await browser.new_page()
+            try:
+                await page.goto(url, timeout=45000, wait_until="domcontentloaded")
+                await page.wait_for_timeout(2000)
+                axe = AsyncAxe()
+                axe_result = await axe.run(page)
+                result = axe_result.response
+            except Exception as e:
+                console.print(f"[red]Error: {e}[/red]")
+                return None
+            finally:
+                await browser.close()
+            return result
+
+    result = asyncio.run(_run())
+    if result is None:
+        raise typer.Exit(1)
+
+    PLAYWRIGHT_LOGS.mkdir(parents=True, exist_ok=True)
+    AXE_CORE_LOGS.mkdir(parents=True, exist_ok=True)
+
+    domain = url.replace("https://", "").replace("http://", "").split("/")[0]
+    safe_name = _safe_filename(domain)
+
+    async def _save_html():
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            page = await browser.new_page()
+            try:
+                await page.goto(url, timeout=45000, wait_until="domcontentloaded")
+                await page.wait_for_timeout(2000)
+                html = await page.content()
+                (PLAYWRIGHT_LOGS / f"{safe_name}.html").write_text(html, encoding="utf-8")
+                console.print(f"[green]HTML saved to {PLAYWRIGHT_LOGS / f'{safe_name}.html'}[/green]")
+            except Exception as e:
+                console.print(f"[yellow]Could not save HTML: {e}[/yellow]")
+            finally:
+                await browser.close()
+
+    asyncio.run(_save_html())
+
+    axe_path = AXE_CORE_LOGS / f"{safe_name}.json"
+    axe_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    console.print(f"[green]Axe result saved to {axe_path}[/green]")
 
     if json_report:
         console.print_json(json.dumps(result, indent=2))
