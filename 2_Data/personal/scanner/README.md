@@ -36,11 +36,7 @@ uv run scanner scan ../data.csv -o results.csv   # custom output path
 |---|---|
 | `popularity_rank` | From input CSV |
 | `domain` | From input CSV |
-| `Populated` | Set to `1` after scan |
-| `Accessibility_Rank_2026` | Reserved for ranking data |
-| `Accessibility_Rank_2025` | Reserved for ranking data |
-| `Accessibility_Rank_2024` | Reserved for ranking data |
-| `Accessibility_Rank_2023` | Reserved for ranking data |
+| `Populated` | `Yes` if scan succeeded, `No` if it failed |
 | `Number_of_accessibility_errors_detected` | Total violation nodes found |
 | `WCAG_2_A/AA_failure_detected` | Count of WCAG 2 A/AA violations |
 | `Number_of_page_elements` | Passes + violations |

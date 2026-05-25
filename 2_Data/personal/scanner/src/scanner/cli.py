@@ -54,10 +54,6 @@ def _extract_row(result: Optional[dict], domain: str) -> dict:
 
     return {
         "domain": domain,
-        "Accessibility_Rank_2026": "",
-        "Accessibility_Rank_2025": "",
-        "Accessibility_Rank_2024": "",
-        "Accessibility_Rank_2023": "",
         "Number_of_accessibility_errors_detected": num_violations,
         "WCAG_2_A/AA_failure_detected": len(wcag_aa_failures),
         "Number_of_page_elements": num_elements,
@@ -70,10 +66,6 @@ CSV_COLUMNS = [
     "popularity_rank",
     "domain",
     "Populated",
-    "Accessibility_Rank_2026",
-    "Accessibility_Rank_2025",
-    "Accessibility_Rank_2024",
-    "Accessibility_Rank_2023",
     "Number_of_accessibility_errors_detected",
     "WCAG_2_A/AA_failure_detected",
     "Number_of_page_elements",
@@ -130,7 +122,7 @@ def scan(
                 if not domain:
                     progress.advance(task)
                     continue
-                if skip_populated and row.get("Populated", "").strip() == "1":
+                if skip_populated and row.get("Populated", "").strip().lower() == "yes":
                     progress.advance(task)
                     continue
 
@@ -139,7 +131,7 @@ def scan(
 
                 extracted = _extract_row(result, domain)
                 extracted["popularity_rank"] = row.get("popularity_rank", "")
-                extracted["Populated"] = "1"
+                extracted["Populated"] = "Yes" if result else "No"
                 results_data.append(extracted)
 
                 if json_report and result:
