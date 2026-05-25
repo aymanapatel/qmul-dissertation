@@ -1,0 +1,15 @@
+[project]
+name = "scanner"
+version = "0.1.0"
+description = "Web accessibility scanner using axe-core + Playwright"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "axe-playwright-python>=0.1.7",
+    "playwright>=1.60.0",
+    "rich>=15.0.0",
+    "typer>=0.25.1",
+]
+
+[project.scripts]
+scanner = "scanner.cli:app"

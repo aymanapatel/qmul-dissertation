@@ -1,0 +1,4 @@
+popularity_rank,domain,Populated,Accessibility_Rank_2026,Accessibility_Rank_2025,Accessibility_Rank_2024,Accessibility_Rank_2023,Number_of_accessibility_errors_detected,WCAG_2_A/AA_failure_detected,Number_of_page_elements,Error_density_Percentage,Top_error_types_detected
+1,google.com,1,,,,,0,0,32,0.0,
+2,gtld-servers.net,1,,,,,,,,,
+3,cloudflare.com,1,,,,,2,1,45,4.44,color-contrast
