@@ -1,4 +1,1001 @@
-popularity_rank,domain,Populated,Accessibility_Rank_2026,Accessibility_Rank_2025,Accessibility_Rank_2024,Accessibility_Rank_2023,Number_of_accessibility_errors_detected,WCAG_2_A/AA_failure_detected,Number_of_page_elements,Error_density_Percentage,Top_error_types_detected
-1,google.com,1,,,,,0,0,32,0.0,
-2,gtld-servers.net,1,,,,,,,,,
-3,cloudflare.com,1,,,,,2,1,45,4.44,color-contrast
+popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_A/AA_failure_detected,Number_of_page_elements,Error_density_Percentage,Top_error_types_detected
+11,mail.ru,Yes,42,6,78,53.85,color-contrast; button-name; link-name; list; aria-input-field-name
+12,instagram.com,Yes,5,1,41,12.2,link-in-text-block; aria-dialog-name; heading-order; meta-viewport-large
+13,akamai.net,No,,,,,
+14,fbcdn.net,Yes,2,0,7,28.57,landmark-one-main; page-has-heading-one
+15,twitter.com,Yes,3,1,28,10.71,document-title; page-has-heading-one; region
+16,dzen.ru,Yes,5,1,39,12.82,color-contrast; aria-allowed-role
+17,linkedin.com,Yes,1,1,46,2.17,nested-interactive
+18,live.com,Yes,3,2,15,20.0,aria-allowed-role; html-has-lang; meta-viewport
+19,googletagmanager.com,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
+20,googlevideo.com,No,,,,,
+21,office.com,Yes,4,1,46,8.7,link-name; region
+22,akamaiedge.net,No,,,,,
+23,akadns.net,No,,,,,
+24,amazon.com,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+25,azure.com,Yes,1,0,51,1.96,region
+26,googleusercontent.com,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
+27,wikipedia.org,Yes,1,0,46,2.17,heading-order
+28,domaincontrol.com,No,,,,,
+29,github.com,Yes,1,0,50,2.0,landmark-unique
+30,ezviz7.com,No,,,,,
+31,doubleclick.net,Yes,9,2,52,17.31,svg-img-alt; aria-allowed-attr; region
+32,bing.com,Yes,5,0,53,9.43,region; landmark-banner-is-top-level
+33,microsoftonline.com,No,,,,,
+34,fastly.net,Yes,10,4,55,18.18,color-contrast; region; heading-order; link-name; nested-interactive
+35,appsflyersdk.com,Yes,8,2,10,80.0,region; document-title; html-has-lang; landmark-one-main; page-has-heading-one
+36,whatsapp.net,Yes,34,0,77,44.16,region; aria-allowed-role; heading-order; landmark-one-main
+37,trafficmanager.net,No,,,,,
+38,apple-dns.net,No,,,,,
+39,office.net,No,,,,,
+40,netflix.com,Yes,16,1,55,29.09,region; heading-order; landmark-unique; meta-viewport
+41,digicert.com,Yes,5,3,10,50.0,document-title; frame-title; html-has-lang; landmark-one-main; page-has-heading-one
+42,wordpress.org,Yes,1,1,45,2.22,link-in-text-block
+43,aaplimg.com,No,,,,,
+44,skype.com,Yes,0,0,27,0.0,
+45,sharepoint.com,No,,,,,
+46,youtu.be,Yes,4,1,48,8.33,aria-allowed-attr
+47,ripn.net,No,,,,,
+48,pinterest.com,Yes,0,0,10,0.0,
+49,whatsapp.com,Yes,32,0,75,42.67,region; aria-allowed-role; heading-order; landmark-one-main
+50,gandi.net,Yes,16,1,61,26.23,region; empty-heading; heading-order; aria-required-children
+51,goo.gl,Yes,8,3,17,47.06,region; html-has-lang; image-alt; landmark-one-main; link-name
+52,cloudfront.net,No,,,,,
+53,googlesyndication.com,Yes,0,0,32,0.0,
+54,yahoo.com,Yes,5,3,38,13.16,link-in-text-block; html-has-lang; meta-viewport
+55,x.com,Yes,3,2,17,17.65,aria-prohibited-attr; document-title; region
+56,cloud.microsoft,Yes,5,1,48,10.42,link-name; region; empty-heading
+57,hicloudcam.com,No,,,,,
+58,tiktok.com,Yes,2,0,14,14.29,page-has-heading-one; region
+59,icloud.com,Yes,1,0,22,4.55,region
+60,msn.com,Yes,2,0,9,22.22,landmark-one-main; page-has-heading-one
+61,spotify.com,Yes,3,1,9,33.33,landmark-one-main; meta-viewport; page-has-heading-one
+62,windowsupdate.com,No,,,,,
+63,gvt1.com,No,,,,,
+64,adobe.com,No,,,,,
+65,vimeo.com,Yes,105,1,145,72.41,region; image-redundant-alt; frame-title; aria-allowed-role; heading-order
+66,cloudflare.net,Yes,64,6,108,59.26,aria-hidden-focus; color-contrast; aria-required-children; image-alt; aria-allowed-attr
+67,ntp.org,Yes,32,5,58,55.17,color-contrast; image-alt; nested-interactive; link-name; region
+68,chatgpt.com,Yes,3,2,41,7.32,aria-allowed-attr; color-contrast; region
+69,googledomains.com,Yes,2,0,39,5.13,landmark-banner-is-top-level; landmark-contentinfo-is-top-level
+70,windows.net,No,,,,,
+71,telekom.de,Yes,10,0,52,19.23,region; image-redundant-alt; landmark-unique
+72,wa.me,Yes,5,1,47,10.64,aria-allowed-role; color-contrast; heading-order; landmark-one-main; region
+73,akam.net,No,,,,,
+74,tiktokcdn.com,No,,,,,
+75,myfritz.net,Yes,2,0,7,28.57,landmark-one-main; page-has-heading-one
+76,gvt2.com,No,,,,,
+77,zoom.us,Yes,14,6,58,24.14,color-contrast; image-alt; aria-allowed-role; image-redundant-alt; aria-allowed-attr
+78,roblox.com,Yes,18,2,56,32.14,region; select-name; aria-progressbar-name; autocomplete-valid; landmark-one-main
+79,tiktokv.com,Yes,4,1,12,33.33,region; html-has-lang; landmark-one-main
+80,ytimg.com,No,,,,,
+81,qq.com,Yes,134,6,160,83.75,region; color-contrast; link-name; image-alt; aria-roles
+82,pv-cdn.net,No,,,,,
+83,cloudflare-dns.com,Yes,14,4,49,28.57,color-contrast; link-name; empty-heading; frame-title; meta-viewport
+84,yandex.net,Yes,7,2,41,17.07,color-contrast; aria-allowed-role; aria-required-attr; page-has-heading-one
+85,baidu.com,Yes,56,5,79,70.89,region; image-alt; color-contrast; aria-allowed-attr; html-has-lang
+86,nginx.org,Yes,7,2,31,22.58,region; heading-order; html-has-lang; label; landmark-one-main
+87,workers.dev,Yes,3,1,45,6.67,color-contrast
+88,edgekey.net,No,,,,,
+89,mozilla.org,Yes,4,1,42,9.52,region; aria-allowed-attr; landmark-unique
+90,opera.com,Yes,6,1,51,11.76,nested-interactive; region
+91,nic.ru,No,,,,,
+92,windows.com,Yes,1,0,45,2.22,region
+93,yandex.ru,Yes,56,7,89,62.92,aria-valid-attr-value; listitem; aria-allowed-attr; region; link-name
+94,samsung.com,Yes,31,4,71,43.66,aria-required-parent; listitem; aria-required-children; empty-heading; link-name
+95,sentry.io,Yes,2,1,51,3.92,aria-command-name; empty-heading
+96,google-analytics.com,Yes,5,2,48,10.42,region; svg-img-alt; aria-allowed-attr
+97,nginx.com,Yes,18,0,60,30.0,region; landmark-unique; heading-order; image-redundant-alt; landmark-one-main
+98,edgesuite.net,No,,,,,
+99,wordpress.com,Yes,8,3,56,14.29,aria-allowed-attr; presentation-role-conflict; color-contrast; label-title-only; label
+100,office365.com,Yes,5,2,11,45.45,color-contrast; html-has-lang; landmark-one-main; region
+101,bit.ly,Yes,16,2,65,24.62,region; aria-allowed-role; heading-order; listitem; aria-required-children
+102,ui.com,Yes,32,4,72,44.44,color-contrast; nested-interactive; aria-hidden-focus; landmark-unique; link-name
+103,okcdn.ru,Yes,4,1,12,33.33,region; html-has-lang; landmark-one-main
+104,cdninstagram.com,No,,,,,
+105,root-servers.net,No,,,,,
+106,reddit.com,Yes,6,3,12,50.0,document-title; html-has-lang; image-alt; landmark-one-main; page-has-heading-one
+107,discord.gg,Yes,18,2,58,31.03,region; link-name; nested-interactive
+108,criteo.com,Yes,121,8,160,75.62,listitem; region; link-name; aria-allowed-role; aria-allowed-attr
+109,a2z.com,No,,,,,
+110,googleadservices.com,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
+111,trbcdn.net,No,,,,,
+112,t.me,Yes,60,4,76,78.95,color-contrast; image-alt; region; link-name; empty-heading
+113,blogspot.com,Yes,6,1,45,13.33,color-contrast
+114,europa.eu,Yes,1,0,45,2.22,region
+115,vedcdnlb.com,No,,,,,
+116,keenetic.io,No,,,,,
+117,vk.com,Yes,7,0,39,17.95,region
+118,f5.com,Yes,39,0,82,47.56,region; heading-order; landmark-unique; landmark-one-main
+119,b-cdn.net,Yes,19,3,59,32.2,link-name; color-contrast; heading-order; image-alt; region
+120,epicgames.com,Yes,5,2,26,19.23,region; empty-heading; html-has-lang; meta-refresh
+121,mailinabox.email,Yes,67,5,88,76.14,region; color-contrast; image-alt; link-name; frame-title
+122,unity3d.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+123,amazon-adsystem.com,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+124,snapchat.com,Yes,4,2,41,9.76,color-contrast; heading-order; select-name
+125,app-measurement.com,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
+126,github.io,Yes,31,2,53,58.49,color-contrast; region; link-name; heading-order; landmark-one-main
+127,apache.org,Yes,2,0,38,5.26,heading-order; region
+128,intuit.com,Yes,2,1,43,4.65,landmark-contentinfo-is-top-level; nested-interactive
+129,amazonvideo.com,Yes,5,1,40,12.5,region; color-contrast; landmark-one-main
+130,cdn77.org,No,,,,,
+131,prodregistryv2.org,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+132,nih.gov,Yes,3,1,48,6.25,link-in-text-block; page-has-heading-one; region
+133,msftncsi.com,No,,,,,
+134,kaspersky.com,Yes,41,5,85,48.24,aria-allowed-role; color-contrast; list; aria-allowed-attr; button-name
+135,dns.google,Yes,5,1,22,22.73,region; color-contrast; landmark-one-main; page-has-heading-one
+136,amazon.dev,No,,,,,
+137,outlook.com,Yes,3,2,15,20.0,aria-allowed-role; html-has-lang; meta-viewport
+138,gravatar.com,Yes,20,2,53,37.74,region; aria-hidden-focus; color-contrast; heading-order; landmark-one-main
+139,dropbox.com,Yes,0,0,39,0.0,
+140,app-analytics-services.com,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
+141,registrar-servers.com,No,,,,,
+142,iiko.it,No,,,,,
+143,xiaomi.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+144,forms.gle,Yes,4,2,10,40.0,document-title; landmark-one-main; meta-viewport; page-has-heading-one
+145,reg.ru,Yes,93,7,121,76.86,region; color-contrast; button-name; link-name; listitem
+146,archive.org,Yes,4,0,28,14.29,landmark-one-main; landmark-unique; page-has-heading-one; region
+147,yccdn.ru,No,,,,,
+148,msftconnecttest.com,No,,,,,
+149,godaddy.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+150,steamserver.net,No,,,,,
+151,spo-msedge.net,No,,,,,
+152,tumblr.com,Yes,11,3,46,23.91,color-contrast; aria-progressbar-name; landmark-contentinfo-is-top-level; landmark-unique; list
+153,nytimes.com,Yes,32,3,79,40.51,link-name; image-alt; landmark-unique; aria-hidden-focus
+154,vkuserphoto.ru,Yes,4,2,5,80.0,document-title; html-has-lang; landmark-one-main; page-has-heading-one
+155,paypal.com,Yes,2,0,48,4.17,region
+156,one.one,Yes,13,3,28,46.43,definition-list; html-has-lang; link-name; page-has-heading-one
+157,azurefd.net,No,,,,,
+158,ax-msedge.net,No,,,,,
+159,miit.gov.cn,No,,,,,
+160,dnsowl.com,No,,,,,
+161,applovin.com,Yes,16,3,38,42.11,link-name; color-contrast; html-has-lang
+162,nflxso.net,No,,,,,
+163,shopify.com,Yes,4,1,50,8.0,aria-prohibited-attr
+164,3gppnetwork.org,No,,,,,
+165,aliyuncs.com,Yes,5,1,15,33.33,region; html-has-lang; landmark-one-main
+166,discord.com,Yes,18,2,58,31.03,region; link-name; nested-interactive
+167,ggpht.com,No,,,,,
+168,bytefcdn-oversea.com,No,,,,,
+169,webex.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+170,adobe.io,Yes,7,4,47,14.89,aria-allowed-attr; color-contrast; aria-prohibited-attr; button-name
+171,akamaitech.net,No,,,,,
+172,macromedia.com,No,,,,,
+173,cdn-apple.com,No,,,,,
+174,azurewebsites.net,No,,,,,
+175,flickr.com,Yes,22,3,64,34.38,color-contrast; link-name; input-button-name; region
+176,wac-msedge.net,No,,,,,
+177,userapi.com,Yes,7,0,39,17.95,region
+178,example.com,Yes,2,0,15,13.33,landmark-one-main; region
+179,soundcloud.com,Yes,4,1,19,21.05,landmark-one-main; meta-viewport; page-has-heading-one; region
+180,adtrafficquality.google,Yes,5,1,44,11.36,aria-allowed-attr; presentation-role-conflict
+181,medium.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+182,w3.org,Yes,0,0,41,0.0,
+183,rubiconproject.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+184,taboola.com,Yes,7,1,47,14.89,color-contrast; heading-order
+185,cnn.com,Yes,5,1,49,10.2,landmark-unique; link-name; page-has-heading-one
+186,aws.dev,No,,,,,
+187,theguardian.com,Yes,18,2,67,26.87,aria-allowed-role; landmark-complementary-is-top-level; list; region; image-redundant-alt
+188,vungle.com,Yes,2,0,13,15.38,landmark-one-main; page-has-heading-one
+189,nominetdns.uk,No,,,,,
+190,ttdns2.com,No,,,,,
+191,static.microsoft,No,,,,,
+192,avast.com,Yes,53,2,89,59.55,region; aria-allowed-attr; heading-order; aria-dialog-name; image-alt
+193,fastly-edge.com,No,,,,,
+194,oracle.com,Yes,4,1,14,28.57,html-has-lang; landmark-one-main; page-has-heading-one; region
+195,msedge.net,No,,,,,
+196,creativecommons.org,Yes,0,0,39,0.0,
+197,forbes.com,Yes,256,3,294,87.07,region; heading-order; button-name; landmark-one-main; link-in-text-block
+198,ebay.com,Yes,16,3,65,24.62,tabindex; link-name; role-img-alt; aria-allowed-role; aria-required-attr
+199,ozon.ru,Yes,2,0,9,22.22,landmark-one-main; page-has-heading-one
+200,shifen.com,No,,,,,
+201,pubmatic.com,Yes,18,4,53,33.96,region; image-alt; color-contrast; frame-title; heading-order
+202,dns-parking.com,No,,,,,
+203,sfx.ms,No,,,,,
+204,jomodns.com,No,,,,,
+205,ipv4only.arpa,No,,,,,
+206,bbc.com,Yes,2,1,48,4.17,aria-hidden-focus; heading-order
+207,tm-azurefd.net,No,,,,,
+208,cpanel.net,Yes,8,2,49,16.33,listitem; aria-required-attr
+209,weather.com,Yes,5,0,49,10.2,empty-heading; heading-order; landmark-main-is-top-level; landmark-no-duplicate-main; landmark-unique
+210,adnxs.com,Yes,4,1,12,33.33,region; html-has-lang; landmark-one-main
+211,t.co,Yes,17,3,26,65.38,color-contrast; region; html-has-lang; landmark-one-main; link-in-text-block
+212,spov-msedge.net,No,,,,,
+213,twitch.tv,Yes,2,1,35,5.71,autocomplete-valid; nested-interactive
+214,roku.com,Yes,3,0,48,6.25,image-redundant-alt; landmark-unique
+215,sciencedirect.com,Yes,0,0,39,0.0,
+216,researchgate.net,Yes,6,2,26,23.08,region; link-name; meta-refresh
+217,youtube-nocookie.com,No,,,,,
+218,gmail.com,Yes,8,1,40,20.0,region; landmark-one-main; select-name
+219,bbc.co.uk,Yes,2,1,48,4.17,aria-hidden-focus; heading-order
+220,azureedge.net,No,,,,,
+221,pki.goog,Yes,12,1,52,23.08,color-contrast
+222,oxylabs.io,Yes,100,4,144,69.44,region; color-contrast; nested-interactive; aria-hidden-focus; heading-order
+223,vecdnlb.com,No,,,,,
+224,mit.edu,Yes,2,1,44,4.55,aria-allowed-attr; heading-order
+225,hichina.com,No,,,,,
+226,akamaized.net,No,,,,,
+227,sourceforge.net,Yes,4,0,19,21.05,region; landmark-one-main
+228,adsafeprotected.com,Yes,5,2,12,41.67,html-has-lang; image-alt; landmark-one-main; page-has-heading-one; region
+229,canva.com,Yes,2,0,46,4.35,region
+230,ubuntu.com,Yes,16,3,62,25.81,listitem; aria-required-parent; landmark-unique; aria-required-children; landmark-no-duplicate-banner
+231,android.com,Yes,7,1,51,13.73,aria-prohibited-attr; region; empty-heading; landmark-unique
+232,doi.org,No,,,,,
+233,t-online.de,Yes,104,5,152,68.42,color-contrast; landmark-complementary-is-top-level; landmark-unique; link-name; aria-required-children
+234,meraki.com,Yes,22,1,66,33.33,color-contrast; tabindex; avoid-inline-spacing
+235,scorecardresearch.com,Yes,12,4,31,38.71,region; color-contrast; image-alt; landmark-one-main; link-in-text-block
+236,nist.gov,Yes,22,1,64,34.38,region; landmark-one-main; page-has-heading-one; role-img-alt
+237,shopifysvc.com,No,,,,,
+238,nic.direct,No,,,,,
+239,cdngslb.com,No,,,,,
+240,miui.com,Yes,84,4,112,75.0,image-alt; color-contrast; heading-order; empty-heading; html-has-lang
+241,imdb.com,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+242,doubleverify.com,Yes,2,1,49,4.08,label; page-has-heading-one
+243,tiktokcdn-us.com,No,,,,,
+244,comcast.net,No,,,,,
+245,stripe.com,Yes,2,0,48,4.17,empty-heading; region
+246,wsdvs.com,No,,,,,
+247,casalemedia.com,Yes,25,2,59,42.37,region; link-name; aria-hidden-focus; landmark-one-main
+248,ksyuncdn.com,No,,,,,
+249,telegram.org,Yes,60,4,76,78.95,color-contrast; image-alt; region; link-name; empty-heading
+250,who.int,Yes,7,0,53,13.21,empty-heading; label-title-only; landmark-unique
+251,cisco.com,Yes,21,0,64,32.81,region; tabindex; landmark-one-main; skip-link
+252,hubspot.com,Yes,15,1,63,23.81,color-contrast; aria-allowed-role; presentation-role-conflict
+253,linktr.ee,Yes,59,2,97,60.82,region; aria-allowed-role; link-name; aria-required-children; heading-order
+254,adsrvr.org,Yes,19,3,48,39.58,color-contrast; link-in-text-block; link-name
+255,wixsite.com,No,,,,,
+256,openai.com,Yes,1,0,45,2.22,page-has-heading-one
+257,gwfb.net,No,,,,,
+258,playstation.net,No,,,,,
+259,dropcatch.com,Yes,1,0,38,2.63,landmark-one-main
+260,libp2p.direct,No,,,,,
+261,forter.com,Yes,2,1,49,4.08,aria-allowed-role; select-name
+262,booking.com,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+263,alibabadns.com,No,,,,,
+264,omtrdc.net,No,,,,,
+265,lencr.org,Yes,6,1,50,12.0,link-name; heading-order; region
+266,launchpad.net,Yes,14,1,38,36.84,region; heading-order; landmark-one-main; link-in-text-block; page-has-heading-one
+267,telekom.net,Yes,1,1,46,2.17,svg-img-alt
+268,wikimedia.org,Yes,10,1,24,41.67,region; image-alt; landmark-one-main; page-has-heading-one
+269,mts.ru,Yes,105,5,137,76.64,region; image-alt; color-contrast; image-redundant-alt; button-name
+270,hp.com,No,,,,,
+271,mangosip.ru,No,,,,,
+272,springer.com,Yes,1,0,47,2.13,landmark-complementary-is-top-level
+273,ttvnw.net,No,,,,,
+274,salesforce.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+275,mzstatic.com,Yes,7,2,53,13.21,aria-allowed-role; aria-required-children; color-contrast; region
+276,heytapmobile.com,No,,,,,
+277,autodesk.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+278,inmobi.com,Yes,9,3,42,21.43,color-contrast; link-name; region; heading-order; meta-viewport
+279,tinyurl.com,Yes,8,1,52,15.38,heading-order; region; list
+280,ampproject.org,Yes,7,2,46,15.22,heading-order; link-name; select-name
+281,facebook.net,No,,,,,
+282,samsungcloud.com,Yes,4,2,9,44.44,html-has-lang; landmark-one-main; meta-viewport; page-has-heading-one
+283,smartadserver.com,No,,,,,
+284,jsdelivr.net,No,,,,,
+285,reuters.com,Yes,2,0,12,16.67,landmark-one-main; page-has-heading-one
+286,mozilla.com,Yes,0,0,37,0.0,
+287,openx.net,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+288,triplinkintl.com,Yes,40,2,70,57.14,color-contrast; region; aria-command-name; landmark-one-main
+289,etsy.com,Yes,2,0,12,16.67,landmark-one-main; page-has-heading-one
+290,ibm.com,Yes,81,6,119,68.07,region; svg-img-alt; aria-required-parent; heading-order; aria-command-name
+291,shalltry.com,Yes,8,2,10,80.0,region; document-title; html-has-lang; landmark-one-main; page-has-heading-one
+292,duckdns.org,Yes,5,2,36,13.89,color-contrast; html-has-lang
+293,drom.ru,No,,,,,
+294,www.gov.uk,Yes,2,0,50,4.0,region
+295,wiley.com,Yes,4,0,19,21.05,region; landmark-one-main
+296,alibaba.com,Yes,8,2,46,17.39,region; aria-roles; color-contrast; landmark-one-main; page-has-heading-one
+297,ok.ru,Yes,6,3,45,13.33,region; color-contrast; meta-viewport; nested-interactive
+298,amplitude.com,Yes,28,3,69,40.58,nested-interactive; button-name; heading-order; landmark-unique; link-name
+299,dnsmadeeasy.com,Yes,76,2,115,66.09,region; color-contrast; link-name; landmark-one-main; landmark-unique
+300,appsflyer.com,No,,,,,
+301,nature.com,Yes,4,0,50,8.0,region
+302,harvard.edu,Yes,0,0,42,0.0,
+303,samsungqbe.com,No,,,,,
+304,googleblog.com,Yes,1,0,51,1.96,page-has-heading-one
+305,3lift.com,Yes,15,1,57,26.32,region; select-name; landmark-one-main
+306,media.net,Yes,5,1,40,12.5,link-name; heading-order
+307,steampowered.com,Yes,10,2,46,21.74,color-contrast; aria-required-children; page-has-heading-one
+308,pages.dev,Yes,1,1,46,2.17,link-name
+309,byteoversea.net,No,,,,,
+310,mtgglobals.com,No,,,,,
+311,debian.org,Yes,28,3,56,50.0,region; aria-hidden-focus; label; landmark-one-main; select-name
+312,php.net,Yes,5,1,42,11.9,region; landmark-one-main; link-name; page-has-heading-one
+313,media-amazon.com,No,,,,,
+314,nr-data.net,No,,,,,
+315,amazon.co.uk,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+316,launchdarkly.com,Yes,16,2,60,26.67,color-contrast; image-redundant-alt; landmark-complementary-is-top-level; region; heading-order
+317,alidns.com,Yes,78,7,113,69.03,region; button-name; listitem; role-img-alt; link-name
+318,trueconf.net,No,,,,,
+319,name-services.com,No,,,,,
+320,akamaihd.net,No,,,,,
+321,clarity.ms,No,,,,,
+322,telecid.ru,No,,,,,
+323,aol.com,Yes,26,4,73,35.62,aria-prohibited-attr; nested-interactive; region; tabindex; aria-required-children
+324,vk.ru,Yes,7,0,39,17.95,region
+325,myshopify.com,Yes,5,0,22,22.73,region; landmark-one-main
+326,weibo.com,Yes,3,1,7,42.86,html-has-lang; landmark-one-main; page-has-heading-one
+327,slack.com,Yes,8,0,48,16.67,presentation-role-conflict; landmark-unique; region; skip-link
+328,ea.com,No,,,,,
+329,afternic.com,Yes,6,2,49,12.24,aria-allowed-role; aria-hidden-focus; color-contrast
+330,issuu.com,Yes,5,0,41,12.2,region; landmark-one-main; skip-link
+331,douyincdn.com,No,,,,,
+332,gnu.org,Yes,4,2,6,66.67,document-title; html-has-lang; landmark-one-main; page-has-heading-one
+333,wbx2.com,No,,,,,
+334,crashlytics.com,No,,,,,
+335,checkpoint.com,Yes,5,1,13,38.46,region; html-has-lang; landmark-one-main
+336,weebly.com,Yes,39,3,72,54.17,region; color-contrast; link-name; heading-order; image-alt
+337,inner-active.mobi,No,,,,,
+338,onelink.me,No,,,,,
+339,cdc.gov,Yes,16,0,53,30.19,region; landmark-unique; tabindex; landmark-contentinfo-is-top-level; landmark-no-duplicate-banner
+340,un.org,Yes,3,1,10,30.0,html-has-lang; landmark-one-main; region
+341,wildberries.ru,Yes,5,2,11,45.45,html-has-lang; landmark-one-main; meta-refresh; page-has-heading-one; region
+342,mi.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+343,tradingview.com,Yes,20,4,61,32.79,button-name; aria-allowed-role; region; color-contrast; image-alt
+344,vkuser.net,No,,,,,
+345,opendns.com,Yes,11,1,44,25.0,region; listitem; landmark-one-main
+346,trustpilot.com,Yes,2,0,14,14.29,landmark-one-main; region
+347,allawnos.com,No,,,,,
+348,byteglb.com,No,,,,,
+349,naver.com,Yes,10,1,47,21.28,region; button-name; empty-heading; label-title-only
+350,ivi.ru,Yes,168,4,192,87.5,region; image-alt; color-contrast; link-name; landmark-one-main
+351,wsj.com,Yes,2,0,12,16.67,landmark-one-main; page-has-heading-one
+352,cdnbuild.net,No,,,,,
+353,tbcache.com,No,,,,,
+354,kaspersky-labs.com,No,,,,,
+355,ezvizlife.com,No,,,,,
+356,washingtonpost.com,No,,,,,
+357,aliyun.com,Yes,341,5,375,90.93,region; color-contrast; image-alt; link-name; button-name
+358,demdex.net,No,,,,,
+359,bilibili.com,Yes,76,5,102,74.51,region; color-contrast; listitem; button-name; label
+360,dell.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+361,rocket-cdn.com,No,,,,,
+362,cnbc.com,Yes,52,3,103,50.49,link-name; aria-required-parent; aria-valid-attr-value; heading-order; landmark-banner-is-top-level
+363,selectel.ru,Yes,44,5,80,55.0,color-contrast; image-alt; heading-order; region; button-name
+364,samsungcloudsolution.com,No,,,,,
+365,google.cn,Yes,3,0,17,17.65,region; landmark-one-main
+366,capcutapi.com,No,,,,,
+367,dailymail.co.uk,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+368,stanford.edu,Yes,3,0,45,6.67,aria-allowed-role
+369,dailymotion.com,Yes,4,2,44,9.09,heading-order; image-alt; list
+370,kwai-pro.com,No,,,,,
+371,bloomberg.com,Yes,3,0,20,15.0,region; landmark-one-main
+372,nvidia.com,No,,,,,
+373,rzone.de,No,,,,,
+374,nasa.gov,No,,,,,
+375,plesk.com,No,,,,,
+376,namebrightdns.com,No,,,,,
+377,temu.com,Yes,4,2,5,80.0,document-title; html-has-lang; landmark-one-main; page-has-heading-one
+378,tiktokv.us,No,,,,,
+379,tp-link.com,Yes,1,1,31,3.23,link-name
+380,yahoo.co.jp,Yes,25,3,51,49.02,color-contrast; html-has-lang; landmark-contentinfo-is-top-level; meta-viewport; page-has-heading-one
+381,hcaptcha.com,No,,,,,
+382,heytapdl.com,No,,,,,
+383,quickconnect.to,Yes,14,3,32,43.75,region; color-contrast; image-alt; html-has-lang
+384,vivoglobal.com,Yes,7,2,24,29.17,link-name; image-alt; landmark-one-main; page-has-heading-one
+385,yandex.com,Yes,2,1,37,5.41,aria-required-attr; page-has-heading-one
+386,unsplash.com,Yes,0,0,23,0.0,
+387,virginm.net,No,,,,,
+388,ibyteimg.com,No,,,,,
+389,avsxappcaptiveportal.com,No,,,,,
+390,indeed.com,Yes,0,0,29,0.0,
+391,calendly.com,Yes,8,1,44,18.18,heading-order; aria-prohibited-attr; landmark-banner-is-top-level; landmark-contentinfo-is-top-level; page-has-heading-one
+392,amazon.de,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+393,globo.com,Yes,510,4,553,92.22,color-contrast; region; image-alt; image-redundant-alt; aria-allowed-role
+394,edgecdn.ru,No,,,,,
+395,moe.video,Yes,21,3,52,40.38,color-contrast; link-name; meta-viewport; region
+396,arubanetworks.com,No,,,,,
+397,enacdn.net,No,,,,,
+398,kwaipros.com,No,,,,,
+399,xcal.tv,No,,,,,
+400,imcmdb.net,No,,,,,
+401,duckduckgo.com,No,,,,,
+402,adriver.ru,Yes,12,3,44,27.27,image-alt; link-name; region; aria-allowed-attr; landmark-one-main
+403,cookiedatabase.org,No,,,,,
+404,aliyuncsslbintl.com,No,,,,,
+405,adobe.net,No,,,,,
+406,gitlab.com,No,,,,,
+407,zendesk.com,No,,,,,
+408,tiktokcdn-eu.com,No,,,,,
+409,tiktokv.eu,No,,,,,
+410,cloudns.net,Yes,64,4,93,68.82,region; color-contrast; link-name; button-name; landmark-complementary-is-top-level
+411,live-video.net,No,,,,,
+412,espn.com,Yes,210,7,248,84.68,region; image-alt; color-contrast; link-name; button-name
+413,supercell.com,Yes,25,1,67,37.31,color-contrast; heading-order
+414,businessinsider.com,Yes,90,2,140,64.29,region; aria-hidden-focus; empty-heading; landmark-complementary-is-top-level; landmark-unique
+415,telegram.me,Yes,60,4,75,80.0,color-contrast; image-alt; region; link-name; empty-heading
+416,pixabay.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+417,ip-api.com,Yes,19,1,50,38.0,color-contrast; heading-order; landmark-unique
+418,dual-s-msedge.net,No,,,,,
+419,avcdn.net,No,,,,,
+420,amazonalexa.com,Yes,58,6,108,53.7,region; aria-required-attr; nested-interactive; aria-allowed-role; heading-order
+421,pangle.io,No,,,,,
+422,sc-gw.com,No,,,,,
+423,ngenix.net,No,,,,,
+424,163.com,Yes,137,8,161,85.09,region; image-redundant-alt; color-contrast; link-name; frame-title
+425,online-metrix.net,No,,,,,
+426,line.me,No,,,,,
+427,browser-intake-datadoghq.com,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+428,steamcommunity.com,Yes,15,4,49,30.61,image-alt; link-name; color-contrast; label; page-has-heading-one
+429,brave.com,Yes,10,3,55,18.18,aria-allowed-attr; heading-order; button-name; label
+430,amazontrust.com,Yes,0,0,30,0.0,
+431,huawei.com,Yes,29,3,61,47.54,region; link-name; color-contrast; heading-order; label
+432,intel.com,No,,,,,
+433,taobao.com,Yes,62,6,105,59.05,color-contrast; region; image-alt; aria-hidden-focus; link-name
+434,go.com,No,,,,,
+435,wp.com,Yes,8,3,56,14.29,aria-allowed-attr; presentation-role-conflict; color-contrast; label-title-only; label
+436,lsrelayaccess.com,No,,,,,
+437,crpt.ru,Yes,8,3,42,19.05,color-contrast; button-name; link-name; page-has-heading-one
+438,statista.com,Yes,0,0,49,0.0,
+439,worldnic.com,No,,,,,
+440,awsglobalaccelerator.com,No,,,,,
+441,netangels.ru,No,,,,,
+442,mynetname.net,No,,,,,
+443,netease.com,No,,,,,
+444,speedtest.net,Yes,3,0,36,8.33,landmark-unique; page-has-heading-one; tabindex
+445,list-manage.com,No,,,,,
+446,duolingo.com,No,,,,,
+447,mcafee.com,No,,,,,
+448,aliexpress.com,Yes,5,3,8,62.5,document-title; html-has-lang; landmark-one-main; meta-viewport; page-has-heading-one
+449,t-mobile.com,No,,,,,
+450,discord.media,Yes,11,3,29,37.93,color-contrast; region; link-in-text-block; heading-order; landmark-one-main
+451,mikrotik.com,Yes,104,1,144,72.22,region; color-contrast; empty-heading
+452,featureassets.org,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+453,svc.ms,No,,,,,
+454,beian.gov.cn,No,,,,,
+455,quora.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+456,myhuaweicloud.com,No,,,,,
+457,eventbrite.com,Yes,2,1,48,4.17,aria-valid-attr-value; landmark-unique
+458,gamepass.com,No,,,,,
+459,g.page,Yes,0,0,36,0.0,
+460,bsky.app,Yes,1,1,8,12.5,html-has-lang
+461,hostgator.com,Yes,5,2,28,17.86,empty-heading; link-name; meta-refresh; page-has-heading-one; region
+462,nflximg.com,No,,,,,
+463,awswaf.com,No,,,,,
+464,eye4.cn,No,,,,,
+465,ietf.org,Yes,6,0,50,12.0,aria-allowed-role
+466,sohu.com,Yes,78,1,115,67.83,color-contrast; region; page-has-heading-one
+467,goodreads.com,Yes,4,2,5,80.0,document-title; html-has-lang; landmark-one-main; page-has-heading-one
+468,2mdn.net,No,,,,,
+469,firetvcaptiveportal.com,No,,,,,
+470,kwai.net,No,,,,,
+471,gosuslugi.ru,Yes,2,1,17,11.76,meta-viewport; page-has-heading-one
+472,scribd.com,Yes,5,1,52,9.62,svg-img-alt; landmark-unique
+473,addtoany.com,Yes,18,1,35,51.43,region; link-in-text-block; landmark-one-main
+474,mysql.com,Yes,40,3,77,51.95,link-name; color-contrast; link-in-text-block; page-has-heading-one
+475,npr.org,No,,,,,
+476,walmart.com,No,,,,,
+477,vkontakte.ru,No,,,,,
+478,name.com,No,,,,,
+479,mediatek.com,No,,,,,
+480,myqcloud.com,No,,,,,
+481,tencent-cloud.net,No,,,,,
+482,sberbank.ru,Yes,7,0,15,46.67,region; landmark-one-main; page-has-heading-one
+483,nstld.com,No,,,,,
+484,amagi.tv,No,,,,,
+485,pushy.io,No,,,,,
+486,paloaltonetworks.com,Yes,110,0,154,71.43,region; landmark-one-main; landmark-unique
+487,foxnews.com,No,,,,,
+488,exp-tas.com,No,,,,,
+489,t-msedge.net,No,,,,,
+490,nease.net,No,,,,,
+491,giphy.com,Yes,28,2,48,58.33,region; html-has-lang; landmark-one-main; meta-viewport
+492,amzn.to,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+493,shein.com,No,,,,,
+494,slideshare.net,No,,,,,
+495,sina.com.cn,No,,,,,
+496,rbxcdn.com,No,,,,,
+497,indiatimes.com,Yes,93,4,127,73.23,aria-hidden-focus; region; link-name; image-redundant-alt; button-name
+498,stackoverflow.com,No,,,,,
+499,adobedtm.com,No,,,,,
+500,amazon.co.jp,No,,,,,
+501,google.de,No,,,,,
+502,behance.net,Yes,4,1,48,8.33,aria-valid-attr-value; landmark-no-duplicate-contentinfo; landmark-unique
+503,substack.com,Yes,26,4,60,43.33,color-contrast; svg-img-alt; region; aria-allowed-attr; landmark-one-main
+504,nflxvideo.net,No,,,,,
+505,fandom.com,Yes,1,1,28,3.57,meta-refresh
+506,easebar.com,No,,,,,
+507,gandi-ns.fr,No,,,,,
+508,nbcnews.com,No,,,,,
+509,atlassian.net,No,,,,,
+510,skyhigh.cloud,No,,,,,
+511,okta.com,No,,,,,
+512,beyondwickedmapping.org,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+513,docker.com,No,,,,,
+514,firefox.com,Yes,0,0,37,0.0,
+515,wired.com,No,,,,,
+516,run.app,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
+517,blogger.com,No,,,,,
+518,palmplaystore.com,Yes,52,2,66,78.79,color-contrast; meta-viewport; page-has-heading-one
+519,elasticbeanstalk.com,No,,,,,
+520,360yield.com,No,,,,,
+521,ft.com,Yes,4,1,41,9.76,landmark-main-is-top-level; landmark-no-duplicate-main; landmark-unique; meta-refresh
+522,sc-cdn.net,No,,,,,
+523,jquery.com,Yes,33,4,74,44.59,color-contrast; listitem; region; aria-required-children; button-name
+524,gcdn.co,No,,,,,
+525,icloud-content.com,No,,,,,
+526,dynatrace.com,Yes,2,0,32,6.25,heading-order
+527,cloudflareinsights.com,Yes,6,3,13,46.15,document-title; html-has-lang; image-alt; landmark-one-main; page-has-heading-one
+528,vedsalb.com,No,,,,,
+529,uol.com.br,Yes,134,7,176,76.14,color-contrast; region; aria-prohibited-attr; aria-hidden-focus; empty-heading
+530,spaceweb.pro,No,,,,,
+531,uk.com,Yes,11,4,48,22.92,color-contrast; image-alt; label; landmark-unique; link-name
+532,deere.com,No,,,,,
+533,time.com,Yes,9,1,53,16.98,color-contrast; heading-order; landmark-unique
+534,vidaahub.com,No,,,,,
+535,xhamster.com,No,,,,,
+536,trendmicro.com,No,,,,,
+537,360.cn,No,,,,,
+538,imgsmail.ru,No,,,,,
+539,arxiv.org,Yes,0,0,46,0.0,
+540,2gis.com,Yes,9,2,20,45.0,region; color-contrast; html-has-lang; landmark-one-main; page-has-heading-one
+541,geobasket.ru,No,,,,,
+542,markmonitor.com,Yes,1,1,28,3.57,meta-refresh
+543,capcut.com,Yes,7,2,48,14.58,color-contrast; frame-title; landmark-unique
+544,patreon.com,No,,,,,
+545,usatoday.com,No,,,,,
+546,deviantart.com,Yes,12,3,54,22.22,aria-hidden-focus; region; button-name; landmark-contentinfo-is-top-level; svg-img-alt
+547,visualstudio.com,No,,,,,
+548,eset.com,No,,,,,
+549,google.com.hk,No,,,,,
+550,tplinkcloud.com,No,,,,,
+551,rlcdn.com,No,,,,,
+552,grammarly.com,No,,,,,
+553,wix.com,No,,,,,
+554,teamviewer.com,No,,,,,
+555,live.net,No,,,,,
+556,fast.com,Yes,7,1,25,28.0,region; html-has-lang; landmark-one-main; page-has-heading-one
+557,azure-dns.com,No,,,,,
+558,netflix.net,Yes,19,1,58,32.76,region; heading-order; meta-viewport
+559,dnspod.net,No,,,,,
+560,atlassian.com,No,,,,,
+561,tandfonline.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+562,tripadvisor.com,Yes,2,0,12,16.67,landmark-one-main; page-has-heading-one
+563,comcast.com,No,,,,,
+564,hotjar.com,Yes,8,1,46,17.39,link-name; empty-heading; region
+565,oup.com,Yes,3,1,10,30.0,html-has-lang; landmark-one-main; region
+566,ca.gov,No,,,,,
+567,ya.ru,Yes,5,1,39,12.82,color-contrast; aria-allowed-role
+568,telegraph.co.uk,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+569,oraclecloud.com,Yes,4,1,14,28.57,html-has-lang; landmark-one-main; page-has-heading-one; region
+570,my.com,No,,,,,
+571,volcfcdndvs.com,No,,,,,
+572,timeweb.ru,No,,,,,
+573,deepl.com,Yes,22,3,69,31.88,region; list; aria-hidden-focus; aria-required-children; landmark-one-main
+574,msidentity.com,No,,,,,
+575,cdn20.com,No,,,,,
+576,dtkn.ru,No,,,,,
+577,cornell.edu,No,,,,,
+578,surveymonkey.com,Yes,57,3,102,55.88,region; color-contrast; aria-roles; svg-img-alt
+579,sharethrough.com,Yes,29,4,71,40.85,region; link-name; color-contrast; select-name; html-has-lang
+580,impervadns.net,No,,,,,
+581,yahoodns.net,No,,,,,
+582,hicloud.com,No,,,,,
+583,yieldmo.com,No,,,,,
+584,avito.ru,Yes,12,0,28,42.86,region; landmark-one-main; page-has-heading-one
+585,expireddomains.com,Yes,3,1,39,7.69,color-contrast; page-has-heading-one
+586,rakuten.co.jp,No,,,,,
+587,adobedc.net,No,,,,,
+588,target.com,No,,,,,
+589,bidswitch.net,No,,,,,
+590,berkeley.edu,No,,,,,
+591,googlezip.net,No,,,,,
+592,cdnvideo.ru,No,,,,,
+593,alicdn.com,No,,,,,
+594,a-msedge.net,No,,,,,
+595,apnews.com,No,,,,,
+596,xiaomi.net,No,,,,,
+597,xboxlive.com,No,,,,,
+598,samsungapps.com,No,,,,,
+599,playstation.com,No,,,,,
+600,ieee.org,Yes,4,1,9,44.44,html-has-lang; landmark-one-main; page-has-heading-one; region
+601,aboutads.info,Yes,31,3,57,54.39,color-contrast; region; heading-order; image-alt; landmark-one-main
+602,ipinfo.io,Yes,99,4,142,69.72,region; color-contrast; button-name; landmark-one-main; landmark-unique
+603,googletagservices.com,No,,,,,
+604,free.fr,No,,,,,
+605,verisign.com,Yes,3,2,29,10.34,button-name; color-contrast; page-has-heading-one
+606,digitalocean.com,Yes,52,0,86,60.47,region; empty-heading; landmark-one-main
+607,onetrust.com,Yes,49,0,93,52.69,region; heading-order; landmark-one-main
+608,mdpi.com,No,,,,,
+609,claude.ai,Yes,4,0,32,12.5,region; landmark-one-main; page-has-heading-one
+610,licdn.com,No,,,,,
+611,jotform.com,Yes,4,1,46,8.7,color-contrast
+612,accuweather.com,No,,,,,
+613,britannica.com,Yes,34,3,75,45.33,link-in-text-block; image-alt; link-name
+614,klaviyo.com,Yes,2,1,47,4.26,landmark-unique; role-img-alt
+615,ikea.com,Yes,2,0,43,4.65,region; skip-link
+616,ozone.ru,No,,,,,
+617,braze.com,Yes,5,1,47,10.64,aria-hidden-focus; heading-order
+618,branch.io,Yes,1,0,44,2.27,region
+619,loc.gov,Yes,5,1,55,9.09,aria-valid-attr-value; aria-dialog-name; region
+620,fontawesome.com,Yes,10,4,58,17.24,link-name; aria-prohibited-attr; color-contrast; region; image-alt
+621,squarespace.com,Yes,0,0,48,0.0,
+622,bunnyinfra.net,No,,,,,
+623,redhat.com,Yes,12,0,57,21.05,region
+624,nintendo.com,Yes,42,3,79,53.16,region; image-alt; aria-prohibited-attr; color-contrast; landmark-unique
+625,qlivecdn.com,No,,,,,
+626,force.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+627,stackadapt.com,No,,,,,
+628,wswebcdn.com,No,,,,,
+629,dyndns.org,Yes,17,2,57,29.82,region; color-contrast; heading-order; select-name; tabindex
+630,cookielaw.org,Yes,22,1,65,33.85,region; color-contrast; landmark-one-main
+631,typekit.net,No,,,,,
+632,independent.co.uk,Yes,191,2,235,81.28,region; color-contrast; landmark-one-main; link-in-text-block
+633,amazon.fr,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+634,cbsnews.com,No,,,,,
+635,intercom.io,Yes,24,3,67,35.82,color-contrast; aria-prohibited-attr; aria-allowed-attr
+636,threads.com,Yes,10,2,45,22.22,color-contrast; region; landmark-one-main; meta-viewport-large; svg-img-alt
+637,cnet.com,Yes,0,0,41,0.0,
+638,conviva.com,Yes,10,4,57,17.54,link-name; aria-hidden-focus; aria-allowed-attr; image-alt; landmark-unique
+639,viber.com,Yes,17,3,51,33.33,color-contrast; link-name; image-alt
+640,nic.network,No,,,,,
+641,outbrain.com,Yes,24,3,64,37.5,aria-required-parent; aria-allowed-attr; aria-allowed-role; heading-order; presentation-role-conflict
+642,elpais.com,Yes,4,0,44,9.09,landmark-unique; landmark-complementary-is-top-level
+643,sagepub.com,Yes,0,0,45,0.0,
+644,nike.com,Yes,73,6,120,60.83,aria-hidden-focus; aria-allowed-role; aria-required-parent; color-contrast; listitem
+645,yelp.com,Yes,2,0,12,16.67,landmark-one-main; page-has-heading-one
+646,ovh.net,Yes,7,2,18,38.89,region; frame-title; html-has-lang; landmark-one-main; page-has-heading-one
+647,consultant.ru,Yes,5,3,46,10.87,link-name; color-contrast; link-in-text-block; region
+648,imgur.com,Yes,4,2,13,30.77,color-contrast; html-has-lang; landmark-one-main; region
+649,abovedomains.com,No,,,,,
+650,unesco.org,No,,,,,
+651,dreamhost.com,Yes,9,1,56,16.07,color-contrast
+652,bytedns1.com,No,,,,,
+653,techcrunch.com,Yes,5,2,51,9.8,aria-allowed-role; link-name; list; page-has-heading-one; region
+654,amazon.ca,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+655,noaa.gov,No,,,,,
+656,ups.com,No,,,,,
+657,dotomi.com,Yes,5,3,55,9.09,frame-title; aria-hidden-focus; color-contrast
+658,withgoogle.com,Yes,0,0,32,0.0,
+659,cambridge.org,Yes,1,1,28,3.57,meta-refresh
+660,g.co,Yes,4,0,22,18.18,region; landmark-one-main
+661,bx-msedge.net,No,,,,,
+662,agkn.com,No,,,,,
+663,quantserve.com,Yes,3,1,12,25.0,html-has-lang; landmark-one-main; region
+664,1rx.io,No,,,,,
+665,bluehost.com,Yes,8,2,30,26.67,region; empty-heading; link-name; meta-refresh; page-has-heading-one
+666,pinimg.com,Yes,0,0,10,0.0,
+667,scdn.co,No,,,,,
+668,service.gov.uk,Yes,2,0,50,4.0,region
+669,b-msedge.net,No,,,,,
+670,mailchimp.com,No,,,,,
+671,id5-sync.com,Yes,4,2,6,66.67,document-title; html-has-lang; landmark-one-main; page-has-heading-one
+672,optimizely.com,Yes,8,0,52,15.38,region; landmark-unique; landmark-contentinfo-is-top-level; landmark-no-duplicate-contentinfo
+673,crwdcntrl.net,No,,,,,
+674,afilias-nst.info,No,,,,,
+675,ted.com,No,,,,,
+676,twimg.com,No,,,,,
+677,ui-dns.com,No,,,,,
+678,tencent.com,Yes,65,4,98,66.33,region; link-name; heading-order; image-alt; empty-heading
+679,telephony.goog,No,,,,,
+680,lijit.com,Yes,8,0,26,30.77,region; landmark-one-main; page-has-heading-one
+681,lemonde.fr,Yes,18,2,57,31.58,color-contrast; frame-title; heading-order
+682,spiegel.de,Yes,20,1,63,31.75,image-redundant-alt; color-contrast; empty-heading; landmark-unique; page-has-heading-one
+683,smaato.net,No,,,,,
+684,fb.com,Yes,2,0,7,28.57,landmark-one-main; page-has-heading-one
+685,supertms.com,No,,,,,
+686,hihonorcloud.com,Yes,5,3,10,50.0,document-title; html-has-lang; landmark-one-main; meta-viewport; page-has-heading-one
+687,zdnscloud.cn,No,,,,,
+688,anydesk.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+689,att.net,No,,,,,
+690,safebrowsing.apple,No,,,,,
+691,rackspace.net,No,,,,,
+692,ln-msedge.net,No,,,,,
+693,edgcdn.net,No,,,,,
+694,creativecdn.com,No,,,,,
+695,samsungacr.com,No,,,,,
+696,whecloud.com,No,,,,,
+697,hath.network,No,,,,,
+698,rt.ru,Yes,25,3,56,44.64,color-contrast; link-name; image-redundant-alt; landmark-no-duplicate-contentinfo; landmark-unique
+699,shopee.com.br,Yes,4,2,8,50.0,document-title; html-has-lang; landmark-one-main; page-has-heading-one
+700,bidr.io,No,,,,,
+701,mega.co.nz,Yes,4,0,37,10.81,heading-order; landmark-unique
+702,google.co.uk,Yes,0,0,32,0.0,
+703,ks-cdn.com,No,,,,,
+704,tapad.com,No,,,,,
+705,wps.com,No,,,,,
+706,amazon.in,No,,,,,
+707,newrelic.com,No,,,,,
+708,ovscdns.com,No,,,,,
+709,criteo.net,No,,,,,
+710,chinamobile.com,No,,,,,
+711,mediafire.com,Yes,1,0,40,2.5,region
+712,cursor.sh,Yes,69,3,114,60.53,color-contrast; aria-hidden-focus; landmark-unique; scrollable-region-focusable
+713,asus.com,No,,,,,
+714,360safe.com,No,,,,,
+715,wattpad.com,Yes,15,1,52,28.85,region; heading-order; label; landmark-no-duplicate-banner; landmark-one-main
+716,bitrix24.ru,No,,,,,
+717,it.com,No,,,,,
+718,sophos.com,No,,,,,
+719,box.com,Yes,7,0,53,13.21,region; heading-order; landmark-contentinfo-is-top-level; landmark-no-duplicate-contentinfo
+720,bdydns.com,No,,,,,
+721,bamgrid.com,No,,,,,
+722,allaboutcookies.org,Yes,2,0,12,16.67,landmark-one-main; page-has-heading-one
+723,shopee.co.id,Yes,4,2,8,50.0,document-title; html-has-lang; landmark-one-main; page-has-heading-one
+724,dbankcloud.com,No,,,,,
+725,afilias-nst.org,No,,,,,
+726,everesttech.net,No,,,,,
+727,bugsnag.com,No,,,,,
+728,amazon.es,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+729,stripchat.com,Yes,13,1,50,26.0,region; color-contrast; landmark-unique
+730,homedepot.com,No,,,,,
+731,adform.net,Yes,4,1,12,33.33,region; html-has-lang; landmark-one-main
+732,steamstatic.com,No,,,,,
+733,marriott.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+734,bytefcdn-ttpus.com,No,,,,,
+735,grammarly.io,No,,,,,
+736,liadm.com,No,,,,,
+737,seznam.cz,No,,,,,
+738,networkadvertising.org,No,,,,,
+739,adguard-vpn.online,No,,,,,
+740,githubusercontent.com,No,,,,,
+741,amazon.it,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+742,imrworldwide.com,No,,,,,
+743,jetbrains.com,Yes,2,1,37,5.41,heading-order; meta-viewport
+744,alipaydns.com,No,,,,,
+745,google.com.br,Yes,0,0,32,0.0,
+746,myspace.com,No,,,,,
+747,ring.com,Yes,24,4,64,37.5,color-contrast; button-name; link-name; region; image-alt
+748,iso.org,No,,,,,
+749,mckinsey.com,No,,,,,
+750,bandcamp.com,Yes,0,0,49,0.0,
+751,gumgum.com,No,,,,,
+752,teads.tv,No,,,,,
+753,fda.gov,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+754,zillow.com,Yes,2,0,8,25.0,landmark-one-main; page-has-heading-one
+755,freepik.com,Yes,2,0,9,22.22,landmark-one-main; page-has-heading-one
+756,anthropic.com,No,,,,,
+757,appcenter.ms,No,,,,,
+758,python.org,Yes,107,5,154,69.48,aria-required-parent; listitem; color-contrast; list; aria-required-children
+759,ci-servers.net,No,,,,,
+760,primevideo.com,No,,,,,
+761,nmrodam.com,No,,,,,
+762,wb.ru,Yes,5,2,11,45.45,html-has-lang; landmark-one-main; meta-refresh; page-has-heading-one; region
+763,nel.goog,No,,,,,
+764,mercadolivre.com.br,Yes,5,3,25,20.0,document-title; html-has-lang; label; page-has-heading-one; tabindex
+765,prnewswire.com,No,,,,,
+766,abc.net.au,No,,,,,
+767,e2ro.com,No,,,,,
+768,resolver.arpa,No,,,,,
+769,turn.com,No,,,,,
+770,ci-servers.org,No,,,,,
+771,mlb.com,No,,,,,
+772,nikkei.com,No,,,,,
+773,wp.pl,Yes,194,3,227,85.46,region; color-contrast; button-name; image-alt; heading-order
+774,no-ip.com,No,,,,,
+775,theverge.com,No,,,,,
+776,ameblo.jp,Yes,39,2,78,50.0,listitem; region; svg-img-alt; landmark-complementary-is-top-level
+777,fiverr.com,Yes,1,1,22,4.55,image-alt
+778,a-mo.net,Yes,5,2,7,71.43,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+779,hbr.org,Yes,2,1,45,4.44,heading-order; link-name
+780,33across.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+781,unpkg.com,Yes,124,3,159,77.99,color-contrast; link-name; scrollable-region-focusable
+782,appspot.com,No,,,,,
+783,zoom.com,No,,,,,
+784,people.com,Yes,3,1,20,15.0,empty-heading; meta-refresh; page-has-heading-one
+785,blackberry.com,No,,,,,
+786,allegro.pl,No,,,,,
+787,uber.com,Yes,4,3,46,8.7,listitem; aria-allowed-attr; list
+788,washington.edu,Yes,1,1,42,2.38,aria-hidden-focus
+789,shopeemobile.com,Yes,10,2,23,43.48,region; link-name; landmark-one-main; meta-viewport; page-has-heading-one
+790,lgtvcommon.com,No,,,,,
+791,datadoghq.com,No,,,,,
+792,dbankcloud.ru,No,,,,,
+793,globalsign.com,No,,,,,
+794,hostgator.com.br,No,,,,,
+795,disneyplus.com,No,,,,,
+796,moloco.com,No,,,,,
+797,welt.de,Yes,32,1,75,42.67,heading-order; color-contrast; region; landmark-unique; landmark-banner-is-top-level
+798,mixpanel.com,No,,,,,
+799,sedo.com,Yes,18,2,61,29.51,link-in-text-block; link-name; region; heading-order; landmark-unique
+800,herokudns.com,No,,,,,
+801,disqus.com,Yes,11,1,42,26.19,color-contrast
+802,mhverifier.ru,No,,,,,
+803,rakuten.com,Yes,4,2,35,11.43,html-has-lang; landmark-one-main; meta-viewport; region
+804,yandexcloud.net,No,,,,,
+805,ddnss.de,Yes,41,3,76,53.95,color-contrast; listitem; link-in-text-block; heading-order; region
+806,usgovcloudapi.net,No,,,,,
+807,bild.de,Yes,38,2,84,45.24,link-name; color-contrast; region; page-has-heading-one
+808,openstreetmap.org,Yes,36,3,76,47.37,color-contrast; region; link-in-text-block; button-name; landmark-unique
+809,adjust.com,No,,,,,
+810,fwmrm.net,No,,,,,
+811,on.aws,No,,,,,
+812,livejournal.com,No,,,,,
+813,liftoff.io,No,,,,,
+814,mayoclinic.org,Yes,0,0,44,0.0,
+815,lenovo.com,Yes,6,0,49,12.24,tabindex; heading-order; landmark-main-is-top-level; landmark-no-duplicate-main; landmark-unique
+816,onetag-sys.com,Yes,6,2,20,30.0,region; html-has-lang; landmark-one-main; meta-viewport
+817,aljazeera.com,Yes,14,2,61,22.95,empty-heading; aria-hidden-focus; region; color-contrast
+818,erome.com,No,,,,,
+819,cmediahub.ru,No,,,,,
+820,yellowblue.io,No,,,,,
+821,discordapp.com,No,,,,,
+822,zhihu.com,Yes,15,6,53,28.3,color-contrast; button-name; aria-roles; aria-valid-attr; image-alt
+823,share.google,Yes,4,0,22,18.18,region; landmark-one-main
+824,recaptcha.net,Yes,1,0,25,4.0,page-has-heading-one
+825,usps.com,Yes,56,6,96,58.33,region; aria-required-parent; listitem; aria-allowed-attr; link-name
+826,squarespacedns.com,No,,,,,
+827,lefigaro.fr,Yes,79,4,132,59.85,image-redundant-alt; color-contrast; landmark-complementary-is-top-level; landmark-unique; aria-input-field-name
+828,ys7.com,No,,,,,
+829,vivo.com.cn,Yes,6,2,48,12.5,button-name; list; page-has-heading-one
+830,msftauth.net,No,,,,,
+831,academia.edu,No,,,,,
+832,adgrx.com,No,,,,,
+833,cdnhwc1.com,No,,,,,
+834,pornhub.com,No,,,,,
+835,latimes.com,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+836,kick.com,Yes,11,2,47,23.4,button-name; region; meta-viewport; page-has-heading-one
+837,figma.com,Yes,10,1,54,18.52,aria-hidden-focus; aria-allowed-role
+838,cdn-vk.ru,No,,,,,
+839,me.com,Yes,0,0,37,0.0,
+840,wpguardian.com,Yes,16,2,62,25.81,heading-order; color-contrast; image-alt; empty-table-header
+841,ssl-images-amazon.com,No,,,,,
+842,investopedia.com,Yes,3,1,20,15.0,empty-heading; meta-refresh; page-has-heading-one
+843,onlyfans.com,No,,,,,
+844,pexels.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+845,discogs.com,Yes,1,1,28,3.57,meta-refresh
+846,wpguardian.io,Yes,16,2,62,25.81,heading-order; color-contrast; image-alt; empty-table-header
+847,news.com.au,Yes,8,2,18,44.44,region; document-title; empty-heading; html-has-lang; landmark-one-main
+848,spotifycdn.com,No,,,,,
+849,ebay.co.uk,Yes,16,3,66,24.24,tabindex; link-name; role-img-alt; aria-allowed-role; aria-required-attr
+850,zoho.com,Yes,0,0,35,0.0,
+851,thenai.org,Yes,21,3,52,40.38,aria-hidden-focus; button-name; color-contrast
+852,focus.de,Yes,51,3,87,58.62,button-name; color-contrast; landmark-complementary-is-top-level; landmark-unique; link-name
+853,goskope.com,No,,,,,
+854,webmd.com,Yes,131,6,175,74.86,listitem; image-alt; list; aria-allowed-attr; link-name
+855,cloudinary.com,Yes,27,5,68,39.71,image-alt; color-contrast; link-name; heading-order; aria-allowed-attr
+856,princeton.edu,Yes,0,0,42,0.0,
+857,herokuapp.com,No,,,,,
+858,kontur.ru,Yes,2,2,34,5.88,color-contrast; link-in-text-block
+859,miwifi.com,Yes,5,1,15,33.33,region; html-has-lang; landmark-one-main
+860,agoda.com,Yes,0,0,33,0.0,
+861,zenecn.net,No,,,,,
+862,chess.com,Yes,2,0,38,5.26,landmark-unique; tabindex
+863,change.org,Yes,0,0,38,0.0,
+864,biblegateway.com,Yes,2,1,45,4.44,nested-interactive; page-has-heading-one
+865,synology.com,Yes,6,3,56,10.71,region; button-name; label; role-img-alt
+866,ndtv.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+867,merriam-webster.com,Yes,42,2,82,51.22,region; image-redundant-alt; landmark-unique; color-contrast; landmark-no-duplicate-banner
+868,life360.com,Yes,13,1,54,24.07,heading-order; color-contrast; landmark-banner-is-top-level; landmark-main-is-top-level; landmark-no-duplicate-banner
+869,qualtrics.com,Yes,8,2,57,14.04,aria-allowed-attr; aria-required-children; heading-order; landmark-unique; page-has-heading-one
+870,themeforest.net,Yes,1,1,25,4.0,meta-refresh
+871,xvideos.com,No,,,,,
+872,wbbasket.ru,No,,,,,
+873,smartthings.com,Yes,32,3,75,42.67,aria-required-parent; listitem; aria-required-children
+874,eu-1-id5-sync.com,Yes,11,3,29,37.93,color-contrast; region; link-in-text-block; heading-order; landmark-one-main
+875,ebay.de,Yes,16,3,66,24.24,tabindex; link-name; role-img-alt; aria-allowed-role; aria-required-attr
+876,tplinknbu.com,No,,,,,
+877,usda.gov,No,,,,,
+878,admanmedia.com,Yes,31,2,59,52.54,color-contrast; region; link-name; aria-allowed-role; landmark-banner-is-top-level
+879,healthline.com,Yes,68,1,108,62.96,region; image-redundant-alt; color-contrast; landmark-one-main
+880,flashtalking.com,Yes,18,2,61,29.51,link-name; color-contrast; heading-order; landmark-banner-is-top-level; landmark-no-duplicate-banner
+881,usercontent.goog,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
+882,kunluncan.com,No,,,,,
+883,amazon.com.br,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+884,arcgis.com,Yes,3,1,27,11.11,landmark-one-main; meta-viewport; region
+885,starlink.com,Yes,2,0,8,25.0,landmark-one-main; page-has-heading-one
+886,worldbank.org,Yes,0,0,28,0.0,
+887,deloitte.com,Yes,17,1,61,27.87,aria-allowed-role; list; heading-order
+888,irs.gov,Yes,9,1,58,15.52,aria-allowed-role; aria-allowed-attr; landmark-unique; region
+889,akahost.net,No,,,,,
+890,bankofamerica.com,Yes,57,2,88,64.77,aria-allowed-role; image-alt; region; link-name; empty-heading
+891,richaudience.com,Yes,65,3,89,73.03,color-contrast; region; link-name; heading-order; image-alt
+892,nic.io,Yes,3,2,32,9.38,heading-order; link-name; meta-viewport
+893,fidelity.com,No,,,,,
+894,otto.de,Yes,27,1,73,36.99,region; aria-prohibited-attr; label-title-only; landmark-one-main
+895,www.gov.br,Yes,11,1,58,18.97,image-redundant-alt; button-name; landmark-banner-is-top-level; landmark-no-duplicate-banner; landmark-unique
+896,aiv-delivery.net,No,,,,,
+897,ioref.io,No,,,,,
+898,bytefcdn.com,No,,,,,
+899,frontiersin.org,Yes,0,0,41,0.0,
+900,tiktokw.us,No,,,,,
+901,eu.com,Yes,5,3,42,11.9,image-alt; label; landmark-unique; link-name; page-has-heading-one
+902,clever.com,Yes,0,0,41,0.0,
+903,genius.com,Yes,5,1,31,16.13,empty-heading; landmark-main-is-top-level; landmark-no-duplicate-main; landmark-unique; meta-refresh
+904,seedtag.com,Yes,47,3,86,54.65,color-contrast; link-name; aria-prohibited-attr; heading-order; region
+905,go-mpulse.net,No,,,,,
+906,daum.net,Yes,62,6,112,55.36,color-contrast; tabindex; empty-heading; aria-allowed-attr; aria-required-children
+907,fbsbx.com,Yes,3,1,6,50.0,html-has-lang; landmark-one-main; page-has-heading-one
+908,azure-devices.net,No,,,,,
+909,pixiv.net,Yes,18,3,32,56.25,region; color-contrast; link-in-text-block; link-name
+910,playrix.com,Yes,11,3,38,28.95,region; listitem; color-contrast; landmark-one-main; meta-viewport
+911,hm.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+912,samsungosp.com,No,,,,,
+913,rutube.ru,Yes,100,3,143,69.93,link-name; landmark-unique; aria-valid-attr-value; meta-viewport; page-has-heading-one
+914,blackberry.net,No,,,,,
+915,classlink.com,Yes,55,3,96,57.29,region; color-contrast; aria-required-attr; aria-allowed-role; label-title-only
+916,deepseek.com,Yes,36,2,65,55.38,aria-hidden-focus; color-contrast; page-has-heading-one
+917,state.gov,Yes,4,1,15,26.67,image-alt; landmark-one-main; page-has-heading-one; region
+918,jimdo.com,Yes,0,0,40,0.0,
+919,mailchi.mp,Yes,0,0,49,0.0,
+920,linode.com,Yes,9,0,49,18.37,landmark-unique; heading-order; landmark-banner-is-top-level; landmark-complementary-is-top-level; landmark-contentinfo-is-top-level
+921,poki.com,Yes,190,1,225,84.44,image-redundant-alt; region; landmark-one-main; nested-interactive
+922,cloudsink.net,No,,,,,
+923,xerox.com,Yes,10,2,54,18.52,region; color-contrast; aria-prohibited-attr
+924,agora.io,Yes,77,4,115,66.96,region; color-contrast; nested-interactive; landmark-one-main; link-name
+925,epa.gov,Yes,0,0,45,0.0,
+926,nintendo.net,No,,,,,
+927,pccc.com,Yes,47,3,82,57.32,region; listitem; color-contrast; aria-required-children; heading-order
+928,perplexity.ai,Yes,1,1,28,3.57,meta-refresh
+929,ddns.net,No,,,,,
+930,presage.io,No,,,,,
+931,ubnt.com,Yes,32,4,72,44.44,color-contrast; nested-interactive; aria-hidden-focus; landmark-unique; link-name
+932,nationalgeographic.com,Yes,201,7,244,82.38,empty-heading; link-name; aria-required-parent; nested-interactive; landmark-complementary-is-top-level
+933,character.ai,Yes,5,2,33,15.15,landmark-main-is-top-level; landmark-no-duplicate-main; landmark-unique; link-name; meta-viewport
+934,split.io,Yes,25,2,62,40.32,link-name; region; color-contrast; landmark-one-main
+935,ryanair.com,Yes,6,0,31,19.35,region; landmark-one-main; page-has-heading-one
+936,chaturbate.com,No,,,,,
+937,docker.io,Yes,19,3,63,30.16,link-name; list; color-contrast; heading-order
+938,coupang.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+939,smilewanted.com,Yes,157,8,198,79.29,image-alt; region; color-contrast; aria-required-parent; button-name
+940,typeform.com,Yes,3,1,47,6.38,color-contrast; region
+941,youku.com,Yes,121,4,141,85.82,image-alt; region; link-name; html-has-lang; label
+942,airbnb.com,Yes,3,1,39,7.69,aria-command-name; region
+943,repubblica.it,Yes,235,4,272,86.4,color-contrast; image-alt; link-name; button-name; region
+944,rackspace.com,Yes,1,0,44,2.27,region
+945,pendo.io,Yes,166,4,207,80.19,region; color-contrast; link-name; nested-interactive; aria-hidden-focus
+946,amazon.com.au,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+947,mercadolibre.com.ar,Yes,5,3,25,20.0,document-title; html-has-lang; label; page-has-heading-one; tabindex
+948,lowes.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
+949,kleinanzeigen.de,Yes,0,0,47,0.0,
+950,kickstarter.com,Yes,1,1,28,3.57,meta-refresh
+951,cdnhwc2.com,No,,,,,
+952,corriere.it,Yes,79,4,121,65.29,link-name; empty-heading; button-name; landmark-complementary-is-top-level; aria-prohibited-attr
+953,opera-api.com,No,,,,,
+954,wyzecam.com,No,,,,,
+955,rambler.ru,Yes,135,6,173,78.03,region; color-contrast; aria-required-parent; button-name; link-in-text-block
+956,weforum.org,Yes,54,2,93,58.06,region; landmark-unique; link-name; button-name; landmark-one-main
+957,btloader.com,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+958,segment.io,Yes,1,0,43,2.33,heading-order
+959,theatlantic.com,Yes,1,0,44,2.27,page-has-heading-one
+960,4dex.io,No,,,,,
+961,xnxx.com,No,,,,,
+962,tiktokrow-cdn.com,No,,,,,
+963,readthedocs.io,Yes,21,1,52,40.38,color-contrast; region
+964,umich.edu,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+965,pbs.org,Yes,1,0,43,2.33,landmark-unique
+966,nextlgsdp.com,No,,,,,
+967,omnitagjs.com,No,,,,,
+968,kwai.com,Yes,19,4,41,46.34,region; link-name; color-contrast; image-alt; label
+969,yandex.com.tr,Yes,17,3,60,28.33,color-contrast; aria-required-attr; list; page-has-heading-one
+970,vercel.app,Yes,25,6,70,35.71,color-contrast; link-name; aria-hidden-focus; aria-prohibited-attr; heading-order
+971,leiniao.com,No,,,,,
+972,px-cloud.net,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
+973,kslawin.com,No,,,,,
+974,whitehouse.gov,Yes,3,0,46,6.52,empty-heading; label-title-only; landmark-unique
+975,note.com,Yes,6,2,21,28.57,region; frame-title; html-has-lang; landmark-one-main
+976,jd.com,Yes,42,4,75,56.0,color-contrast; region; link-name; html-has-lang; image-alt
+977,caixa.gov.br,No,,,,,
+978,elmundo.es,No,,,,,
+979,immedia-semi.com,No,,,,,
+980,tsyndicate.com,No,,,,,
+981,singular.net,Yes,19,3,59,32.2,link-name; image-alt; color-contrast; region
+982,theconversation.com,Yes,0,0,44,0.0,
+983,digitaloceanspaces.com,Yes,52,0,86,60.47,region; empty-heading; landmark-one-main
+984,giex.ru,No,,,,,
+985,netgear.com,Yes,54,4,94,57.45,region; svg-img-alt; heading-order; aria-allowed-role; aria-prohibited-attr
+986,onet.pl,Yes,33,4,71,46.48,link-name; empty-heading; region; color-contrast; frame-title
+987,nexusmods.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
+988,hotstar.com,No,,,,,
+989,afafb.com,No,,,,,
+990,kueezrtb.com,Yes,27,2,57,47.37,region; color-contrast; link-name; landmark-one-main
+991,sofascore.com,No,,,,,
+992,costco.com,No,,,,,
+993,onesignal.com,Yes,91,3,133,68.42,link-name; aria-prohibited-attr; color-contrast; heading-order; landmark-unique
+994,fbpigeon.com,No,,,,,
+995,vercel-dns-016.com,No,,,,,
+996,vk-analytics.ru,No,,,,,
+997,us.com,Yes,5,3,42,11.9,image-alt; label; landmark-unique; link-name; page-has-heading-one
+998,utorrent.com,Yes,30,4,65,46.15,listitem; color-contrast; link-name; image-alt; heading-order
+999,nypost.com,Yes,30,3,78,38.46,link-name; image-redundant-alt; region; frame-title; heading-order
+1000,binance.com,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
+1001,pvp.net,No,,,,,
+1002,snapkit.com,Yes,22,2,51,43.14,region; color-contrast; image-alt; landmark-one-main; page-has-heading-one
+1003,ipify.org,Yes,235,4,259,90.73,color-contrast; region; link-in-text-block; scrollable-region-focusable; image-alt
+1004,columbia.edu,Yes,1,1,28,3.57,meta-refresh
+1005,samsungcloudsolution.net,No,,,,,
+1006,faphouse.com,Yes,949,4,974,97.43,region; link-name; color-contrast; button-name; heading-order
+1007,quizlet.com,Yes,4,1,26,15.38,region; empty-heading; meta-refresh
+1008,bol.com,No,,,,,
+1009,orderbox-dns.com,No,,,,,
+1010,tagesschau.de,Yes,13,3,55,23.64,color-contrast; region; definition-list; heading-order; svg-img-alt

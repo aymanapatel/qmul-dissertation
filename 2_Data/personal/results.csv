@@ -8,4 +8,4 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 7,googleapis.com,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
 8,youtube.com,Yes,4,1,48,8.33,aria-allowed-attr
 9,amazonaws.com,Yes,18,5,62,29.03,aria-required-parent; heading-order; aria-prohibited-attr; aria-required-children; aria-valid-attr-value
-10,apple.com,Yes,7,2,53,13.21,aria-allowed-role; aria-required-children; color-contrast; region
+10,apple.com,Yes,6,2,52,11.54,aria-allowed-role; aria-required-children; color-contrast; region
