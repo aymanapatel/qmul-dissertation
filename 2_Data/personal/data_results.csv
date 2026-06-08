@@ -84,7 +84,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 93,yandex.ru,Yes,56,7,89,62.92,aria-valid-attr-value; listitem; aria-allowed-attr; region; link-name
 94,samsung.com,Yes,31,4,71,43.66,aria-required-parent; listitem; aria-required-children; empty-heading; link-name
 95,sentry.io,Yes,2,1,51,3.92,aria-command-name; empty-heading
-96,google-analytics.com,Yes,5,2,48,10.42,region; svg-img-alt; aria-allowed-attr
 97,nginx.com,Yes,18,0,60,30.0,region; landmark-unique; heading-order; image-redundant-alt; landmark-one-main
 98,edgesuite.net,No,,,,,
 99,wordpress.com,Yes,8,3,56,14.29,aria-allowed-attr; presentation-role-conflict; color-contrast; label-title-only; label
@@ -128,7 +127,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 137,outlook.com,Yes,3,2,15,20.0,aria-allowed-role; html-has-lang; meta-viewport
 138,gravatar.com,Yes,20,2,53,37.74,region; aria-hidden-focus; color-contrast; heading-order; landmark-one-main
 139,dropbox.com,Yes,0,0,39,0.0,
-140,app-analytics-services.com,Yes,5,0,18,27.78,region; landmark-one-main; page-has-heading-one
 141,registrar-servers.com,No,,,,,
 142,iiko.it,No,,,,,
 143,xiaomi.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
@@ -523,7 +521,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 532,deere.com,No,,,,,
 533,time.com,Yes,9,1,53,16.98,color-contrast; heading-order; landmark-unique
 534,vidaahub.com,No,,,,,
-535,xhamster.com,No,,,,,
 536,trendmicro.com,No,,,,,
 537,360.cn,No,,,,,
 538,imgsmail.ru,No,,,,,
@@ -717,7 +714,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 726,everesttech.net,No,,,,,
 727,bugsnag.com,No,,,,,
 728,amazon.es,Yes,3,1,9,33.33,document-title; landmark-one-main; page-has-heading-one
-729,stripchat.com,Yes,13,1,50,26.0,region; color-contrast; landmark-unique
 730,homedepot.com,No,,,,,
 731,adform.net,Yes,4,1,12,33.33,region; html-has-lang; landmark-one-main
 732,steamstatic.com,No,,,,,
@@ -822,7 +818,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 831,academia.edu,No,,,,,
 832,adgrx.com,No,,,,,
 833,cdnhwc1.com,No,,,,,
-834,pornhub.com,No,,,,,
 835,latimes.com,Yes,5,2,8,62.5,document-title; html-has-lang; landmark-one-main; page-has-heading-one; region
 836,kick.com,Yes,11,2,47,23.4,button-name; region; meta-viewport; page-has-heading-one
 837,figma.com,Yes,10,1,54,18.52,aria-hidden-focus; aria-allowed-role
@@ -831,7 +826,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 840,wpguardian.com,Yes,16,2,62,25.81,heading-order; color-contrast; image-alt; empty-table-header
 841,ssl-images-amazon.com,No,,,,,
 842,investopedia.com,Yes,3,1,20,15.0,empty-heading; meta-refresh; page-has-heading-one
-843,onlyfans.com,No,,,,,
 844,pexels.com,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
 845,discogs.com,Yes,1,1,28,3.57,meta-refresh
 846,wpguardian.io,Yes,16,2,62,25.81,heading-order; color-contrast; image-alt; empty-table-header
@@ -859,7 +853,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 868,life360.com,Yes,13,1,54,24.07,heading-order; color-contrast; landmark-banner-is-top-level; landmark-main-is-top-level; landmark-no-duplicate-banner
 869,qualtrics.com,Yes,8,2,57,14.04,aria-allowed-attr; aria-required-children; heading-order; landmark-unique; page-has-heading-one
 870,themeforest.net,Yes,1,1,25,4.0,meta-refresh
-871,xvideos.com,No,,,,,
 872,wbbasket.ru,No,,,,,
 873,smartthings.com,Yes,32,3,75,42.67,aria-required-parent; listitem; aria-required-children
 874,eu-1-id5-sync.com,Yes,11,3,29,37.93,color-contrast; region; link-in-text-block; heading-order; landmark-one-main
@@ -924,7 +917,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 933,character.ai,Yes,5,2,33,15.15,landmark-main-is-top-level; landmark-no-duplicate-main; landmark-unique; link-name; meta-viewport
 934,split.io,Yes,25,2,62,40.32,link-name; region; color-contrast; landmark-one-main
 935,ryanair.com,Yes,6,0,31,19.35,region; landmark-one-main; page-has-heading-one
-936,chaturbate.com,No,,,,,
 937,docker.io,Yes,19,3,63,30.16,link-name; list; color-contrast; heading-order
 938,coupang.com,Yes,5,1,11,45.45,region; html-has-lang; landmark-one-main
 939,smilewanted.com,Yes,157,8,198,79.29,image-alt; region; color-contrast; aria-required-parent; button-name
@@ -949,7 +941,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 958,segment.io,Yes,1,0,43,2.33,heading-order
 959,theatlantic.com,Yes,1,0,44,2.27,page-has-heading-one
 960,4dex.io,No,,,,,
-961,xnxx.com,No,,,,,
 962,tiktokrow-cdn.com,No,,,,,
 963,readthedocs.io,Yes,21,1,52,40.38,color-contrast; region
 964,umich.edu,Yes,2,1,17,11.76,meta-refresh; page-has-heading-one
@@ -984,7 +975,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 993,onesignal.com,Yes,91,3,133,68.42,link-name; aria-prohibited-attr; color-contrast; heading-order; landmark-unique
 994,fbpigeon.com,No,,,,,
 995,vercel-dns-016.com,No,,,,,
-996,vk-analytics.ru,No,,,,,
 997,us.com,Yes,5,3,42,11.9,image-alt; label; landmark-unique; link-name; page-has-heading-one
 998,utorrent.com,Yes,30,4,65,46.15,listitem; color-contrast; link-name; image-alt; heading-order
 999,nypost.com,Yes,30,3,78,38.46,link-name; image-redundant-alt; region; frame-title; heading-order
@@ -994,7 +984,6 @@ popularity_rank,domain,Populated,Number_of_accessibility_errors_detected,WCAG_2_
 1003,ipify.org,Yes,235,4,259,90.73,color-contrast; region; link-in-text-block; scrollable-region-focusable; image-alt
 1004,columbia.edu,Yes,1,1,28,3.57,meta-refresh
 1005,samsungcloudsolution.net,No,,,,,
-1006,faphouse.com,Yes,949,4,974,97.43,region; link-name; color-contrast; button-name; heading-order
 1007,quizlet.com,Yes,4,1,26,15.38,region; empty-heading; meta-refresh
 1008,bol.com,No,,,,,
 1009,orderbox-dns.com,No,,,,,
