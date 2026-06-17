@@ -1,6 +1,10 @@
 AAA
 *logs*
 
-.env
+
+.env*
+!.env.example
+
+*.idea*
 
 *__pycache__*
