@@ -6,12 +6,15 @@ import os
 import re
 from pathlib import Path
 
+from pydantic import BaseModel
+
 from browser_use import Agent
 from browser_use.browser.profile import BrowserProfile
 from browser_use.llm.openrouter.chat import ChatOpenRouter
+from browser_use.tools.service import Tools
 from dotenv import load_dotenv
 
-from auth import get_saved_password, login
+from auth import generate_random_password, get_saved_password, login, make_password, save_password, signup
 from axe import inject_axe, run_axe, save_report, slug_from_url, summarize_reports
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -25,6 +28,8 @@ load_dotenv(BASE_DIR / ".env")
 
 parser = argparse.ArgumentParser(description="Run axe-core accessibility audits on websites.")
 parser.add_argument("--no-nav", action="store_true", help="Skip navigation link extraction; only audit the current page after login.")
+parser.add_argument("--site", type=str, help="Run on a single site directly (bypasses CSV).")
+parser.add_argument("--signup", action="store_true", help="Sign up for a new account instead of logging in. Password will be saved to .env.passwords.")
 
 
 def read_domains(csv_path: Path) -> list[str]:
@@ -69,6 +74,23 @@ def parse_urls_from_output(output: str, base_domain: str) -> list[str]:
     return list(dict.fromkeys(filtered))[:MAX_PAGES]
 
 
+_SIGNUP_ERROR_KEYWORDS = [
+    "password must be", "password is too", "weak password", "invalid password",
+    "password error", "password requirements", "password criteria",
+    "email already", "already registered", "already exists", "already taken",
+    "account already", "user already", "signup failed", "sign up failed",
+    "registration failed", "could not sign up", "unable to create",
+    "unfortunately", "sorry", "unable to", "failed to"
+]
+
+
+def signup_looks_broken(output: str, result) -> bool:
+    if result.errors:
+        return True
+    output_lower = output.lower()
+    return any(kw in output_lower for kw in _SIGNUP_ERROR_KEYWORDS)
+
+
 @login
 async def login_and_extract_task(domain: str, email: str, password: str) -> str:
     return (
@@ -87,6 +109,33 @@ async def login_only_task(domain: str, email: str, password: str) -> str:
         f"Go to https://{domain} and log in to an existing account. "
         f"Use the email {email} and the password {password}. "
         f"After logging in, stop. Do nothing else."
+    )
+
+
+@signup
+async def signup_and_extract_task(domain: str, email: str, password: str) -> str:
+    return (
+        f"Go to https://{domain} and create a new account. "
+        f"Use the email {email} and the password {password}. "
+        f"Fill out the signup form completely. "
+        f"IMPORTANT: If the form rejects the password (e.g., too weak, too short, missing special characters), "
+        f"call the tool generate_new_password with domain='{domain}' to get a new secure password, then retry the signup. "
+        f"After signing up and landing on the main page, extract all unique navigation links visible on the page "
+        f"(header nav, sidebar, footer links, main menu items). "
+        f"Return ONLY a JSON array of full URLs, no other text. "
+        f'Example: ["https://{domain}/dashboard", "https://{domain}/settings"]'
+    )
+
+
+@signup
+async def signup_only_task(domain: str, email: str, password: str) -> str:
+    return (
+        f"Go to https://{domain} and create a new account. "
+        f"Use the email {email} and the password {password}. "
+        f"Fill out the signup form completely. "
+        f"IMPORTANT: If the form rejects the password (e.g., too weak, too short, missing special characters), "
+        f"call the tool generate_new_password with domain='{domain}' to get a new secure password, then retry the signup. "
+        f"After signing up, stop. Do nothing else."
     )
 
 
@@ -128,25 +177,65 @@ async def main():
         api_key=os.getenv("AI_API_KEY"),
     )
 
-    for domain in read_domains(INPUT_CSV):
+    if args.site:
+        domains = [args.site]
+    else:
+        domains = read_domains(INPUT_CSV)
+
+    for domain in domains:
         password = get_saved_password(domain)
-        if not password:
-            print(f"[{domain}] No password in .env.passwords, skipping")
-            continue
+        if args.signup or not password:
+            if not password:
+                print(f"[{domain}] No saved password found, signing up")
+            else:
+                print(f"[{domain}] --signup flag set, signing up")
+            password = make_password(domain)
+            should_signup = True
+        else:
+            print(f"[{domain}] Logging in{' and extracting navigation links' if not args.no_nav else ''}")
+            should_signup = False
 
         domain_dir = OUTPUT_DIR / safe_dir_name(domain)
         domain_dir.mkdir(parents=True, exist_ok=True)
 
-        print(f"[{domain}] Logging in{' and extracting navigation links' if not args.no_nav else ''}")
-        task = await (login_only_task if args.no_nav else login_and_extract_task)(domain)
+        if should_signup:
+            task = await (signup_only_task if args.no_nav else signup_and_extract_task)(domain)
+        else:
+            task = await (login_only_task if args.no_nav else login_and_extract_task)(domain)
 
         profile = BrowserProfile(keep_alive=True)
-        agent = Agent(task=task, llm=llm, browser_profile=profile)
+        custom_tools = Tools()
+
+        class GeneratePasswordParams(BaseModel):
+            domain: str
+
+        @custom_tools.registry.action(
+            description="Generate a new cryptographically secure random password for the given domain and save it to .env.passwords. Use this ONLY when the signup form rejects the current password (e.g., too weak, too short, missing special characters, does not meet complexity requirements).",
+            param_model=GeneratePasswordParams,
+        )
+        def generate_new_password(params: GeneratePasswordParams) -> str:
+            password = generate_random_password()
+            save_password(params.domain, password)
+            return f"Generated and saved new password for {params.domain}: {password}"
+
+        agent = Agent(task=task, llm=llm, browser_profile=profile, tools=custom_tools)
 
         all_reports: list[dict] = []
         try:
             result = await agent.run()
             output = result.final_result or ""
+
+            if should_signup:
+                # The LLM may have called generate_new_password via tool call.
+                # Check what password ended up in .env.passwords and save that.
+                final_password = get_saved_password(domain)
+                if final_password and final_password != password:
+                    print(f"[{domain}] LLM generated a new password via tool call, saved to .env.passwords")
+                elif not signup_looks_broken(output, result):
+                    save_password(domain, password)
+                    print(f"[{domain}] Saved generated password to .env.passwords")
+                else:
+                    print(f"[{domain}] Signup may have failed, not saving password")
 
             if args.no_nav:
                 print(f"[{domain}] --no-nav set, analyzing current page only")
