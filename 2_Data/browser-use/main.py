@@ -25,6 +25,7 @@ OUTPUT_DIR = BASE_DIR / "outputs" / "axe-core"
 MAX_PAGES = 15
 PAGE_LOAD_TIMEOUT_MS = 10_000
 NOT_RENDERED_STATUS = "yes_but_not_rendered"
+CLOUDFLARE_CHALLENGE_TIMEOUT_SECONDS = 30.0
 
 load_dotenv(BASE_DIR / ".env")
 
@@ -35,6 +36,11 @@ parser.add_argument("--no-nav-landing-page", action="store_true", help="Skip aut
 parser.add_argument("--site", type=str, help="Run on a single site directly (bypasses CSV).")
 parser.add_argument("--signup", action="store_true", help="Sign up for a new account instead of logging in. Password will be saved to .env.passwords.")
 parser.add_argument("--workers", type=int, default=1, help="Number of domains to process in parallel.")
+parser.add_argument("--skip-completed", action="store_true", help="Skip domains already marked complete in domains.csv.")
+parser.add_argument("--skip-existing-output", action="store_true", help="Skip domains that already have an output summary.json.")
+parser.add_argument("--no-csv-status", action="store_true", help="Do not update domains.csv while running.")
+parser.add_argument("--settle-seconds", type=float, default=2.0, help="Seconds to wait after page load before running axe-core.")
+parser.add_argument("--page-timeout-ms", type=int, default=PAGE_LOAD_TIMEOUT_MS, help="Page navigation timeout in milliseconds.")
 parser.add_argument(
     "--start-row",
     "--source-row",
@@ -52,22 +58,34 @@ parser.add_argument(
 )
 
 
-def read_domains(csv_path: Path, start_row: int = 1, end_row: int | None = None) -> list[str]:
+def read_domains(
+    csv_path: Path,
+    start_row: int = 1,
+    end_row: int | None = None,
+    *,
+    skip_completed: bool = False,
+    completion_field: str = "scrapped_first",
+) -> list[str]:
     domains: list[str] = []
     with csv_path.open(newline="", encoding="utf-8-sig") as file:
-        reader = csv.reader(file)
+        reader = csv.DictReader(file)
         data_row = 0
         for row in reader:
-            if len(row) < 1:
-                continue
-            domain = row[0].strip()
-            if domain == "domain" or not domain:
+            domain = row.get("domain", "").strip()
+            if not domain:
                 continue
             data_row += 1
             if data_row < start_row:
                 continue
             if end_row is not None and data_row > end_row:
                 break
+            if skip_completed:
+                status = row.get(completion_field, "").strip()
+                completed_statuses = {"yes"}
+                if completion_field == "scrapped_first":
+                    completed_statuses.add(NOT_RENDERED_STATUS)
+                if status in completed_statuses:
+                    continue
             domains.append(domain)
     return domains
 
@@ -124,6 +142,26 @@ def safe_dir_name(domain: str) -> str:
     return re.sub(r"[^A-Za-z0-9.-]+", "_", domain).strip("._")
 
 
+def save_domain_summary(reports: list[dict], path: Path, first_status: str | None = None) -> dict:
+    summary = summarize_reports(reports)
+    summary["scrapped_first"] = first_status or ("yes" if reports else "")
+    save_report(summary, path)
+    return summary
+
+
+async def save_rendered_html(page, path: Path) -> None:
+    html = await page.evaluate(
+        """() => {
+            const doctype = document.doctype
+                ? `<!DOCTYPE ${document.doctype.name}${document.doctype.publicId ? ` PUBLIC "${document.doctype.publicId}"` : ''}${document.doctype.systemId ? ` "${document.doctype.systemId}"` : ''}>\\n`
+                : '';
+            return doctype + document.documentElement.outerHTML;
+        }"""
+    )
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(html, encoding="utf-8")
+
+
 def parse_urls_from_output(output: str, base_domain: str) -> list[str]:
     urls: list[str] = []
     try:
@@ -155,7 +193,7 @@ def get_content_type(headers: dict) -> str:
     return ""
 
 
-async def navigate_page(page, url: str) -> tuple[bool, str]:
+async def navigate_page(page, url: str, timeout_ms: int = PAGE_LOAD_TIMEOUT_MS) -> tuple[bool, str]:
     if hasattr(page, "_ensure_session") and hasattr(page, "_client"):
         session_id = await page._ensure_session()
         client = page._client
@@ -175,23 +213,23 @@ async def navigate_page(page, url: str) -> tuple[bool, str]:
             await client.send.Network.enable(session_id=session_id)
             nav_result = await asyncio.wait_for(
                 client.send.Page.navigate({"url": url}, session_id=session_id),
-                timeout=PAGE_LOAD_TIMEOUT_MS / 1000,
+                timeout=timeout_ms / 1000,
             )
             if nav_result.get("errorText"):
                 return False, ""
             try:
-                return True, await asyncio.wait_for(response_future, timeout=PAGE_LOAD_TIMEOUT_MS / 1000)
+                return True, await asyncio.wait_for(response_future, timeout=timeout_ms / 1000)
             except TimeoutError:
                 return False, ""
         finally:
             client._event_registry.unregister("Network.responseReceived")
 
     try:
-        response = await page.goto(url, timeout=PAGE_LOAD_TIMEOUT_MS)
+        response = await page.goto(url, timeout=timeout_ms)
     except TypeError as e:
         if "unexpected keyword argument" not in str(e):
             raise
-        response = await asyncio.wait_for(page.goto(url), timeout=PAGE_LOAD_TIMEOUT_MS / 1000)
+        response = await asyncio.wait_for(page.goto(url), timeout=timeout_ms / 1000)
 
     if not response:
         return False, ""
@@ -199,6 +237,66 @@ async def navigate_page(page, url: str) -> tuple[bool, str]:
     if callable(headers):
         headers = headers()
     return True, get_content_type(headers)
+
+
+CLOUDFLARE_TURNSTILE_CHECK_SCRIPT = """() => {
+    const html = document.documentElement?.outerHTML || '';
+    const selectors = [
+        'iframe[src*="challenges.cloudflare.com"]',
+        'iframe[src*="/turnstile/"]',
+        '.cf-turnstile',
+        '[data-sitekey][data-callback]',
+        'input[name="cf-turnstile-response"]',
+        '#challenge-stage',
+        '#cf-challenge-running',
+        '#cf-challenge-hcaptcha-wrapper',
+        '#turnstile-wrapper'
+    ];
+    const markers = selectors.filter((selector) => document.querySelector(selector));
+    const text = (document.body?.innerText || '').replace(/\\s+/g, ' ').trim();
+    const title = document.title || '';
+    const combined = `${title} ${text} ${html}`;
+    const challengeHtml = /challenges\\.cloudflare\\.com|cf-turnstile|cf-challenge|turnstile-wrapper|cf-browser-verification/i.test(html);
+    const challengeText = /checking if the site connection is secure|verify you are human|verifying you are human|just a moment|ray id/i.test(combined);
+    const active = markers.length > 0 || challengeHtml || challengeText;
+    return JSON.stringify({ active, markers: markers.slice(0, 5), title });
+}"""
+
+
+async def detect_cloudflare_turnstile(page) -> tuple[bool, list[str], str]:
+    raw = await page.evaluate(CLOUDFLARE_TURNSTILE_CHECK_SCRIPT)
+    data = json.loads(raw) if isinstance(raw, str) else raw
+    if not isinstance(data, dict):
+        return False, [], ""
+    return bool(data.get("active")), list(data.get("markers") or []), str(data.get("title") or "")
+
+
+async def wait_for_cloudflare_turnstile(page, url: str) -> None:
+    started_waiting = False
+    deadline = asyncio.get_running_loop().time() + CLOUDFLARE_CHALLENGE_TIMEOUT_SECONDS
+    while True:
+        try:
+            active, markers, title = await detect_cloudflare_turnstile(page)
+        except Exception as e:
+            print(f"  Cloudflare/Turnstile check skipped on {url}: {e}")
+            return
+
+        if not active:
+            if started_waiting:
+                print(f"  Cloudflare/Turnstile challenge cleared on {url}")
+            return
+
+        if not started_waiting:
+            marker_text = ", ".join(markers) if markers else title or "challenge text"
+            print(f"  Cloudflare/Turnstile challenge HTML detected on {url}; waiting for it to clear ({marker_text})")
+            started_waiting = True
+
+        remaining = deadline - asyncio.get_running_loop().time()
+        if remaining <= 0:
+            print(f"  Cloudflare/Turnstile wait timed out on {url}; continuing to axe-core")
+            return
+
+        await asyncio.sleep(min(2.0, remaining))
 
 
 _SIGNUP_ERROR_KEYWORDS = [
@@ -266,9 +364,17 @@ async def signup_only_task(domain: str, email: str, password: str) -> str:
     )
 
 
-async def analyze_page(page, url: str, output_path: Path) -> tuple[dict | None, bool]:
+async def analyze_page(
+    page,
+    url: str,
+    output_path: Path,
+    *,
+    html_path: Path,
+    settle_seconds: float,
+    timeout_ms: int,
+) -> tuple[dict | None, bool]:
     try:
-        has_response, content_type = await navigate_page(page, url)
+        has_response, content_type = await navigate_page(page, url, timeout_ms=timeout_ms)
     except Exception as e:
         print(f"  Failed to navigate to {url}: {e}")
         return None, False
@@ -282,7 +388,9 @@ async def analyze_page(page, url: str, output_path: Path) -> tuple[dict | None, 
         return None, True
 
     print(f"  HTML page: {url}")
-    await asyncio.sleep(2)
+    if settle_seconds > 0:
+        await asyncio.sleep(settle_seconds)
+    await wait_for_cloudflare_turnstile(page, url)
 
     try:
         accepted = await accept_cookies(page)
@@ -291,6 +399,12 @@ async def analyze_page(page, url: str, output_path: Path) -> tuple[dict | None, 
             print(f"  Accepted cookie prompt on {url} via {sources}")
     except Exception as e:
         print(f"  Cookie prompt handling skipped on {url}: {e}")
+
+    try:
+        await save_rendered_html(page, html_path)
+        print(f"  Saved rendered HTML → {html_path.name}")
+    except Exception as e:
+        print(f"  Failed to save rendered HTML for {url}: {e}")
 
     try:
         await inject_axe(page)
@@ -320,6 +434,7 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
     domain_dir = OUTPUT_DIR / safe_dir_name(domain)
     domain_dir.mkdir(parents=True, exist_ok=True)
     all_reports: list[dict] = []
+    first_status: str | None = None
 
     if args.no_nav_landing_page:
         print(f"[{domain}] --no-nav-landing-page set, analyzing landing page only")
@@ -329,11 +444,21 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
         try:
             await browser_session.start()
             page = await browser_session.new_page(f"https://{domain}")
-            report, not_rendered = await analyze_page(page, f"https://{domain}", domain_dir / "page-0_home.json")
+            report, not_rendered = await analyze_page(
+                page,
+                f"https://{domain}",
+                domain_dir / "page-0_home.json",
+                html_path=domain_dir / "0.html",
+                settle_seconds=args.settle_seconds,
+                timeout_ms=args.page_timeout_ms,
+            )
             if not_rendered and update_csv_status:
                 await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+            if not_rendered:
+                first_status = NOT_RENDERED_STATUS
             if report:
                 all_reports.append(report)
+                first_status = "yes"
                 if update_csv_status:
                     await update_domain_status_locked(csv_lock, domain, first=True)
         finally:
@@ -342,8 +467,7 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
             except Exception:
                 pass
 
-        summary = summarize_reports(all_reports)
-        save_report(summary, domain_dir / "summary.json")
+        summary = save_domain_summary(all_reports, domain_dir / "summary.json", first_status)
         print(f"[{domain}] Done — {summary['total_pages']} pages, {summary['total_violations']} total violations")
         return
 
@@ -402,11 +526,21 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
             page = await agent.browser_session.get_current_page()
             if page:
                 current_url = await page.get_url()
-                report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                report, not_rendered = await analyze_page(
+                    page,
+                    current_url,
+                    domain_dir / "page-0_home.json",
+                    html_path=domain_dir / "0.html",
+                    settle_seconds=args.settle_seconds,
+                    timeout_ms=args.page_timeout_ms,
+                )
                 if not_rendered and update_csv_status:
                     await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+                if not_rendered:
+                    first_status = NOT_RENDERED_STATUS
                 if report:
                     all_reports.append(report)
+                    first_status = "yes"
                     if update_csv_status:
                         await update_domain_status_locked(csv_lock, domain, first=True)
         else:
@@ -416,11 +550,21 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
                 page = await agent.browser_session.get_current_page()
                 if page:
                     current_url = await page.get_url()
-                    report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                    report, not_rendered = await analyze_page(
+                        page,
+                        current_url,
+                        domain_dir / "page-0_home.json",
+                        html_path=domain_dir / "0.html",
+                        settle_seconds=args.settle_seconds,
+                        timeout_ms=args.page_timeout_ms,
+                    )
                     if not_rendered and update_csv_status:
                         await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+                    if not_rendered:
+                        first_status = NOT_RENDERED_STATUS
                     if report:
                         all_reports.append(report)
+                        first_status = "yes"
                         if update_csv_status:
                             await update_domain_status_locked(csv_lock, domain, first=True)
             else:
@@ -433,13 +577,24 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
                 for i, url in enumerate(urls):
                     slug = slug_from_url(url)
                     out_path = domain_dir / f"page-{i}_{slug}.json"
-                    report, not_rendered = await analyze_page(page, url, out_path)
+                    report, not_rendered = await analyze_page(
+                        page,
+                        url,
+                        out_path,
+                        html_path=domain_dir / f"{i}.html",
+                        settle_seconds=args.settle_seconds,
+                        timeout_ms=args.page_timeout_ms,
+                    )
                     if i == 0 and not_rendered and update_csv_status:
                         await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+                    if i == 0 and not_rendered:
+                        first_status = NOT_RENDERED_STATUS
                     if report:
                         all_reports.append(report)
-                        if i == 0 and update_csv_status:
-                            await update_domain_status_locked(csv_lock, domain, first=True)
+                        if i == 0:
+                            first_status = "yes"
+                            if update_csv_status:
+                                await update_domain_status_locked(csv_lock, domain, first=True)
 
                 if len(all_reports) == len(urls) and update_csv_status:
                     await update_domain_status_locked(csv_lock, domain, full=True)
@@ -450,8 +605,7 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
         except Exception:
             pass
 
-    summary = summarize_reports(all_reports)
-    save_report(summary, domain_dir / "summary.json")
+    summary = save_domain_summary(all_reports, domain_dir / "summary.json", first_status)
     print(f"[{domain}] Done — {summary['total_pages']} pages, {summary['total_violations']} total violations")
 
 
@@ -467,6 +621,10 @@ async def main():
         parser.error("row range flags cannot be combined with --site")
     if args.workers < 1:
         parser.error("--workers must be 1 or greater")
+    if args.settle_seconds < 0:
+        parser.error("--settle-seconds must be 0 or greater")
+    if args.page_timeout_ms < 1000:
+        parser.error("--page-timeout-ms must be at least 1000")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -482,10 +640,21 @@ async def main():
         domains = [args.site]
         update_csv_status = False
     else:
-        domains = read_domains(INPUT_CSV, start_row=args.start_row, end_row=args.end_row)
-        update_csv_status = True
+        completion_field = "scrapped_full"
+        if args.no_nav_landing_page or args.no_nav:
+            completion_field = "scrapped_first"
+        domains = read_domains(
+            INPUT_CSV,
+            start_row=args.start_row,
+            end_row=args.end_row,
+            skip_completed=args.skip_completed,
+            completion_field=completion_field,
+        )
+        update_csv_status = not args.no_csv_status
         selected_range = f"rows {args.start_row} to {args.end_row}" if args.end_row is not None else f"rows {args.start_row} to end"
         print(f"[domains.csv] Loaded {len(domains)} domains from {selected_range}")
+        if args.skip_completed:
+            print(f"[domains.csv] Skipped rows already marked {completion_field}=yes")
 
     semaphore = asyncio.Semaphore(args.workers)
     csv_lock = asyncio.Lock()
@@ -493,6 +662,9 @@ async def main():
     async def run_domain(domain: str) -> None:
         async with semaphore:
             try:
+                if args.skip_existing_output and (OUTPUT_DIR / safe_dir_name(domain) / "summary.json").exists():
+                    print(f"[{domain}] Skipping existing output")
+                    return
                 await process_domain(domain, args, llm, update_csv_status, csv_lock)
             except Exception as e:
                 print(f"[{domain}] Failed: {e}")
