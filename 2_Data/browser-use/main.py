@@ -10,40 +10,101 @@ from pydantic import BaseModel
 
 from browser_use import Agent
 from browser_use.browser.profile import BrowserProfile
+from browser_use.browser.session import BrowserSession
 from browser_use.llm.openrouter.chat import ChatOpenRouter
 from browser_use.tools.service import Tools
 from dotenv import load_dotenv
 
 from auth import generate_random_password, get_saved_password, login, make_password, save_password, signup
-from axe import inject_axe, run_axe, save_report, slug_from_url, summarize_reports
+from axe import accept_cookies, inject_axe, run_axe, save_report, slug_from_url, summarize_reports
 
 BASE_DIR = Path(__file__).resolve().parent
-INPUT_CSV = BASE_DIR / "temp.csv"
+INPUT_CSV = BASE_DIR / "domains.csv"
 OUTPUT_DIR = BASE_DIR / "outputs" / "axe-core"
 
 MAX_PAGES = 15
+PAGE_LOAD_TIMEOUT_MS = 10_000
 
 load_dotenv(BASE_DIR / ".env")
 
 
 parser = argparse.ArgumentParser(description="Run axe-core accessibility audits on websites.")
 parser.add_argument("--no-nav", action="store_true", help="Skip navigation link extraction; only audit the current page after login.")
+parser.add_argument("--no-nav-landing-page", action="store_true", help="Skip authentication and navigation extraction; only audit the public landing page.")
 parser.add_argument("--site", type=str, help="Run on a single site directly (bypasses CSV).")
 parser.add_argument("--signup", action="store_true", help="Sign up for a new account instead of logging in. Password will be saved to .env.passwords.")
+parser.add_argument(
+    "--start-row",
+    "--source-row",
+    dest="start_row",
+    type=int,
+    default=1,
+    help="First 1-based data row from domains.csv to process. Header is not counted.",
+)
+parser.add_argument(
+    "--end-row",
+    "--destination-row",
+    dest="end_row",
+    type=int,
+    help="Last 1-based data row from domains.csv to process, inclusive. Header is not counted.",
+)
 
 
-def read_domains(csv_path: Path) -> list[str]:
+def read_domains(csv_path: Path, start_row: int = 1, end_row: int | None = None) -> list[str]:
     domains: list[str] = []
     with csv_path.open(newline="", encoding="utf-8-sig") as file:
         reader = csv.reader(file)
+        data_row = 0
         for row in reader:
             if len(row) < 1:
                 continue
             domain = row[0].strip()
             if domain == "domain" or not domain:
                 continue
+            data_row += 1
+            if data_row < start_row:
+                continue
+            if end_row is not None and data_row > end_row:
+                break
             domains.append(domain)
     return domains
+
+
+def update_domain_status(csv_path: Path, domain: str, *, first: bool = False, full: bool = False) -> None:
+    if not csv_path.exists():
+        return
+
+    with csv_path.open(newline="", encoding="utf-8-sig") as file:
+        reader = csv.DictReader(file)
+        if not reader.fieldnames:
+            return
+
+        fieldnames = list(reader.fieldnames)
+        for field in ("scrapped_first", "scrapped_full", "notes"):
+            if field not in fieldnames:
+                fieldnames.append(field)
+
+        rows = list(reader)
+
+    changed = False
+    for row in rows:
+        if row.get("domain", "").strip() != domain:
+            continue
+        if first and row.get("scrapped_first", "") != "yes":
+            row["scrapped_first"] = "yes"
+            changed = True
+        if full and row.get("scrapped_full", "") != "yes":
+            row["scrapped_full"] = "yes"
+            changed = True
+        break
+
+    if not changed:
+        return
+
+    with csv_path.open("w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        writer.writeheader()
+        writer.writerows(rows)
 
 
 def safe_dir_name(domain: str) -> str:
@@ -141,12 +202,20 @@ async def signup_only_task(domain: str, email: str, password: str) -> str:
 
 async def analyze_page(page, url: str, output_path: Path) -> dict | None:
     try:
-        await page.goto(url)
+        await page.goto(url, timeout=PAGE_LOAD_TIMEOUT_MS)
     except Exception as e:
         print(f"  Failed to navigate to {url}: {e}")
         return None
 
     await asyncio.sleep(2)
+
+    try:
+        accepted = await accept_cookies(page)
+        if accepted:
+            sources = ", ".join(item.get("source", "heuristic") for item in accepted)
+            print(f"  Accepted cookie prompt on {url} via {sources}")
+    except Exception as e:
+        print(f"  Cookie prompt handling skipped on {url}: {e}")
 
     try:
         await inject_axe(page)
@@ -169,20 +238,63 @@ async def analyze_page(page, url: str, output_path: Path) -> dict | None:
 
 async def main():
     args = parser.parse_args()
+    if args.no_nav_landing_page and (args.no_nav or args.signup):
+        parser.error("--no-nav-landing-page cannot be combined with --no-nav or --signup")
+    if args.start_row < 1:
+        parser.error("--start-row/--source-row must be 1 or greater")
+    if args.end_row is not None and args.end_row < args.start_row:
+        parser.error("--end-row/--destination-row must be greater than or equal to --start-row/--source-row")
+    if args.site and (args.start_row != 1 or args.end_row is not None):
+        parser.error("row range flags cannot be combined with --site")
+
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    llm = ChatOpenRouter(
-        model="kimi-k2.6",
-        base_url=os.getenv("OPENCODE_GO_URL"),
-        api_key=os.getenv("AI_API_KEY"),
-    )
+    llm = None
+    if not args.no_nav_landing_page:
+        llm = ChatOpenRouter(
+            model="kimi-k2.6",
+            base_url=os.getenv("OPENCODE_GO_URL"),
+            api_key=os.getenv("AI_API_KEY"),
+        )
 
     if args.site:
         domains = [args.site]
+        update_csv_status = False
     else:
-        domains = read_domains(INPUT_CSV)
+        domains = read_domains(INPUT_CSV, start_row=args.start_row, end_row=args.end_row)
+        update_csv_status = True
+        selected_range = f"rows {args.start_row} to {args.end_row}" if args.end_row is not None else f"rows {args.start_row} to end"
+        print(f"[domains.csv] Loaded {len(domains)} domains from {selected_range}")
 
     for domain in domains:
+        domain_dir = OUTPUT_DIR / safe_dir_name(domain)
+        domain_dir.mkdir(parents=True, exist_ok=True)
+        all_reports: list[dict] = []
+
+        if args.no_nav_landing_page:
+            print(f"[{domain}] --no-nav-landing-page set, analyzing landing page only")
+            profile = BrowserProfile(keep_alive=True)
+            browser_session = BrowserSession(browser_profile=profile)
+
+            try:
+                await browser_session.start()
+                page = await browser_session.new_page(f"https://{domain}")
+                report = await analyze_page(page, f"https://{domain}", domain_dir / "page-0_home.json")
+                if report:
+                    all_reports.append(report)
+                    if update_csv_status:
+                        update_domain_status(INPUT_CSV, domain, first=True)
+            finally:
+                try:
+                    await browser_session.close()
+                except Exception:
+                    pass
+
+            summary = summarize_reports(all_reports)
+            save_report(summary, domain_dir / "summary.json")
+            print(f"[{domain}] Done — {summary['total_pages']} pages, {summary['total_violations']} total violations")
+            continue
+
         password = get_saved_password(domain)
         if args.signup or not password:
             if not password:
@@ -194,9 +306,6 @@ async def main():
         else:
             print(f"[{domain}] Logging in{' and extracting navigation links' if not args.no_nav else ''}")
             should_signup = False
-
-        domain_dir = OUTPUT_DIR / safe_dir_name(domain)
-        domain_dir.mkdir(parents=True, exist_ok=True)
 
         if should_signup:
             task = await (signup_only_task if args.no_nav else signup_and_extract_task)(domain)
@@ -220,7 +329,6 @@ async def main():
 
         agent = Agent(task=task, llm=llm, browser_profile=profile, tools=custom_tools)
 
-        all_reports: list[dict] = []
         try:
             result = await agent.run()
             output = result.final_result or ""
@@ -245,6 +353,8 @@ async def main():
                     report = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
                     if report:
                         all_reports.append(report)
+                        if update_csv_status:
+                            update_domain_status(INPUT_CSV, domain, first=True)
             else:
                 urls = parse_urls_from_output(output, domain)
                 if not urls:
@@ -255,6 +365,8 @@ async def main():
                         report = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
                         if report:
                             all_reports.append(report)
+                            if update_csv_status:
+                                update_domain_status(INPUT_CSV, domain, first=True)
                 else:
                     print(f"[{domain}] Found {len(urls)} pages to analyze")
                     page = await agent.browser_session.get_current_page()
@@ -268,6 +380,11 @@ async def main():
                         report = await analyze_page(page, url, out_path)
                         if report:
                             all_reports.append(report)
+                            if i == 0 and update_csv_status:
+                                update_domain_status(INPUT_CSV, domain, first=True)
+
+                    if len(all_reports) == len(urls) and update_csv_status:
+                        update_domain_status(INPUT_CSV, domain, full=True)
 
         finally:
             try:

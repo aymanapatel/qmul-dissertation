@@ -6,5 +6,5 @@ AAA
 !.env.example
 
 *.idea*
-
+-
 *__pycache__*
