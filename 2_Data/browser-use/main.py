@@ -24,6 +24,7 @@ OUTPUT_DIR = BASE_DIR / "outputs" / "axe-core"
 
 MAX_PAGES = 15
 PAGE_LOAD_TIMEOUT_MS = 10_000
+NOT_RENDERED_STATUS = "yes_but_not_rendered"
 
 load_dotenv(BASE_DIR / ".env")
 
@@ -33,6 +34,7 @@ parser.add_argument("--no-nav", action="store_true", help="Skip navigation link 
 parser.add_argument("--no-nav-landing-page", action="store_true", help="Skip authentication and navigation extraction; only audit the public landing page.")
 parser.add_argument("--site", type=str, help="Run on a single site directly (bypasses CSV).")
 parser.add_argument("--signup", action="store_true", help="Sign up for a new account instead of logging in. Password will be saved to .env.passwords.")
+parser.add_argument("--workers", type=int, default=1, help="Number of domains to process in parallel.")
 parser.add_argument(
     "--start-row",
     "--source-row",
@@ -70,7 +72,14 @@ def read_domains(csv_path: Path, start_row: int = 1, end_row: int | None = None)
     return domains
 
 
-def update_domain_status(csv_path: Path, domain: str, *, first: bool = False, full: bool = False) -> None:
+def update_domain_status(
+    csv_path: Path,
+    domain: str,
+    *,
+    first: bool = False,
+    full: bool = False,
+    first_status: str | None = None,
+) -> None:
     if not csv_path.exists():
         return
 
@@ -90,7 +99,11 @@ def update_domain_status(csv_path: Path, domain: str, *, first: bool = False, fu
     for row in rows:
         if row.get("domain", "").strip() != domain:
             continue
-        if first and row.get("scrapped_first", "") != "yes":
+        current_first_status = row.get("scrapped_first", "")
+        if first_status is not None and current_first_status != first_status:
+            row["scrapped_first"] = first_status
+            changed = True
+        elif first and current_first_status != "yes":
             row["scrapped_first"] = "yes"
             changed = True
         if full and row.get("scrapped_full", "") != "yes":
@@ -133,6 +146,59 @@ def parse_urls_from_output(output: str, base_domain: str) -> list[str]:
         if base_domain_clean in url:
             filtered.append(url)
     return list(dict.fromkeys(filtered))[:MAX_PAGES]
+
+
+def get_content_type(headers: dict) -> str:
+    for key, value in headers.items():
+        if key.lower() == "content-type":
+            return str(value)
+    return ""
+
+
+async def navigate_page(page, url: str) -> tuple[bool, str]:
+    if hasattr(page, "_ensure_session") and hasattr(page, "_client"):
+        session_id = await page._ensure_session()
+        client = page._client
+        loop = asyncio.get_running_loop()
+        response_future = loop.create_future()
+
+        def on_response(event, event_session_id):
+            if event_session_id != session_id or response_future.done():
+                return
+            if event.get("type") != "Document":
+                return
+            response = event.get("response", {})
+            response_future.set_result(get_content_type(response.get("headers", {})))
+
+        client.register.Network.responseReceived(on_response)
+        try:
+            await client.send.Network.enable(session_id=session_id)
+            nav_result = await asyncio.wait_for(
+                client.send.Page.navigate({"url": url}, session_id=session_id),
+                timeout=PAGE_LOAD_TIMEOUT_MS / 1000,
+            )
+            if nav_result.get("errorText"):
+                return False, ""
+            try:
+                return True, await asyncio.wait_for(response_future, timeout=PAGE_LOAD_TIMEOUT_MS / 1000)
+            except TimeoutError:
+                return False, ""
+        finally:
+            client._event_registry.unregister("Network.responseReceived")
+
+    try:
+        response = await page.goto(url, timeout=PAGE_LOAD_TIMEOUT_MS)
+    except TypeError as e:
+        if "unexpected keyword argument" not in str(e):
+            raise
+        response = await asyncio.wait_for(page.goto(url), timeout=PAGE_LOAD_TIMEOUT_MS / 1000)
+
+    if not response:
+        return False, ""
+    headers = response.headers
+    if callable(headers):
+        headers = headers()
+    return True, get_content_type(headers)
 
 
 _SIGNUP_ERROR_KEYWORDS = [
@@ -200,13 +266,22 @@ async def signup_only_task(domain: str, email: str, password: str) -> str:
     )
 
 
-async def analyze_page(page, url: str, output_path: Path) -> dict | None:
+async def analyze_page(page, url: str, output_path: Path) -> tuple[dict | None, bool]:
     try:
-        await page.goto(url, timeout=PAGE_LOAD_TIMEOUT_MS)
+        has_response, content_type = await navigate_page(page, url)
     except Exception as e:
         print(f"  Failed to navigate to {url}: {e}")
-        return None
+        return None, False
 
+    if not has_response:
+        print(f"  No response for {url}")
+        return None, True
+
+    if "text/html" not in content_type.lower():
+        print(f"  Not HTML for {url}: {content_type}")
+        return None, True
+
+    print(f"  HTML page: {url}")
     await asyncio.sleep(2)
 
     try:
@@ -221,19 +296,19 @@ async def analyze_page(page, url: str, output_path: Path) -> dict | None:
         await inject_axe(page)
     except Exception as e:
         print(f"  Failed to inject axe-core on {url}: {e}")
-        return None
+        return None, False
 
     try:
         results = await run_axe(page)
     except Exception as e:
         print(f"  Failed to run axe on {url}: {e}")
-        return None
+        return None, False
 
     results["url"] = url
     save_report(results, output_path)
     violations = sum(len(v.get("nodes", [])) for v in results.get("violations", []))
     print(f"  {url} — {violations} violations → {output_path.name}")
-    return results
+    return results, False
 
 
 async def main():
@@ -279,7 +354,9 @@ async def main():
             try:
                 await browser_session.start()
                 page = await browser_session.new_page(f"https://{domain}")
-                report = await analyze_page(page, f"https://{domain}", domain_dir / "page-0_home.json")
+                report, not_rendered = await analyze_page(page, f"https://{domain}", domain_dir / "page-0_home.json")
+                if not_rendered and update_csv_status:
+                    update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
                 if report:
                     all_reports.append(report)
                     if update_csv_status:
@@ -350,7 +427,9 @@ async def main():
                 page = await agent.browser_session.get_current_page()
                 if page:
                     current_url = await page.get_url()
-                    report = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                    report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                    if not_rendered and update_csv_status:
+                        update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
                     if report:
                         all_reports.append(report)
                         if update_csv_status:
@@ -362,7 +441,9 @@ async def main():
                     page = await agent.browser_session.get_current_page()
                     if page:
                         current_url = await page.get_url()
-                        report = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                        report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                        if not_rendered and update_csv_status:
+                            update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
                         if report:
                             all_reports.append(report)
                             if update_csv_status:
@@ -377,7 +458,9 @@ async def main():
                     for i, url in enumerate(urls):
                         slug = slug_from_url(url)
                         out_path = domain_dir / f"page-{i}_{slug}.json"
-                        report = await analyze_page(page, url, out_path)
+                        report, not_rendered = await analyze_page(page, url, out_path)
+                        if i == 0 and not_rendered and update_csv_status:
+                            update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
                         if report:
                             all_reports.append(report)
                             if i == 0 and update_csv_status:
