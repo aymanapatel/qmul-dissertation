@@ -311,6 +311,150 @@ async def analyze_page(page, url: str, output_path: Path) -> tuple[dict | None, 
     return results, False
 
 
+async def update_domain_status_locked(csv_lock: asyncio.Lock, domain: str, **kwargs) -> None:
+    async with csv_lock:
+        update_domain_status(INPUT_CSV, domain, **kwargs)
+
+
+async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lock: asyncio.Lock) -> None:
+    domain_dir = OUTPUT_DIR / safe_dir_name(domain)
+    domain_dir.mkdir(parents=True, exist_ok=True)
+    all_reports: list[dict] = []
+
+    if args.no_nav_landing_page:
+        print(f"[{domain}] --no-nav-landing-page set, analyzing landing page only")
+        profile = BrowserProfile(keep_alive=True)
+        browser_session = BrowserSession(browser_profile=profile)
+
+        try:
+            await browser_session.start()
+            page = await browser_session.new_page(f"https://{domain}")
+            report, not_rendered = await analyze_page(page, f"https://{domain}", domain_dir / "page-0_home.json")
+            if not_rendered and update_csv_status:
+                await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+            if report:
+                all_reports.append(report)
+                if update_csv_status:
+                    await update_domain_status_locked(csv_lock, domain, first=True)
+        finally:
+            try:
+                await browser_session.close()
+            except Exception:
+                pass
+
+        summary = summarize_reports(all_reports)
+        save_report(summary, domain_dir / "summary.json")
+        print(f"[{domain}] Done — {summary['total_pages']} pages, {summary['total_violations']} total violations")
+        return
+
+    password = get_saved_password(domain)
+    if args.signup or not password:
+        if not password:
+            print(f"[{domain}] No saved password found, signing up")
+        else:
+            print(f"[{domain}] --signup flag set, signing up")
+        password = make_password(domain)
+        should_signup = True
+    else:
+        print(f"[{domain}] Logging in{' and extracting navigation links' if not args.no_nav else ''}")
+        should_signup = False
+
+    if should_signup:
+        task = await (signup_only_task if args.no_nav else signup_and_extract_task)(domain)
+    else:
+        task = await (login_only_task if args.no_nav else login_and_extract_task)(domain)
+
+    profile = BrowserProfile(keep_alive=True)
+    custom_tools = Tools()
+
+    class GeneratePasswordParams(BaseModel):
+        domain: str
+
+    @custom_tools.registry.action(
+        description="Generate a new cryptographically secure random password for the given domain and save it to .env.passwords. Use this ONLY when the signup form rejects the current password (e.g., too weak, too short, missing special characters, does not meet complexity requirements).",
+        param_model=GeneratePasswordParams,
+    )
+    def generate_new_password(params: GeneratePasswordParams) -> str:
+        password = generate_random_password()
+        save_password(params.domain, password)
+        return f"Generated and saved new password for {params.domain}: {password}"
+
+    agent = Agent(task=task, llm=llm, browser_profile=profile, tools=custom_tools)
+
+    try:
+        result = await agent.run()
+        output = result.final_result or ""
+
+        if should_signup:
+            # The LLM may have called generate_new_password via tool call.
+            # Check what password ended up in .env.passwords and save that.
+            final_password = get_saved_password(domain)
+            if final_password and final_password != password:
+                print(f"[{domain}] LLM generated a new password via tool call, saved to .env.passwords")
+            elif not signup_looks_broken(output, result):
+                save_password(domain, password)
+                print(f"[{domain}] Saved generated password to .env.passwords")
+            else:
+                print(f"[{domain}] Signup may have failed, not saving password")
+
+        if args.no_nav:
+            print(f"[{domain}] --no-nav set, analyzing current page only")
+            page = await agent.browser_session.get_current_page()
+            if page:
+                current_url = await page.get_url()
+                report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                if not_rendered and update_csv_status:
+                    await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+                if report:
+                    all_reports.append(report)
+                    if update_csv_status:
+                        await update_domain_status_locked(csv_lock, domain, first=True)
+        else:
+            urls = parse_urls_from_output(output, domain)
+            if not urls:
+                print(f"[{domain}] No navigation links found, analyzing current page only")
+                page = await agent.browser_session.get_current_page()
+                if page:
+                    current_url = await page.get_url()
+                    report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
+                    if not_rendered and update_csv_status:
+                        await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+                    if report:
+                        all_reports.append(report)
+                        if update_csv_status:
+                            await update_domain_status_locked(csv_lock, domain, first=True)
+            else:
+                print(f"[{domain}] Found {len(urls)} pages to analyze")
+                page = await agent.browser_session.get_current_page()
+                if not page:
+                    print(f"[{domain}] No page available after login")
+                    return
+
+                for i, url in enumerate(urls):
+                    slug = slug_from_url(url)
+                    out_path = domain_dir / f"page-{i}_{slug}.json"
+                    report, not_rendered = await analyze_page(page, url, out_path)
+                    if i == 0 and not_rendered and update_csv_status:
+                        await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
+                    if report:
+                        all_reports.append(report)
+                        if i == 0 and update_csv_status:
+                            await update_domain_status_locked(csv_lock, domain, first=True)
+
+                if len(all_reports) == len(urls) and update_csv_status:
+                    await update_domain_status_locked(csv_lock, domain, full=True)
+
+    finally:
+        try:
+            await agent.close()
+        except Exception:
+            pass
+
+    summary = summarize_reports(all_reports)
+    save_report(summary, domain_dir / "summary.json")
+    print(f"[{domain}] Done — {summary['total_pages']} pages, {summary['total_violations']} total violations")
+
+
 async def main():
     args = parser.parse_args()
     if args.no_nav_landing_page and (args.no_nav or args.signup):
@@ -321,6 +465,8 @@ async def main():
         parser.error("--end-row/--destination-row must be greater than or equal to --start-row/--source-row")
     if args.site and (args.start_row != 1 or args.end_row is not None):
         parser.error("row range flags cannot be combined with --site")
+    if args.workers < 1:
+        parser.error("--workers must be 1 or greater")
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -341,143 +487,22 @@ async def main():
         selected_range = f"rows {args.start_row} to {args.end_row}" if args.end_row is not None else f"rows {args.start_row} to end"
         print(f"[domains.csv] Loaded {len(domains)} domains from {selected_range}")
 
-    for domain in domains:
-        domain_dir = OUTPUT_DIR / safe_dir_name(domain)
-        domain_dir.mkdir(parents=True, exist_ok=True)
-        all_reports: list[dict] = []
+    semaphore = asyncio.Semaphore(args.workers)
+    csv_lock = asyncio.Lock()
 
-        if args.no_nav_landing_page:
-            print(f"[{domain}] --no-nav-landing-page set, analyzing landing page only")
-            profile = BrowserProfile(keep_alive=True)
-            browser_session = BrowserSession(browser_profile=profile)
-
+    async def run_domain(domain: str) -> None:
+        async with semaphore:
             try:
-                await browser_session.start()
-                page = await browser_session.new_page(f"https://{domain}")
-                report, not_rendered = await analyze_page(page, f"https://{domain}", domain_dir / "page-0_home.json")
-                if not_rendered and update_csv_status:
-                    update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
-                if report:
-                    all_reports.append(report)
-                    if update_csv_status:
-                        update_domain_status(INPUT_CSV, domain, first=True)
-            finally:
-                try:
-                    await browser_session.close()
-                except Exception:
-                    pass
+                await process_domain(domain, args, llm, update_csv_status, csv_lock)
+            except Exception as e:
+                print(f"[{domain}] Failed: {e}")
 
-            summary = summarize_reports(all_reports)
-            save_report(summary, domain_dir / "summary.json")
-            print(f"[{domain}] Done — {summary['total_pages']} pages, {summary['total_violations']} total violations")
-            continue
-
-        password = get_saved_password(domain)
-        if args.signup or not password:
-            if not password:
-                print(f"[{domain}] No saved password found, signing up")
-            else:
-                print(f"[{domain}] --signup flag set, signing up")
-            password = make_password(domain)
-            should_signup = True
-        else:
-            print(f"[{domain}] Logging in{' and extracting navigation links' if not args.no_nav else ''}")
-            should_signup = False
-
-        if should_signup:
-            task = await (signup_only_task if args.no_nav else signup_and_extract_task)(domain)
-        else:
-            task = await (login_only_task if args.no_nav else login_and_extract_task)(domain)
-
-        profile = BrowserProfile(keep_alive=True)
-        custom_tools = Tools()
-
-        class GeneratePasswordParams(BaseModel):
-            domain: str
-
-        @custom_tools.registry.action(
-            description="Generate a new cryptographically secure random password for the given domain and save it to .env.passwords. Use this ONLY when the signup form rejects the current password (e.g., too weak, too short, missing special characters, does not meet complexity requirements).",
-            param_model=GeneratePasswordParams,
-        )
-        def generate_new_password(params: GeneratePasswordParams) -> str:
-            password = generate_random_password()
-            save_password(params.domain, password)
-            return f"Generated and saved new password for {params.domain}: {password}"
-
-        agent = Agent(task=task, llm=llm, browser_profile=profile, tools=custom_tools)
-
-        try:
-            result = await agent.run()
-            output = result.final_result or ""
-
-            if should_signup:
-                # The LLM may have called generate_new_password via tool call.
-                # Check what password ended up in .env.passwords and save that.
-                final_password = get_saved_password(domain)
-                if final_password and final_password != password:
-                    print(f"[{domain}] LLM generated a new password via tool call, saved to .env.passwords")
-                elif not signup_looks_broken(output, result):
-                    save_password(domain, password)
-                    print(f"[{domain}] Saved generated password to .env.passwords")
-                else:
-                    print(f"[{domain}] Signup may have failed, not saving password")
-
-            if args.no_nav:
-                print(f"[{domain}] --no-nav set, analyzing current page only")
-                page = await agent.browser_session.get_current_page()
-                if page:
-                    current_url = await page.get_url()
-                    report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
-                    if not_rendered and update_csv_status:
-                        update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
-                    if report:
-                        all_reports.append(report)
-                        if update_csv_status:
-                            update_domain_status(INPUT_CSV, domain, first=True)
-            else:
-                urls = parse_urls_from_output(output, domain)
-                if not urls:
-                    print(f"[{domain}] No navigation links found, analyzing current page only")
-                    page = await agent.browser_session.get_current_page()
-                    if page:
-                        current_url = await page.get_url()
-                        report, not_rendered = await analyze_page(page, current_url, domain_dir / "page-0_home.json")
-                        if not_rendered and update_csv_status:
-                            update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
-                        if report:
-                            all_reports.append(report)
-                            if update_csv_status:
-                                update_domain_status(INPUT_CSV, domain, first=True)
-                else:
-                    print(f"[{domain}] Found {len(urls)} pages to analyze")
-                    page = await agent.browser_session.get_current_page()
-                    if not page:
-                        print(f"[{domain}] No page available after login")
-                        continue
-
-                    for i, url in enumerate(urls):
-                        slug = slug_from_url(url)
-                        out_path = domain_dir / f"page-{i}_{slug}.json"
-                        report, not_rendered = await analyze_page(page, url, out_path)
-                        if i == 0 and not_rendered and update_csv_status:
-                            update_domain_status(INPUT_CSV, domain, first_status=NOT_RENDERED_STATUS)
-                        if report:
-                            all_reports.append(report)
-                            if i == 0 and update_csv_status:
-                                update_domain_status(INPUT_CSV, domain, first=True)
-
-                    if len(all_reports) == len(urls) and update_csv_status:
-                        update_domain_status(INPUT_CSV, domain, full=True)
-
-        finally:
-            try:
-                await agent.close()
-            except Exception:
-                pass
-
-        summary = summarize_reports(all_reports)
-        save_report(summary, domain_dir / "summary.json")
-        print(f"[{domain}] Done — {summary['total_pages']} pages, {summary['total_violations']} total violations")
+    if args.workers == 1:
+        for domain in domains:
+            await run_domain(domain)
+    else:
+        print(f"[parallel] Processing {len(domains)} domains with {args.workers} workers")
+        await asyncio.gather(*(run_domain(domain) for domain in domains))
 
 
 if __name__ == "__main__":
