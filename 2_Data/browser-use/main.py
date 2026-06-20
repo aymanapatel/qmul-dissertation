@@ -36,6 +36,8 @@ parser.add_argument("--no-nav-landing-page", action="store_true", help="Skip aut
 parser.add_argument("--site", type=str, help="Run on a single site directly (bypasses CSV).")
 parser.add_argument("--signup", action="store_true", help="Sign up for a new account instead of logging in. Password will be saved to .env.passwords.")
 parser.add_argument("--workers", type=int, default=1, help="Number of domains to process in parallel.")
+parser.add_argument("--headful", action="store_true", help="Run a real browser window offscreen/minimized instead of headless.")
+parser.add_argument("--foreground", action="store_true", help="When used with --headful, keep browser windows visible for debugging.")
 parser.add_argument("--skip-completed", action="store_true", help="Skip domains already marked complete in domains.csv.")
 parser.add_argument("--skip-existing-output", action="store_true", help="Skip domains that already have an output summary.json.")
 parser.add_argument("--no-csv-status", action="store_true", help="Do not update domains.csv while running.")
@@ -56,6 +58,26 @@ parser.add_argument(
     type=int,
     help="Last 1-based data row from domains.csv to process, inclusive. Header is not counted.",
 )
+
+
+def make_browser_profile(args) -> BrowserProfile:
+    if not args.headful:
+        return BrowserProfile(keep_alive=True, headless=True)
+
+    if args.foreground:
+        return BrowserProfile(keep_alive=True, headless=False)
+
+    return BrowserProfile(
+        keep_alive=True,
+        headless=False,
+        window_size={"width": 1280, "height": 720},
+        window_position={"width": 10000, "height": 10000},
+        args=[
+            "--start-minimized",
+            "--disable-focus-on-load",
+            "--disable-window-activation",
+        ],
+    )
 
 
 def read_domains(
@@ -364,6 +386,18 @@ async def signup_only_task(domain: str, email: str, password: str) -> str:
     )
 
 
+async def pre_page_waiting(page, url: str) -> None:
+    await wait_for_cloudflare_turnstile(page, url)
+
+    try:
+        accepted = await accept_cookies(page)
+        if accepted:
+            sources = ", ".join(item.get("source", "heuristic") for item in accepted)
+            print(f"  Accepted cookie prompt on {url} via {sources}")
+    except Exception as e:
+        print(f"  Cookie prompt handling skipped on {url}: {e}")
+
+
 async def analyze_page(
     page,
     url: str,
@@ -390,15 +424,7 @@ async def analyze_page(
     print(f"  HTML page: {url}")
     if settle_seconds > 0:
         await asyncio.sleep(settle_seconds)
-    await wait_for_cloudflare_turnstile(page, url)
-
-    try:
-        accepted = await accept_cookies(page)
-        if accepted:
-            sources = ", ".join(item.get("source", "heuristic") for item in accepted)
-            print(f"  Accepted cookie prompt on {url} via {sources}")
-    except Exception as e:
-        print(f"  Cookie prompt handling skipped on {url}: {e}")
+    await pre_page_waiting(page, url)
 
     try:
         await save_rendered_html(page, html_path)
@@ -438,7 +464,7 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
 
     if args.no_nav_landing_page:
         print(f"[{domain}] --no-nav-landing-page set, analyzing landing page only")
-        profile = BrowserProfile(keep_alive=True)
+        profile = make_browser_profile(args)
         browser_session = BrowserSession(browser_profile=profile)
 
         try:
@@ -488,7 +514,7 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
     else:
         task = await (login_only_task if args.no_nav else login_and_extract_task)(domain)
 
-    profile = BrowserProfile(keep_alive=True)
+    profile = make_browser_profile(args)
     custom_tools = Tools()
 
     class GeneratePasswordParams(BaseModel):
@@ -621,6 +647,8 @@ async def main():
         parser.error("row range flags cannot be combined with --site")
     if args.workers < 1:
         parser.error("--workers must be 1 or greater")
+    if args.foreground and not args.headful:
+        parser.error("--foreground can only be used with --headful")
     if args.settle_seconds < 0:
         parser.error("--settle-seconds must be 0 or greater")
     if args.page_timeout_ms < 1000:
