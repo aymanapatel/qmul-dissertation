@@ -8,3 +8,5 @@ AAA
 *.idea*
 -
 *__pycache__*
+
+.vite
