@@ -154,28 +154,9 @@ python3 scripts/process_page.py \
 # Python running
 
 
-# 1. Process the page (already done)
-python scripts/process_page.py \
-  --html /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.1mg.com/0.html \
-  --axe /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.1mg.com/page-0_home.json \
-  --output ./graphs \
-  --visual
-
-# 2. Train the model
-python scripts/train_single_page.py \
-  --graph ./graphs/0_graph.pt \
-  --epochs 50 \
-  --hidden 64 \
-  --save ./models
-
-# 3. Visualize with trained model
-python scripts/visualize_graph.py \
-  --graph ./graphs/0_graph.pt \
-  --model ./models/best_model.pt \
-  --output ./visualizations
 
 
-
+## Single page training
 ```
 # Crawl bt.com (using your browser-use pipeline)
 cd /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use
@@ -185,22 +166,48 @@ python main.py --site https://www.bt.com
 cd /Users/aymanpatel/Desktop/Uni/Dissertation/3_Learning
 source .venv/bin/activate
 
-python scripts/process_page.py \
+```
+python3 scripts/process_page.py \
   --html /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.bt.com/0.html \
   --axe /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.bt.com/page-0_home.json \
   --output ./graphs \
   --visual
 
-python scripts/train_single_page.py \
+python3 scripts/train_single_page.py \
   --graph ./graphs/0_graph.pt \
   --epochs 100 \
   --hidden 128 \
   --layers 3 \
   --save ./models
 
-python scripts/visualize_graph.py \
+python3 scripts/visualize_graph.py \
   --graph ./graphs/0_graph.pt \
   --model ./models/best_model.pt \
   --output ./visualizations
 
+```
+
+##  Batch script  training
+
+
+### Step 1: Multi site training:
+
+
+
+
+```python
+python3 scripts/train_multi_site.py --data-dir /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core --output-dir ./graphs_multi --model-dir ./models_multi_test --max-sites 20 --epochs 3 --batch-size 4 --device mps
+ ```
+
+
+### 2. Single page prediction
+
+
+```python
+python scripts/predict_site.py \
+  --html /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.aggrid.com/0.html \
+  --axe /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.aggrid.com/page-0_home.json \
+  --model ./models_multi/best_model.pt \
+  --output ./reports/prediction.json \
+  --threshold 0.5
 ```
