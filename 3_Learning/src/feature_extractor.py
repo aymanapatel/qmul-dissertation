@@ -208,13 +208,17 @@ class FeatureExtractor:
         self,
         axe_report_path: Path,
         node_map: Dict[int, DOMNode],
-    ) -> torch.Tensor:
+    ) -> tuple:
         """
         Load axe-core report and map violations to DOM nodes.
         Uses CSS selector matching for accurate mapping.
         
-        Returns node-level binary labels: 1 if element has any violation.
+        Returns:
+            - node_labels_binary: [N] long tensor, 1 if element has any violation
+            - node_labels_multi: [N, NUM_RULES] float tensor, multi-hot encoded rules
         """
+        from wcag_rules import RULE_INDEX, NUM_RULES
+        
         with open(axe_report_path, "r", encoding="utf-8") as f:
             report = json.load(f)
         
@@ -231,9 +235,25 @@ class FeatureExtractor:
                     target_str = target[-1] if isinstance(target, list) else str(target)
                     violated_nodes.append((target_str, rule_id, impact))
         
-        node_labels = torch.zeros(len(node_map), dtype=torch.long)
+        node_labels_binary = torch.zeros(len(node_map), dtype=torch.long)
+        node_labels_multi = torch.zeros(len(node_map), NUM_RULES, dtype=torch.float)
         
-        # Build a lookup from id/class/tag to node_ids for faster matching
+        # AYMAN_NOTE: Root cause of 0 recall
+        # Build lookups for exact CSS matching first, then heuristic fallback.
+        root_element = node_map[0].element if node_map else None
+        element_to_node = {
+            id(node.element): node_id
+            for node_id, node in node_map.items()
+            if not node.is_text
+        }
+
+        def apply_label(node_id: int, rule_id: str, rule_idx: int, impact: str) -> None:
+            node_labels_binary[node_id] = 1
+            node_labels_multi[node_id, rule_idx] = 1.0
+            node_map[node_id].axe_violations.append(rule_id)
+            node_map[node_id].axe_impact = impact
+
+        # Build a lookup from id/class/tag to node_ids for faster fallback matching
         id_to_nodes = {}
         class_to_nodes = {}
         tag_to_nodes = {}
@@ -257,15 +277,39 @@ class FeatureExtractor:
         matched_count = 0
         for target_str, rule_id, impact in violated_nodes:
             target_str = target_str.strip()
+            rule_idx = RULE_INDEX.get(rule_id)
+            if rule_idx is None:
+                continue  # Unknown rule
+            
             matched = False
+
+            # Strategy 0: exact CSS selector match using the parsed DOM.
+            # axe targets often contain child combinators, nth-child, and escaped Tailwind classes.
+            if root_element is not None:
+                try:
+                    selected_elements = root_element.select(target_str)
+                except Exception:
+                    selected_elements = []
+
+                exact_node_ids = []
+                for elem in selected_elements:
+                    node_id = element_to_node.get(id(elem))
+                    if node_id is not None:
+                        exact_node_ids.append(node_id)
+
+                if exact_node_ids:
+                    for nid in exact_node_ids:
+                        apply_label(nid, rule_id, rule_idx, impact)
+                    matched = True
+                    matched_count += 1
+                    continue
             
             # Strategy 1: Direct ID match (#id)
             if target_str.startswith("#"):
                 elem_id = target_str[1:].split(".")[0].split(":")[0]
                 if elem_id in id_to_nodes:
                     for nid in id_to_nodes[elem_id]:
-                        node_labels[nid] = 1
-                        node_map[nid].axe_violations.append(rule_id)
+                        apply_label(nid, rule_id, rule_idx, impact)
                         matched = True
                     matched_count += 1
                     continue
@@ -275,8 +319,7 @@ class FeatureExtractor:
                 class_name = target_str[1:].split(" ")[0].split(".")[0]
                 if class_name in class_to_nodes:
                     for nid in class_to_nodes[class_name][:3]:  # Limit matches
-                        node_labels[nid] = 1
-                        node_map[nid].axe_violations.append(rule_id)
+                        apply_label(nid, rule_id, rule_idx, impact)
                         matched = True
                     matched_count += 1
                     continue
@@ -335,8 +378,7 @@ class FeatureExtractor:
             
             if best_nodes and best_score >= 10:
                 for nid in best_nodes[:3]:
-                    node_labels[nid] = 1
-                    node_map[nid].axe_violations.append(rule_id)
+                    apply_label(nid, rule_id, rule_idx, impact)
                 matched = True
                 matched_count += 1
             
@@ -351,13 +393,13 @@ class FeatureExtractor:
                         # Check if any attribute matches
                         node_id_val = node.attrs.get("id", "")
                         if node_id_val and node_id_val in target_str:
-                            node_labels[nid] = 1
-                            node_map[nid].axe_violations.append(rule_id)
+                            apply_label(nid, rule_id, rule_idx, impact)
                             matched_count += 1
                             break
         
         print(f"  Matched {matched_count} / {len(violated_nodes)} violation targets to DOM nodes")
-        return node_labels
+        print(f"  Rules found: {(node_labels_multi.sum(dim=0) > 0).sum().item()} / {NUM_RULES}")
+        return node_labels_binary, node_labels_multi
     
     def process_page(
         self,
@@ -398,14 +440,19 @@ class FeatureExtractor:
         # Load axe labels
         if axe_report_path and axe_report_path.exists():
             print(f"Loading axe labels from {axe_report_path}...")
-            node_labels = self.load_axe_labels(axe_report_path, node_map)
-            data.node_y = node_labels
-            data.y = torch.tensor([1 if node_labels.sum() > 0 else 0], dtype=torch.long)
-            print(f"Found {node_labels.sum().item()} violating elements out of {len(node_map)} nodes")
+            node_labels_binary, node_labels_multi = self.load_axe_labels(axe_report_path, node_map)
+            data.node_y = node_labels_binary
+            data.node_y_multi = node_labels_multi
+            data.y = torch.tensor([1 if node_labels_binary.sum() > 0 else 0], dtype=torch.long)
+            data.has_ground_truth = True
+            print(f"Found {node_labels_binary.sum().item()} violating elements out of {len(node_map)} nodes")
+            print(f"  Multi-label: {(node_labels_multi.sum(dim=0) > 0).sum().item()} unique rules violated")
         else:
-            print("No axe report provided — using dummy labels")
+            print("No axe report provided — using dummy labels for inference only")
             data.node_y = torch.zeros(len(node_map), dtype=torch.long)
+            data.node_y_multi = torch.zeros(len(node_map), 46, dtype=torch.float)
             data.y = torch.tensor([0], dtype=torch.long)
+            data.has_ground_truth = False
         
         return ProcessedPage(data=data, node_map=node_map, html_path=html_path)
 

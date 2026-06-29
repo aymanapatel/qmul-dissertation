@@ -175,14 +175,22 @@ def main():
     
     # Load model if provided
     if args.model and Path(args.model).exists():
-        model = DOMGCN(
-            num_tags=116, tag_embed_dim=32, attr_dim=attr_dim, text_dim=text_dim,
-            hidden_dim=64, num_node_classes=2, num_graph_classes=2,
-            num_layers=2, dropout=0.3, pooling="mean",
-        )
         checkpoint = torch.load(args.model, map_location=args.device, weights_only=False)
+        hparams = checkpoint.get("hparams", {})
+        model = DOMGCN(
+            num_tags=hparams.get("num_tags", 116),
+            tag_embed_dim=hparams.get("tag_embed_dim", 32),
+            attr_dim=attr_dim,
+            text_dim=text_dim,
+            hidden_dim=hparams.get("hidden_dim", 64),
+            num_node_classes=hparams.get("num_node_classes", 2),
+            num_graph_classes=hparams.get("num_graph_classes", 2),
+            num_layers=hparams.get("num_layers", 2),
+            dropout=hparams.get("dropout", 0.3),
+            pooling=hparams.get("pooling", "mean"),
+        )
         model.load_state_dict(checkpoint["model_state_dict"])
-        print(f"Loaded model from {args.model}")
+        print(f"Loaded model from {args.model} (hidden={hparams.get('hidden_dim', 64)}, layers={hparams.get('num_layers', 2)})")
     else:
         print("No model provided — using random initialization")
         model = DOMGCN(

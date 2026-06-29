@@ -164,12 +164,23 @@ def main():
     )
     
     save_path = save_dir / "best_model.pt"
+    hparams = {
+        "num_tags": 116,
+        "tag_embed_dim": 32,
+        "hidden_dim": args.hidden,
+        "num_node_classes": 2,
+        "num_graph_classes": 2,
+        "num_layers": args.layers,
+        "dropout": args.dropout,
+        "pooling": "mean",
+    }
     history = trainer.fit(
         train_loader=train_loader,
         val_loader=val_loader,
         epochs=args.epochs,
         patience=15,
         save_path=save_path,
+        hparams=hparams,
     )
     
     # Evaluate on original graph
