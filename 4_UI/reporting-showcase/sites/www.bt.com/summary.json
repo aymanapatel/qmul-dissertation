@@ -1,0 +1,16 @@
+{
+  "total_pages": 1,
+  "total_violations": 14,
+  "by_rule": {
+    "aria-prohibited-attr": 6,
+    "link-name": 8
+  },
+  "by_page": [
+    {
+      "page_index": 0,
+      "url": "https://www.bt.com",
+      "violations": 14
+    }
+  ],
+  "scrapped_first": "yes"
+}
