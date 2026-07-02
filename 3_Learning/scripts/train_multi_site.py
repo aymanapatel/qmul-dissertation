@@ -13,6 +13,7 @@ Usage:
 """
 
 import argparse
+import gc
 import json
 import sys
 from pathlib import Path
@@ -28,6 +29,7 @@ from torch.utils.data import WeightedRandomSampler
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from feature_extractor import FeatureExtractor, ProcessedPage
+from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM
 from models import DOMAttentionNet
 from train import Trainer, get_device
 from wcag_rules import NUM_RULES
@@ -50,6 +52,7 @@ def process_site(
     output_dir: Path,
     extractor: FeatureExtractor,
     extract_visual: bool = False,
+    graph_source: str = GRAPH_SOURCE_DOM,
     resume: bool = True,
 ) -> Optional[Data]:
     """Process a single site into a PyG Data object. Cache to disk."""
@@ -59,12 +62,21 @@ def process_site(
     if resume and cache_path.exists():
         try:
             page = ProcessedPage.load(cache_path)
+            cached_graph_source = getattr(page.data, "graph_source", GRAPH_SOURCE_DOM)
             # Verify it has multi-label data
             if not hasattr(page.data, "node_y_multi"):
                 print(f"  [outdated cache] {site_name} — reprocessing")
                 # Fall through to reprocess
+            elif cached_graph_source != graph_source:
+                print(
+                    f"  [graph-source mismatch] {site_name} "
+                    f"({cached_graph_source} != {graph_source}) — reprocessing"
+                )
             else:
-                print(f"  [cached] {site_name} — {page.data.num_nodes} nodes")
+                print(
+                    f"  [cached] {site_name} — "
+                    f"{page.data.num_nodes} nodes ({cached_graph_source})"
+                )
                 return page.data
         except Exception as e:
             print(f"  [cache corrupt] {site_name}: {e}")
@@ -85,6 +97,7 @@ def process_site(
             html_path=html_path,
             axe_report_path=axe_path,
             extract_visual=extract_visual,
+            graph_source=graph_source,
         )
     except Exception as e:
         print(f"  [skip] {site_name}: processing failed: {e}")
@@ -94,7 +107,7 @@ def process_site(
     page.save(cache_path)
     print(
         f"  [processed] {site_name} — "
-        f"{page.data.num_nodes} nodes, {num_violations} violation types, "
+        f"{page.data.num_nodes} nodes ({graph_source}), {num_violations} violation types, "
         f"{(page.data.node_y_multi.sum(dim=0) > 0).sum().item()} unique rules"
     )
     return page.data
@@ -188,6 +201,13 @@ def main():
     # Processing
     parser.add_argument("--max-sites", type=int, default=None, help="Maximum number of sites (default: all)")
     parser.add_argument("--visual", action="store_true", help="Extract visual features (slower)")
+    parser.add_argument(
+        "--graph-source",
+        type=str,
+        default=GRAPH_SOURCE_DOM,
+        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
+        help="Graph source to build: dom is current, a11y-tree is reserved for future work",
+    )
     parser.add_argument("--resume", action="store_true", help="Skip already-cached graphs")
     # Model
     parser.add_argument("--hidden", type=int, default=256, help="Hidden dimension")
@@ -205,9 +225,18 @@ def main():
     parser.add_argument("--rule-loss-weight", type=float, default=5.0, help="Weight for rule-level loss")
     parser.add_argument("--graph-loss-weight", type=float, default=0.5, help="Weight for graph-level loss")
     parser.add_argument("--focal-gamma", type=float, default=2.0, help="Focal loss gamma")
+    parser.add_argument("--rule-label-smoothing", type=float, default=0.0, help="Smooth positive rule labels only; absent rules stay 0")
     parser.add_argument("--hard-neg-weight", type=float, default=10.0, help="Hard negative mining weight")
     parser.add_argument("--hard-pos-weight", type=float, default=5.0, help="Hard positive mining weight")
+    parser.add_argument("--node-pos-weight-cap", type=float, default=50.0, help="Maximum positive class weight for node loss")
+    parser.add_argument("--rule-pos-weight", type=float, default=50.0, help="Positive class weight for rule loss")
+    parser.add_argument("--node-threshold", type=float, default=0.5, help="Validation threshold for node violation predictions")
+    parser.add_argument("--rule-threshold", type=float, default=0.5, help="Validation threshold for rule predictions")
+    parser.add_argument("--selection-metric", type=str, default="node_f1_pos", help="Validation metric for scheduler, checkpointing, and early stopping")
     parser.add_argument("--device", type=str, default="auto", help="Device (auto, mps, cuda, cpu)")
+    parser.add_argument("--resume-training", action="store_true", help="Resume model and optimizer state from the training checkpoint")
+    parser.add_argument("--resume-checkpoint", type=str, default=None, help="Checkpoint path for --resume-training (default: model-dir/last_model.pt, falling back to best_model.pt)")
+    parser.add_argument("--clear-cache-every", type=int, default=0, help="Clear accelerator cache every N batches (0 disables)")
     # Misc
     parser.add_argument("--seed", type=int, default=42, help="Random seed")
     args = parser.parse_args()
@@ -234,6 +263,7 @@ def main():
     print(f"Output directory: {output_dir}")
     print(f"Model directory: {model_dir}")
     print(f"Device: {device}")
+    print(f"Graph source: {args.graph_source}")
     print()
 
     # Phase 1: Find and process sites
@@ -264,6 +294,7 @@ def main():
             output_dir=output_dir,
             extractor=extractor,
             extract_visual=args.visual,
+            graph_source=args.graph_source,
             resume=args.resume,
         )
         if data is not None:
@@ -276,6 +307,13 @@ def main():
     if len(data_list) == 0:
         print("No graphs to train on! Exiting.")
         sys.exit(1)
+    
+    del extractor
+    gc.collect()
+    if device == "mps" and hasattr(torch, "mps"):
+        torch.mps.empty_cache()
+    elif device == "cuda":
+        torch.cuda.empty_cache()
 
     # Dataset statistics
     violation_sites = sum(1 for d in data_list if d.y.item() == 1)
@@ -356,7 +394,9 @@ def main():
     # Weighted sampler for training
     train_labels = np.array([d.y.item() for d in train_data])
     class_counts = np.bincount(train_labels)
-    class_weights = 1.0 / class_counts
+    class_weights = np.zeros_like(class_counts, dtype=float)
+    nonzero_classes = class_counts > 0
+    class_weights[nonzero_classes] = 1.0 / class_counts[nonzero_classes]
     sample_weights = class_weights[train_labels]
     sampler = WeightedRandomSampler(
         weights=sample_weights,
@@ -378,8 +418,15 @@ def main():
         graph_loss_weight=args.graph_loss_weight,
         use_focal_loss=True,
         focal_gamma=args.focal_gamma,
+        label_smoothing=args.rule_label_smoothing,
         hard_neg_weight=args.hard_neg_weight,
         hard_pos_weight=args.hard_pos_weight,
+        node_pos_weight_cap=args.node_pos_weight_cap,
+        rule_pos_weight=args.rule_pos_weight,
+        node_threshold=args.node_threshold,
+        rule_threshold=args.rule_threshold,
+        selection_metric=args.selection_metric,
+        cache_clear_interval=args.clear_cache_every,
     )
 
     hparams = {
@@ -393,16 +440,39 @@ def main():
         "heads": args.heads,
         "dropout": args.dropout,
         "pooling": args.pooling,
+        "graph_source": args.graph_source,
+        "node_pos_weight_cap": args.node_pos_weight_cap,
+        "rule_pos_weight": args.rule_pos_weight,
+        "rule_label_smoothing": args.rule_label_smoothing,
+        "node_threshold": args.node_threshold,
+        "rule_threshold": args.rule_threshold,
+        "selection_metric": args.selection_metric,
+        "clear_cache_every": args.clear_cache_every,
     }
 
     save_path = model_dir / "best_model.pt"
+    last_save_path = model_dir / "last_model.pt"
+    resume_path = None
+    if args.resume_training:
+        if args.resume_checkpoint:
+            resume_path = Path(args.resume_checkpoint)
+        elif last_save_path.exists():
+            resume_path = last_save_path
+        else:
+            resume_path = save_path
+        if not resume_path.exists():
+            print(f"Cannot resume training: checkpoint not found at {resume_path}")
+            sys.exit(1)
+
     history = trainer.fit(
         train_loader=train_loader,
         val_loader=val_loader,
         epochs=args.epochs,
         patience=args.patience,
         save_path=save_path,
+        last_save_path=last_save_path,
         hparams=hparams,
+        resume_from=resume_path,
     )
 
     # Save history
@@ -420,8 +490,12 @@ def main():
     print(f"Test Loss:          {test_metrics['loss']:.4f}")
     if "node_acc" in test_metrics:
         print(f"Test Node Acc:      {test_metrics['node_acc']:.4f}")
+        print(f"Test Node Precision:{test_metrics['node_precision']:.4f}")
+        print(f"Test Node Recall:   {test_metrics['node_recall']:.4f}")
         print(f"Test Node F1(pos):  {test_metrics['node_f1_pos']:.4f}")
     if "rule_f1_micro" in test_metrics:
+        print(f"Test Rule Precision(micro): {test_metrics['rule_precision_micro']:.4f}")
+        print(f"Test Rule Recall(micro):    {test_metrics['rule_recall_micro']:.4f}")
         print(f"Test Rule F1(micro): {test_metrics['rule_f1_micro']:.4f}")
         print(f"Test Rule F1(macro): {test_metrics['rule_f1_macro']:.4f}")
     if "graph_acc" in test_metrics:

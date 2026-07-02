@@ -18,7 +18,7 @@ sys.path.insert(0, str(src_path))
 import torch
 
 from feature_extractor import FeatureExtractor, ProcessedPage
-from html_graph_builder import add_spatial_edges
+from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM
 from models import DOMGCN
 from train import Trainer
 from torch_geometric.utils import dropout_edge, subgraph
@@ -89,6 +89,13 @@ def main():
     parser.add_argument("--output", type=str, default="./graphs", help="Output directory for processed graphs")
     parser.add_argument("--visual", action="store_true", help="Extract visual features via Playwright")
     parser.add_argument("--device", type=str, default="cpu", help="Device (cpu or cuda)")
+    parser.add_argument(
+        "--graph-source",
+        type=str,
+        default=GRAPH_SOURCE_DOM,
+        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
+        help="Graph source to build: dom is current, a11y-tree is reserved for future work",
+    )
     parser.add_argument("--train", action="store_true", help="Run a quick training demo")
     parser.add_argument("--viz", action="store_true", help="Generate ASCII visualization of predictions")
     parser.add_argument("--max-nodes", type=int, default=None, help="Max nodes to parse (for debugging)")
@@ -109,6 +116,7 @@ def main():
     print(f"HTML: {html_path}")
     print(f"Axe:  {axe_path}")
     print(f"Visual: {args.visual}")
+    print(f"Graph source: {args.graph_source}")
     print()
     
     # Initialize feature extractor
@@ -119,6 +127,7 @@ def main():
         html_path=html_path,
         axe_report_path=axe_path,
         extract_visual=args.visual,
+        graph_source=args.graph_source,
     )
     
     # Print statistics
@@ -128,6 +137,7 @@ def main():
     print(f"Total nodes: {page.data.num_nodes}")
     print(f"Total edges: {page.data.edge_index.shape[1]}")
     print(f"Node feature dim: {page.data.x.shape[1]}")
+    print(f"Graph source: {getattr(page.data, 'graph_source', GRAPH_SOURCE_DOM)}")
     print(f"Node labels: {page.data.node_y.sum().item()} / {len(page.data.node_y)} have violations")
     print(f"Graph label: {'VIOLATIONS' if page.data.y.item() == 1 else 'CLEAN'}")
     

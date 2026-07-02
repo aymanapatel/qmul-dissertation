@@ -1,0 +1,61 @@
+{
+  "loss": 1.457073599100113,
+  "node_acc": 0.9551848504260378,
+  "node_f1_macro": 0.6337287398271344,
+  "node_f1_pos": 0.2905959160994583,
+  "node_precision": 0.19052823315118397,
+  "node_recall": 0.6120538326506729,
+  "rule_precision_micro": 0.23825789923142612,
+  "rule_recall_micro": 0.485780615206036,
+  "rule_f1_micro": 0.31970970206264326,
+  "rule_f1_macro": 0.03757947310805321,
+  "top_rules": [
+    [
+      "link-name",
+      0.4896
+    ],
+    [
+      "button-name",
+      0.404
+    ],
+    [
+      "image-alt",
+      0.346
+    ],
+    [
+      "html-has-lang",
+      0.1913
+    ],
+    [
+      "color-contrast",
+      0.1612
+    ]
+  ],
+  "worst_rules": [
+    [
+      "role-img-alt",
+      0.0
+    ],
+    [
+      "scrollable-region-focusable",
+      0.0
+    ],
+    [
+      "select-name",
+      0.0
+    ],
+    [
+      "summary-name",
+      0.0
+    ],
+    [
+      "svg-img-alt",
+      0.0
+    ]
+  ],
+  "graph_acc": 0.7692307692307693,
+  "graph_f1": 0.7723855890944498,
+  "graph_precision": 0.8589743589743589,
+  "graph_recall": 0.8375,
+  "graph_auc": 0.7250000000000001
+}

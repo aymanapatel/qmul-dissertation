@@ -49,6 +49,7 @@ python scripts/process_page.py \
   --html /path/to/page.html \
   --axe /path/to/axe_report.json \
   --output ./graphs \
+  --graph-source dom \
   --visual \
   --train
 ```
@@ -196,7 +197,15 @@ python3 scripts/visualize_graph.py \
 
 
 ```python
-python3 scripts/train_multi_site.py --data-dir /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core --output-dir ./graphs_multi --model-dir ./models_multi_test --max-sites 20 --epochs 3 --batch-size 4 --device mps
+python3 scripts/train_multi_site.py \
+--data-dir /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core \
+--output-dir ./graphs_multi \
+--model-dir ./models_multi_test \
+# --max-sites 20 \
+--epochs 100 \
+--batch-size 4 \
+--device mps \
+--graph-source dom
  ```
 
 
@@ -205,9 +214,20 @@ python3 scripts/train_multi_site.py --data-dir /Users/aymanpatel/Desktop/Uni/Dis
 
 ```python
 python scripts/predict_site.py \
-  --html /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.aggrid.com/0.html \
-  --axe /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.aggrid.com/page-0_home.json \
+  --html /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.gov.ie_en/0.html \
+  --axe /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.gov.ie_en/page-0_home.json \
   --model ./models_multi/best_model.pt \
-  --output ./reports/prediction.json \
+  --output ./reports/prediction_incometax.json \
+  --graph-source dom \
   --threshold 0.5
 ```
+
+### Graph source flag
+
+Current experiments use `--graph-source dom`, which builds graphs from the parsed HTML DOM.
+The `--graph-source a11y-tree` value is reserved for future browser accessibility-tree graphs and currently exits with a clear "not implemented" error.
+
+Graph-source behavior is isolated in `src/graph_sources.py`:
+- `build_dom_graph()` parses saved HTML with BeautifulSoup and returns the current element graph.
+- `build_a11y_tree_graph()` is the future browser accessibility-tree entrypoint.
+- `apply_visual_edges()` applies DOM spatial edges today and keeps future a11y-tree visual edge behavior separate.
