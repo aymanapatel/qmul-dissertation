@@ -1,0 +1,21 @@
+{
+  "html_path": "/Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.gov.ie_en/0.html",
+  "model_path": "models_multi_f1_fix_semaphore/best_model.pt",
+  "summary": {
+    "total_nodes": 13,
+    "actionable_nodes": 2,
+    "graph_violation_probability": 0.84,
+    "predicted_violation_count": 0,
+    "threshold": 0.5,
+    "graph_source": "dom"
+  },
+  "predicted_violations": [],
+  "ground_truth": {
+    "true_violations": 1,
+    "true_positives": 0,
+    "false_positives": 0,
+    "false_negatives": 1,
+    "precision": 0,
+    "recall": 0.0
+  }
+}

@@ -100,11 +100,17 @@ class Trainer:
         use_focal_loss: bool = True,
         focal_alpha: float = 0.95,
         focal_gamma: float = 2.0,
-        label_smoothing: float = 0.1,
+        label_smoothing: float = 0.0,
         hard_neg_weight: float = 10.0,
         hard_pos_weight: float = 5.0,
         hard_neg_threshold: float = 0.1,
         hard_pos_threshold: float = 0.7,
+        node_pos_weight_cap: float = 50.0,
+        rule_pos_weight: float = 50.0,
+        node_threshold: float = 0.5,
+        rule_threshold: float = 0.5,
+        selection_metric: str = "node_f1_pos",
+        cache_clear_interval: int = 0,
     ):
         if device == "auto":
             device = get_device()
@@ -124,6 +130,13 @@ class Trainer:
         self.hard_pos_weight = hard_pos_weight
         self.hard_neg_threshold = hard_neg_threshold
         self.hard_pos_threshold = hard_pos_threshold
+        self.node_pos_weight_cap = node_pos_weight_cap
+        self.rule_pos_weight = rule_pos_weight
+        self.rule_label_smoothing = label_smoothing
+        self.node_threshold = node_threshold
+        self.rule_threshold = rule_threshold
+        self.selection_metric = selection_metric
+        self.cache_clear_interval = cache_clear_interval
         
         if use_focal_loss:
             self.node_criterion = FocalLoss(alpha=focal_alpha, gamma=focal_gamma)
@@ -141,17 +154,22 @@ class Trainer:
             "val_node_acc": [],
             "val_graph_acc": [],
             "val_f1": [],
+            "val_node_precision": [],
+            "val_node_recall": [],
+            "val_node_f1": [],
+            "val_rule_precision_micro": [],
+            "val_rule_recall_micro": [],
+            "val_rule_f1_micro": [],
         }
     
-    def compute_loss(self, data: Data) -> Tuple[torch.Tensor, Dict[str, float]]:
-        """Compute combined loss with hard negative mining."""
-        data = data.to(self.device)
-        
-        node_logits, node_rule_logits, graph_logits = self.model(
-            data.x, data.edge_index, data.tag_indices,
-            data.batch if hasattr(data, "batch") else None
-        )
-        
+    def compute_loss_from_outputs(
+        self,
+        data: Data,
+        node_logits: torch.Tensor,
+        node_rule_logits: torch.Tensor,
+        graph_logits: torch.Tensor,
+    ) -> Tuple[torch.Tensor, Dict[str, float]]:
+        """Compute combined loss from an existing model forward pass."""
         metrics = {}
         total_loss = torch.tensor(0.0, device=self.device)
         
@@ -162,7 +180,7 @@ class Trainer:
             
             if num_pos > 0:
                 # Aggressive class weighting: weight positive class by neg/pos ratio
-                weight_pos = min(num_neg / (num_pos + 1e-6), 500.0)
+                weight_pos = min(num_neg / (num_pos + 1e-6), self.node_pos_weight_cap)
                 weights = torch.tensor([1.0, weight_pos], device=self.device)
             else:
                 weights = None
@@ -191,12 +209,14 @@ class Trainer:
         if hasattr(data, "node_y_multi") and data.node_y_multi is not None:
             rule_targets = data.node_y_multi.to(self.device)
             
-            # Use fixed pos_weight=200 based on ~0.5% violation rate
-            # This is more stable than per-batch adaptive weighting
-            pos_weight_val = 200.0
+            # Fixed rule-level positive weight keeps training stable across batches.
+            pos_weight_val = self.rule_pos_weight
             
-            # Base BCE loss with fixed class weighting and label smoothing
-            smoothed_targets = rule_targets * 0.9 + (1 - rule_targets) * 0.1
+            # Keep absent rules at 0. Smoothing negatives with pos_weight makes the
+            # sparse rule head predict nearly every node-rule pair as positive.
+            smoothed_targets = rule_targets
+            if self.rule_label_smoothing > 0:
+                smoothed_targets = rule_targets * (1.0 - self.rule_label_smoothing)
             per_sample_loss = F.binary_cross_entropy_with_logits(
                 node_rule_logits, smoothed_targets,
                 pos_weight=torch.tensor([pos_weight_val], device=self.device),
@@ -241,6 +261,22 @@ class Trainer:
         metrics["loss"] = total_loss.item()
         
         return total_loss, metrics
+
+    def compute_loss(self, data: Data) -> Tuple[torch.Tensor, Dict[str, float]]:
+        """Compute combined loss with hard negative mining."""
+        data = data.to(self.device)
+        
+        node_logits, node_rule_logits, graph_logits = self.model(
+            data.x, data.edge_index, data.tag_indices,
+            data.batch if hasattr(data, "batch") else None
+        )
+        
+        return self.compute_loss_from_outputs(
+            data=data,
+            node_logits=node_logits,
+            node_rule_logits=node_rule_logits,
+            graph_logits=graph_logits,
+        )
     
     def train_epoch(self, loader: DataLoader) -> Dict[str, float]:
         """Train for one epoch."""
@@ -262,7 +298,7 @@ class Trainer:
         }
         
         for batch_idx, data in enumerate(loader):
-            self.optimizer.zero_grad()
+            self.optimizer.zero_grad(set_to_none=True) # Optimize memory for semaphore error
             loss, metrics = self.compute_loss(data)
             loss.backward()
             
@@ -273,6 +309,10 @@ class Trainer:
             
             for key in epoch_metrics:
                 epoch_metrics[key] += metrics.get(key, 0)
+            
+            del loss, metrics, data
+            if self.cache_clear_interval and (batch_idx + 1) % self.cache_clear_interval == 0:
+                self.clear_device_cache()
         
         # Average metrics
         num_batches = len(loader)
@@ -286,17 +326,21 @@ class Trainer:
         """Evaluate on validation/test set."""
         self.model.eval()
         
-        all_node_preds = []
-        all_node_labels = []
-        all_rule_probs = []
-        all_rule_labels = []
         all_graph_preds = []
         all_graph_labels = []
         all_graph_probs = []
+        node_tp = node_fp = node_fn = node_tn = 0
+        node_total = 0
+        rule_tp = torch.zeros(NUM_RULES, dtype=torch.long)
+        rule_fp = torch.zeros(NUM_RULES, dtype=torch.long)
+        rule_fn = torch.zeros(NUM_RULES, dtype=torch.long)
+        rule_label_count = torch.zeros(NUM_RULES, dtype=torch.long)
+        has_node_labels = False
+        has_rule_labels = False
         
         total_loss = 0.0
         
-        for data in loader:
+        for batch_idx, data in enumerate(loader):
             data = data.to(self.device)
             node_logits, node_rule_logits, graph_logits = self.model(
                 data.x, data.edge_index, data.tag_indices,
@@ -305,15 +349,25 @@ class Trainer:
             
             # Collect binary node predictions
             if hasattr(data, "node_y"):
-                node_preds = node_logits.argmax(dim=-1).cpu()
-                all_node_preds.append(node_preds)
-                all_node_labels.append(data.node_y.cpu())
+                has_node_labels = True
+                node_probs = F.softmax(node_logits, dim=-1)[:, 1]
+                node_preds = node_probs >= self.node_threshold
+                node_labels = data.node_y.bool()
+                node_tp += (node_preds & node_labels).sum().item()
+                node_fp += (node_preds & ~node_labels).sum().item()
+                node_fn += (~node_preds & node_labels).sum().item()
+                node_tn += (~node_preds & ~node_labels).sum().item()
+                node_total += node_labels.numel()
             
             # Collect multi-label rule predictions
             if hasattr(data, "node_y_multi"):
-                rule_probs = torch.sigmoid(node_rule_logits).cpu()
-                all_rule_probs.append(rule_probs)
-                all_rule_labels.append(data.node_y_multi.cpu())
+                has_rule_labels = True
+                rule_preds = (torch.sigmoid(node_rule_logits) >= self.rule_threshold).cpu()
+                rule_labels = data.node_y_multi.cpu().bool()
+                rule_tp += (rule_preds & rule_labels).sum(dim=0)
+                rule_fp += (rule_preds & ~rule_labels).sum(dim=0)
+                rule_fn += (~rule_preds & rule_labels).sum(dim=0)
+                rule_label_count += rule_labels.sum(dim=0)
             
             # Collect graph predictions
             if hasattr(data, "y"):
@@ -323,43 +377,70 @@ class Trainer:
                 all_graph_labels.append(data.y.cpu())
                 all_graph_probs.append(graph_probs)
             
-            loss, _ = self.compute_loss(data)
+            loss, _ = self.compute_loss_from_outputs(
+                data=data,
+                node_logits=node_logits,
+                node_rule_logits=node_rule_logits,
+                graph_logits=graph_logits,
+            )
             total_loss += loss.item()
+            
+            del data, node_logits, node_rule_logits, graph_logits, loss
+            if self.cache_clear_interval and (batch_idx + 1) % self.cache_clear_interval == 0:
+                self.clear_device_cache()
         
         metrics = {"loss": total_loss / len(loader)}
         
         # Binary node-level metrics
-        if all_node_preds:
-            node_preds = torch.cat(all_node_preds)
-            node_labels = torch.cat(all_node_labels)
-            metrics["node_acc"] = accuracy_score(node_labels, node_preds)
-            metrics["node_f1_macro"] = f1_score(node_labels, node_preds, average="macro", zero_division=0)
-            metrics["node_f1_pos"] = f1_score(node_labels, node_preds, pos_label=1, zero_division=0)
-            metrics["node_precision"] = precision_score(node_labels, node_preds, pos_label=1, zero_division=0)
-            metrics["node_recall"] = recall_score(node_labels, node_preds, pos_label=1, zero_division=0)
+        if has_node_labels:
+            node_precision = node_tp / (node_tp + node_fp) if (node_tp + node_fp) else 0.0
+            node_recall = node_tp / (node_tp + node_fn) if (node_tp + node_fn) else 0.0
+            node_f1_pos = (
+                2 * node_precision * node_recall / (node_precision + node_recall)
+                if (node_precision + node_recall) else 0.0
+            )
+            node_neg_precision = node_tn / (node_tn + node_fn) if (node_tn + node_fn) else 0.0
+            node_neg_recall = node_tn / (node_tn + node_fp) if (node_tn + node_fp) else 0.0
+            node_f1_neg = (
+                2 * node_neg_precision * node_neg_recall / (node_neg_precision + node_neg_recall)
+                if (node_neg_precision + node_neg_recall) else 0.0
+            )
+            metrics["node_acc"] = (node_tp + node_tn) / node_total if node_total else 0.0
+            metrics["node_f1_macro"] = (node_f1_pos + node_f1_neg) / 2
+            metrics["node_f1_pos"] = node_f1_pos
+            metrics["node_precision"] = node_precision
+            metrics["node_recall"] = node_recall
         
         # Multi-label rule metrics
-        if all_rule_probs:
-            rule_probs = torch.cat(all_rule_probs)
-            rule_labels = torch.cat(all_rule_labels)
-            rule_preds = (rule_probs > 0.5).long()
+        if has_rule_labels:
+            micro_tp = rule_tp.sum().item()
+            micro_fp = rule_fp.sum().item()
+            micro_fn = rule_fn.sum().item()
+            rule_precision_micro = micro_tp / (micro_tp + micro_fp) if (micro_tp + micro_fp) else 0.0
+            rule_recall_micro = micro_tp / (micro_tp + micro_fn) if (micro_tp + micro_fn) else 0.0
+            rule_f1_micro = (
+                2 * rule_precision_micro * rule_recall_micro / (rule_precision_micro + rule_recall_micro)
+                if (rule_precision_micro + rule_recall_micro) else 0.0
+            )
+            per_rule_precision = rule_tp.float() / (rule_tp + rule_fp).clamp_min(1).float()
+            per_rule_recall = rule_tp.float() / (rule_tp + rule_fn).clamp_min(1).float()
+            per_rule_denominator = per_rule_precision + per_rule_recall
+            per_rule_f1_values = torch.where(
+                per_rule_denominator > 0,
+                2 * per_rule_precision * per_rule_recall / per_rule_denominator,
+                torch.zeros_like(per_rule_denominator),
+            )
             
-            # Overall metrics
-            metrics["rule_f1_micro"] = f1_score(
-                rule_labels.numpy(), rule_preds.numpy(), average="micro", zero_division=0
-            )
-            metrics["rule_f1_macro"] = f1_score(
-                rule_labels.numpy(), rule_preds.numpy(), average="macro", zero_division=0
-            )
+            metrics["rule_precision_micro"] = rule_precision_micro
+            metrics["rule_recall_micro"] = rule_recall_micro
+            metrics["rule_f1_micro"] = rule_f1_micro
+            metrics["rule_f1_macro"] = per_rule_f1_values.mean().item()
             
             # Per-rule metrics
             per_rule_f1 = {}
             for i in range(NUM_RULES):
-                rule_f1 = f1_score(
-                    rule_labels[:, i].numpy(), rule_preds[:, i].numpy(), zero_division=0
-                )
-                if rule_labels[:, i].sum() > 0:  # Only report rules that appear in data
-                    per_rule_f1[INDEX_TO_RULE[i]] = round(rule_f1, 4)
+                if rule_label_count[i] > 0:  # Only report rules that appear in data
+                    per_rule_f1[INDEX_TO_RULE[i]] = round(per_rule_f1_values[i].item(), 4)
             
             # Top 5 best and worst performing rules
             sorted_rules = sorted(per_rule_f1.items(), key=lambda x: x[1], reverse=True)
@@ -389,14 +470,38 @@ class Trainer:
         epochs: int = 100,
         patience: int = 10,
         save_path: Optional[Path] = None,
+        last_save_path: Optional[Path] = None,
         hparams: Optional[Dict] = None,
+        resume_from: Optional[Path] = None,
     ) -> Dict:
         """Full training loop with early stopping."""
-        best_val_f1 = -1.0
+        best_metric_value = -1.0
         patience_counter = 0
         has_saved = False
+        start_epoch = 0
+
+        if resume_from is not None and resume_from.exists():
+            checkpoint = torch.load(resume_from, map_location=self.device, weights_only=False)
+            self.model.load_state_dict(checkpoint["model_state_dict"])
+            if "optimizer_state_dict" in checkpoint:
+                self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+            start_epoch = int(checkpoint.get("epoch", -1)) + 1
+            best_metric_value = checkpoint.get(
+                "selection_metric_value", checkpoint.get("val_f1", best_metric_value)
+            )
+            checkpoint_metric = checkpoint.get("selection_metric", self.selection_metric)
+            if checkpoint_metric != self.selection_metric:
+                print(
+                    f"Warning: checkpoint was selected by {checkpoint_metric}, "
+                    f"but this run is selecting by {self.selection_metric}"
+                )
+            has_saved = True
+            print(
+                f"Resuming training from {resume_from} at epoch {start_epoch + 1} "
+                f"(best {self.selection_metric}={best_metric_value:.4f})"
+            )
         
-        for epoch in range(epochs):
+        for epoch in range(start_epoch, epochs):
             train_metrics = self.train_epoch(train_loader)
             
             log_str = f"Epoch {epoch+1}/{epochs}"
@@ -416,42 +521,78 @@ class Trainer:
             if val_loader is not None:
                 val_metrics = self.evaluate(val_loader)
                 log_str += f" || Val Loss: {val_metrics['loss']:.4f}"
-                log_str += f" | Val Node F1: {val_metrics.get('node_f1_pos', 0):.4f}"
+                log_str += f" | Val Node P/R/F1: {val_metrics.get('node_precision', 0):.4f}/{val_metrics.get('node_recall', 0):.4f}/{val_metrics.get('node_f1_pos', 0):.4f}"
                 log_str += f" | Val Graph F1: {val_metrics.get('graph_f1', 0):.4f}"
                 
                 if "rule_f1_micro" in val_metrics:
-                    log_str += f" | Rule F1(micro): {val_metrics['rule_f1_micro']:.4f}"
+                    log_str += (
+                        " | Rule P/R/F1(micro): "
+                        f"{val_metrics.get('rule_precision_micro', 0):.4f}/"
+                        f"{val_metrics.get('rule_recall_micro', 0):.4f}/"
+                        f"{val_metrics['rule_f1_micro']:.4f}"
+                    )
                 
                 self.history["val_node_acc"].append(val_metrics.get("node_acc", 0))
                 self.history["val_graph_acc"].append(val_metrics.get("graph_acc", 0))
-                self.history["val_f1"].append(val_metrics.get("graph_f1", 0))
+                self.history["val_node_precision"].append(val_metrics.get("node_precision", 0))
+                self.history["val_node_recall"].append(val_metrics.get("node_recall", 0))
+                self.history["val_node_f1"].append(val_metrics.get("node_f1_pos", 0))
+                self.history["val_rule_precision_micro"].append(val_metrics.get("rule_precision_micro", 0))
+                self.history["val_rule_recall_micro"].append(val_metrics.get("rule_recall_micro", 0))
+                self.history["val_rule_f1_micro"].append(val_metrics.get("rule_f1_micro", 0))
                 
-                # Learning rate scheduling on rule F1 micro (best overall metric)
-                current_f1 = val_metrics.get("rule_f1_micro", val_metrics.get("node_f1_pos", 0))
-                self.scheduler.step(current_f1)
+                if self.selection_metric not in val_metrics:
+                    available = ", ".join(sorted(val_metrics.keys()))
+                    raise ValueError(
+                        f"Selection metric '{self.selection_metric}' was not produced. "
+                        f"Available validation metrics: {available}"
+                    )
+                current_metric = val_metrics[self.selection_metric]
+                self.history["val_f1"].append(current_metric)
                 
-                # Early stopping based on rule F1
-                if current_f1 > best_val_f1:
-                    best_val_f1 = current_f1
+                self.scheduler.step(current_metric)
+                
+                if current_metric > best_metric_value:
+                    best_metric_value = current_metric
                     patience_counter = 0
                     if save_path:
                         checkpoint = {
                             "epoch": epoch,
                             "model_state_dict": self.model.state_dict(),
                             "optimizer_state_dict": self.optimizer.state_dict(),
-                            "val_f1": best_val_f1,
+                            "val_f1": best_metric_value,
+                            "selection_metric": self.selection_metric,
+                            "selection_metric_value": best_metric_value,
                         }
                         if hparams:
                             checkpoint["hparams"] = hparams
                         torch.save(checkpoint, save_path)
                         has_saved = True
-                        print(f"  -> Saved best model (F1={best_val_f1:.4f})")
+                        print(
+                            f"  -> Saved best model "
+                            f"({self.selection_metric}={best_metric_value:.4f})"
+                        )
                 else:
                     patience_counter += 1
                     if patience_counter >= patience:
                         print(f"\nEarly stopping at epoch {epoch+1}")
                         break
+
+                if last_save_path:
+                    checkpoint = {
+                        "epoch": epoch,
+                        "model_state_dict": self.model.state_dict(),
+                        "optimizer_state_dict": self.optimizer.state_dict(),
+                        "val_f1": best_metric_value,
+                        "selection_metric": self.selection_metric,
+                        "selection_metric_value": best_metric_value,
+                        "last_metric_value": current_metric,
+                    }
+                    if hparams:
+                        checkpoint["hparams"] = hparams
+                    torch.save(checkpoint, last_save_path)
             
+            self.clear_device_cache()
             print(log_str)
         
         # Save final model if none was saved
@@ -460,20 +601,32 @@ class Trainer:
                 "epoch": epochs - 1,
                 "model_state_dict": self.model.state_dict(),
                 "optimizer_state_dict": self.optimizer.state_dict(),
-                "val_f1": best_val_f1,
+                "val_f1": best_metric_value,
+                "selection_metric": self.selection_metric,
+                "selection_metric_value": best_metric_value,
             }
             if hparams:
                 checkpoint["hparams"] = hparams
             torch.save(checkpoint, save_path)
-            print(f"  -> Saved final model (F1={best_val_f1:.4f})")
+            print(f"  -> Saved final model ({self.selection_metric}={best_metric_value:.4f})")
         
         return self.history
+    
+    # Fix for `leaked semaphore objects`
+    def clear_device_cache(self):
+        """Release cached accelerator memory where supported."""
+        if self.device == "mps" and hasattr(torch, "mps"):
+            torch.mps.empty_cache()
+        elif self.device == "cuda":
+            torch.cuda.empty_cache()
     
     def load_best(self, save_path: Path):
         """Load best model checkpoint."""
         checkpoint = torch.load(save_path, map_location=self.device, weights_only=False)
         self.model.load_state_dict(checkpoint["model_state_dict"])
-        print(f"Loaded best model from epoch {checkpoint['epoch']} (F1={checkpoint['val_f1']:.4f})")
+        metric_name = checkpoint.get("selection_metric", "val_f1")
+        metric_value = checkpoint.get("selection_metric_value", checkpoint.get("val_f1", 0.0))
+        print(f"Loaded best model from epoch {checkpoint['epoch']} ({metric_name}={metric_value:.4f})")
 
 
 def create_data_loaders(

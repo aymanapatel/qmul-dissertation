@@ -23,6 +23,7 @@ import torch.nn.functional as F
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from feature_extractor import FeatureExtractor
+from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM
 from models import DOMAttentionNet
 from wcag_rules import INDEX_TO_RULE, NUM_RULES
 
@@ -151,6 +152,13 @@ def main():
         "--device", type=str, default="auto", help="Device (auto, mps, cuda, cpu)"
     )
     parser.add_argument(
+        "--graph-source",
+        type=str,
+        default=GRAPH_SOURCE_DOM,
+        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
+        help="Graph source to build: dom is current, a11y-tree is reserved for future work",
+    )
+    parser.add_argument(
         "--top-k",
         type=int,
         default=20,
@@ -190,12 +198,20 @@ def main():
     print(f"HTML: {html_path}")
     print(f"Model: {model_path}")
     print(f"Device: {device}")
+    print(f"Graph source: {args.graph_source}")
     print()
 
     # Load model
     print("Loading model...")
     checkpoint = torch.load(model_path, map_location=device, weights_only=False)
     hparams = checkpoint.get("hparams", {})
+    model_graph_source = hparams.get("graph_source", GRAPH_SOURCE_DOM)
+    if model_graph_source != args.graph_source:
+        print(
+            f"Error: Model was trained with graph_source={model_graph_source}, "
+            f"but prediction requested graph_source={args.graph_source}"
+        )
+        sys.exit(1)
 
     # Process page
     print("Processing HTML page...")
@@ -204,6 +220,7 @@ def main():
         html_path=html_path,
         axe_report_path=axe_path,
         extract_visual=args.visual,
+        graph_source=args.graph_source,
     )
     has_real_ground_truth = bool(args.axe) and bool(
         getattr(page.data, "has_ground_truth", False)
@@ -372,6 +389,7 @@ def main():
                     (filtered_probs > args.threshold).sum().item()
                 ),
                 "threshold": args.threshold,
+                "graph_source": getattr(page.data, "graph_source", args.graph_source),
             },
             "predicted_violations": report_entries,
         }

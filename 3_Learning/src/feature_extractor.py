@@ -15,6 +15,7 @@ import torch
 from playwright.sync_api import sync_playwright
 from sentence_transformers import SentenceTransformer
 
+from graph_sources import GRAPH_SOURCE_DOM, apply_visual_edges, build_graph
 from html_graph_builder import DOMNode
 
 
@@ -406,15 +407,15 @@ class FeatureExtractor:
         html_path: Path,
         axe_report_path: Optional[Path] = None,
         extract_visual: bool = True,
+        graph_source: str = GRAPH_SOURCE_DOM,
     ) -> "ProcessedPage":
         """
         Full pipeline: parse HTML, extract text, visual, and axe features.
         """
-        from html_graph_builder import parse_html_to_graph, add_spatial_edges
-        
-        # Parse HTML to graph
-        data, node_map = parse_html_to_graph(html_path)
-        print(f"Parsed {len(node_map)} DOM nodes")
+        graph_result = build_graph(html_path, graph_source=graph_source)
+        data = graph_result.data
+        node_map = graph_result.node_map
+        print(f"Built {graph_source} graph: {len(node_map)} nodes ({graph_result.description})")
         
         # Extract text embeddings
         print("Extracting text embeddings...")
@@ -434,8 +435,7 @@ class FeatureExtractor:
                 new_attrs = node.get_attribute_features()
                 data.x[node_id, :new_attrs.shape[0]] = new_attrs
             
-            # Add spatial edges
-            data = add_spatial_edges(data, node_map)
+            data = apply_visual_edges(data, node_map, graph_source=graph_source)
         
         # Load axe labels
         if axe_report_path and axe_report_path.exists():
@@ -471,6 +471,7 @@ class ProcessedPage:
             "data": self.data,
             "html_path": str(self.html_path),
             "num_nodes": len(self.node_map),
+            "graph_source": getattr(self.data, "graph_source", GRAPH_SOURCE_DOM),
         }, output_path)
         print(f"Saved processed graph to {output_path}")
     
@@ -478,8 +479,11 @@ class ProcessedPage:
     def load(cls, path: Path):
         """Load processed graph from disk."""
         checkpoint = torch.load(path, weights_only=False)
+        data = checkpoint["data"]
+        if not hasattr(data, "graph_source"):
+            data.graph_source = checkpoint.get("graph_source", GRAPH_SOURCE_DOM)
         return cls(
-            data=checkpoint["data"],
+            data=data,
             node_map={},  # Reconstruct if needed
             html_path=Path(checkpoint["html_path"]),
         )

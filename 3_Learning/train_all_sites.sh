@@ -22,5 +22,6 @@ python scripts/train_multi_site.py \
   --hard-neg-weight 10.0 \
   --hard-pos-weight 5.0 \
   --device auto \
+  --graph-source dom \
   --resume \
   "$@"
