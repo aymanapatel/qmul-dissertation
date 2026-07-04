@@ -71,7 +71,7 @@ class FeatureExtractor:
             
             # Load HTML file
             page.goto(f"file://{html_path.resolve()}")
-            page.wait_for_load_state("networkidle")
+            page.wait_for_load_state("domcontentloaded")
             
             # Get viewport size
             viewport_size = page.viewport_size
@@ -248,6 +248,24 @@ class FeatureExtractor:
             if not node.is_text
         }
 
+        def nearest_accessible_node_id(element) -> Optional[int]:
+            """Project a DOM element to the closest node retained in the graph."""
+            direct = element_to_node.get(id(element))
+            if direct is not None:
+                return direct
+
+            for parent in getattr(element, "parents", []):
+                parent_id = element_to_node.get(id(parent))
+                if parent_id is not None:
+                    return parent_id
+
+            for child in getattr(element, "descendants", []):
+                child_id = element_to_node.get(id(child))
+                if child_id is not None:
+                    return child_id
+
+            return None
+
         def apply_label(node_id: int, rule_id: str, rule_idx: int, impact: str) -> None:
             node_labels_binary[node_id] = 1
             node_labels_multi[node_id, rule_idx] = 1.0
@@ -294,12 +312,12 @@ class FeatureExtractor:
 
                 exact_node_ids = []
                 for elem in selected_elements:
-                    node_id = element_to_node.get(id(elem))
+                    node_id = nearest_accessible_node_id(elem)
                     if node_id is not None:
                         exact_node_ids.append(node_id)
 
                 if exact_node_ids:
-                    for nid in exact_node_ids:
+                    for nid in sorted(set(exact_node_ids)):
                         apply_label(nid, rule_id, rule_idx, impact)
                     matched = True
                     matched_count += 1
