@@ -111,23 +111,23 @@ class DOMNode:
         features = []
         
         # Basic presence flags
-        features.append(1.0 if self.attrs.get("id") else 0.0)
-        features.append(1.0 if self.attrs.get("class") else 0.0)
-        features.append(1.0 if self.attrs.get("href") else 0.0)
-        features.append(1.0 if self.attrs.get("src") else 0.0)
-        features.append(1.0 if self.attrs.get("alt") else 0.0)
-        features.append(1.0 if self.attrs.get("title") else 0.0)
-        features.append(1.0 if self.attrs.get("type") else 0.0)
-        features.append(1.0 if self.attrs.get("name") else 0.0)
-        features.append(1.0 if self.attrs.get("value") else 0.0)
-        features.append(1.0 if self.attrs.get("placeholder") else 0.0)
-        features.append(1.0 if self.attrs.get("for") else 0.0)
-        features.append(1.0 if self.attrs.get("rel") else 0.0)
-        features.append(1.0 if self.attrs.get("target") else 0.0)
+        features.append(1.0 if "id" in self.attrs else 0.0)
+        features.append(1.0 if "class" in self.attrs else 0.0)
+        features.append(1.0 if "href" in self.attrs else 0.0)
+        features.append(1.0 if "src" in self.attrs else 0.0)
+        features.append(1.0 if "alt" in self.attrs else 0.0)
+        features.append(1.0 if "title" in self.attrs else 0.0)
+        features.append(1.0 if "type" in self.attrs else 0.0)
+        features.append(1.0 if "name" in self.attrs else 0.0)
+        features.append(1.0 if "value" in self.attrs else 0.0)
+        features.append(1.0 if "placeholder" in self.attrs else 0.0)
+        features.append(1.0 if "for" in self.attrs else 0.0)
+        features.append(1.0 if "rel" in self.attrs else 0.0)
+        features.append(1.0 if "target" in self.attrs else 0.0)
         
         # ARIA attributes
         for attr in ARIA_ATTRIBUTES:
-            features.append(1.0 if self.attrs.get(attr) else 0.0)
+            features.append(1.0 if attr in self.attrs else 0.0)
         
         # Semantic role (one-hot-ish)
         role = self.attrs.get("role", "").lower()

@@ -1,0 +1,32 @@
+{
+  "model_dir": "models_a11y_v5",
+  "checkpoint": "models_a11y_v5/best_model.pt",
+  "graph_source": "a11y-tree",
+  "validation_graphs": 102,
+  "recommended": {
+    "graph_threshold": 0.35,
+    "node_threshold": 0.45,
+    "rule_threshold": 0.25
+  },
+  "best_graph": {
+    "precision": 0.7938144329896907,
+    "recall": 1.0,
+    "f1": 0.8850574712643678,
+    "accuracy": 0.803921568627451,
+    "threshold": 0.3
+  },
+  "best_node_gated": {
+    "precision": 0.45474613686534215,
+    "recall": 0.46292134831460674,
+    "f1": 0.45879732739420936,
+    "node_threshold": 0.45,
+    "graph_threshold": 0.35
+  },
+  "best_rule_gated": {
+    "precision": 0.37,
+    "recall": 0.0824665676077266,
+    "f1": 0.13487241798298907,
+    "rule_threshold": 0.25,
+    "graph_threshold": 0.35
+  }
+}

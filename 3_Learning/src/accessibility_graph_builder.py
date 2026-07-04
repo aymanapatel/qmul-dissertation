@@ -156,6 +156,8 @@ def _infer_role(element) -> str:
         return explicit_role.split()[0]
 
     tag = element.name.lower() if element.name else ""
+    if tag == "img" and element.attrs.get("alt") == "":
+        return "presentation"
     if tag in {"h1", "h2", "h3", "h4", "h5", "h6"}:
         return "heading"
     if tag == "input":
@@ -297,4 +299,3 @@ def parse_html_to_a11y_graph(html_path: Path) -> Tuple[Data, Dict[int, DOMNode]]
     )
 
     return data, node_map
-
