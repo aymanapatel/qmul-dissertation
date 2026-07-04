@@ -194,25 +194,25 @@ class DOMAttentionNet(torch.nn.Module):
         graph_logits = self.graph_classifier(graph_x)
         
         return node_logits, node_rule_logits, graph_logits
-    
-    def predict_nodes(self, x, edge_index, tag_indices):
-        """Convenience method for binary node-level inference."""
-        node_logits, _, _ = self.forward(x, edge_index, tag_indices)
-        return node_logits.argmax(dim=-1)
-    
-    def predict_rules(self, x, edge_index, tag_indices, threshold=0.5):
-        """Convenience method for multi-label rule inference."""
-        _, node_rule_logits, _ = self.forward(x, edge_index, tag_indices)
-        probs = torch.sigmoid(node_rule_logits)
-        return (probs > threshold).long()
-    
-    def predict_graph(self, x, edge_index, tag_indices, batch=None):
-        """Convenience method for graph-level inference."""
-        _, _, graph_logits = self.forward(x, edge_index, tag_indices, batch)
-        return graph_logits.argmax(dim=-1)
+    # TODO: Remove dead code
+    # def predict_nodes(self, x, edge_index, tag_indices):
+    #     """Convenience method for binary node-level inference."""
+    #     node_logits, _, _ = self.forward(x, edge_index, tag_indices)
+    #     return node_logits.argmax(dim=-1)
+    #
+    # def predict_rules(self, x, edge_index, tag_indices, threshold=0.5):
+    #     """Convenience method for multi-label rule inference."""
+    #     _, node_rule_logits, _ = self.forward(x, edge_index, tag_indices)
+    #     probs = torch.sigmoid(node_rule_logits)
+    #     return (probs > threshold).long()
+    #
+    # def predict_graph(self, x, edge_index, tag_indices, batch=None):
+    #     """Convenience method for graph-level inference."""
+    #     _, _, graph_logits = self.forward(x, edge_index, tag_indices, batch)
+    #     return graph_logits.argmax(dim=-1)
 
 
-# Keep DOMGCN for backward compatibility
+# TODO: Keep DOMGCN for backward compatibility
 class DOMGCN(torch.nn.Module):
     """Legacy GCN model - kept for loading old checkpoints."""
     

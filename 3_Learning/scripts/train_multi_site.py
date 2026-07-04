@@ -57,7 +57,7 @@ def process_site(
 ) -> Optional[Data]:
     """Process a single site into a PyG Data object. Cache to disk."""
     site_name = site_dir.name
-    cache_path = output_dir / f"{site_name}.pt"
+    cache_path = output_dir / f"{site_name}_{graph_source}.pt"
 
     if resume and cache_path.exists():
         try:
@@ -206,7 +206,7 @@ def main():
         type=str,
         default=GRAPH_SOURCE_DOM,
         choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
-        help="Graph source to build: dom is current, a11y-tree is reserved for future work",
+        help="Graph source to build: dom or a11y-tree",
     )
     parser.add_argument("--resume", action="store_true", help="Skip already-cached graphs")
     # Model
@@ -223,7 +223,7 @@ def main():
     parser.add_argument("--patience", type=int, default=30, help="Early stopping patience")
     parser.add_argument("--node-loss-weight", type=float, default=1.0, help="Weight for node-level loss")
     parser.add_argument("--rule-loss-weight", type=float, default=5.0, help="Weight for rule-level loss")
-    parser.add_argument("--graph-loss-weight", type=float, default=0.5, help="Weight for graph-level loss")
+    parser.add_argument("--graph-loss-weight", type=float, default=1.0, help="Weight for graph-level loss")
     parser.add_argument("--focal-gamma", type=float, default=2.0, help="Focal loss gamma")
     parser.add_argument("--rule-label-smoothing", type=float, default=0.0, help="Smooth positive rule labels only; absent rules stay 0")
     parser.add_argument("--hard-neg-weight", type=float, default=10.0, help="Hard negative mining weight")
@@ -232,7 +232,10 @@ def main():
     parser.add_argument("--rule-pos-weight", type=float, default=50.0, help="Positive class weight for rule loss")
     parser.add_argument("--node-threshold", type=float, default=0.5, help="Validation threshold for node violation predictions")
     parser.add_argument("--rule-threshold", type=float, default=0.5, help="Validation threshold for rule predictions")
-    parser.add_argument("--selection-metric", type=str, default="node_f1_pos", help="Validation metric for scheduler, checkpointing, and early stopping")
+    parser.add_argument("--selection-metric", type=str, default="node_f1_pos_plus_graph_recall", help="Validation metric for scheduler, checkpointing, and early stopping")
+    parser.add_argument("--clean-page-node-loss-weight", type=float, default=0.5, help="Penalty for high node violation probabilities on clean pages")
+    parser.add_argument("--positive-page-node-evidence-loss-weight", type=float, default=0.5, help="Penalty when violating pages have no strong node evidence")
+    parser.add_argument("--graph-node-consistency-loss-weight", type=float, default=0.5, help="Penalty when graph probability disagrees with strongest node evidence")
     parser.add_argument("--device", type=str, default="auto", help="Device (auto, mps, cuda, cpu)")
     parser.add_argument("--resume-training", action="store_true", help="Resume model and optimizer state from the training checkpoint")
     parser.add_argument("--resume-checkpoint", type=str, default=None, help="Checkpoint path for --resume-training (default: model-dir/last_model.pt, falling back to best_model.pt)")
@@ -427,6 +430,9 @@ def main():
         rule_threshold=args.rule_threshold,
         selection_metric=args.selection_metric,
         cache_clear_interval=args.clear_cache_every,
+        clean_page_node_loss_weight=args.clean_page_node_loss_weight,
+        positive_page_node_evidence_loss_weight=args.positive_page_node_evidence_loss_weight,
+        graph_node_consistency_loss_weight=args.graph_node_consistency_loss_weight,
     )
 
     hparams = {
@@ -441,6 +447,9 @@ def main():
         "dropout": args.dropout,
         "pooling": args.pooling,
         "graph_source": args.graph_source,
+        "node_loss_weight": args.node_loss_weight,
+        "rule_loss_weight": args.rule_loss_weight,
+        "graph_loss_weight": args.graph_loss_weight,
         "node_pos_weight_cap": args.node_pos_weight_cap,
         "rule_pos_weight": args.rule_pos_weight,
         "rule_label_smoothing": args.rule_label_smoothing,
@@ -448,6 +457,9 @@ def main():
         "rule_threshold": args.rule_threshold,
         "selection_metric": args.selection_metric,
         "clear_cache_every": args.clear_cache_every,
+        "clean_page_node_loss_weight": args.clean_page_node_loss_weight,
+        "positive_page_node_evidence_loss_weight": args.positive_page_node_evidence_loss_weight,
+        "graph_node_consistency_loss_weight": args.graph_node_consistency_loss_weight,
     }
 
     save_path = model_dir / "best_model.pt"
@@ -500,6 +512,8 @@ def main():
         print(f"Test Rule F1(macro): {test_metrics['rule_f1_macro']:.4f}")
     if "graph_acc" in test_metrics:
         print(f"Test Graph Acc:     {test_metrics['graph_acc']:.4f}")
+        print(f"Test Graph Precision:{test_metrics['graph_precision']:.4f}")
+        print(f"Test Graph Recall:  {test_metrics['graph_recall']:.4f}")
         print(f"Test Graph F1:      {test_metrics['graph_f1']:.4f}")
     
     # Per-rule breakdown

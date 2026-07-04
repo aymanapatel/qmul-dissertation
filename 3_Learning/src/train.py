@@ -19,6 +19,25 @@ from models import DOMAttentionNet
 from wcag_rules import NUM_RULES, INDEX_TO_RULE
 
 
+def max_node_probability_by_graph(
+    node_probs: torch.Tensor,
+    batch: Optional[torch.Tensor],
+    num_graphs: int,
+) -> torch.Tensor:
+    """Return the strongest node violation probability for each graph."""
+    if batch is None:
+        return node_probs.max().reshape(1)
+
+    values = []
+    for graph_idx in range(num_graphs):
+        graph_node_probs = node_probs[batch == graph_idx]
+        if graph_node_probs.numel() == 0:
+            values.append(torch.tensor(0.0, device=node_probs.device, dtype=node_probs.dtype))
+        else:
+            values.append(graph_node_probs.max())
+    return torch.stack(values)
+
+
 def get_device(prefer_mps: bool = True) -> str:
     """Get the best available device."""
     if prefer_mps and torch.backends.mps.is_available():
@@ -96,7 +115,7 @@ class Trainer:
         weight_decay: float = 1e-5,
         node_loss_weight: float = 1.0,
         rule_loss_weight: float = 5.0,
-        graph_loss_weight: float = 0.5,
+        graph_loss_weight: float = 1.0,
         use_focal_loss: bool = True,
         focal_alpha: float = 0.95,
         focal_gamma: float = 2.0,
@@ -109,8 +128,11 @@ class Trainer:
         rule_pos_weight: float = 50.0,
         node_threshold: float = 0.5,
         rule_threshold: float = 0.5,
-        selection_metric: str = "node_f1_pos",
+        selection_metric: str = "node_f1_pos_plus_graph_recall",
         cache_clear_interval: int = 0,
+        clean_page_node_loss_weight: float = 0.5,
+        positive_page_node_evidence_loss_weight: float = 0.5,
+        graph_node_consistency_loss_weight: float = 0.5,
     ):
         if device == "auto":
             device = get_device()
@@ -137,6 +159,9 @@ class Trainer:
         self.rule_threshold = rule_threshold
         self.selection_metric = selection_metric
         self.cache_clear_interval = cache_clear_interval
+        self.clean_page_node_loss_weight = clean_page_node_loss_weight
+        self.positive_page_node_evidence_loss_weight = positive_page_node_evidence_loss_weight
+        self.graph_node_consistency_loss_weight = graph_node_consistency_loss_weight
         
         if use_focal_loss:
             self.node_criterion = FocalLoss(alpha=focal_alpha, gamma=focal_gamma)
@@ -160,6 +185,8 @@ class Trainer:
             "val_rule_precision_micro": [],
             "val_rule_recall_micro": [],
             "val_rule_f1_micro": [],
+            "val_graph_precision": [],
+            "val_graph_recall": [],
         }
     
     def compute_loss_from_outputs(
@@ -198,12 +225,46 @@ class Trainer:
             metrics["node_pos_pred"] = num_pos_pred
             metrics["node_pos_true"] = num_pos_true
             metrics["node_pos_weight"] = weights[1].item() if weights is not None else 0.0
+
+            clean_page_loss = torch.tensor(0.0, device=self.device)
+            positive_page_node_evidence_loss = torch.tensor(0.0, device=self.device)
+            if (
+                (self.clean_page_node_loss_weight > 0 or self.positive_page_node_evidence_loss_weight > 0)
+                and hasattr(data, "y")
+                and data.y is not None
+                and hasattr(data, "batch")
+            ):
+                node_probs = F.softmax(node_logits, dim=-1)[:, 1]
+                clean_graph_mask = data.y[data.batch] == 0
+                if self.clean_page_node_loss_weight > 0 and clean_graph_mask.any():
+                    clean_page_loss = node_probs[clean_graph_mask].mean()
+                    total_loss += self.clean_page_node_loss_weight * clean_page_loss
+                if self.positive_page_node_evidence_loss_weight > 0:
+                    node_evidence_probs = max_node_probability_by_graph(
+                        node_probs=node_probs,
+                        batch=data.batch,
+                        num_graphs=data.y.numel(),
+                    )
+                    positive_graph_mask = data.y == 1
+                    if positive_graph_mask.any():
+                        positive_page_node_evidence_loss = F.binary_cross_entropy(
+                            node_evidence_probs[positive_graph_mask],
+                            torch.ones_like(node_evidence_probs[positive_graph_mask]),
+                        )
+                        total_loss += (
+                            self.positive_page_node_evidence_loss_weight
+                            * positive_page_node_evidence_loss
+                        )
+            metrics["clean_page_node_loss"] = clean_page_loss.item()
+            metrics["positive_page_node_evidence_loss"] = positive_page_node_evidence_loss.item()
         else:
             metrics["node_loss"] = 0.0
             metrics["node_acc"] = 0.0
             metrics["node_pos_pred"] = 0
             metrics["node_pos_true"] = 0
             metrics["node_pos_weight"] = 0.0
+            metrics["clean_page_node_loss"] = 0.0
+            metrics["positive_page_node_evidence_loss"] = 0.0
         
         # Multi-label rule loss with hard negative mining and class balancing
         if hasattr(data, "node_y_multi") and data.node_y_multi is not None:
@@ -254,9 +315,27 @@ class Trainer:
             total_loss += self.graph_loss_weight * graph_loss
             metrics["graph_loss"] = graph_loss.item()
             metrics["graph_acc"] = graph_acc
+
+            graph_node_consistency_loss = torch.tensor(0.0, device=self.device)
+            if (
+                self.graph_node_consistency_loss_weight > 0
+                and hasattr(data, "node_y")
+                and data.node_y is not None
+            ):
+                node_probs = F.softmax(node_logits, dim=-1)[:, 1]
+                node_evidence_probs = max_node_probability_by_graph(
+                    node_probs=node_probs,
+                    batch=data.batch if hasattr(data, "batch") else None,
+                    num_graphs=data.y.numel(),
+                )
+                graph_probs = F.softmax(graph_logits, dim=-1)[:, 1]
+                graph_node_consistency_loss = F.mse_loss(graph_probs, node_evidence_probs)
+                total_loss += self.graph_node_consistency_loss_weight * graph_node_consistency_loss
+            metrics["graph_node_consistency_loss"] = graph_node_consistency_loss.item()
         else:
             metrics["graph_loss"] = 0.0
             metrics["graph_acc"] = 0.0
+            metrics["graph_node_consistency_loss"] = 0.0
         
         metrics["loss"] = total_loss.item()
         
@@ -295,6 +374,9 @@ class Trainer:
             "node_pos_pred": 0,
             "node_pos_true": 0,
             "node_pos_weight": 0.0,
+            "clean_page_node_loss": 0.0,
+            "positive_page_node_evidence_loss": 0.0,
+            "graph_node_consistency_loss": 0.0,
         }
         
         for batch_idx, data in enumerate(loader):
@@ -457,6 +539,10 @@ class Trainer:
             metrics["graph_f1"] = f1_score(graph_labels, graph_preds, average="weighted", zero_division=0)
             metrics["graph_precision"] = precision_score(graph_labels, graph_preds, zero_division=0)
             metrics["graph_recall"] = recall_score(graph_labels, graph_preds, zero_division=0)
+            metrics["node_f1_pos_plus_graph_recall"] = (
+                0.8 * metrics.get("node_f1_pos", 0.0)
+                + 0.2 * metrics["graph_recall"]
+            )
             
             if len(torch.unique(graph_labels)) > 1:
                 metrics["graph_auc"] = roc_auc_score(graph_labels, graph_probs)
@@ -513,6 +599,12 @@ class Trainer:
             log_str += f" | HardPos: {train_metrics['hard_pos']:.0f}"
             log_str += f" | PosWeight: {train_metrics['pos_weight_mean']:.1f}"
             log_str += f" | NodeW: {train_metrics['node_pos_weight']:.1f}"
+            if self.clean_page_node_loss_weight > 0:
+                log_str += f" | CleanNodeLoss: {train_metrics['clean_page_node_loss']:.4f}"
+            if self.positive_page_node_evidence_loss_weight > 0:
+                log_str += f" | PosPageNodeLoss: {train_metrics['positive_page_node_evidence_loss']:.4f}"
+            if self.graph_node_consistency_loss_weight > 0:
+                log_str += f" | GraphNodeLoss: {train_metrics['graph_node_consistency_loss']:.4f}"
             
             self.history["train_loss"].append(train_metrics["loss"])
             self.history["train_node_acc"].append(train_metrics["node_acc"])
@@ -522,7 +614,12 @@ class Trainer:
                 val_metrics = self.evaluate(val_loader)
                 log_str += f" || Val Loss: {val_metrics['loss']:.4f}"
                 log_str += f" | Val Node P/R/F1: {val_metrics.get('node_precision', 0):.4f}/{val_metrics.get('node_recall', 0):.4f}/{val_metrics.get('node_f1_pos', 0):.4f}"
-                log_str += f" | Val Graph F1: {val_metrics.get('graph_f1', 0):.4f}"
+                log_str += (
+                    " | Val Graph P/R/F1: "
+                    f"{val_metrics.get('graph_precision', 0):.4f}/"
+                    f"{val_metrics.get('graph_recall', 0):.4f}/"
+                    f"{val_metrics.get('graph_f1', 0):.4f}"
+                )
                 
                 if "rule_f1_micro" in val_metrics:
                     log_str += (
@@ -537,6 +634,8 @@ class Trainer:
                 self.history["val_node_precision"].append(val_metrics.get("node_precision", 0))
                 self.history["val_node_recall"].append(val_metrics.get("node_recall", 0))
                 self.history["val_node_f1"].append(val_metrics.get("node_f1_pos", 0))
+                self.history["val_graph_precision"].append(val_metrics.get("graph_precision", 0))
+                self.history["val_graph_recall"].append(val_metrics.get("graph_recall", 0))
                 self.history["val_rule_precision_micro"].append(val_metrics.get("rule_precision_micro", 0))
                 self.history["val_rule_recall_micro"].append(val_metrics.get("rule_recall_micro", 0))
                 self.history["val_rule_f1_micro"].append(val_metrics.get("rule_f1_micro", 0))

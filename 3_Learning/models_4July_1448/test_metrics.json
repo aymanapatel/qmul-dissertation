@@ -1,0 +1,62 @@
+{
+  "loss": 3.9602985932276797,
+  "node_acc": 0.8586194987171897,
+  "node_f1_macro": 0.6051011704245068,
+  "node_f1_pos": 0.28869306193372224,
+  "node_precision": 0.1835832675611681,
+  "node_recall": 0.6753774680603949,
+  "rule_precision_micro": 0.17136294027565085,
+  "rule_recall_micro": 0.6325607687959299,
+  "rule_f1_micro": 0.26967104470418124,
+  "rule_f1_macro": 0.07292024791240692,
+  "top_rules": [
+    [
+      "document-title",
+      0.6316
+    ],
+    [
+      "svg-img-alt",
+      0.614
+    ],
+    [
+      "link-name",
+      0.5775
+    ],
+    [
+      "button-name",
+      0.5033
+    ],
+    [
+      "image-alt",
+      0.3739
+    ]
+  ],
+  "worst_rules": [
+    [
+      "frame-title",
+      0.0
+    ],
+    [
+      "input-button-name",
+      0.0
+    ],
+    [
+      "link-in-text-block",
+      0.0
+    ],
+    [
+      "list",
+      0.0
+    ],
+    [
+      "meta-viewport",
+      0.0
+    ]
+  ],
+  "graph_acc": 0.7019230769230769,
+  "graph_f1": 0.6889695210449928,
+  "graph_precision": 0.7654320987654321,
+  "graph_recall": 0.8378378378378378,
+  "node_f1_pos_plus_graph_recall": 0.3985220171145454,
+  "graph_auc": 0.718018018018018
+}
