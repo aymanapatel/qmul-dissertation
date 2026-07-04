@@ -1,0 +1,1181 @@
+{
+  "html_path": "/Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.impots.gouv.fr/0.html",
+  "model_path": "models_4July_1448/best_model.pt",
+  "summary": {
+    "total_nodes": 336,
+    "actionable_nodes": 334,
+    "graph_violation_probability": 0.6237,
+    "node_evidence_probability": 0.8753,
+    "page_violation_probability": 0.8753,
+    "graph_threshold": 0.5,
+    "page_prediction": "likely_violation",
+    "node_predictions_suppressed_by_page_gate": false,
+    "node_predictions_gated": false,
+    "predicted_violation_count": 11,
+    "candidate_warning_count": 12,
+    "threshold": 0.45,
+    "node_threshold": 0.45,
+    "rule_threshold": 0.5,
+    "graph_source": "a11y-tree"
+  },
+  "predicted_violations": [
+    {
+      "node_id": 133,
+      "tag": "img",
+      "probability": 0.8753,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/gestpas/gestpas.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7382
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 72,
+      "tag": "img",
+      "probability": 0.8634,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "alt": "",
+        "src": "/sites/default/files/media/cabcom/images/_banniere/facturation_electronique_logigramme/fe-num-tel.png",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7487
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 136,
+      "tag": "img",
+      "probability": 0.8601,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/entreprises/soutien_entreprises.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7368
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 142,
+      "tag": "img",
+      "probability": 0.8571,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/sp_plus/spplus.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7388
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 139,
+      "tag": "img",
+      "probability": 0.8504,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/gmbi/gmbi.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7378
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 145,
+      "tag": "img",
+      "probability": 0.8382,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/label_argent_num_appel.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7378
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 78,
+      "tag": "img",
+      "probability": 0.7566,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/professionnel/2026/aide_gnr_btp.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7157
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 84,
+      "tag": "img",
+      "probability": 0.7423,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/professionnel/2026/aide_gnr_agriculteurs.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7141
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 90,
+      "tag": "img",
+      "probability": 0.733,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/colloc/datavisualition_fdl.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7121
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 3,
+      "tag": "ul",
+      "probability": 0.6199,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "container",
+          "fr-skiplinks__list"
+        ],
+        "role": "list",
+        "aria-label": "Aller au contenu principal Menu principal Aller au champ \"Rechercher\" Contact"
+      },
+      "text_preview": "Aller au contenu principal Menu principal Aller au champ \"Rechercher\" Contact",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.4836
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1973
+        },
+        {
+          "rule_id": "aria-required-children",
+          "probability": 0.108
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 153,
+      "tag": "img",
+      "probability": 0.4736,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/_images/carte_proximite.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.6722
+        }
+      ],
+      "node_threshold": 0.45
+    }
+  ],
+  "candidate_warnings": [
+    {
+      "node_id": 85,
+      "tag": "ul",
+      "probability": 0.3499,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "fr-badges-group"
+        ],
+        "role": "list",
+        "aria-label": "\u00c0 la une Professionnel"
+      },
+      "text_preview": "\u00c0 la une Professionnel",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.344
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1636
+        },
+        {
+          "rule_id": "aria-required-children",
+          "probability": 0.1165
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 79,
+      "tag": "ul",
+      "probability": 0.3327,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "fr-badges-group"
+        ],
+        "role": "list",
+        "aria-label": "\u00c0 la une Professionnel"
+      },
+      "text_preview": "\u00c0 la une Professionnel",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.3352
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1545
+        },
+        {
+          "rule_id": "aria-required-children",
+          "probability": 0.1111
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 220,
+      "tag": "a",
+      "probability": 0.2988,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "/votre-avis-sur-le-site",
+        "title": "Votre avis sur le site",
+        "class": [
+          "fr-btn",
+          "fr-btn--secondary",
+          "fr-btns-group--center",
+          "pus-votre-avis"
+        ],
+        "role": "link",
+        "aria-label": "Votre avis sur le site"
+      },
+      "text_preview": "Votre avis sur le site",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3964
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 223,
+      "tag": "ul",
+      "probability": 0.2914,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "fr-btns-group",
+          "fr-btns-group--lg"
+        ],
+        "role": "list",
+        "aria-label": "Facebook Twitter-X Linkedin Instagram"
+      },
+      "text_preview": "Facebook Twitter-X Linkedin Instagram",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.1836
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.172
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 141,
+      "tag": "a",
+      "probability": 0.2778,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "/les-engagements-de-qualite-de-service",
+        "title": "Services publics +",
+        "role": "link",
+        "aria-label": "Services publics +"
+      },
+      "text_preview": "Services publics +",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.4697
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 71,
+      "tag": "a",
+      "probability": 0.263,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "/professionnel/je-passe-la-facturation-electronique",
+        "role": "link",
+        "aria-label": "notre rubrique d\u00e9di\u00e9e"
+      },
+      "text_preview": "notre rubrique d\u00e9di\u00e9e",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2717
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 13,
+      "tag": "button",
+      "probability": 0.2407,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "fr-btn--search",
+          "fr-btn"
+        ],
+        "data-fr-opened": "false",
+        "aria-controls": "modal-474",
+        "id": "button-475",
+        "title": "Rechercher",
+        "data-fr-js-modal-button": "true",
+        "role": "button",
+        "aria-label": "Rechercher"
+      },
+      "text_preview": "Rechercher",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2667
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 232,
+      "tag": "a",
+      "probability": 0.2292,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "/contacts",
+        "title": "Contact et prise de RDV",
+        "class": [
+          "fr-btn",
+          "fr-btn",
+          "fr-btn--secondary",
+          "fr-btn--icon-left",
+          "fr-icon-chat-3-line"
+        ],
+        "role": "link",
+        "aria-label": "Contact et prise de RDV"
+      },
+      "text_preview": "Contact et prise de RDV",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3994
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 57,
+      "tag": "main",
+      "probability": 0.2284,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "role": "main",
+        "id": "main-content",
+        "tabindex": "-1",
+        "class": [
+          "page--accueil"
+        ],
+        "aria-label": "Accueil impots.gouv.fr \u00c0 la une Particulier Professionnel Demande d'aide de 100\u00a0\u20ac pour les travailleurs \u00ab\u00a0grands rouleurs\u00a0\u00bb Publi\u00e9 le 27 mai 2026 V\u00e9rifiez votre \u00e9ligibilit\u00e9 pour pouvoir faire votre demande. Commencer la d\u00e9marche de demande de l'aide pour les travailleurs grands rouleurs Besoin d'aide ? Consultez notre foire aux questions et le pas-\u00e0-pas pour faire votre demande (PDF). Attention aux arnaques : \u00e0 l'issue de la demande d'aide, la DGFiP vous adresse un simple accus\u00e9 de r\u00e9ception avec le num\u00e9ro de votre demande. Ne cliquez sur aucun lien et ne r\u00e9pondez \u00e0 aucun message qui vous indique un montant d'aide ou qui vous r\u00e9clame des informations personnelles ou un n\u00b0 de carte bancaire. La facturation \u00e9lectronique : plus juste, plus simple, plus efficace. Je suis professionnel, je passe \u00e0 la facturation \u00e9lectronique Gr\u00e2ce \u00e0 notre questionnaire, acc\u00e9dez \u00e0 une s\u00e9lection personnalis\u00e9e de fiches pratiques pour passer \u00e0 la facturation \u00e9lectronique : Commencer le questionnaire Une question sur la facturation \u00e9lectronique ? Consultez notre rubrique d\u00e9di\u00e9e ou appelez le 0806 807 807 (Service gratuit + prix de l'appel) Les plateformes agr\u00e9\u00e9es Immatricul\u00e9es par l'\u00c9tat, les plateformes agr\u00e9\u00e9es assurent les op\u00e9rations d'\u00e9mission, transmission et de r\u00e9ception li\u00e9es \u00e0 la facturation \u00e9lectronique et fournissent les donn\u00e9es utiles \u00e0 l'administration. Je choisis une plateforme agr\u00e9\u00e9e \u00c0 la Une Aide pour les entreprises du secteur du b\u00e2timent et des travaux publics utilisant du gazole non routier Publi\u00e9 le 09/06/2026 \u00c0 la une Professionnel Aide pour l'acquisition de gazole non routier utilis\u00e9 pour la r\u00e9alisation de travaux agricoles ou forestiers Publi\u00e9 le 11/05/2026 \u00c0 la une Professionnel Visualisation de la fiscalit\u00e9 locale en 2025 L'outil de visualisation des donn\u00e9es de la fiscalit\u00e9 locale des particuliers et des professionnels de la DGFiP a \u00e9t\u00e9 enrichi des donn\u00e9es pour l'ann\u00e9e 2025. Publi\u00e9 le 29/05/2026 \u00c0 la une Communication g\u00e9n\u00e9rale Publication du rapport d\u2019activit\u00e9 2025 de la DGFiP Ce rapport d\u2019activit\u00e9 met en avant les r\u00e9sultats et chiffres cl\u00e9s de chacune des grandes missions de la DGFiP : gestion fiscale, comptabilit\u00e9 de l\u2019\u00c9tat, des collectivit\u00e9s, contr\u00f4le fiscal, aides aux acteurs \u00e9conomiques. Publi\u00e9 le 06/05/2026 \u00c0 la une Communication g\u00e9n\u00e9rale Voir toutes les actualit\u00e9s Vous \u00eates un particulier Se connecter Accueil particulier D\u00e9couvrez des tutoriels et simulateurs, des informations sur les diff\u00e9rents imp\u00f4ts et r\u00e9ductions, les d\u00e9marches li\u00e9es \u00e0 vos changements de situation, \u00e0 vos biens immobiliers. Payer en ligne Autres d\u00e9marches Questions & r\u00e9ponses Calendrier fiscal Actualit\u00e9s Vous \u00eates un professionnel Se connecter Accueil Professionnel D\u00e9couvrez des simulateurs d'imp\u00f4t, des informations sur la vie de     votre entreprise, son r\u00e9gime fiscal, les modalit\u00e9s de d\u00e9claration et     de paiement de la TVA, de la CFE, l'accompagnement des PME. D\u00e9marches Questions & r\u00e9ponses Calendrier fiscal Actualit\u00e9s Bon \u00e0 savoir Concours, m\u00e9tiers de l\u2019informatique, apprentissage, stages Vous avez le brevet ? Les inscriptions aux concours communs d'agent des Finances publiques sont ouvertes. En savoir plus G\u00e9rer mon pr\u00e9l\u00e8vement \u00e0 la source Mariage, naissance, retraite, \u00e9volution salariale : adaptez votre imp\u00f4t \u00e0 votre nouvelle situation. En savoir plus Aides aux entreprises, ind\u00e9pendants, entrepreneurs D\u00e9couvrir l'ensemble des aides et contacter mon conseiller d\u00e9partemental aux entreprises en difficult\u00e9. En savoir plus G\u00e9rer mes biens immobiliers Le service en ligne des usagers propri\u00e9taires. Pour \u00e9viter les erreurs d'imposition et \u00eatre en r\u00e8gle, pensez \u00e0 d\u00e9clarer tout changement concernant vos biens immobiliers. En savoir plus Services publics + Dans le cadre des nouveaux engagements du service public, la direction g\u00e9n\u00e9rale des Finances publiques s'engage pour des services plus proches, plus simple, plus efficaces. Retrouvez nos engagements et nos r\u00e9sultats La qualit\u00e9 de service aux Finances publiques reconnue par les usagers et par la certification Services Publics La DGFiP a obtenu le label Services Publics+ argent pour sa plateforme t\u00e9l\u00e9phonique nationale d\u2019assistance aux usagers, 0 809 401 401. En savoir plus Plus d\u2019actualit\u00e9s Situation mensuelle comptable des collectivit\u00e9s locales n\u00b044 :  situation 2026 au 31 mai 2026 Collectivit\u00e9 Publi\u00e9 le 02/07/2026 Tous vos points d'accueil rassembl\u00e9s sur une seule carte D\u00e9couvrez la nouvelle version de notre carte des points d'accueil. Plus claire et plus accessible, elle simplifie votre recherche de services de proximit\u00e9. Publi\u00e9 le 09/04/2026 Particulier Professionnel Voir toutes les actualit\u00e9s Nous vous accompagnons Trouver un point d'accueil de proximit\u00e9 Les engagements de la DGFIP Services en ligne laissez vous guider ! Fin du ch\u00e8que en 2027 20 2 7 D\u00e9marches V\u00e9rifier un avis d'imp\u00f4t Payer vos factures publiques Payer une amende Payer un forfait de post-stationnement Obtenir un quitus fiscal Acheter un timbre fiscal Consulter un extrait de plan cadastral Acc\u00e9der aux ventes domaniales Pour aller plus loin Statistiques et Donn\u00e9es Accompagnement fiscal des PME Les rescrits Le droit \u00e0 l'erreur Le contr\u00f4le fiscal et la lutte contre la fraude Charte des droits du contribuable v\u00e9rifi\u00e9 Haut de page Votre avis sur le site"
+      },
+      "text_preview": "Accueil impots.gouv.fr \u00c0 la une Particulier Professionnel Demande d'aide de 100\u00a0\u20ac pour les travaille",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2748
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 329,
+      "tag": "button",
+      "probability": 0.2172,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "fr-footer__bottom-link",
+          "fr-p-0",
+          "fr-icon-theme-fill",
+          "fr-btn--icon-left"
+        ],
+        "aria-controls": "fr-theme-modal",
+        "data-fr-opened": "false",
+        "data-fr-js-modal-button": "true",
+        "role": "button",
+        "aria-label": "Param\u00e8tres d'affichage"
+      },
+      "text_preview": "Param\u00e8tres d'affichage",
+      "predicted_rules": [
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.4065
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2099
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 91,
+      "tag": "ul",
+      "probability": 0.2113,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "fr-badges-group"
+        ],
+        "role": "list",
+        "aria-label": "\u00c0 la une Communication g\u00e9n\u00e9rale"
+      },
+      "text_preview": "\u00c0 la une Communication g\u00e9n\u00e9rale",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.2655
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1113
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 188,
+      "tag": "a",
+      "probability": 0.2022,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "/obtenir-un-quitus-fiscal",
+        "title": "Obtenir un quitus fiscal - ouvre une nouvelle fen\u00eatre",
+        "rel": [
+          "noopener"
+        ],
+        "target": "_blank",
+        "role": "link",
+        "aria-label": "Obtenir un quitus fiscal - ouvre une nouvelle fen\u00eatre"
+      },
+      "text_preview": "Obtenir un quitus fiscal - ouvre une nouvelle fen\u00eatre",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.279
+        }
+      ],
+      "node_threshold": 0.45
+    }
+  ],
+  "raw_top_predictions": [
+    {
+      "node_id": 133,
+      "tag": "img",
+      "probability": 0.8753,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/gestpas/gestpas.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7382
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 1
+    },
+    {
+      "node_id": 72,
+      "tag": "img",
+      "probability": 0.8634,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "alt": "",
+        "src": "/sites/default/files/media/cabcom/images/_banniere/facturation_electronique_logigramme/fe-num-tel.png",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7487
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 2
+    },
+    {
+      "node_id": 136,
+      "tag": "img",
+      "probability": 0.8601,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/entreprises/soutien_entreprises.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7368
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 3
+    },
+    {
+      "node_id": 142,
+      "tag": "img",
+      "probability": 0.8571,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/sp_plus/spplus.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7388
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 4
+    },
+    {
+      "node_id": 139,
+      "tag": "img",
+      "probability": 0.8504,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/gmbi/gmbi.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7378
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 5
+    },
+    {
+      "node_id": 145,
+      "tag": "img",
+      "probability": 0.8382,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-16x9"
+        ],
+        "src": "/sites/default/files/media/cabcom/images/_banniere/label_argent_num_appel.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7378
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 6
+    },
+    {
+      "node_id": 78,
+      "tag": "img",
+      "probability": 0.7566,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/professionnel/2026/aide_gnr_btp.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7157
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 7
+    },
+    {
+      "node_id": 84,
+      "tag": "img",
+      "probability": 0.7423,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/professionnel/2026/aide_gnr_agriculteurs.jpg",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7141
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 8
+    },
+    {
+      "node_id": 90,
+      "tag": "img",
+      "probability": 0.733,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/colloc/datavisualition_fdl.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7121
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 9
+    },
+    {
+      "node_id": 3,
+      "tag": "ul",
+      "probability": 0.6199,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "container",
+          "fr-skiplinks__list"
+        ],
+        "role": "list",
+        "aria-label": "Aller au contenu principal Menu principal Aller au champ \"Rechercher\" Contact"
+      },
+      "text_preview": "Aller au contenu principal Menu principal Aller au champ \"Rechercher\" Contact",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.4836
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1973
+        },
+        {
+          "rule_id": "aria-required-children",
+          "probability": 0.108
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 10
+    },
+    {
+      "node_id": 153,
+      "tag": "img",
+      "probability": 0.4736,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-responsive-img",
+          "fr-ratio-32x9"
+        ],
+        "src": "https://www.impots.gouv.fr/sites/default/files/media/2_actu/_images/carte_proximite.png",
+        "alt": "",
+        "data-fr-js-ratio": "true",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.6722
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 11
+    },
+    {
+      "node_id": 85,
+      "tag": "ul",
+      "probability": 0.3499,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-badges-group"
+        ],
+        "role": "list",
+        "aria-label": "\u00c0 la une Professionnel"
+      },
+      "text_preview": "\u00c0 la une Professionnel",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.344
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1636
+        },
+        {
+          "rule_id": "aria-required-children",
+          "probability": 0.1165
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 12
+    },
+    {
+      "node_id": 79,
+      "tag": "ul",
+      "probability": 0.3327,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-badges-group"
+        ],
+        "role": "list",
+        "aria-label": "\u00c0 la une Professionnel"
+      },
+      "text_preview": "\u00c0 la une Professionnel",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.3352
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1545
+        },
+        {
+          "rule_id": "aria-required-children",
+          "probability": 0.1111
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 13
+    },
+    {
+      "node_id": 220,
+      "tag": "a",
+      "probability": 0.2988,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "href": "/votre-avis-sur-le-site",
+        "title": "Votre avis sur le site",
+        "class": [
+          "fr-btn",
+          "fr-btn--secondary",
+          "fr-btns-group--center",
+          "pus-votre-avis"
+        ],
+        "role": "link",
+        "aria-label": "Votre avis sur le site"
+      },
+      "text_preview": "Votre avis sur le site",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3964
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 14
+    },
+    {
+      "node_id": 223,
+      "tag": "ul",
+      "probability": 0.2914,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-btns-group",
+          "fr-btns-group--lg"
+        ],
+        "role": "list",
+        "aria-label": "Facebook Twitter-X Linkedin Instagram"
+      },
+      "text_preview": "Facebook Twitter-X Linkedin Instagram",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.1836
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.172
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 15
+    },
+    {
+      "node_id": 141,
+      "tag": "a",
+      "probability": 0.2778,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "href": "/les-engagements-de-qualite-de-service",
+        "title": "Services publics +",
+        "role": "link",
+        "aria-label": "Services publics +"
+      },
+      "text_preview": "Services publics +",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.4697
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 16
+    },
+    {
+      "node_id": 71,
+      "tag": "a",
+      "probability": 0.263,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "href": "/professionnel/je-passe-la-facturation-electronique",
+        "role": "link",
+        "aria-label": "notre rubrique d\u00e9di\u00e9e"
+      },
+      "text_preview": "notre rubrique d\u00e9di\u00e9e",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2717
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 17
+    },
+    {
+      "node_id": 13,
+      "tag": "button",
+      "probability": 0.2407,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "fr-btn--search",
+          "fr-btn"
+        ],
+        "data-fr-opened": "false",
+        "aria-controls": "modal-474",
+        "id": "button-475",
+        "title": "Rechercher",
+        "data-fr-js-modal-button": "true",
+        "role": "button",
+        "aria-label": "Rechercher"
+      },
+      "text_preview": "Rechercher",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2667
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 18
+    },
+    {
+      "node_id": 232,
+      "tag": "a",
+      "probability": 0.2292,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "href": "/contacts",
+        "title": "Contact et prise de RDV",
+        "class": [
+          "fr-btn",
+          "fr-btn",
+          "fr-btn--secondary",
+          "fr-btn--icon-left",
+          "fr-icon-chat-3-line"
+        ],
+        "role": "link",
+        "aria-label": "Contact et prise de RDV"
+      },
+      "text_preview": "Contact et prise de RDV",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3994
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 19
+    },
+    {
+      "node_id": 57,
+      "tag": "main",
+      "probability": 0.2284,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "role": "main",
+        "id": "main-content",
+        "tabindex": "-1",
+        "class": [
+          "page--accueil"
+        ],
+        "aria-label": "Accueil impots.gouv.fr \u00c0 la une Particulier Professionnel Demande d'aide de 100\u00a0\u20ac pour les travailleurs \u00ab\u00a0grands rouleurs\u00a0\u00bb Publi\u00e9 le 27 mai 2026 V\u00e9rifiez votre \u00e9ligibilit\u00e9 pour pouvoir faire votre demande. Commencer la d\u00e9marche de demande de l'aide pour les travailleurs grands rouleurs Besoin d'aide ? Consultez notre foire aux questions et le pas-\u00e0-pas pour faire votre demande (PDF). Attention aux arnaques : \u00e0 l'issue de la demande d'aide, la DGFiP vous adresse un simple accus\u00e9 de r\u00e9ception avec le num\u00e9ro de votre demande. Ne cliquez sur aucun lien et ne r\u00e9pondez \u00e0 aucun message qui vous indique un montant d'aide ou qui vous r\u00e9clame des informations personnelles ou un n\u00b0 de carte bancaire. La facturation \u00e9lectronique : plus juste, plus simple, plus efficace. Je suis professionnel, je passe \u00e0 la facturation \u00e9lectronique Gr\u00e2ce \u00e0 notre questionnaire, acc\u00e9dez \u00e0 une s\u00e9lection personnalis\u00e9e de fiches pratiques pour passer \u00e0 la facturation \u00e9lectronique : Commencer le questionnaire Une question sur la facturation \u00e9lectronique ? Consultez notre rubrique d\u00e9di\u00e9e ou appelez le 0806 807 807 (Service gratuit + prix de l'appel) Les plateformes agr\u00e9\u00e9es Immatricul\u00e9es par l'\u00c9tat, les plateformes agr\u00e9\u00e9es assurent les op\u00e9rations d'\u00e9mission, transmission et de r\u00e9ception li\u00e9es \u00e0 la facturation \u00e9lectronique et fournissent les donn\u00e9es utiles \u00e0 l'administration. Je choisis une plateforme agr\u00e9\u00e9e \u00c0 la Une Aide pour les entreprises du secteur du b\u00e2timent et des travaux publics utilisant du gazole non routier Publi\u00e9 le 09/06/2026 \u00c0 la une Professionnel Aide pour l'acquisition de gazole non routier utilis\u00e9 pour la r\u00e9alisation de travaux agricoles ou forestiers Publi\u00e9 le 11/05/2026 \u00c0 la une Professionnel Visualisation de la fiscalit\u00e9 locale en 2025 L'outil de visualisation des donn\u00e9es de la fiscalit\u00e9 locale des particuliers et des professionnels de la DGFiP a \u00e9t\u00e9 enrichi des donn\u00e9es pour l'ann\u00e9e 2025. Publi\u00e9 le 29/05/2026 \u00c0 la une Communication g\u00e9n\u00e9rale Publication du rapport d\u2019activit\u00e9 2025 de la DGFiP Ce rapport d\u2019activit\u00e9 met en avant les r\u00e9sultats et chiffres cl\u00e9s de chacune des grandes missions de la DGFiP : gestion fiscale, comptabilit\u00e9 de l\u2019\u00c9tat, des collectivit\u00e9s, contr\u00f4le fiscal, aides aux acteurs \u00e9conomiques. Publi\u00e9 le 06/05/2026 \u00c0 la une Communication g\u00e9n\u00e9rale Voir toutes les actualit\u00e9s Vous \u00eates un particulier Se connecter Accueil particulier D\u00e9couvrez des tutoriels et simulateurs, des informations sur les diff\u00e9rents imp\u00f4ts et r\u00e9ductions, les d\u00e9marches li\u00e9es \u00e0 vos changements de situation, \u00e0 vos biens immobiliers. Payer en ligne Autres d\u00e9marches Questions & r\u00e9ponses Calendrier fiscal Actualit\u00e9s Vous \u00eates un professionnel Se connecter Accueil Professionnel D\u00e9couvrez des simulateurs d'imp\u00f4t, des informations sur la vie de     votre entreprise, son r\u00e9gime fiscal, les modalit\u00e9s de d\u00e9claration et     de paiement de la TVA, de la CFE, l'accompagnement des PME. D\u00e9marches Questions & r\u00e9ponses Calendrier fiscal Actualit\u00e9s Bon \u00e0 savoir Concours, m\u00e9tiers de l\u2019informatique, apprentissage, stages Vous avez le brevet ? Les inscriptions aux concours communs d'agent des Finances publiques sont ouvertes. En savoir plus G\u00e9rer mon pr\u00e9l\u00e8vement \u00e0 la source Mariage, naissance, retraite, \u00e9volution salariale : adaptez votre imp\u00f4t \u00e0 votre nouvelle situation. En savoir plus Aides aux entreprises, ind\u00e9pendants, entrepreneurs D\u00e9couvrir l'ensemble des aides et contacter mon conseiller d\u00e9partemental aux entreprises en difficult\u00e9. En savoir plus G\u00e9rer mes biens immobiliers Le service en ligne des usagers propri\u00e9taires. Pour \u00e9viter les erreurs d'imposition et \u00eatre en r\u00e8gle, pensez \u00e0 d\u00e9clarer tout changement concernant vos biens immobiliers. En savoir plus Services publics + Dans le cadre des nouveaux engagements du service public, la direction g\u00e9n\u00e9rale des Finances publiques s'engage pour des services plus proches, plus simple, plus efficaces. Retrouvez nos engagements et nos r\u00e9sultats La qualit\u00e9 de service aux Finances publiques reconnue par les usagers et par la certification Services Publics La DGFiP a obtenu le label Services Publics+ argent pour sa plateforme t\u00e9l\u00e9phonique nationale d\u2019assistance aux usagers, 0 809 401 401. En savoir plus Plus d\u2019actualit\u00e9s Situation mensuelle comptable des collectivit\u00e9s locales n\u00b044 :  situation 2026 au 31 mai 2026 Collectivit\u00e9 Publi\u00e9 le 02/07/2026 Tous vos points d'accueil rassembl\u00e9s sur une seule carte D\u00e9couvrez la nouvelle version de notre carte des points d'accueil. Plus claire et plus accessible, elle simplifie votre recherche de services de proximit\u00e9. Publi\u00e9 le 09/04/2026 Particulier Professionnel Voir toutes les actualit\u00e9s Nous vous accompagnons Trouver un point d'accueil de proximit\u00e9 Les engagements de la DGFIP Services en ligne laissez vous guider ! Fin du ch\u00e8que en 2027 20 2 7 D\u00e9marches V\u00e9rifier un avis d'imp\u00f4t Payer vos factures publiques Payer une amende Payer un forfait de post-stationnement Obtenir un quitus fiscal Acheter un timbre fiscal Consulter un extrait de plan cadastral Acc\u00e9der aux ventes domaniales Pour aller plus loin Statistiques et Donn\u00e9es Accompagnement fiscal des PME Les rescrits Le droit \u00e0 l'erreur Le contr\u00f4le fiscal et la lutte contre la fraude Charte des droits du contribuable v\u00e9rifi\u00e9 Haut de page Votre avis sur le site"
+      },
+      "text_preview": "Accueil impots.gouv.fr \u00c0 la une Particulier Professionnel Demande d'aide de 100\u00a0\u20ac pour les travaille",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2748
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 20
+    }
+  ],
+  "axe_summary": {
+    "available": true,
+    "violation_count": 0,
+    "pass_count": 27,
+    "incomplete_count": 2,
+    "inapplicable_count": 34,
+    "incomplete": [
+      {
+        "rule_id": "aria-valid-attr-value",
+        "impact": "critical",
+        "help": "ARIA attributes must conform to valid values",
+        "nodes": 1
+      },
+      {
+        "rule_id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 81
+      }
+    ]
+  },
+  "ground_truth": {
+    "true_violations": 0,
+    "true_positives": 0,
+    "false_positives": 11,
+    "false_negatives": 0,
+    "precision": 0.0,
+    "recall": 0
+  }
+}

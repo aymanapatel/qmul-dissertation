@@ -6,8 +6,8 @@ Source-specific graph construction.
 Current source:
 - dom: builds a graph from the parsed HTML DOM.
 
-Reserved source:
-- a11y-tree: future browser accessibility-tree graph extraction.
+Additional source:
+- a11y-tree: builds a static accessibility-tree-style graph from parsed HTML.
 """
 
 from dataclasses import dataclass
@@ -18,6 +18,7 @@ from utils import validate_graph_source
 
 from torch_geometric.data import Data
 
+from accessibility_graph_builder import parse_html_to_a11y_graph
 from html_graph_builder import DOMNode, add_spatial_edges, parse_html_to_graph
 
 
@@ -44,9 +45,10 @@ def apply_visual_edges(
     if graph_source == GRAPH_SOURCE_DOM:
         return add_spatial_edges(data, node_map)
 
-    raise NotImplementedError(
-        "Visual edges for the a11y-tree graph source are not implemented yet."
-    )
+    if graph_source == GRAPH_SOURCE_A11Y_TREE:
+        return add_spatial_edges(data, node_map)
+
+    return data
 
 def build_graph(html_path: Path, graph_source: str = GRAPH_SOURCE_DOM) -> GraphBuildResult:
     validate_graph_source(graph_source)
@@ -69,16 +71,11 @@ def build_dom_graph(html_path: Path) -> GraphBuildResult:
 
 
 def build_a11y_tree_graph(html_path: Path) -> GraphBuildResult:
-    """
-    Reserved integration point for future browser accessibility-tree extraction.
-
-    Expected future behavior:
-    - Use a browser accessibility snapshot rather than BeautifulSoup DOM nodes.
-    - Create nodes for accessibility-tree entries such as roles/names/states.
-    - Preserve enough mapping back to DOM/axe targets for labels and remediation.
-    """
-    raise NotImplementedError(
-        "The a11y-tree graph source is reserved for future accessibility-tree "
-        "extraction. Use --graph-source dom for the current DOM-based pipeline."
+    """Build a static accessibility-tree-style graph from parsed HTML."""
+    data, node_map = parse_html_to_a11y_graph(html_path)
+    data.graph_source = GRAPH_SOURCE_A11Y_TREE
+    return GraphBuildResult(
+        data=data,
+        node_map=node_map,
+        description="Accessibility-tree-style graph from semantic HTML roles/names",
     )
-

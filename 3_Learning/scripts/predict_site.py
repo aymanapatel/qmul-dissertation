@@ -125,6 +125,72 @@ def get_top_rules(rule_probs, top_k=3):
     return rules
 
 
+def load_calibration(path: Path) -> dict:
+    """Load threshold calibration JSON if supplied."""
+    if not path.exists():
+        print(f"Error: Calibration file not found: {path}")
+        sys.exit(1)
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def calibration_value(calibration: dict, key: str, default: float) -> float:
+    """Read a threshold from either top-level or recommended calibration shape."""
+    if not calibration:
+        return default
+    if key in calibration:
+        return float(calibration[key])
+    recommended = calibration.get("recommended", {})
+    if key in recommended:
+        return float(recommended[key])
+    return default
+
+
+def load_axe_summary(axe_path: Path | None) -> dict:
+    """Read high-level axe counts and incomplete checks for reporting."""
+    if not axe_path:
+        return {"available": False}
+    with open(axe_path, "r", encoding="utf-8") as f:
+        report = json.load(f)
+
+    incomplete = []
+    for item in report.get("incomplete", []):
+        incomplete.append(
+            {
+                "rule_id": item.get("id"),
+                "impact": item.get("impact"),
+                "help": item.get("help"),
+                "nodes": len(item.get("nodes", [])),
+            }
+        )
+
+    return {
+        "available": True,
+        "violation_count": len(report.get("violations", [])),
+        "pass_count": len(report.get("passes", [])),
+        "incomplete_count": len(report.get("incomplete", [])),
+        "inapplicable_count": len(report.get("inapplicable", [])),
+        "incomplete": incomplete,
+    }
+
+
+def make_prediction_entry(
+    node, idx: int, prob: float, rule_probs, node_threshold: float, status: str
+) -> dict:
+    """Build a JSON-safe prediction/candidate entry."""
+    return {
+        "node_id": idx,
+        "tag": node.tag,
+        "probability": round(prob, 4),
+        "predicted_violation": status == "predicted_violation",
+        "status": status,
+        "attributes": dict(node.attrs),
+        "text_preview": node.text_content[:100] if node.text_content else "",
+        "predicted_rules": get_top_rules(rule_probs, top_k=3),
+        "node_threshold": node_threshold,
+    }
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Predict accessibility violations on a webpage"
@@ -145,8 +211,26 @@ def main():
     parser.add_argument(
         "--threshold",
         type=float,
-        default=0.5,
-        help="Probability threshold for violation prediction",
+        default=None,
+        help="Node probability threshold for violation prediction (default: calibration or 0.5)",
+    )
+    parser.add_argument(
+        "--graph-threshold",
+        type=float,
+        default=None,
+        help="Graph probability threshold for enabling node violations (default: calibration or 0.5)",
+    )
+    parser.add_argument(
+        "--rule-threshold",
+        type=float,
+        default=None,
+        help="Rule probability threshold for calibrated reports (default: calibration or 0.5)",
+    )
+    parser.add_argument(
+        "--calibration",
+        type=str,
+        default=None,
+        help="Optional calibration.json from scripts/calibrate_thresholds.py",
     )
     parser.add_argument(
         "--device", type=str, default="auto", help="Device (auto, mps, cuda, cpu)"
@@ -156,7 +240,7 @@ def main():
         type=str,
         default=GRAPH_SOURCE_DOM,
         choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
-        help="Graph source to build: dom is current, a11y-tree is reserved for future work",
+        help="Graph source to build: dom or a11y-tree",
     )
     parser.add_argument(
         "--top-k",
@@ -170,6 +254,7 @@ def main():
     html_path = Path(args.html)
     model_path = Path(args.model)
     axe_path = Path(args.axe) if args.axe else None
+    calibration = load_calibration(Path(args.calibration)) if args.calibration else {}
 
     if not html_path.exists():
         print(f"Error: HTML file not found: {html_path}")
@@ -199,6 +284,8 @@ def main():
     print(f"Model: {model_path}")
     print(f"Device: {device}")
     print(f"Graph source: {args.graph_source}")
+    if calibration:
+        print(f"Calibration: {args.calibration}")
     print()
 
     # Load model
@@ -260,6 +347,22 @@ def main():
     node_probs = results["node_probs"]
     rule_probs = results["rule_probs"]
     graph_prob = results["graph_violation_prob"]
+    node_threshold = (
+        args.threshold
+        if args.threshold is not None
+        else calibration_value(calibration, "node_threshold", 0.5)
+    )
+    graph_threshold = (
+        args.graph_threshold
+        if args.graph_threshold is not None
+        else calibration_value(calibration, "graph_threshold", 0.5)
+    )
+    rule_threshold = (
+        args.rule_threshold
+        if args.rule_threshold is not None
+        else calibration_value(calibration, "rule_threshold", 0.5)
+    )
+    axe_summary = load_axe_summary(axe_path)
 
     # Filter to actionable tags
     actionable_mask = torch.zeros(len(page.node_map), dtype=torch.bool)
@@ -269,6 +372,10 @@ def main():
 
     filtered_probs = node_probs.clone()
     filtered_probs[~actionable_mask] = 0.0
+    node_evidence_prob = filtered_probs.max().item() if filtered_probs.numel() else 0.0
+    page_violation_prob = max(graph_prob, node_evidence_prob)
+    page_is_likely_violation = page_violation_prob >= graph_threshold
+    page_prediction = "likely_violation" if page_is_likely_violation else "likely_clean"
 
     # Generate report
     print(f"\n{'=' * 70}")
@@ -277,22 +384,31 @@ def main():
     print(f"Total nodes analyzed: {len(page.node_map)}")
     print(f"Actionable nodes: {actionable_mask.sum().item()}")
     print(f"Graph violation probability: {graph_prob:.4f}")
-    print(
-        f"Nodes with violation prob > {args.threshold}: {(filtered_probs > args.threshold).sum().item()}"
-    )
+    print(f"Node evidence probability: {node_evidence_prob:.4f}")
+    print(f"Page violation probability: {page_violation_prob:.4f} (threshold={graph_threshold:.4f})")
+    print(f"Page prediction: {page_prediction}")
+    raw_over_threshold = int((filtered_probs >= node_threshold).sum().item())
+    confirmed_over_threshold = raw_over_threshold if page_is_likely_violation else 0
+    print(f"Nodes with violation prob >= {node_threshold}: {raw_over_threshold}")
+    print(f"Confirmed node violations after page decision: {confirmed_over_threshold}")
 
-    # Top-K predictions
-    top_indices = filtered_probs.argsort(descending=True)[: args.top_k]
+    # Top-K predictions stay as a compact raw view, while confirmed
+    # violations/candidates below include every node above the report floor.
+    sorted_indices = filtered_probs.argsort(descending=True)
 
     print(f"\nTop {args.top_k} Most Likely Violations:")
     print("-" * 70)
     print(f"{'Rank':<6} {'Node':<6} {'Tag':<12} {'Prob':<8} {'Predicted Rules'}")
     print("-" * 70)
 
-    report_entries = []
-    for rank, idx in enumerate(top_indices, 1):
+    raw_top_predictions = []
+    predicted_violations = []
+    candidate_warnings = []
+    for rank, idx in enumerate(sorted_indices, 1):
         idx = idx.item()
         prob = filtered_probs[idx].item()
+        if prob < 0.2:
+            break
         node = page.node_map.get(idx)
 
         if not node:
@@ -306,20 +422,50 @@ def main():
             else "none"
         )
 
-        marker = " [VIOLATION]" if prob > args.threshold else ""
-        print(f"{rank:<6} {idx:<6} {tag:<12} {prob:.4f}  {rule_str}{marker}")
+        over_node_threshold = prob >= node_threshold
+        confirmed_violation = page_is_likely_violation and over_node_threshold
+        if rank <= args.top_k:
+            marker = " [VIOLATION]" if confirmed_violation else ""
+            print(f"{rank:<6} {idx:<6} {tag:<12} {prob:.4f}  {rule_str}{marker}")
 
-        if prob > 0.2:  # Include in report if somewhat likely
-            entry = {
-                "node_id": idx,
-                "tag": node.tag,
-                "probability": round(prob, 4),
-                "predicted_violation": prob > args.threshold,
-                "attributes": dict(node.attrs),
-                "text_preview": node.text_content[:100] if node.text_content else "",
-                "predicted_rules": top_rules,
-            }
-            report_entries.append(entry)
+            raw_entry = make_prediction_entry(
+                node=node,
+                idx=idx,
+                prob=prob,
+                rule_probs=rule_probs[idx],
+                node_threshold=node_threshold,
+                status="raw_candidate",
+            )
+            raw_entry["rank"] = rank
+            raw_top_predictions.append(raw_entry)
+
+        if confirmed_violation:
+            predicted_violations.append(
+                make_prediction_entry(
+                    node=node,
+                    idx=idx,
+                    prob=prob,
+                    rule_probs=rule_probs[idx],
+                    node_threshold=node_threshold,
+                    status="predicted_violation",
+                )
+            )
+        elif prob >= 0.2:
+            status = "candidate_warning"
+            if not page_is_likely_violation and over_node_threshold:
+                status = "model_warning_on_likely_clean_page"
+                if axe_summary.get("available") and axe_summary.get("violation_count") == 0:
+                    status = "false_positive_against_axe"
+            candidate_warnings.append(
+                make_prediction_entry(
+                    node=node,
+                    idx=idx,
+                    prob=prob,
+                    rule_probs=rule_probs[idx],
+                    node_threshold=node_threshold,
+                    status=status,
+                )
+            )
 
     # Ground truth comparison if available
     has_ground_truth = (
@@ -330,7 +476,9 @@ def main():
     gt_stats = {}
 
     if has_ground_truth:
-        predictions = (filtered_probs > args.threshold).long().cpu()
+        predictions = (
+            (filtered_probs >= node_threshold) & page_is_likely_violation
+        ).long().cpu()
         node_y = page.data.node_y.cpu().long()
 
         true_violations = (node_y == 1).sum().item()
@@ -385,13 +533,23 @@ def main():
                 "total_nodes": len(page.node_map),
                 "actionable_nodes": int(actionable_mask.sum().item()),
                 "graph_violation_probability": round(graph_prob, 4),
-                "predicted_violation_count": int(
-                    (filtered_probs > args.threshold).sum().item()
-                ),
-                "threshold": args.threshold,
+                "node_evidence_probability": round(node_evidence_prob, 4),
+                "page_violation_probability": round(page_violation_prob, 4),
+                "graph_threshold": graph_threshold,
+                "page_prediction": page_prediction,
+                "node_predictions_suppressed_by_page_gate": raw_over_threshold > 0 and not page_is_likely_violation,
+                "node_predictions_gated": raw_over_threshold > 0 and not page_is_likely_violation,
+                "predicted_violation_count": len(predicted_violations),
+                "candidate_warning_count": len(candidate_warnings),
+                "threshold": node_threshold,
+                "node_threshold": node_threshold,
+                "rule_threshold": rule_threshold,
                 "graph_source": getattr(page.data, "graph_source", args.graph_source),
             },
-            "predicted_violations": report_entries,
+            "predicted_violations": predicted_violations,
+            "candidate_warnings": candidate_warnings,
+            "raw_top_predictions": raw_top_predictions,
+            "axe_summary": axe_summary,
         }
 
         if gt_stats:

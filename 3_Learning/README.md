@@ -193,7 +193,7 @@ python3 scripts/visualize_graph.py \
 
 ### Step 1: Multi site training:
 
-
+Note: Do not add a comment. It messes up with flags
 
 
 ```python
@@ -201,12 +201,28 @@ python3 scripts/train_multi_site.py \
 --data-dir /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core \
 --output-dir ./graphs_multi \
 --model-dir ./models_multi_test \
-# --max-sites 20 \
 --epochs 100 \
 --batch-size 4 \
 --device mps \
---graph-source dom
+--graph-source [dom|a11y-tree]
  ```
+
+```
+python3 scripts/train_multi_site.py \
+ --data-dir ../2_Data/browser-use/outputs/axe-core \
+  --output-dir ./graphs_multi \
+  --model-dir ./models_4July_1448 \
+  --graph-source a11y-tree \
+  --resume \
+  --epochs 30 \
+  --batch-size 4 \
+  --device mps \
+  --clean-page-node-loss-weight 0.5 \
+  --positive-page-node-evidence-loss-weight 0.5 \
+  --graph-node-consistency-loss-weight 0.5 \
+  --graph-loss-weight 1.0 \
+  --selection-metric node_f1_pos_plus_graph_recall
+``` 
 
 
 ### 2. Single page prediction

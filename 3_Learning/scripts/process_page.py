@@ -94,7 +94,7 @@ def main():
         type=str,
         default=GRAPH_SOURCE_DOM,
         choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
-        help="Graph source to build: dom is current, a11y-tree is reserved for future work",
+        help="Graph source to build: dom or a11y-tree",
     )
     parser.add_argument("--train", action="store_true", help="Run a quick training demo")
     parser.add_argument("--viz", action="store_true", help="Generate ASCII visualization of predictions")

@@ -1,0 +1,3367 @@
+{
+  "html_path": "/Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.airindia.com/0.html",
+  "model_path": "models_4July_1448/best_model.pt",
+  "summary": {
+    "total_nodes": 641,
+    "actionable_nodes": 639,
+    "graph_violation_probability": 0.9691,
+    "node_evidence_probability": 0.9826,
+    "page_violation_probability": 0.9826,
+    "graph_threshold": 0.5,
+    "page_prediction": "likely_violation",
+    "node_predictions_suppressed_by_page_gate": false,
+    "node_predictions_gated": false,
+    "predicted_violation_count": 54,
+    "candidate_warning_count": 47,
+    "threshold": 0.45,
+    "node_threshold": 0.45,
+    "rule_threshold": 0.5,
+    "graph_source": "a11y-tree"
+  },
+  "predicted_violations": [
+    {
+      "node_id": 222,
+      "tag": "input",
+      "probability": 0.9826,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c3018682154": "",
+        "autocomplete": "off",
+        "class": [
+          "mat-mdc-autocomplete-trigger",
+          "ai-autocomplete-input",
+          "ng-star-inserted"
+        ],
+        "placeholder": "",
+        "tabindex": "0",
+        "aria-label": "Select origin airport",
+        "role": "combobox",
+        "aria-autocomplete": "list",
+        "aria-expanded": "false",
+        "aria-haspopup": "listbox"
+      },
+      "text_preview": "Select origin airport",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-allowed-attr",
+          "probability": 0.6352
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.5725
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.5224
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 210,
+      "tag": "div",
+      "probability": 0.9822,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item",
+          "link-tab",
+          "ez-booking"
+        ],
+        "id": "tab-one-click",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "eZ Booking"
+      },
+      "text_preview": "eZ Booking",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7906
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.6877
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.6059
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 219,
+      "tag": "input",
+      "probability": 0.9797,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c3018682154": "",
+        "autocomplete": "off",
+        "class": [
+          "mat-mdc-autocomplete-trigger",
+          "ai-autocomplete-input",
+          "ng-star-inserted"
+        ],
+        "placeholder": "",
+        "tabindex": "0",
+        "aria-label": "Select origin airport",
+        "role": "combobox",
+        "aria-autocomplete": "list",
+        "aria-expanded": "false",
+        "aria-haspopup": "listbox"
+      },
+      "text_preview": "Select origin airport",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-allowed-attr",
+          "probability": 0.6379
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.5563
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.5374
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 208,
+      "tag": "div",
+      "probability": 0.9751,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item"
+        ],
+        "id": "tab-check-in",
+        "aria-controls": "panel-check-in",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "CHECK-IN"
+      },
+      "text_preview": "CHECK-IN",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7296
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.5985
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5118
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 209,
+      "tag": "div",
+      "probability": 0.974,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item"
+        ],
+        "id": "tab-flight-status",
+        "aria-controls": "panel-flight-status",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "FLIGHT STATUS"
+      },
+      "text_preview": "FLIGHT STATUS",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7349
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.596
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5156
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 206,
+      "tag": "div",
+      "probability": 0.9712,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item",
+          "active"
+        ],
+        "id": "tab-search-flight",
+        "aria-controls": "panel-search-flight",
+        "tabindex": "0",
+        "aria-selected": "true",
+        "aria-label": "SEARCH FLIGHTS"
+      },
+      "text_preview": "SEARCH FLIGHTS",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7749
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.7141
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.616
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 207,
+      "tag": "div",
+      "probability": 0.9662,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item"
+        ],
+        "id": "tab-manage-booking",
+        "aria-controls": "panel-manage-booking",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "MANAGE BOOKING"
+      },
+      "text_preview": "MANAGE BOOKING",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7688
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.6702
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.5412
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 435,
+      "tag": "a",
+      "probability": 0.9624,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "show-on-android",
+          "device-hidden"
+        ],
+        "href": "https://play.google.com/store/apps/details?id=com.bets.airindia.ui",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8341
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 433,
+      "tag": "a",
+      "probability": 0.9603,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "show-on-ios",
+          "device-hidden"
+        ],
+        "href": "https://apps.apple.com/us/app/air-india/id932302964",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8353
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 211,
+      "tag": "div",
+      "probability": 0.9568,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item",
+          "special",
+          "link-tab",
+          "exclusive-deals",
+          "special-offers"
+        ],
+        "id": "tab-exclusive-deals",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "APAAR-ID OFFER"
+      },
+      "text_preview": "APAAR-ID OFFER",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7664
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.6336
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.5431
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 217,
+      "tag": "img",
+      "probability": 0.9511,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c2444066174": "",
+        "width": "24",
+        "height": "24",
+        "class": [
+          "ai-promo-trigger__icon",
+          "ng-tns-c2444066174-0"
+        ],
+        "src": "https://dmlib.airindia.com/adobe/assets/urn:aaid:aem:65f8ca27-05d7-4e6b-9ce2-3dd6a61dadd1/as/chevron-down.png",
+        "alt": "",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7592
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 216,
+      "tag": "button",
+      "probability": 0.9402,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c2444066174": "",
+        "type": "button",
+        "class": [
+          "ai-promo-trigger",
+          "ng-tns-c2444066174-0",
+          "ng-star-inserted"
+        ],
+        "tabindex": "0",
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.9295
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.1474
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 223,
+      "tag": "button",
+      "probability": 0.9274,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c3969314520": "",
+        "type": "button",
+        "class": [
+          "ai-booking-widget__date-section",
+          "ng-star-inserted"
+        ],
+        "aria-label": "",
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.9282
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.1313
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 414,
+      "tag": "a",
+      "probability": 0.9043,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "show-on-android",
+          "device-hidden"
+        ],
+        "href": "https://play.google.com/store/apps/details?id=com.bets.airindia.ui",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.782
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 15,
+      "tag": "a",
+      "probability": 0.8917,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-data-layer": "{\"314696878\":{\"@type\":\"airindia-website/components/home/components/header-components/header-wrapper\",\"cardHref\":\"https://www.airindia.comhttps://aibiz.airindia.com\"}}",
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "class": [
+          "top-menu-button"
+        ],
+        "href": "https://aibiz.airindia.com",
+        "target": "_self",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8194
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 297,
+      "tag": "a",
+      "probability": 0.8893,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "href": "/in/en/book/exclusive-deals/member-offer.html",
+        "target": "_self",
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8442
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 365,
+      "tag": "img",
+      "probability": 0.8856,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "ai-d-none",
+          "ai-d-md-block",
+          "ai-d-lg-none"
+        ],
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7577
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 364,
+      "tag": "img",
+      "probability": 0.8815,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "ai-d-none",
+          "ai-d-lg-block"
+        ],
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7547
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 141,
+      "tag": "a",
+      "probability": 0.8586,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/maharaja-club/partner-offers.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8309
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 366,
+      "tag": "img",
+      "probability": 0.8552,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "ai-d-block",
+          "ai-d-md-none"
+        ],
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.749
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 213,
+      "tag": "a",
+      "probability": 0.8465,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c3969314520": "",
+        "class": [
+          "ai-booking-widget__multi-city-link",
+          "ng-star-inserted"
+        ],
+        "href": "/in/en/multicity-booking.html",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8133
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 412,
+      "tag": "a",
+      "probability": 0.8404,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "show-on-ios",
+          "device-hidden"
+        ],
+        "href": "https://apps.apple.com/us/app/air-india/id932302964",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7826
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 218,
+      "tag": "div",
+      "probability": 0.8327,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c119382412": "",
+        "aria-label": "Select origin airport",
+        "class": [
+          "ai-origin-destination__field-container"
+        ],
+        "style": "cursor: pointer;",
+        "role": "generic"
+      },
+      "text_preview": "Select origin airport",
+      "predicted_rules": [
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.7036
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.6607
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.5252
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 145,
+      "tag": "a",
+      "probability": 0.8265,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/maharaja-club/account-summary.html",
+        "target": "_self",
+        "class": [
+          "tier",
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8245
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 437,
+      "tag": "button",
+      "probability": 0.8255,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "swiper-play-pause",
+          "swiper-play-pause-button"
+        ],
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.9075
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.1067
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 416,
+      "tag": "button",
+      "probability": 0.8205,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "swiper-play-pause",
+          "swiper-play-pause-button"
+        ],
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.8879
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 367,
+      "tag": "button",
+      "probability": 0.8168,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "swiper-play-pause",
+          "swiper-play-pause-button"
+        ],
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.9092
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.1074
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 147,
+      "tag": "a",
+      "probability": 0.8165,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/my-profile.html?upgrade=true",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8246
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 378,
+      "tag": "button",
+      "probability": 0.8156,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "swiper-play-pause",
+          "swiper-play-pause-button"
+        ],
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.9146
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.1264
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 221,
+      "tag": "div",
+      "probability": 0.8029,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c119382412": "",
+        "aria-label": "Select destination airport",
+        "class": [
+          "ai-origin-destination__field-container"
+        ],
+        "style": "cursor: pointer;",
+        "role": "generic"
+      },
+      "text_preview": "Select destination airport",
+      "predicted_rules": [
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.6898
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.6205
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.4987
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 308,
+      "tag": "a",
+      "probability": 0.8004,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "href": "/in/en/book/exclusive-deals/upi-payments-offer.html",
+        "target": "_self",
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8347
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 161,
+      "tag": "a",
+      "probability": 0.7888,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "tabindex": "0",
+        "class": [
+          "top-menu-button"
+        ],
+        "href": "https://aibiz.airindia.com",
+        "target": "_self",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8047
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 143,
+      "tag": "a",
+      "probability": 0.7729,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/maharaja-club/sign-up",
+        "class": [
+          "enrollnowlink",
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7968
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 186,
+      "tag": "button",
+      "probability": 0.7695,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "popup-button-cancel"
+        ],
+        "id": "giftPagePopupClose",
+        "onclick": "closePopup()",
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.8694
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.13
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.1098
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 392,
+      "tag": "button",
+      "probability": 0.7655,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "swiper-play-pause",
+          "swiper-play-pause-button"
+        ],
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.8989
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.1141
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 300,
+      "tag": "a",
+      "probability": 0.7629,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "href": "/in/en/book/exclusive-deals/amex-offer.html",
+        "target": "_self",
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8341
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 225,
+      "tag": "img",
+      "probability": 0.7557,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "_ngcontent-ng-c3864293528": "",
+        "width": "24",
+        "height": "24",
+        "class": [
+          "ai-pax-selector__trigger-icon"
+        ],
+        "src": "https://dmlib.airindia.com/adobe/assets/urn:aaid:aem:65f8ca27-05d7-4e6b-9ce2-3dd6a61dadd1/as/chevron-down.png",
+        "alt": "",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7161
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 604,
+      "tag": "a",
+      "probability": 0.7336,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "href": "https://www.airindia.com/in/en/cookie-policy.html",
+        "class": [
+          "privacy-notice-link"
+        ],
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ],
+        "target": "_blank",
+        "aria-label": "More information about your privacy, opens in a new tab",
+        "role": "link"
+      },
+      "text_preview": "More information about your privacy, opens in a new tab",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.7594
+        },
+        {
+          "rule_id": "link-in-text-block",
+          "probability": 0.1406
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 305,
+      "tag": "a",
+      "probability": 0.6972,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "href": "/in/en/tata-neu-hdfc-credit-card-offers.html",
+        "target": "_self",
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8278
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 636,
+      "tag": "button",
+      "probability": 0.6264,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "ot-pc-refuse-all-handler"
+        ],
+        "ot-button-order": "1",
+        "role": "button",
+        "aria-label": "Reject All"
+      },
+      "text_preview": "Reject All",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.6752
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 605,
+      "tag": "button",
+      "probability": 0.6134,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "id": "accept-recommended-btn-handler",
+        "ot-button-order": "0",
+        "role": "button",
+        "aria-label": "Accept All"
+      },
+      "text_preview": "Accept All",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.6885
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 618,
+      "tag": "button",
+      "probability": 0.607,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "ot-link-btn",
+          "category-host-list-handler"
+        ],
+        "dir": "ltr",
+        "aria-label": "Performance Cookies - Cookie Details button opens Cookie List menu",
+        "data-parent-id": "C0002",
+        "role": "button"
+      },
+      "text_preview": "Performance Cookies - Cookie Details button opens Cookie List menu",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.4674
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.1228
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 429,
+      "tag": "div",
+      "probability": 0.6061,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "swiper-slide"
+        ],
+        "data-swiper-slide-index": "2",
+        "role": "group",
+        "aria-label": "3 / 3"
+      },
+      "text_preview": "3 / 3",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3762
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.2912
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.2369
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 101,
+      "tag": "a",
+      "probability": 0.6004,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/travel-information/baggage-guidelines/prepay-excess-baggage.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7901
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 620,
+      "tag": "button",
+      "probability": 0.5651,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "ot-link-btn",
+          "back-btn-handler"
+        ],
+        "aria-label": "Back",
+        "role": "button"
+      },
+      "text_preview": "Back",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5442
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 85,
+      "tag": "a",
+      "probability": 0.5304,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/destinations/newlaunch.html?de=jfk&des=new%20york.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7887
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 361,
+      "tag": "div",
+      "probability": 0.5274,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "swiper-slide",
+          "loyalty-carousel-slide",
+          "swiper-slide-visible",
+          "swiper-slide-fully-visible",
+          "swiper-slide-active",
+          "swiper-slide-next"
+        ],
+        "data-cmp-data-layer": "{\"-1783389252\":{\"buttonText\":\"Now earn and redeem \\r\\nMaharaja Points on\\r\\nAir India Express\",\"siteSection\":\"Book & Manage\",\"clickComponentType\":\"card\",\"imgAltText\":\"AIX\",\"@type\":\"airindia-website/components/home/components/loyalty-component\",\"siteSubSection\":\"Air India: Book Domestic & International Non-Stop Direct Flights\",\"cardHref\":\"https://www.airindia.com/content/air-india/in/en/maharaja-club/earn-and-redeem-air-india-express.html\",\"componentName\":\"Your Member Benifits\"}}",
+        "role": "group",
+        "aria-label": "1 / 1",
+        "data-swiper-slide-index": "0",
+        "style": "width: 511px;"
+      },
+      "text_preview": "1 / 1",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.4992
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.384
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3185
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 175,
+      "tag": "button",
+      "probability": 0.4813,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "type": "button",
+        "class": [
+          "viewProfileBtn"
+        ],
+        "onclick": "redirectToAIUserAccount(false)",
+        "role": "button",
+        "aria-label": "View Profile"
+      },
+      "text_preview": "View Profile",
+      "predicted_rules": [
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.3756
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2946
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.2298
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 596,
+      "tag": "a",
+      "probability": 0.4811,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "ot-cookie-policy-link"
+        ],
+        "href": "https://www.airindia.com/in/en/cookie-policy.html",
+        "aria-label": "More information about your privacy, opens in a new tab",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ],
+        "target": "_blank",
+        "role": "link"
+      },
+      "text_preview": "More information about your privacy, opens in a new tab",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.6467
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 637,
+      "tag": "button",
+      "probability": 0.4733,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [
+          "save-preference-btn-handler",
+          "onetrust-close-btn-handler"
+        ],
+        "ot-button-order": "2",
+        "role": "button",
+        "aria-label": "Save Settings"
+      },
+      "text_preview": "Save Settings",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5489
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 638,
+      "tag": "a",
+      "probability": 0.4665,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "href": "https://www.onetrust.com/solutions/consent-and-preferences/?utm_source=cmp&utm_medium=cmpbanner",
+        "target": "_blank",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ],
+        "aria-label": "Powered by OneTrust Opens in a new Tab",
+        "role": "link"
+      },
+      "text_preview": "Powered by OneTrust Opens in a new Tab",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5312
+        },
+        {
+          "rule_id": "link-in-text-block",
+          "probability": 0.1175
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 623,
+      "tag": "button",
+      "probability": 0.4656,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "id": "filter-btn-handler",
+        "aria-label": "Filter Cookie List",
+        "aria-haspopup": "true",
+        "aria-expanded": "false",
+        "role": "button"
+      },
+      "text_preview": "Filter Cookie List",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.4891
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 119,
+      "tag": "a",
+      "probability": 0.4551,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "https://www.getyourguide.com/?partner_id=VVCO1YW&utm_medium=transport_partners&cmp=prepare_to_travel",
+        "target": "_blank",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.771
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 335,
+      "tag": "a",
+      "probability": 0.4525,
+      "predicted_violation": true,
+      "status": "predicted_violation",
+      "attributes": {
+        "class": [],
+        "href": "/in/en/travel-information/baggage-guidelines.html",
+        "target": "_self",
+        "role": "button",
+        "aria-label": "Know More",
+        "tabindex": "0"
+      },
+      "text_preview": "Know More",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2987
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1588
+        },
+        {
+          "rule_id": "link-in-text-block",
+          "probability": 0.1052
+        }
+      ],
+      "node_threshold": 0.45
+    }
+  ],
+  "candidate_warnings": [
+    {
+      "node_id": 600,
+      "tag": "div",
+      "probability": 0.4208,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "role": "dialog",
+        "aria-modal": "true",
+        "style": "height: 100%;",
+        "aria-label": "Customise Your Cookie Preferences "
+      },
+      "text_preview": "Customise Your Cookie Preferences",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3311
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 333,
+      "tag": "div",
+      "probability": 0.4085,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "custom-swiper-slide",
+          "swiper-slide-active",
+          "animate-door"
+        ],
+        "data-cmp-data-layer": "{\"-1000441170\":{\"buttonText\":\"baggageessentials-Know More\",\"siteSection\":\"Book & Manage\",\"clickComponentType\":\"card\",\"imgAltText\":\"baggage\",\"@type\":\"airindia-website/components/home/components/swipe-cards\",\"siteSubSection\":\"Air India: Book Domestic & International Non-Stop Direct Flights\",\"cardHref\":\"https://www.airindia.com/content/air-india/in/en/travel-information/baggage-guidelines.html\",\"componentName\":\"Plan Your Trip\",\"title\":\"BAGGAGE ESSENTIALS\"}}",
+        "role": "group",
+        "aria-label": "1 / 3",
+        "style": "margin-right: 20px;"
+      },
+      "text_preview": "1 / 3",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.3246
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3058
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.1713
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 87,
+      "tag": "a",
+      "probability": 0.3998,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/destinations/newlaunch/new-delhi-to-london.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7795
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 580,
+      "tag": "a",
+      "probability": 0.3846,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "https://www.youtube.com/channel/UCnfpyluc2VymxpxWpiL9Oaw",
+        "target": "_blank",
+        "class": [
+          "ai-list-item"
+        ],
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7837
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 586,
+      "tag": "a",
+      "probability": 0.382,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "https://www.facebook.com/AirIndia/",
+        "target": "_blank",
+        "class": [
+          "ai-list-item"
+        ],
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7846
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 103,
+      "tag": "a",
+      "probability": 0.3817,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/book/cars.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7684
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 584,
+      "tag": "a",
+      "probability": 0.3802,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "https://www.instagram.com/airindia/",
+        "target": "_blank",
+        "class": [
+          "ai-list-item"
+        ],
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7832
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 582,
+      "tag": "a",
+      "probability": 0.3798,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "https://twitter.com/airindia",
+        "target": "_blank",
+        "class": [
+          "ai-list-item"
+        ],
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7832
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 578,
+      "tag": "a",
+      "probability": 0.3751,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "https://www.linkedin.com/company/airindia/mycompany/",
+        "target": "_blank",
+        "class": [
+          "ai-list-item"
+        ],
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7768
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 121,
+      "tag": "a",
+      "probability": 0.3712,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/book/add-ons/travel-insurance.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7513
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 117,
+      "tag": "a",
+      "probability": 0.364,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/experience/in-air/premium-economy.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7522
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 176,
+      "tag": "button",
+      "probability": 0.3616,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "type": "button",
+        "class": [
+          "logoutbtn"
+        ],
+        "onclick": "signOut()",
+        "role": "button",
+        "aria-label": "SIGN OUT"
+      },
+      "text_preview": "SIGN OUT",
+      "predicted_rules": [
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.3076
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2933
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1534
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 214,
+      "tag": "div",
+      "probability": 0.3605,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "_ngcontent-ng-c3757420357": "",
+        "role": "combobox",
+        "tabindex": "0",
+        "class": [
+          "ai-dropdown__trigger",
+          "ng-tns-c3757420357-3"
+        ],
+        "aria-expanded": "false",
+        "aria-haspopup": "true",
+        "aria-disabled": "false",
+        "aria-label": "dropdown.selectAnOption"
+      },
+      "text_preview": "dropdown.selectAnOption",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2409
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.2203
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.1749
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 626,
+      "tag": "ul",
+      "probability": 0.3565,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "ot-fltr-opts"
+        ],
+        "role": "list",
+        "aria-label": "checkbox label label"
+      },
+      "text_preview": "checkbox label label",
+      "predicted_rules": [
+        {
+          "rule_id": "list",
+          "probability": 0.2253
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.166
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 237,
+      "tag": "a",
+      "probability": 0.3514,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [],
+        "href": "/in/en/book/exclusive-deals.html",
+        "target": "_self",
+        "role": "button",
+        "aria-label": "Know More",
+        "tabindex": "0"
+      },
+      "text_preview": "Know More",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2896
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1327
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 597,
+      "tag": "button",
+      "probability": 0.3485,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "onetrust-pc-btn-handler",
+        "aria-label": "Manage Cookies, Opens the preference center dialog",
+        "aria-haspopup": "dialog",
+        "role": "button"
+      },
+      "text_preview": "Manage Cookies, Opens the preference center dialog",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5861
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 249,
+      "tag": "a",
+      "probability": 0.3458,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [],
+        "href": "/in/en/destinations/alliances-and-partnerships.html",
+        "target": "_self",
+        "role": "button",
+        "aria-label": "Know More",
+        "tabindex": "0"
+      },
+      "text_preview": "Know More",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3061
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1326
+        },
+        {
+          "rule_id": "link-in-text-block",
+          "probability": 0.1014
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 174,
+      "tag": "button",
+      "probability": 0.3432,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "type": "button",
+        "class": [
+          "myAccbtn"
+        ],
+        "role": "button",
+        "aria-label": "Maharaja Club Account"
+      },
+      "text_preview": "Maharaja Club Account",
+      "predicted_rules": [
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.389
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2926
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.109
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 340,
+      "tag": "a",
+      "probability": 0.3199,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [],
+        "href": "https://www.staralliance.com/en/frequent-flyers",
+        "target": "_blank",
+        "role": "button",
+        "aria-label": "Know More",
+        "tabindex": "0"
+      },
+      "text_preview": "Know More",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2448
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1463
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 105,
+      "tag": "a",
+      "probability": 0.3127,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/travel-information/visa-services.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7543
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 538,
+      "tag": "a",
+      "probability": 0.3118,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "aria-label": "Mishandled Baggage Statement",
+        "href": "/in/en/travel-information/baggage-guidelines/mishandled-baggage-statement.html",
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "Mishandled Baggage Statement",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.4012
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 243,
+      "tag": "a",
+      "probability": 0.3066,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [],
+        "href": "/in/en/experience/travel-with-kids.html",
+        "target": "_self",
+        "role": "button",
+        "aria-label": "Know More",
+        "tabindex": "0"
+      },
+      "text_preview": "Know More",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2814
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.128
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 593,
+      "tag": "div",
+      "probability": 0.3028,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "onetrust-banner-sdk",
+        "class": [
+          "otFloatingRounded",
+          "otRelFont",
+          "ot-bottom-right",
+          "vertical-align-content"
+        ],
+        "tabindex": "0",
+        "style": "\n                animation-timing-function: ease-out;\n                animation-fill-mode: forwards;\n                animation-duration: 2000ms;animation-name: slide-down-custom;bottom: -300px;",
+        "role": "generic",
+        "aria-label": "Set your cookies We use cookies to ensure Air India websites function properly, to analyse traffic, and to create better user experiences, including delivering personalised content. By clicking \u201cAccept All,\u201d you agree to our use of cookies. To customise your cookie preferences, click \"Manage Cookies\" and select the categories you want to accept. For more information about how we use cookies, please view our Cookie Policy. Manage Cookies Reject All Accept All"
+      },
+      "text_preview": "Set your cookies We use cookies to ensure Air India websites function properly, to analyse traffic, ",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2263
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 588,
+      "tag": "a",
+      "probability": 0.3025,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "https://www.tata.com/",
+        "target": "_blank",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7864
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 258,
+      "tag": "a",
+      "probability": 0.2989,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [],
+        "href": "/in/en/maharaja-club/earn-and-redeem-air-india-express.html",
+        "target": "_self",
+        "role": "button",
+        "aria-label": "Know More",
+        "tabindex": "0"
+      },
+      "text_preview": "Know More",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2721
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1095
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 640,
+      "tag": "section",
+      "probability": 0.2871,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "_ngcontent-ng-c2735883603": "",
+        "class": [
+          "floating-chat-bot",
+          "default"
+        ],
+        "role": "region",
+        "aria-label": "Hi, I'm AI.g How can I help you?"
+      },
+      "text_preview": "Hi, I'm AI.g How can I help you?",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3613
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 426,
+      "tag": "div",
+      "probability": 0.2828,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "swiper-slide"
+        ],
+        "data-swiper-slide-index": "1",
+        "role": "group",
+        "aria-label": "2 / 3"
+      },
+      "text_preview": "2 / 3",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2694
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 598,
+      "tag": "button",
+      "probability": 0.2799,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "onetrust-reject-all-handler",
+        "role": "button",
+        "aria-label": "Reject All"
+      },
+      "text_preview": "Reject All",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.603
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 360,
+      "tag": "a",
+      "probability": 0.2772,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [],
+        "href": "/in/en/book/exclusive-deals/member-offer.html",
+        "target": "_self",
+        "role": "button",
+        "aria-label": "Book Now",
+        "tabindex": "0"
+      },
+      "text_preview": "Book Now",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3129
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 622,
+      "tag": "input",
+      "probability": 0.2732,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "vendor-search-handler",
+        "type": "text",
+        "name": "vendor-search-handler",
+        "placeholder": "Search\u2026",
+        "aria-label": "Cookie list search",
+        "role": "textbox"
+      },
+      "text_preview": "Cookie list search",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2946
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 629,
+      "tag": "button",
+      "probability": 0.2515,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "filter-apply-handler",
+        "role": "button",
+        "aria-label": "Apply"
+      },
+      "text_preview": "Apply",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.4016
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 606,
+      "tag": "section",
+      "probability": 0.2444,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "ot-sdk-row",
+          "ot-cat-grp"
+        ],
+        "role": "region",
+        "aria-label": "Manage Consent Preferences Strictly Necessary Cookies These cookies are necessary for the website to function and cannot be switched off in our systems. They are usually only set in response to actions made by you which amount to a request for services, such as setting your privacy preferences, logging in or filling in forms. You can set your browser to block or alert you about these cookies, but some parts of the site will not then work. These cookies do not store any personally identifiable information. Cookie List Targeting Cookies Targeting Cookies These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising. Cookie List Performance Cookies Performance Cookies These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance. Cookie List"
+      },
+      "text_preview": "Manage Consent Preferences Strictly Necessary Cookies These cookies are necessary for the website to",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3543
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 617,
+      "tag": "input",
+      "probability": 0.2418,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "type": "checkbox",
+        "name": "ot-group-id-C0002",
+        "id": "ot-group-id-C0002",
+        "role": "switch",
+        "class": [
+          "category-switch-handler"
+        ],
+        "data-optanongroupid": "C0002",
+        "aria-labelledby": "ot-header-id-C0002",
+        "aria-label": "Performance Cookies"
+      },
+      "text_preview": "Performance Cookies",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2423
+        },
+        {
+          "rule_id": "label",
+          "probability": 0.1055
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 614,
+      "tag": "button",
+      "probability": 0.241,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "ot-link-btn",
+          "category-host-list-handler"
+        ],
+        "dir": "ltr",
+        "aria-label": "Targeting Cookies - Cookie Details button opens Cookie List menu",
+        "data-parent-id": "C0004",
+        "role": "button"
+      },
+      "text_preview": "Targeting Cookies - Cookie Details button opens Cookie List menu",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3003
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 619,
+      "tag": "section",
+      "probability": 0.2387,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "ot-pc-lst",
+        "class": [
+          "ot-hide",
+          "ot-hosts-ui",
+          "ot-pc-scrollbar",
+          "ot-enbl-chr"
+        ],
+        "role": "region",
+        "aria-label": "Back Button Cookie List Search Icon Filter Icon Clear checkbox label label Apply Cancel Consent Leg.Interest checkbox label label checkbox label label checkbox label label"
+      },
+      "text_preview": "Back Button Cookie List Search Icon Filter Icon Clear checkbox label label Apply Cancel Consent Leg.",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3053
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 603,
+      "tag": "h2",
+      "probability": 0.2362,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "ot-pc-title",
+        "role": "heading",
+        "aria-label": "Customise Your Cookie Preferences"
+      },
+      "text_preview": "Customise Your Cookie Preferences",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.391
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 625,
+      "tag": "button",
+      "probability": 0.2298,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "clear-filters-handler",
+        "role": "button",
+        "aria-label": "Clear"
+      },
+      "text_preview": "Clear",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2908
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 630,
+      "tag": "button",
+      "probability": 0.226,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "id": "filter-cancel-handler",
+        "role": "button",
+        "aria-label": "Cancel"
+      },
+      "text_preview": "Cancel",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.4294
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 345,
+      "tag": "a",
+      "probability": 0.2198,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [],
+        "href": "/in/en/contact-us.html",
+        "target": "_self",
+        "role": "button",
+        "aria-label": "Know More",
+        "tabindex": "0"
+      },
+      "text_preview": "Know More",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2448
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 226,
+      "tag": "div",
+      "probability": 0.2197,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "_ngcontent-ng-c3757420357": "",
+        "role": "combobox",
+        "tabindex": "0",
+        "class": [
+          "ai-dropdown__trigger",
+          "ng-tns-c3757420357-1"
+        ],
+        "aria-expanded": "false",
+        "aria-haspopup": "true",
+        "aria-disabled": "false",
+        "aria-label": "Select Class"
+      },
+      "text_preview": "Select Class",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2352
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.1124
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 224,
+      "tag": "button",
+      "probability": 0.2142,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "_ngcontent-ng-c3864293528": "",
+        "type": "button",
+        "class": [
+          "mat-mdc-menu-trigger",
+          "ai-pax-selector__trigger",
+          "ai-pax-selector__trigger--desktop"
+        ],
+        "tabindex": "0",
+        "aria-label": ": 1 bookingWidget.adult",
+        "aria-haspopup": "menu",
+        "aria-expanded": "false",
+        "role": "button"
+      },
+      "text_preview": ": 1 bookingWidget.adult",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2322
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.2108
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1685
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 33,
+      "tag": "a",
+      "probability": 0.2112,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "data-cmp-data-layer": "{\"1978097476\":{\"buttonText\":\"Sign up\",\"@type\":\"/apps/airindia-website/components/home/components/header-components/header-button\",\"cardHref\":\"https://www.airindia.com/content/air-india/in/en/register.html\"}}",
+        "data-cmp-clickable": "",
+        "aria-label": "Sign up",
+        "tabindex": "0",
+        "class": [
+          "top-menu-button"
+        ],
+        "href": "/in/en/register.html",
+        "target": "_self",
+        "id": "signUp",
+        "role": "link"
+      },
+      "text_preview": "Sign up",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.258
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 591,
+      "tag": "a",
+      "probability": 0.2091,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "href": "https://www.staralliance.com/en/frequent-flyers",
+        "target": "_blank",
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.7651
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 338,
+      "tag": "div",
+      "probability": 0.2082,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "custom-swiper-slide",
+          "swiper-slide-next",
+          "animate-door"
+        ],
+        "data-cmp-data-layer": "{\"-1000441169\":{\"buttonText\":\"staralliance-Know More\",\"siteSection\":\"Book & Manage\",\"clickComponentType\":\"card\",\"imgAltText\":\"star alliance\",\"@type\":\"airindia-website/components/home/components/swipe-cards\",\"siteSubSection\":\"Air India: Book Domestic & International Non-Stop Direct Flights\",\"cardHref\":\"https://www.airindia.comhttps://www.staralliance.com/en/frequent-flyers\",\"componentName\":\"Plan Your Trip\",\"title\":\"star alliance\"}}",
+        "role": "group",
+        "aria-label": "2 / 3",
+        "style": "margin-right: 20px;"
+      },
+      "text_preview": "2 / 3",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2277
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 35,
+      "tag": "a",
+      "probability": 0.2068,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "data-cmp-data-layer": "{\"1978097102\":{\"buttonText\":\"Sign In\",\"@type\":\"/apps/airindia-website/components/home/components/header-components/header-button\",\"cardHref\":\"https://www.airindia.com#\"}}",
+        "data-cmp-clickable": "",
+        "aria-label": "Sign In",
+        "tabindex": "0",
+        "data-bs-toggle": "modal",
+        "data-bs-target": "#loginModal",
+        "class": [
+          "top-menu-button",
+          "background-gradient"
+        ],
+        "href": "#",
+        "target": "_self",
+        "id": "signIn",
+        "role": "link"
+      },
+      "text_preview": "Sign In",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2675
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 296,
+      "tag": "div",
+      "probability": 0.2063,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "class": [
+          "special-offer-swipe-cards",
+          "swiper-slide-active"
+        ],
+        "role": "group",
+        "aria-label": "1 / 5",
+        "style": "margin-right: 20px;"
+      },
+      "text_preview": "1 / 5",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2101
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.1885
+        }
+      ],
+      "node_threshold": 0.45
+    },
+    {
+      "node_id": 613,
+      "tag": "input",
+      "probability": 0.2018,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "type": "checkbox",
+        "name": "ot-group-id-C0004",
+        "id": "ot-group-id-C0004",
+        "role": "switch",
+        "class": [
+          "category-switch-handler"
+        ],
+        "data-optanongroupid": "C0004",
+        "aria-labelledby": "ot-header-id-C0004",
+        "aria-label": "Targeting Cookies"
+      },
+      "text_preview": "Targeting Cookies",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2332
+        }
+      ],
+      "node_threshold": 0.45
+    }
+  ],
+  "raw_top_predictions": [
+    {
+      "node_id": 222,
+      "tag": "input",
+      "probability": 0.9826,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c3018682154": "",
+        "autocomplete": "off",
+        "class": [
+          "mat-mdc-autocomplete-trigger",
+          "ai-autocomplete-input",
+          "ng-star-inserted"
+        ],
+        "placeholder": "",
+        "tabindex": "0",
+        "aria-label": "Select origin airport",
+        "role": "combobox",
+        "aria-autocomplete": "list",
+        "aria-expanded": "false",
+        "aria-haspopup": "listbox"
+      },
+      "text_preview": "Select origin airport",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-allowed-attr",
+          "probability": 0.6352
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.5725
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.5224
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 1
+    },
+    {
+      "node_id": 210,
+      "tag": "div",
+      "probability": 0.9822,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item",
+          "link-tab",
+          "ez-booking"
+        ],
+        "id": "tab-one-click",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "eZ Booking"
+      },
+      "text_preview": "eZ Booking",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7906
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.6877
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.6059
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 2
+    },
+    {
+      "node_id": 219,
+      "tag": "input",
+      "probability": 0.9797,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c3018682154": "",
+        "autocomplete": "off",
+        "class": [
+          "mat-mdc-autocomplete-trigger",
+          "ai-autocomplete-input",
+          "ng-star-inserted"
+        ],
+        "placeholder": "",
+        "tabindex": "0",
+        "aria-label": "Select origin airport",
+        "role": "combobox",
+        "aria-autocomplete": "list",
+        "aria-expanded": "false",
+        "aria-haspopup": "listbox"
+      },
+      "text_preview": "Select origin airport",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-allowed-attr",
+          "probability": 0.6379
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.5563
+        },
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.5374
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 3
+    },
+    {
+      "node_id": 208,
+      "tag": "div",
+      "probability": 0.9751,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item"
+        ],
+        "id": "tab-check-in",
+        "aria-controls": "panel-check-in",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "CHECK-IN"
+      },
+      "text_preview": "CHECK-IN",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7296
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.5985
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5118
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 4
+    },
+    {
+      "node_id": 209,
+      "tag": "div",
+      "probability": 0.974,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item"
+        ],
+        "id": "tab-flight-status",
+        "aria-controls": "panel-flight-status",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "FLIGHT STATUS"
+      },
+      "text_preview": "FLIGHT STATUS",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7349
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.596
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.5156
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 5
+    },
+    {
+      "node_id": 206,
+      "tag": "div",
+      "probability": 0.9712,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item",
+          "active"
+        ],
+        "id": "tab-search-flight",
+        "aria-controls": "panel-search-flight",
+        "tabindex": "0",
+        "aria-selected": "true",
+        "aria-label": "SEARCH FLIGHTS"
+      },
+      "text_preview": "SEARCH FLIGHTS",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7749
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.7141
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.616
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 6
+    },
+    {
+      "node_id": 207,
+      "tag": "div",
+      "probability": 0.9662,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item"
+        ],
+        "id": "tab-manage-booking",
+        "aria-controls": "panel-manage-booking",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "MANAGE BOOKING"
+      },
+      "text_preview": "MANAGE BOOKING",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7688
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.6702
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.5412
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 7
+    },
+    {
+      "node_id": 435,
+      "tag": "a",
+      "probability": 0.9624,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "show-on-android",
+          "device-hidden"
+        ],
+        "href": "https://play.google.com/store/apps/details?id=com.bets.airindia.ui",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8341
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 8
+    },
+    {
+      "node_id": 433,
+      "tag": "a",
+      "probability": 0.9603,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "show-on-ios",
+          "device-hidden"
+        ],
+        "href": "https://apps.apple.com/us/app/air-india/id932302964",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8353
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 9
+    },
+    {
+      "node_id": 211,
+      "tag": "div",
+      "probability": 0.9568,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c1344642380": "",
+        "role": "tab",
+        "class": [
+          "tab-item",
+          "special",
+          "link-tab",
+          "exclusive-deals",
+          "special-offers"
+        ],
+        "id": "tab-exclusive-deals",
+        "tabindex": "-1",
+        "aria-selected": "false",
+        "aria-label": "APAAR-ID OFFER"
+      },
+      "text_preview": "APAAR-ID OFFER",
+      "predicted_rules": [
+        {
+          "rule_id": "aria-prohibited-attr",
+          "probability": 0.7664
+        },
+        {
+          "rule_id": "nested-interactive",
+          "probability": 0.6336
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.5431
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 10
+    },
+    {
+      "node_id": 217,
+      "tag": "img",
+      "probability": 0.9511,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c2444066174": "",
+        "width": "24",
+        "height": "24",
+        "class": [
+          "ai-promo-trigger__icon",
+          "ng-tns-c2444066174-0"
+        ],
+        "src": "https://dmlib.airindia.com/adobe/assets/urn:aaid:aem:65f8ca27-05d7-4e6b-9ce2-3dd6a61dadd1/as/chevron-down.png",
+        "alt": "",
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7592
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 11
+    },
+    {
+      "node_id": 216,
+      "tag": "button",
+      "probability": 0.9402,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c2444066174": "",
+        "type": "button",
+        "class": [
+          "ai-promo-trigger",
+          "ng-tns-c2444066174-0",
+          "ng-star-inserted"
+        ],
+        "tabindex": "0",
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.9295
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.1474
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 12
+    },
+    {
+      "node_id": 223,
+      "tag": "button",
+      "probability": 0.9274,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "_ngcontent-ng-c3969314520": "",
+        "type": "button",
+        "class": [
+          "ai-booking-widget__date-section",
+          "ng-star-inserted"
+        ],
+        "aria-label": "",
+        "role": "button"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "button-name",
+          "probability": 0.9282
+        },
+        {
+          "rule_id": "aria-command-name",
+          "probability": 0.1313
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 13
+    },
+    {
+      "node_id": 414,
+      "tag": "a",
+      "probability": 0.9043,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "show-on-android",
+          "device-hidden"
+        ],
+        "href": "https://play.google.com/store/apps/details?id=com.bets.airindia.ui",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.782
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 14
+    },
+    {
+      "node_id": 15,
+      "tag": "a",
+      "probability": 0.8917,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "data-cmp-data-layer": "{\"314696878\":{\"@type\":\"airindia-website/components/home/components/header-components/header-wrapper\",\"cardHref\":\"https://www.airindia.comhttps://aibiz.airindia.com\"}}",
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "class": [
+          "top-menu-button"
+        ],
+        "href": "https://aibiz.airindia.com",
+        "target": "_self",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8194
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 15
+    },
+    {
+      "node_id": 297,
+      "tag": "a",
+      "probability": 0.8893,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "href": "/in/en/book/exclusive-deals/member-offer.html",
+        "target": "_self",
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8442
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 16
+    },
+    {
+      "node_id": 365,
+      "tag": "img",
+      "probability": 0.8856,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "ai-d-none",
+          "ai-d-md-block",
+          "ai-d-lg-none"
+        ],
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7577
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 17
+    },
+    {
+      "node_id": 364,
+      "tag": "img",
+      "probability": 0.8815,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "ai-d-none",
+          "ai-d-lg-block"
+        ],
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.7547
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 18
+    },
+    {
+      "node_id": 141,
+      "tag": "a",
+      "probability": 0.8586,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "data-cmp-clickable": "",
+        "tabindex": "0",
+        "href": "/in/en/maharaja-club/partner-offers.html",
+        "target": "_self",
+        "class": [
+          "img-fit-a"
+        ],
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.8309
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 19
+    },
+    {
+      "node_id": 366,
+      "tag": "img",
+      "probability": 0.8552,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "class": [
+          "ai-d-block",
+          "ai-d-md-none"
+        ],
+        "role": "img"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.749
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 20
+    }
+  ],
+  "axe_summary": {
+    "available": true,
+    "violation_count": 6,
+    "pass_count": 33,
+    "incomplete_count": 4,
+    "inapplicable_count": 27,
+    "incomplete": [
+      {
+        "rule_id": "aria-prohibited-attr",
+        "impact": "serious",
+        "help": "Elements must only use permitted ARIA attributes",
+        "nodes": 2
+      },
+      {
+        "rule_id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 32
+      },
+      {
+        "rule_id": "duplicate-id-aria",
+        "impact": "critical",
+        "help": "IDs used in ARIA and labels must be unique",
+        "nodes": 2
+      },
+      {
+        "rule_id": "video-caption",
+        "impact": "critical",
+        "help": "<video> elements must have captions",
+        "nodes": 1
+      }
+    ]
+  },
+  "ground_truth": {
+    "true_violations": 14,
+    "true_positives": 4,
+    "false_positives": 50,
+    "false_negatives": 10,
+    "precision": 0.0741,
+    "recall": 0.2857
+  }
+}
