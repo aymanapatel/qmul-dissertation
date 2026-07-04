@@ -11,9 +11,13 @@ The training entrypoint is `3_Learning/scripts/train_multi_site.py`. For each si
 
 Each page is processed into a PyG `Data` object by `FeatureExtractor.process_page()` in `3_Learning/src/feature_extractor.py`.
 
+### Graph Sources
+
+The graph source is selected with `--graph-source`.
+
 ### DOM Graph Source
 
-The current graph source is `dom`.
+Flag value: `dom`.
 
 For the DOM graph, `html_graph_builder.parse_html_to_graph()` parses the HTML with BeautifulSoup and creates:
 
@@ -32,6 +36,21 @@ node_y         [num_nodes]
 node_y_multi   [num_nodes, num_wcag_rules]
 y              [1]
 ```
+### A11y Tree Graph Source
+
+Flag value: `a11y-tree`.
+
+The a11y-tree source is implemented in `3_Learning/src/accessibility_graph_builder.py`.
+It builds a static accessibility-tree-style graph from the parsed HTML:
+
+- Nodes are semantically relevant/accessibility-exposed elements rather than every DOM element.
+- Roles are inferred from explicit `role`, HTML tag, and input type.
+- Accessible names are inferred from `aria-labelledby`, `aria-label`, `alt`, `title`, `placeholder`, `value`, or visible text.
+- Hidden/presentational/script/style/template nodes are skipped.
+- Edges connect each included node to its nearest included accessibility ancestor.
+- Adjacent accessible siblings receive sibling edges.
+
+The a11y graph still keeps the original parsed element on each node so axe selectors can be mapped back to graph nodes for weak labels.
 
 ### Node Features
 
@@ -290,4 +309,3 @@ DOMAttentionNet
       |
       +--> Graph/page violation logits [B, 2]
 ```
-
