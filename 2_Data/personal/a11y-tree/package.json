@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "playwright": "^1.61.1",
-    "playwright-core": "^1.61.1"
+    "playwright-core": "^1.61.1",
+    "yaml": "^2.9.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

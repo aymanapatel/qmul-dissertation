@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOM &amp; Accessibility Tree Visualizer</title>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <style>
+    :root {
+      --bg: #1a1d24;
+      --panel: #23262e;
+      --panel-2: #2b2f3a;
+      --line: #3a3f4d;
+      --text: #e3e5e8;
+      --muted: #9aa0ad;
+      --accent: #6fb3ff;
+      --accent-2: #f0a060;
+      --role: #f0a060;
+      --name: #6fb3ff;
+      --ignored: #6b7280;
+      --leaf: #8ad08a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header.app {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 22px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header.app h1 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+    header.app .controls {
+      margin-left: auto;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    header.app .controls input[type="file"] {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    header.app .controls select,
+    header.app .controls button {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    header.app .controls button:hover { border-color: var(--accent); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      height: calc(100vh - 56px);
+    }
+    .panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      border-right: 1px solid var(--line);
+    }
+    .panel:last-child { border-right: none; }
+    .panel-head {
+      padding: 10px 16px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-head h2 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--muted);
+    }
+    .panel-head .count {
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      padding: 1px 8px;
+    }
+    .panel-head .toolbar {
+      margin-left: auto;
+      display: flex;
+      gap: 4px;
+    }
+    .panel-head .toolbar button {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .panel-head .toolbar button:hover {
+      color: var(--text);
+      background: var(--panel-2);
+    }
+
+    .toolbar-row {
+      padding: 8px 16px;
+      background: var(--panel-2);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      font-size: 12px;
+    }
+    .toolbar-row input[type="search"] {
+      flex: 1;
+      background: #1a1d24;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      padding: 5px 9px;
+      font-size: 12px;
+    }
+    .toolbar-row input[type="checkbox"] { cursor: pointer; }
+    .toolbar-row label { color: var(--muted); user-select: none; }
+
+    .scroll {
+      overflow: auto;
+      padding: 8px 12px 40px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 1.55;
+    }
+    ul.tree, ul.tree ul { list-style: none; margin: 0; padding: 0; }
+    ul.tree li {
+      position: relative;
+      padding-left: 18px;
+    }
+    ul.tree li::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      border-left: 1px solid var(--line);
+    }
+    ul.tree li > ul::before {
+      content: "";
+      position: absolute;
+      left: -12px;
+      top: 0;
+      width: 12px;
+      border-top: 1px solid var(--line);
+      margin-top: 8px;
+    }
+    ul.tree > li { padding-left: 0; }
+    ul.tree > li::before { display: none; }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      cursor: default;
+    }
+    .row:hover { background: var(--panel-2); }
+    .row .twisty {
+      width: 14px;
+      height: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      user-select: none;
+      font-size: 10px;
+    }
+    .row .twisty.empty { visibility: hidden; }
+    .row .tag { color: var(--accent-2); }
+    .row .role { color: var(--role); font-weight: 600; }
+    .row .name { color: var(--name); }
+    .row .attr { color: var(--leaf); }
+    .row .muted { color: var(--ignored); }
+    .row .labelIgn { color: var(--ignored); font-style: italic; }
+    .row .detail {
+      margin-left: 8px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .hidden { display: none !important; }
+    .highlight { background: #3a3220 !important; }
+
+    .empty-state {
+      padding: 30px;
+      color: var(--muted);
+      font-family: -apple-system, sans-serif;
+      text-align: center;
+    }
+    .empty-state code {
+      background: var(--panel-2);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    .props, .sources {
+      margin-left: 22px;
+      font-size: 11px;
+      color: var(--muted);
+      padding: 4px 8px;
+      border-left: 2px solid var(--line);
+      margin-bottom: 4px;
+    }
+    .props .k { color: var(--leaf); }
+    .props .v { color: var(--text); }
+  </style>
+</head>
+<body>
+  <header class="app">
+    <h1>DOM &amp; Accessibility Tree Visualizer</h1>
+    <div class="controls">
+      <label for="fileInput" style="color:var(--muted);font-size:12px;">
+        Load a11y-tree:
+      </label>
+      <input id="fileInput" type="file" accept=".json,.yaml,.yml,application/json,text/yaml" />
+      <button id="resetBtn">Reset</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <section class="panel">
+      <div class="panel-head">
+        <h2>DOM Tree</h2>
+        <span class="count" id="domCount">0</span>
+        <div class="toolbar">
+          <button id="domExpand">Expand all</button>
+          <button id="domCollapse">Collapse all</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <input type="search" id="domFilter" placeholder="Filter DOM (tag, text)..." />
+      </div>
+      <div class="scroll" id="domViewport">
+        <div class="empty-state">
+          Paste HTML below to render its DOM tree, or load an a11y-tree file to enable
+          automatic DOM reconstruction.
+        </div>
+        <textarea id="domInput"
+          placeholder="Paste HTML here..."
+          style="width:100%;min-height:160px;background:#1a1d24;color:var(--text);
+                 border:1px solid var(--line);border-radius:6px;padding:8px;
+                 font-family:ui-monospace,Menlo,monospace;font-size:12px;">
+        </textarea>
+        <button id="domRender"
+          style="margin-top:8px;background:var(--panel-2);color:var(--text);
+                 border:1px solid var(--line);border-radius:6px;
+                 padding:6px 12px;cursor:pointer;">
+          Render DOM tree
+        </button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <h2>Accessibility Tree</h2>
+        <span class="count" id="axCount">0</span>
+        <div class="toolbar">
+          <button id="axExpand">Expand all</button>
+          <button id="axCollapse">Collapse all</button>
+        </div>
+      </div>
+      <div class="toolbar-row">
+        <input type="search" id="axFilter" placeholder="Filter a11y nodes (role, name)..." />
+        <label><input type="checkbox" id="axIgnored" /> show ignored</label>
+      </div>
+      <div class="scroll" id="axViewport">
+        <div class="empty-state">
+          Loading <code>a11y-tree.json</code>&hellip;
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script>
+("use strict");
+
+// ---------- small utils ----------
+function el(tag, attrs, ...children) {
+  const e = document.createElement(tag);
+  if (attrs)
+    for (const [k, v] of Object.entries(attrs)) {
+      if (v === null || v === undefined) continue;
+      if (k === "class") e.className = v;
+      else if (k === "text") e.textContent = v;
+      else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+      else e.setAttribute(k, v);
+    }
+  for (const c of children.flat()) {
+    if (c == null) continue;
+    e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+  }
+  return e;
+}
+
+function collapse(li) {
+  const sub = li.querySelector(":scope > ul");
+  if (!sub) return;
+  sub.classList.add("hidden");
+  const t = li.querySelector(":scope > .row > .twisty");
+  if (t) t.textContent = "\u25B6";
+}
+function expand(li) {
+  const sub = li.querySelector(":scope > ul");
+  if (!sub || !sub.classList.contains("hidden")) return;
+  sub.classList.remove("hidden");
+  const t = li.querySelector(":scope > .row > .twisty");
+  if (t) t.textContent = "\u25BC";
+}
+
+function expandAll(root) {
+  root.querySelectorAll("li > ul.hidden").forEach((u) => u.classList.remove("hidden"));
+  root.querySelectorAll(".twisty").forEach((t) => (t.textContent = "\u25BC"));
+}
+function collapseAll(root) {
+  // keep first level visible
+  root.querySelectorAll(":scope > li ul:not(.hidden)").forEach((u) => u.classList.add("hidden"));
+  root.querySelectorAll("li li > .row > .twisty:not(.empty)").forEach((t) => (t.textContent = "\u25B6"));
+}
+
+function filterTree(rootUl, query, predicate) {
+  // predicate(li) -> boolean match
+  let visibleCount = 0;
+  const walk = (ul) => {
+    let anyVisible = false;
+    for (const li of ul.children) {
+      const matched = predicate(li);
+      const sub = li.querySelector(":scope > ul");
+      let subVisible = false;
+      if (sub) subVisible = walk(sub);
+      const show = matched || subVisible;
+      li.classList.toggle("hidden", !show);
+      if (matched) li.querySelector(":scope > .row")?.classList.add("highlight");
+      else li.querySelector(":scope > .row")?.classList.remove("highlight");
+      if (show) anyVisible = true;
+      if (matched) visibleCount++;
+    }
+    return anyVisible;
+  };
+  walk(rootUl);
+  return visibleCount;
+}
+function clearFilter(rootUl) {
+  rootUl.querySelectorAll("li.hidden").forEach((li) => li.classList.remove("hidden"));
+  rootUl.querySelectorAll(".row.highlight").forEach((r) => r.classList.remove("highlight"));
+}
+
+// ---------- DOM tree rendering ----------
+function buildDomTree(input, viewport) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(input, "text/html");
+  viewport.innerHTML = "";
+  const root = el("ul", { class: "tree" });
+  let count = 0;
+
+  const walk = (node, parent) => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      const li = el("li");
+      const row = el("div", { class: "row" });
+
+      const attrs = [...node.attributes]
+        .map((a) => ` \u00A0<span class="attr">${a.name}</span>="<span>${a.value}</span>"`)
+        .join("");
+      row.innerHTML =
+        `<span class="tag">&lt;${node.localName}${attrs}&gt;</span>` +
+        (node.childElementCount === 0 && node.textContent.trim()
+          ? ` \u00A0<span class="name">"${node.textContent.trim().slice(0, 40)}"</span>`
+          : "");
+
+      const twisty = el("span", {
+        class: "twisty" + (node.children.length ? "" : " empty"),
+        text: node.children.length ? "\u25BC" : "",
+      });
+      twisty.addEventListener("click", () => {
+        const sub = li.querySelector(":scope > ul");
+        if (!sub) return;
+        sub.classList.contains("hidden") ? expand(li) : collapse(li);
+      });
+      row.prepend(twisty);
+      li.appendChild(row);
+      count++;
+
+      if (node.children.length) {
+        const ul = el("ul");
+        [...node.children].forEach((c) => walk(c, ul));
+        li.appendChild(ul);
+      }
+      parent.appendChild(li);
+    }
+  };
+
+  // start from <html>
+  const html = doc.documentElement;
+  if (html) walk(html, root);
+  viewport.appendChild(root);
+  document.getElementById("domCount").textContent = count;
+  return root;
+}
+
+// ---------- a11y tree rendering ----------
+let axNodes = []; // current
+let axRootUl = null;
+
+function parseAxFile(content, isYaml) {
+  const data = isYaml ? window.jsyaml.load(content) : JSON.parse(content);
+  return Array.isArray(data) ? data : data.nodes;
+}
+
+function roleOf(n) {
+  if (!n.role) return "?";
+  return n.role.value;
+}
+function nameOf(n) {
+  if (!n.name) return "";
+  return n.name.value || "";
+}
+function propsKv(n) {
+  if (!n.properties) return [];
+  return n.properties
+    .filter((p) => p.value && p.value.value !== undefined)
+    .map((p) => [p.name, p.value.value]);
+}
+
+function buildAxTree(nodes, viewport, showIgnored) {
+  const byId = new Map();
+  nodes.forEach((n) => byId.set(String(n.nodeId), n));
+
+  // roots = nodes with no parentId or parentId not in set
+  const roots = nodes.filter((n) => !n.parentId || !byId.has(String(n.parentId)));
+
+  viewport.innerHTML = "";
+  const root = el("ul", { class: "tree" });
+  let count = 0;
+
+  const build = (n, parent) => {
+    // If ignored and not showing ignored, flatten through: recurse into
+    // children directly, skipping this wrapper node entirely.
+    if (n.ignored && !showIgnored) {
+      const children = (n.childIds || [])
+        .map((id) => byId.get(String(id)))
+        .filter(Boolean);
+      children.forEach((c) => build(c, parent));
+      return;
+    }
+
+    const li = el("li");
+    const row = el("div", { class: "row" });
+
+    const allChildren = (n.childIds || [])
+      .map((id) => byId.get(String(id)))
+      .filter(Boolean);
+    // Determine whether any descendant would render (considering flatten-through)
+    const hasRenderable = (node) => {
+      if (!node) return false;
+      if (!node.ignored || showIgnored) return true;
+      const kids = (node.childIds || [])
+        .map((id) => byId.get(String(id)))
+        .filter(Boolean);
+      return kids.some(hasRenderable);
+    };
+    const hasChildren = allChildren.some(hasRenderable);
+
+    const twisty = el("span", {
+      class: "twisty" + (hasChildren ? "" : " empty"),
+      text: hasChildren ? "\u25BC" : "",
+    });
+    twisty.addEventListener("click", () => {
+      const sub = li.querySelector(":scope > ul");
+      if (!sub) return;
+      sub.classList.contains("hidden") ? expand(li) : collapse(li);
+    });
+    row.appendChild(twisty);
+
+    if (n.ignored) {
+      row.appendChild(el("span", { class: "labelIgn", text: "ignored " }));
+      row.appendChild(
+        el("span", { class: "muted", text: `(role: ${roleOf(n)})` })
+      );
+    } else {
+      row.appendChild(
+        el("span", { class: "role", text: roleOf(n) })
+      );
+      const name = nameOf(n);
+      if (name) row.appendChild(el("span", { class: "name", text: ` \u201C${name}\u201D` }));
+      const props = propsKv(n);
+      if (props.length) {
+        const txt = props.map(([k, v]) => `${k}=${JSON.stringify(v)}`).join(", ");
+        row.appendChild(el("span", { class: "detail", text: `[${txt}]` }));
+      }
+      if (n.backendDOMNodeId) {
+        row.appendChild(
+          el("span", { class: "detail muted", text: `dom#${n.backendDOMNodeId}` })
+        );
+      }
+    }
+    li.appendChild(row);
+    count++;
+
+    if (hasChildren) {
+      const ul = el("ul");
+      allChildren.forEach((c) => build(c, ul));
+      if (ul.children.length === 0) {
+        twisty.classList.add("empty");
+        twisty.textContent = "";
+      } else {
+        li.appendChild(ul);
+      }
+    }
+    parent.appendChild(li);
+  };
+
+  roots.forEach((r) => build(r, root));
+  viewport.appendChild(root);
+  document.getElementById("axCount").textContent = count;
+  axRootUl = root;
+  return root;
+}
+
+// ---------- bootstrap: try to load default a11y-tree.json ----------
+async function loadDefault() {
+  const viewport = document.getElementById("axViewport");
+  // Try json first, then yaml
+  for (const [file, isYaml] of [["a11y-tree.json", false], ["a11y-tree.yaml", true]]) {
+    try {
+      const res = await fetch(file);
+      if (!res.ok) continue;
+      const text = await res.text();
+      const nodes = parseAxFile(text, isYaml);
+      axNodes = nodes;
+      buildAxTree(nodes, viewport, document.getElementById("axIgnored").checked);
+      return;
+    } catch (e) {
+      /* try next */
+    }
+  }
+  viewport.innerHTML =
+    '<div class="empty-state">No a11y-tree file found. Use "Load a11y-tree" above to select one.</div>';
+}
+
+// ---------- file input ----------
+document.getElementById("fileInput").addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  const isYaml = /\.(ya?ml)$/i.test(file.name);
+  reader.onload = () => {
+    try {
+      const nodes = parseAxFile(reader.result, isYaml);
+      axNodes = nodes;
+      buildAxTree(nodes, document.getElementById("axViewport"),
+        document.getElementById("axIgnored").checked);
+    } catch (err) {
+      alert("Failed to parse file: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  document.getElementById("fileInput").value = "";
+  loadDefault();
+});
+
+// ---------- toggles ----------
+document.getElementById("axExpand").addEventListener("click", () => axRootUl && expandAll(axRootUl));
+document.getElementById("axCollapse").addEventListener("click", () => axRootUl && collapseAll(axRootUl));
+
+let domRootUl = null;
+document.getElementById("domRender").addEventListener("click", () => {
+  const input = document.getElementById("domInput").value;
+  const viewport = document.getElementById("domViewport");
+  const toggled = viewport.querySelector("ul.tree");
+  if (toggled) toggled.remove();
+  domRootUl = buildDomTree(input, viewport);
+});
+document.getElementById("domExpand").addEventListener("click", () => domRootUl && expandAll(domRootUl));
+document.getElementById("domCollapse").addEventListener("click", () => domRootUl && collapseAll(domRootUl));
+
+// ---------- filtering ----------
+function debounce(fn, ms = 150) {
+  let t;
+  return (...a) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...a), ms);
+  };
+}
+
+document.getElementById("axFilter").addEventListener("input", debounce((e) => {
+  if (!axRootUl) return;
+  const q = e.target.value.trim().toLowerCase();
+  if (!q) return clearFilter(axRootUl);
+  filterTree(axRootUl, q, (li) => {
+    const row = li.querySelector(":scope > .row");
+    return row && row.textContent.toLowerCase().includes(q);
+  });
+}));
+
+document.getElementById("domFilter").addEventListener("input", debounce((e) => {
+  if (!domRootUl) return;
+  const q = e.target.value.trim().toLowerCase();
+  if (!q) return clearFilter(domRootUl);
+  filterTree(domRootUl, q, (li) => {
+    const row = li.querySelector(":scope > .row");
+    return row && row.textContent.toLowerCase().includes(q);
+  });
+}));
+
+document.getElementById("axIgnored").addEventListener("change", () => {
+  if (axNodes.length) {
+    buildAxTree(axNodes, document.getElementById("axViewport"),
+      document.getElementById("axIgnored").checked);
+  }
+});
+
+// Auto-render the DOM tree on first load using index.html
+(async () => {
+  try {
+    const res = await fetch("index.html");
+    if (res.ok) {
+      const txt = await res.text();
+      document.getElementById("domInput").value = txt;
+      domRootUl = buildDomTree(txt, document.getElementById("domViewport"));
+    }
+  } catch (_) {
+    /* not served - user can paste manually */
+  }
+  loadDefault();
+})();
+</script>
+</body>
+</html>

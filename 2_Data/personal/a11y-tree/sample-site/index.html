@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora Coffee — Sample Site</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="brand">
+      <img src="logo.svg" alt="" width="40" height="40" aria-hidden="true" />
+      <span class="brand-name">Aurora Coffee</span>
+    </div>
+
+    <nav aria-label="Primary">
+      <ul class="nav-list">
+        <li><a href="#home" aria-current="page">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#visit">Visit</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+
+    <button class="theme-toggle" type="button"
+            aria-pressed="false" aria-label="Switch to dark theme">
+      Dark theme
+    </button>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <h1 id="hero-heading">Brewed for the early hours</h1>
+      <p class="lede">
+        Single-origin beans, roasted in small batches every Tuesday.
+        Open from 6am on weekdays.
+      </p>
+      <a class="cta" href="#menu" role="button">See the menu</a>
+    </section>
+
+    <article class="feature" aria-labelledby="feature-heading">
+      <h2 id="feature-heading">This week's roast</h2>
+      <p>
+        <strong>Ethiopia Yirgacheffe</strong> — bright citrus, jasmine,
+        and a clean finish. Available as pour-over or espresso.
+      </p>
+
+      <div class="accordion" id="acc">
+        <h3>
+          <button class="acc-trigger" id="acc1-trigger"
+                  aria-expanded="false" aria-controls="acc1-panel">
+            Tasting notes
+          </button>
+        </h3>
+        <div class="acc-panel" id="acc1-panel"
+             role="region" aria-labelledby="acc1-trigger" hidden>
+          <p>Bergamot, white peach, honey on the finish.</p>
+        </div>
+
+        <h3>
+          <button class="acc-trigger" id="acc2-trigger"
+                  aria-expanded="false" aria-controls="acc2-panel">
+            Origin
+          </button>
+        </h3>
+        <div class="acc-panel" id="acc2-panel"
+             role="region" aria-labelledby="acc2-trigger" hidden>
+          <p>Grown at 1,900m in the Yirgacheffe region, washed process.</p>
+        </div>
+
+        <h3>
+          <button class="acc-trigger" id="acc3-trigger"
+                  aria-expanded="false" aria-controls="acc3-panel">
+            Brew ratio
+          </button>
+        </h3>
+        <div class="acc-panel" id="acc3-panel"
+             role="region" aria-labelledby="acc3-trigger" hidden>
+          <p>1:16 for pour-over, 1:2 for espresso.</p>
+        </div>
+      </div>
+    </article>
+
+    <section class="menu" aria-labelledby="menu-heading" id="menu">
+      <h2 id="menu-heading">Menu</h2>
+
+      <table class="price-table">
+        <caption>Standard drinks and prices in GBP</caption>
+        <thead>
+          <tr>
+            <th scope="col">Drink</th>
+            <th scope="col">Small</th>
+            <th scope="col">Large</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Espresso</th>
+            <td>—</td>
+            <td>£3.00</td>
+          </tr>
+          <tr>
+            <th scope="row">Flat white</th>
+            <td>£3.50</td>
+            <td>£4.00</td>
+          </tr>
+          <tr>
+            <th scope="row">Pour-over</th>
+            <td>£4.00</td>
+            <td>£5.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="newsletter" aria-labelledby="news-heading">
+      <h2 id="news-heading">Join the roast list</h2>
+      <p>Get an email when a new batch drops. No spam.</p>
+
+      <form id="signup-form" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name"
+                 aria-describedby="name-error" required />
+          <p class="error" id="name-error" role="alert" hidden>
+            Please enter your name.
+          </p>
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email"
+                 aria-describedby="email-hint email-error" required />
+          <p class="hint" id="email-hint">We'll never share your address.</p>
+          <p class="error" id="email-error" role="alert" hidden>
+            Please enter a valid email address.
+          </p>
+        </div>
+
+        <div class="field checkbox">
+          <input id="agree" name="agree" type="checkbox" required />
+          <label for="agree">I agree to receive emails</label>
+        </div>
+
+        <div class="field">
+          <fieldset>
+            <legend>How often?</legend>
+            <label><input type="radio" name="freq" value="weekly" checked /> Weekly</label>
+            <label><input type="radio" name="freq" value="monthly" /> Monthly</label>
+          </fieldset>
+        </div>
+
+        <div class="field">
+          <label for="roast">Preferred roast</label>
+          <select id="roast" name="roast">
+            <option value="light">Light</option>
+            <option value="medium" selected>Medium</option>
+            <option value="dark">Dark</option>
+          </select>
+        </div>
+
+        <button type="submit" class="submit">Sign me up</button>
+        <p id="form-status" role="status" aria-live="polite" hidden></p>
+      </form>
+    </section>
+
+    <section class="visit" aria-labelledby="visit-heading" id="visit">
+      <h2 id="visit-heading">Visit us</h2>
+      <address>
+        14 Harbour Street<br />
+        Bristol, BS1 6PR<br />
+        <a href="tel:+441179876543">0117 987 6543</a>
+      </address>
+
+      <div class="hours">
+        <h3>Opening hours</h3>
+        <dl>
+          <dt>Mon–Fri</dt>
+          <dd>6:00 — 18:00</dd>
+          <dt>Sat–Sun</dt>
+          <dd>7:00 — 17:00</dd>
+        </dl>
+      </div>
+
+      <button id="open-dialog-btn" type="button">Get directions</button>
+
+      <dialog id="dir-dialog" aria-labelledby="dir-title">
+        <h2 id="dir-title">Directions</h2>
+        <p>From Bristol Temple Meads, walk 8 minutes south along the harbour.</p>
+        <form method="dialog">
+          <button type="submit">Close</button>
+        </form>
+      </dialog>
+    </section>
+
+    <section class="about" aria-labelledby="about-heading" id="about">
+      <h2 id="about-heading">About Aurora</h2>
+      <p>
+        Founded in 2019, Aurora Coffee is a tiny roastery and café in Bristol.
+        We believe good coffee should be simple, sustainable, and surprising.
+      </p>
+      <ul class="ticks">
+        <li>Direct-trade beans</li>
+        <li>Compostable cups</li>
+        <li>Wheelchair accessible</li>
+      </ul>
+
+      <div class="rating" role="img" aria-label="Rated 4.8 out of 5 stars">
+        <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-cols">
+      <div>
+        <h3>Aurora Coffee</h3>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#visit">Visit</a></li>
+          <li><a href="#about">About</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="/privacy">Privacy</a></li>
+          <li><a href="/terms">Terms</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Follow</h3>
+        <ul class="social">
+          <li><a href="#" aria-label="Aurora on Instagram">Instagram</a></li>
+          <li><a href="#" aria-label="Aurora on Twitter">Twitter</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="copyright">&copy; 2026 Aurora Coffee. All rights reserved.</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
