@@ -238,12 +238,38 @@ python scripts/predict_site.py \
   --threshold 0.5
 ```
 
-### Graph source flag
+### Graph source and architecture flags
 
-Current experiments use `--graph-source dom`, which builds graphs from the parsed HTML DOM.
-The `--graph-source a11y-tree` value is reserved for future browser accessibility-tree graphs and currently exits with a clear "not implemented" error.
+Legacy single-view experiments still use `--architecture single --graph-source [dom|a11y-tree|rendered-visual]`.
 
-Graph-source behavior is isolated in `src/graph_sources.py`:
-- `build_dom_graph()` parses saved HTML with BeautifulSoup and returns the current element graph.
-- `build_a11y_tree_graph()` is the future browser accessibility-tree entrypoint.
-- `apply_visual_edges()` applies DOM spatial edges today and keeps future a11y-tree visual edge behavior separate.
+Multi-view experiments train specialist models for rule families that need different evidence:
+- `a11y-tree` predicts accessible-name, role, and text-alternative rules.
+- `dom` predicts DOM structure, ARIA validity, language, and metadata rules.
+- `rendered-visual` predicts rendered style/layout/visibility-dependent rules.
+
+```bash
+python scripts/train_multi_site.py \
+  --architecture multi-view \
+  --data-dir ../2_Data/browser-use/outputs/axe-core \
+  --output-dir ./graphs_multi_multiview \
+  --model-dir ./models_multiview \
+  --resume \
+  --epochs 30 \
+  --batch-size 4 \
+  --device mps \
+  --selection-metric node_f1_pos
+```
+
+Multi-view prediction loads the bundle manifest and merges view-specific predictions:
+
+```bash
+python scripts/predict_site.py \
+  --architecture multi-view \
+  --model-bundle ./models_multiview \
+  --html ../2_Data/browser-use/outputs/axe-core/www.airindia.com/0.html \
+  --axe ../2_Data/browser-use/outputs/axe-core/www.airindia.com/page-0_home.json \
+  --output ./reports/prediction_airindia_multiview.json \
+  --device mps
+```
+
+Rule ownership and WCAG success criteria live in `src/wcag_rules.py`; graph-source behavior lives in `src/graph_sources.py`.

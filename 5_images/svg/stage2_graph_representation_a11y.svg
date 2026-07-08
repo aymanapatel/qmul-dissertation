@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="950" viewBox="0 0 1500 950" role="img" aria-labelledby="title desc">
+  <title id="title">Stage 2 Graph Representation</title>
+  <desc id="desc">Accessibility-specific graph representation showing a page example transformed into DOM and accessibility graph views.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 40px Arial;fill:#111827}.sub{font:400 20px Arial;fill:#4b5563}.h{font:700 22px Arial;fill:#111827}.label{font:700 17px Arial;fill:#111827}.body{font:400 15px Arial;fill:#374151}.small{font:400 13px Arial;fill:#475569}
+      .panel{fill:#fff;stroke:#cbd5e1;stroke-width:1.5;rx:20}.page{fill:#eff6ff;stroke:#93c5fd;stroke-width:1.5;rx:14}.dom{fill:#ecfdf5;stroke:#86efac;stroke-width:1.5;rx:14}.a11y{fill:#fff7ed;stroke:#fdba74;stroke-width:1.5;rx:14}.warn{fill:#fff1f2;stroke:#fb7185;stroke-width:1.5;rx:12}.ok{fill:#f0fdfa;stroke:#5eead4;stroke-width:1.5;rx:12}
+      .edge{stroke:#64748b;stroke-width:2;fill:none}.arrow{stroke:#1f2937;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.node{fill:#fff;stroke:#64748b;stroke-width:1.5}.nodeText{font:700 13px Arial;fill:#111827}
+    </style>
+  </defs>
+  <rect class="bg" width="1500" height="950"/>
+  <text class="title" x="750" y="60" text-anchor="middle">2. Graph Representation</text>
+  <text class="sub" x="750" y="92" text-anchor="middle">A captured page becomes graph views that preserve accessibility-relevant structure</text>
+
+  <rect class="panel" x="55" y="135" width="360" height="700"/>
+  <text class="h" x="235" y="180" text-anchor="middle">Example Page Evidence</text>
+  <rect class="page" x="95" y="220" width="280" height="520"/>
+  <rect x="120" y="250" width="230" height="55" rx="8" fill="#dbeafe" stroke="#93c5fd"/>
+  <text class="label" x="235" y="283" text-anchor="middle">Header + Navigation</text>
+  <rect x="120" y="330" width="230" height="62" rx="8" fill="#fff" stroke="#93c5fd"/>
+  <text class="label" x="235" y="355" text-anchor="middle">Search field</text>
+  <text class="small" x="235" y="378" text-anchor="middle">visible label: Search products</text>
+  <rect x="120" y="420" width="230" height="100" rx="8" fill="#fff1f2" stroke="#fb7185"/>
+  <text class="label" x="235" y="452" text-anchor="middle">Product Image</text>
+  <text class="small" x="235" y="477" text-anchor="middle">no accessible description</text>
+  <text class="small" x="235" y="500" text-anchor="middle">potential image alternative issue</text>
+  <rect x="120" y="550" width="230" height="62" rx="8" fill="#ecfdf5" stroke="#86efac"/>
+  <text class="label" x="235" y="576" text-anchor="middle">Buy Now Button</text>
+  <text class="small" x="235" y="598" text-anchor="middle">clear accessible name</text>
+  <rect x="120" y="640" width="230" height="62" rx="8" fill="#fff" stroke="#cbd5e1"/>
+  <text class="label" x="235" y="666" text-anchor="middle">Footer Links</text>
+  <text class="small" x="235" y="688" text-anchor="middle">reading order matters</text>
+
+  <path class="arrow" d="M415 485 L495 485"/>
+
+  <rect class="panel" x="495" y="135" width="430" height="700"/>
+  <text class="h" x="710" y="180" text-anchor="middle">Two Graph Views</text>
+  <rect class="dom" x="535" y="220" width="350" height="260"/>
+  <text class="label" x="710" y="250" text-anchor="middle">DOM Graph</text>
+  <circle class="node" cx="710" cy="300" r="28"/><text class="nodeText" x="710" y="305" text-anchor="middle">Page</text>
+  <circle class="node" cx="615" cy="370" r="30"/><text class="nodeText" x="615" y="375" text-anchor="middle">Header</text>
+  <circle class="node" cx="710" cy="370" r="30"/><text class="nodeText" x="710" y="375" text-anchor="middle">Main</text>
+  <circle class="node" cx="805" cy="370" r="30"/><text class="nodeText" x="805" y="375" text-anchor="middle">Footer</text>
+  <circle class="node" cx="650" cy="435" r="28"/><text class="nodeText" x="650" y="440" text-anchor="middle">Image</text>
+  <circle class="node" cx="770" cy="435" r="28"/><text class="nodeText" x="770" y="440" text-anchor="middle">Button</text>
+  <path class="edge" d="M710 328 L615 342M710 328 L710 340M710 328 L805 342M700 398 L660 414M720 398 L760 414"/>
+  <text class="small" x="710" y="465" text-anchor="middle">Element hierarchy + sibling order</text>
+
+  <rect class="a11y" x="535" y="535" width="350" height="260"/>
+  <text class="label" x="710" y="565" text-anchor="middle">Accessibility Graph</text>
+  <circle class="node" cx="710" cy="615" r="34"/><text class="nodeText" x="710" y="612" text-anchor="middle">Page</text><text class="small" x="710" y="630" text-anchor="middle">document</text>
+  <circle class="node" cx="610" cy="690" r="36"/><text class="nodeText" x="610" y="687" text-anchor="middle">Nav</text><text class="small" x="610" y="705" text-anchor="middle">landmark</text>
+  <circle class="node" cx="710" cy="690" r="36"/><text class="nodeText" x="710" y="687" text-anchor="middle">Image</text><text class="small" x="710" y="705" text-anchor="middle">unnamed</text>
+  <circle class="node" cx="810" cy="690" r="36"/><text class="nodeText" x="810" y="687" text-anchor="middle">Button</text><text class="small" x="810" y="705" text-anchor="middle">Buy Now</text>
+  <path class="edge" d="M710 649 L610 660M710 649 L710 654M710 649 L810 660"/>
+  <text class="small" x="710" y="765" text-anchor="middle">User-facing roles, names and relationships</text>
+
+  <path class="arrow" d="M925 485 L1005 485"/>
+
+  <rect class="panel" x="1005" y="135" width="440" height="700"/>
+  <text class="h" x="1225" y="180" text-anchor="middle">Accessibility Meaning Preserved</text>
+  <rect class="ok" x="1048" y="235" width="354" height="95"/>
+  <text class="label" x="1225" y="268" text-anchor="middle">Hierarchy</text>
+  <text class="body" x="1225" y="298" text-anchor="middle">Which controls belong to which section?</text>
+
+  <rect class="ok" x="1048" y="365" width="354" height="95"/>
+  <text class="label" x="1225" y="398" text-anchor="middle">Reading and Tab Order</text>
+  <text class="body" x="1225" y="428" text-anchor="middle">Will keyboard and screen-reader flow make sense?</text>
+
+  <rect class="warn" x="1048" y="495" width="354" height="112"/>
+  <text class="label" x="1225" y="528" text-anchor="middle">Accessible Name Gaps</text>
+  <text class="body" x="1225" y="558" text-anchor="middle">Example: product image has no text alternative</text>
+  <text class="small" x="1225" y="582" text-anchor="middle">Graph node can receive an audit-derived weak label</text>
+
+  <rect class="ok" x="1048" y="642" width="354" height="95"/>
+  <text class="label" x="1225" y="675" text-anchor="middle">Spatial Proximity</text>
+  <text class="body" x="1225" y="705" text-anchor="middle">Nearby label, input and help text can be linked</text>
+
+  <text class="sub" x="750" y="890" text-anchor="middle">Output: a page graph whose nodes and edges retain the information needed for accessibility violation learning</text>
+</svg>

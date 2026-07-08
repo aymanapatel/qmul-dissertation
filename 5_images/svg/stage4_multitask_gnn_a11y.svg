@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="950" viewBox="0 0 1500 950" role="img" aria-labelledby="title desc">
+  <title id="title">Stage 4 Multi-Task Graph Neural Network</title>
+  <desc id="desc">Accessibility-specific multi-task graph neural network showing message passing, graph embeddings and prediction heads.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 40px Arial;fill:#111827}.sub{font:400 20px Arial;fill:#4b5563}.h{font:700 22px Arial;fill:#111827}.label{font:700 17px Arial;fill:#111827}.body{font:400 15px Arial;fill:#374151}.small{font:400 13px Arial;fill:#475569}
+      .panel{fill:#fff;stroke:#cbd5e1;stroke-width:1.5;rx:20}.in{fill:#ecfdf5;stroke:#86efac;stroke-width:1.5;rx:14}.model{fill:#f5f3ff;stroke:#c4b5fd;stroke-width:1.5;rx:14}.head{fill:#eff6ff;stroke:#93c5fd;stroke-width:1.5;rx:14}.warn{fill:#fff1f2;stroke:#fb7185;stroke-width:1.5;rx:12}.arrow{stroke:#1f2937;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.edge{stroke:#64748b;stroke-width:2;fill:none}.attention{stroke:#7c3aed;stroke-width:4;fill:none;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect class="bg" width="1500" height="950"/>
+  <text class="title" x="750" y="60" text-anchor="middle">4. Multi-Task Graph Neural Network</text>
+  <text class="sub" x="750" y="92" text-anchor="middle">The model learns accessibility patterns by passing information across related page elements</text>
+
+  <rect class="panel" x="55" y="145" width="330" height="690"/>
+  <text class="h" x="220" y="190" text-anchor="middle">Graph Learning Input</text>
+  <rect class="in" x="95" y="235" width="250" height="100"/>
+  <text class="label" x="220" y="270" text-anchor="middle">Node Features</text>
+  <text class="body" x="220" y="302" text-anchor="middle">semantic, text, visual</text>
+  <text class="body" x="220" y="324" text-anchor="middle">and structural signals</text>
+  <rect class="in" x="95" y="385" width="250" height="100"/>
+  <text class="label" x="220" y="420" text-anchor="middle">Graph Edges</text>
+  <text class="body" x="220" y="452" text-anchor="middle">hierarchy, order and</text>
+  <text class="body" x="220" y="474" text-anchor="middle">layout proximity</text>
+  <rect class="in" x="95" y="535" width="250" height="115"/>
+  <text class="label" x="220" y="570" text-anchor="middle">Weak Labels</text>
+  <text class="body" x="220" y="602" text-anchor="middle">element failures, rule</text>
+  <text class="body" x="220" y="624" text-anchor="middle">types and page status</text>
+
+  <path class="arrow" d="M385 490 L470 490"/>
+
+  <rect class="panel" x="470" y="145" width="520" height="690"/>
+  <text class="h" x="730" y="190" text-anchor="middle">Shared Graph Representation Learning</text>
+  <circle cx="730" cy="310" r="42" fill="#fff" stroke="#64748b" stroke-width="2"/><text class="label" x="730" y="315" text-anchor="middle">Image</text>
+  <circle cx="625" cy="430" r="42" fill="#fff" stroke="#64748b" stroke-width="2"/><text class="label" x="625" y="435" text-anchor="middle">Text</text>
+  <circle cx="835" cy="430" r="42" fill="#fff" stroke="#64748b" stroke-width="2"/><text class="label" x="835" y="435" text-anchor="middle">Button</text>
+  <circle cx="730" cy="560" r="48" fill="#fff" stroke="#64748b" stroke-width="2"/><text class="label" x="730" y="555" text-anchor="middle">Form</text><text class="small" x="730" y="575" text-anchor="middle">Region</text>
+  <path class="edge" d="M703 342 L652 398M757 342 L808 398M654 459 L699 526M806 459 L761 526"/>
+  <path class="attention" d="M696 310 C650 330, 635 370, 625 388"/>
+  <path class="attention" d="M764 310 C812 330, 828 370, 835 388"/>
+  <rect class="model" x="535" y="655" width="390" height="100"/>
+  <text class="label" x="730" y="690" text-anchor="middle">Attention-Based Message Passing</text>
+  <text class="body" x="730" y="722" text-anchor="middle">More relevant neighbours receive stronger influence</text>
+  <text class="small" x="730" y="746" text-anchor="middle">Example: a control can learn from its label, region and nearby text</text>
+
+  <path class="arrow" d="M990 490 L1070 490"/>
+
+  <rect class="panel" x="1070" y="145" width="375" height="690"/>
+  <text class="h" x="1258" y="190" text-anchor="middle">Task-Specific Heads</text>
+  <rect class="head" x="1110" y="245" width="295" height="115"/>
+  <text class="label" x="1258" y="280" text-anchor="middle">Element Violation Head</text>
+  <text class="body" x="1258" y="312" text-anchor="middle">Example: image likely fails</text>
+  <text class="small" x="1258" y="335" text-anchor="middle">because it lacks an accessible description</text>
+  <rect class="head" x="1110" y="415" width="295" height="115"/>
+  <text class="label" x="1258" y="450" text-anchor="middle">Rule Classification Head</text>
+  <text class="body" x="1258" y="482" text-anchor="middle">Example: text alternative</text>
+  <text class="small" x="1258" y="505" text-anchor="middle">or form-label category</text>
+  <rect class="head" x="1110" y="585" width="295" height="115"/>
+  <text class="label" x="1258" y="620" text-anchor="middle">Page Classification Head</text>
+  <text class="body" x="1258" y="652" text-anchor="middle">Example: page contains</text>
+  <text class="small" x="1258" y="675" text-anchor="middle">at least one likely violation</text>
+
+  <rect class="warn" x="510" y="855" width="940" height="55"/>
+  <text class="body" x="980" y="889" text-anchor="middle">The shared graph model learns accessibility context once, then separates the decision into element, rule and page-level tasks.</text>
+</svg>

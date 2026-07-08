@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="950" viewBox="0 0 1500 950" role="img" aria-labelledby="title desc">
+  <title id="title">Stage 5 Prediction and Evaluation</title>
+  <desc id="desc">Accessibility-specific prediction and evaluation outputs with examples of node, rule and page predictions plus metrics.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth"><path d="M2,2 L10,6 L2,10 Z" fill="#1f2937"/></marker>
+    <style>
+      .bg{fill:#f8fafc}.title{font:700 40px Arial;fill:#111827}.sub{font:400 20px Arial;fill:#4b5563}.h{font:700 22px Arial;fill:#111827}.label{font:700 17px Arial;fill:#111827}.body{font:400 15px Arial;fill:#374151}.small{font:400 13px Arial;fill:#475569}
+      .panel{fill:#fff;stroke:#cbd5e1;stroke-width:1.5;rx:20}.pred{fill:#f0fdfa;stroke:#5eead4;stroke-width:1.5;rx:14}.warn{fill:#fff1f2;stroke:#fb7185;stroke-width:1.5;rx:14}.metric{fill:#eff6ff;stroke:#93c5fd;stroke-width:1.5;rx:14}.arrow{stroke:#1f2937;stroke-width:2.5;fill:none;marker-end:url(#arrow)}.thin{stroke:#cbd5e1;stroke-width:2;fill:none}
+    </style>
+  </defs>
+  <rect class="bg" width="1500" height="950"/>
+  <text class="title" x="750" y="60" text-anchor="middle">5. Prediction + Evaluation</text>
+  <text class="sub" x="750" y="92" text-anchor="middle">Model outputs become accessibility findings and are checked against audit-derived ground truth</text>
+
+  <rect class="panel" x="55" y="145" width="300" height="690"/>
+  <text class="h" x="205" y="190" text-anchor="middle">Model Output</text>
+  <rect class="pred" x="95" y="245" width="220" height="105"/>
+  <text class="label" x="205" y="280" text-anchor="middle">Node Scores</text>
+  <text class="body" x="205" y="312" text-anchor="middle">which elements are</text>
+  <text class="body" x="205" y="334" text-anchor="middle">likely failing?</text>
+  <rect class="pred" x="95" y="415" width="220" height="105"/>
+  <text class="label" x="205" y="450" text-anchor="middle">Rule Scores</text>
+  <text class="body" x="205" y="482" text-anchor="middle">which accessibility</text>
+  <text class="body" x="205" y="504" text-anchor="middle">category applies?</text>
+  <rect class="pred" x="95" y="585" width="220" height="105"/>
+  <text class="label" x="205" y="620" text-anchor="middle">Page Score</text>
+  <text class="body" x="205" y="652" text-anchor="middle">does the page contain</text>
+  <text class="body" x="205" y="674" text-anchor="middle">violations?</text>
+
+  <path class="arrow" d="M355 490 L430 490"/>
+
+  <rect class="panel" x="430" y="145" width="450" height="690"/>
+  <text class="h" x="655" y="190" text-anchor="middle">Accessibility-Specific Examples</text>
+  <rect class="warn" x="475" y="240" width="360" height="120"/>
+  <text class="label" x="655" y="275" text-anchor="middle">Predicted Failing Element</text>
+  <text class="body" x="655" y="307" text-anchor="middle">Product image is likely inaccessible</text>
+  <text class="small" x="655" y="332" text-anchor="middle">reason category: missing meaningful alternative text</text>
+  <rect class="warn" x="475" y="405" width="360" height="120"/>
+  <text class="label" x="655" y="440" text-anchor="middle">Predicted Rule Category</text>
+  <text class="body" x="655" y="472" text-anchor="middle">Text alternatives or accessible naming</text>
+  <text class="small" x="655" y="497" text-anchor="middle">useful for ranking issue families across pages</text>
+  <rect class="warn" x="475" y="570" width="360" height="120"/>
+  <text class="label" x="655" y="605" text-anchor="middle">Predicted Page Status</text>
+  <text class="body" x="655" y="637" text-anchor="middle">Page likely contains accessibility failures</text>
+  <text class="small" x="655" y="662" text-anchor="middle">supports page-level screening and prioritisation</text>
+
+  <path class="arrow" d="M880 490 L955 490"/>
+
+  <rect class="panel" x="955" y="145" width="490" height="690"/>
+  <text class="h" x="1200" y="190" text-anchor="middle">Evaluation Against Audit Labels</text>
+  <rect class="metric" x="1000" y="240" width="180" height="105"/>
+  <text class="label" x="1090" y="275" text-anchor="middle">Precision</text>
+  <text class="body" x="1090" y="307" text-anchor="middle">How many predicted</text>
+  <text class="body" x="1090" y="329" text-anchor="middle">failures are real?</text>
+  <rect class="metric" x="1220" y="240" width="180" height="105"/>
+  <text class="label" x="1310" y="275" text-anchor="middle">Recall</text>
+  <text class="body" x="1310" y="307" text-anchor="middle">How many true</text>
+  <text class="body" x="1310" y="329" text-anchor="middle">failures are found?</text>
+  <rect class="metric" x="1000" y="395" width="180" height="105"/>
+  <text class="label" x="1090" y="430" text-anchor="middle">F1 Score</text>
+  <text class="body" x="1090" y="462" text-anchor="middle">Balance between</text>
+  <text class="body" x="1090" y="484" text-anchor="middle">precision and recall</text>
+  <rect class="metric" x="1220" y="395" width="180" height="105"/>
+  <text class="label" x="1310" y="430" text-anchor="middle">Accuracy</text>
+  <text class="body" x="1310" y="462" text-anchor="middle">Overall correct</text>
+  <text class="body" x="1310" y="484" text-anchor="middle">classification rate</text>
+
+  <rect class="pred" x="1000" y="565" width="400" height="135"/>
+  <text class="label" x="1200" y="602" text-anchor="middle">Research Interpretation</text>
+  <text class="body" x="1200" y="635" text-anchor="middle">Node metrics show element-level detection quality</text>
+  <text class="body" x="1200" y="660" text-anchor="middle">Rule metrics show issue-family recognition</text>
+  <text class="body" x="1200" y="685" text-anchor="middle">Page metrics show screening usefulness</text>
+
+  <rect class="panel" x="160" y="860" width="1180" height="55"/>
+  <text class="body" x="750" y="895" text-anchor="middle">Final output: ranked accessibility predictions that can be analysed at element, rule and page level.</text>
+</svg>

@@ -15,8 +15,19 @@ import torch
 from playwright.sync_api import sync_playwright
 from sentence_transformers import SentenceTransformer
 
-from graph_sources import GRAPH_SOURCE_DOM, apply_visual_edges, build_graph
+from graph_sources import (
+    GRAPH_SOURCE_DOM,
+    GRAPH_SOURCE_RENDERED_VISUAL,
+    apply_visual_edges,
+    build_graph,
+)
 from html_graph_builder import DOMNode
+from wcag_rules import (
+    NUM_RULES,
+    RULE_INDEX,
+    rule_ids_for_graph_source,
+    rule_mask_for_graph_source,
+)
 
 
 class FeatureExtractor:
@@ -69,8 +80,13 @@ class FeatureExtractor:
             browser = p.chromium.launch()
             page = browser.new_page(viewport=viewport)
             
-            # Load HTML file
-            page.goto(f"file://{html_path.resolve()}")
+            # Load enough DOM for layout extraction without waiting on external
+            # assets referenced by saved pages.
+            page.goto(
+                f"file://{html_path.resolve()}",
+                wait_until="domcontentloaded",
+                timeout=10_000,
+            )
             page.wait_for_load_state("domcontentloaded")
             
             # Get viewport size
@@ -98,6 +114,7 @@ class FeatureExtractor:
                             tag: node.tagName.toLowerCase(),
                             id: node.id,
                             class: node.className,
+                            cssPath: getCssPath(node),
                             xpath: getXPath(node),
                             x: rect.x,
                             y: rect.y,
@@ -129,6 +146,26 @@ class FeatureExtractor:
                         }
                         return parts.length ? '/' + parts.join('/') : '';
                     }
+
+                    function getCssPath(element) {
+                        const parts = [];
+                        while (element && element.nodeType === Node.ELEMENT_NODE) {
+                            const tag = element.tagName.toLowerCase();
+                            if (element.id) {
+                                parts.unshift(tag + '#' + CSS.escape(element.id));
+                                break;
+                            }
+                            let index = 1;
+                            let sibling = element.previousElementSibling;
+                            while (sibling) {
+                                if (sibling.tagName === element.tagName) index++;
+                                sibling = sibling.previousElementSibling;
+                            }
+                            parts.unshift(tag + ':nth-of-type(' + index + ')');
+                            element = element.parentElement;
+                        }
+                        return parts.join(' > ');
+                    }
                 }
             """)
             
@@ -148,9 +185,13 @@ class FeatureExtractor:
             node_id_attr = node.attrs.get("id", "")
             node_class = " ".join(node.attrs.get("class", [])) if isinstance(node.attrs.get("class", []), list) else str(node.attrs.get("class", ""))
             node_text = node.text_content.strip()[:100]
+            node_dom_path = getattr(node, "dom_path", "")
             
             for elem in elements_info:
                 score = 0
+
+                if node_dom_path and elem.get("cssPath") == node_dom_path:
+                    score += 100
                 
                 # Tag match
                 if elem["tag"] == node.tag:
@@ -209,6 +250,7 @@ class FeatureExtractor:
         self,
         axe_report_path: Path,
         node_map: Dict[int, DOMNode],
+        graph_source: str = GRAPH_SOURCE_DOM,
     ) -> tuple:
         """
         Load axe-core report and map violations to DOM nodes.
@@ -218,23 +260,38 @@ class FeatureExtractor:
             - node_labels_binary: [N] long tensor, 1 if element has any violation
             - node_labels_multi: [N, NUM_RULES] float tensor, multi-hot encoded rules
         """
-        from wcag_rules import RULE_INDEX, NUM_RULES
-        
         with open(axe_report_path, "r", encoding="utf-8") as f:
             report = json.load(f)
+
+        allowed_rule_ids = set(rule_ids_for_graph_source(graph_source))
         
         # Collect all violated node targets with their rule info
         violated_nodes = []  # List of (target_str, rule_id, impact)
         
+        def most_specific_target(target) -> str:
+            if isinstance(target, str):
+                return target
+            if isinstance(target, list):
+                for item in reversed(target):
+                    selector = most_specific_target(item)
+                    if selector:
+                        return selector
+                return ""
+            return str(target) if target else ""
+
         for violation in report.get("violations", []):
             rule_id = violation["id"]
+            if rule_id not in allowed_rule_ids:
+                continue
             impact = violation.get("impact", "minor")
             for node in violation.get("nodes", []):
                 target = node.get("target", [])
                 if target:
-                    # Target is usually a list of selectors, take the most specific one
-                    target_str = target[-1] if isinstance(target, list) else str(target)
-                    violated_nodes.append((target_str, rule_id, impact))
+                    # Target is usually a list of selectors; nested lists can appear
+                    # for iframe/shadow traversal, so peel down to the final selector.
+                    target_str = most_specific_target(target)
+                    if target_str:
+                        violated_nodes.append((target_str, rule_id, impact))
         
         node_labels_binary = torch.zeros(len(node_map), dtype=torch.long)
         node_labels_multi = torch.zeros(len(node_map), NUM_RULES, dtype=torch.float)
@@ -267,6 +324,10 @@ class FeatureExtractor:
             return None
 
         def apply_label(node_id: int, rule_id: str, rule_idx: int, impact: str) -> None:
+            if graph_source == GRAPH_SOURCE_RENDERED_VISUAL:
+                node = node_map[node_id]
+                if not getattr(node, "is_visible", False):
+                    return
             node_labels_binary[node_id] = 1
             node_labels_multi[node_id, rule_idx] = 1.0
             node_map[node_id].axe_violations.append(rule_id)
@@ -440,10 +501,16 @@ class FeatureExtractor:
         text_embeddings = self.extract_text_embeddings(node_map)
         data.text_embeddings = text_embeddings
         
+        # Formula: x_i = [a_i || t_i], where a_i is the current attribute,
+        # accessibility, and visual feature vector in data.x, and t_i is the
+        # MiniLM text embedding for the same node.
         # Concatenate attribute features + text embeddings for model input
         data.x = torch.cat([data.x, text_embeddings], dim=-1)
         
         # Extract visual features
+        if graph_source == GRAPH_SOURCE_RENDERED_VISUAL:
+            extract_visual = True
+
         if extract_visual:
             print("Extracting visual features via Playwright...")
             self.extract_visual_features(html_path, node_map)
@@ -458,7 +525,11 @@ class FeatureExtractor:
         # Load axe labels
         if axe_report_path and axe_report_path.exists():
             print(f"Loading axe labels from {axe_report_path}...")
-            node_labels_binary, node_labels_multi = self.load_axe_labels(axe_report_path, node_map)
+            node_labels_binary, node_labels_multi = self.load_axe_labels(
+                axe_report_path,
+                node_map,
+                graph_source=graph_source,
+            )
             data.node_y = node_labels_binary
             data.node_y_multi = node_labels_multi
             data.y = torch.tensor([1 if node_labels_binary.sum() > 0 else 0], dtype=torch.long)
@@ -468,9 +539,15 @@ class FeatureExtractor:
         else:
             print("No axe report provided — using dummy labels for inference only")
             data.node_y = torch.zeros(len(node_map), dtype=torch.long)
-            data.node_y_multi = torch.zeros(len(node_map), 46, dtype=torch.float)
+            data.node_y_multi = torch.zeros(len(node_map), NUM_RULES, dtype=torch.float)
             data.y = torch.tensor([0], dtype=torch.long)
             data.has_ground_truth = False
+
+        data.available_rule_mask = rule_mask_for_graph_source(graph_source).unsqueeze(0)
+        data.rendered_visible_mask = torch.tensor(
+            [bool(getattr(node, "is_visible", False)) for node in node_map.values()],
+            dtype=torch.bool,
+        )
         
         return ProcessedPage(data=data, node_map=node_map, html_path=html_path)
 
@@ -500,6 +577,8 @@ class ProcessedPage:
         data = checkpoint["data"]
         if not hasattr(data, "graph_source"):
             data.graph_source = checkpoint.get("graph_source", GRAPH_SOURCE_DOM)
+        if not hasattr(data, "available_rule_mask"):
+            data.available_rule_mask = rule_mask_for_graph_source(data.graph_source).unsqueeze(0)
         return cls(
             data=data,
             node_map={},  # Reconstruct if needed

@@ -18,7 +18,7 @@ sys.path.insert(0, str(src_path))
 import torch
 
 from feature_extractor import FeatureExtractor, ProcessedPage
-from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM
+from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM, GRAPH_SOURCE_RENDERED_VISUAL
 from models import DOMGCN
 from train import Trainer
 from torch_geometric.utils import dropout_edge, subgraph
@@ -93,8 +93,8 @@ def main():
         "--graph-source",
         type=str,
         default=GRAPH_SOURCE_DOM,
-        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
-        help="Graph source to build: dom or a11y-tree",
+        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_RENDERED_VISUAL],
+        help="Graph source to build: dom, a11y-tree, or rendered-visual",
     )
     parser.add_argument("--train", action="store_true", help="Run a quick training demo")
     parser.add_argument("--viz", action="store_true", help="Generate ASCII visualization of predictions")

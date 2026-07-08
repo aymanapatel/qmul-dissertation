@@ -148,6 +148,8 @@ class DOMAttentionNet(torch.nn.Module):
         # Embed tags
         tag_embeds = self.tag_embedding(tag_indices)
         
+        # Formula: h_i^(0) = ReLU(BN(W_0 [e_i || x_i] + b_0)), where e_i is
+        # the learned tag embedding and x_i is the extracted node feature vector.
         # Combine tag + attributes + text
         x = torch.cat([tag_embeds, x], dim=-1)
         x = self.input_proj(x)
@@ -155,7 +157,19 @@ class DOMAttentionNet(torch.nn.Module):
         x = F.relu(x)
         x = F.dropout(x, p=self.dropout, training=self.training)
         
+        # Formula: GATConv computes alpha_ij over neighbours j in N(i), then
+        # h_tilde_i^(l+1) = ||_m sum_j alpha_{ij,m} W_m h_j^(l).
+        # The residual line below implements h_i^(l+1) = h_tilde_i^(l+1) + h_i^(l).
         # GAT message passing with residual connections
+        # alpha_ij is conculated inside PyTorch Geometric’s GATConv
+        # \(\mathcal{N}(i)\): `edge_index`
+        # \(M\): `heads in GATConv`
+        # \(m\): `single attention head`
+        # \(W_m^{(l)}\): `internal projection for head m at layer l. Internal head inside GATConv`
+        # \(\alpha_{ij,m}^{(l)}\): `attenttion score from neighbour j to node j at head m. calculated Internaly by GATConv``
+        # \(\sum_{j \in \mathcal{N}(i)}\): Aggregated over neighbour s
+        # \(\sigma\): Activation function `F.relu(x)`
+        # \(\tilde{h}_i^{(l+1)}\): Updated node embedding before residual connection. `row x[i] after x = conv(...), bn, relu, and dropout, before x = x + residual`
         for i, (conv, bn, res_proj) in enumerate(zip(self.convs, self.bns, self.residual_projs)):
             residual = x
             x = conv(x, edge_index)
@@ -168,9 +182,11 @@ class DOMAttentionNet(torch.nn.Module):
                 residual = res_proj(residual)
             x = x + residual  # Residual connection
         
+        # Formula: y_hat_i^node = softmax(f_node(h_i^(L))).
         # Node-level binary predictions
         node_logits = self.node_classifier(x)
         
+        # Formula: y_hat_{i,r}^rule = sigmoid(f_rule(h_i^(L))_r).
         # Node-level multi-label rule predictions (raw logits, apply sigmoid during loss)
         node_rule_logits = self.node_rule_classifier(x)
         
@@ -179,6 +195,7 @@ class DOMAttentionNet(torch.nn.Module):
             batch = torch.zeros(x.size(0), dtype=torch.long, device=x.device)
         
         if self.pooling == "mean":
+            # Formula: h_G = (1 / |V|) sum_{i in V} h_i^(L).
             graph_x = global_mean_pool(x, batch)
         elif self.pooling == "max":
             graph_x = global_max_pool(x, batch)
@@ -191,6 +208,7 @@ class DOMAttentionNet(torch.nn.Module):
         else:
             graph_x = global_mean_pool(x, batch)
         
+        # Formula: y_hat^graph = softmax(f_graph(h_G)).
         graph_logits = self.graph_classifier(graph_x)
         
         return node_logits, node_rule_logits, graph_logits

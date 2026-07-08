@@ -19,7 +19,7 @@ from torch_geometric.data import Data
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from feature_extractor import FeatureExtractor, ProcessedPage
-from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM
+from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM, GRAPH_SOURCE_RENDERED_VISUAL
 from models import DOMAttentionNet
 from wcag_rules import NUM_RULES
 
@@ -162,7 +162,12 @@ def main():
     parser.add_argument("--model-dir", type=str, required=True, help="Directory containing best_model.pt and split.json")
     parser.add_argument("--data-dir", type=str, required=True, help="Directory containing site subdirectories")
     parser.add_argument("--output-dir", type=str, default=None, help="Graph cache directory (default: split args output_dir or ./graphs_multi)")
-    parser.add_argument("--graph-source", type=str, default=None, choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE])
+    parser.add_argument(
+        "--graph-source",
+        type=str,
+        default=None,
+        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_RENDERED_VISUAL],
+    )
     parser.add_argument("--device", type=str, default="auto", help="Device (auto, mps, cuda, cpu)")
     parser.add_argument("--output", type=str, default=None, help="Calibration JSON output path")
     parser.add_argument("--min-val-graphs", type=int, default=10, help="Refuse calibration when validation split is smaller than this")
