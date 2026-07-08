@@ -17,10 +17,15 @@ AAA
 # Training outputs
 
 *graphs_multi*
+*models*
 
 
-*www.airindia*
-*www.impot*
+# *www.airindia*
+# *www.impot*
 
 
 **node_modules**
+*3_WCAG_Solver*
+*gnn_batch_100*
+*ignore*
+*PLANS*
