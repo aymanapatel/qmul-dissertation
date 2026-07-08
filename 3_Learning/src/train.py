@@ -16,7 +16,15 @@ from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
 from models import DOMAttentionNet
-from wcag_rules import NUM_RULES, INDEX_TO_RULE
+from wcag_rules import (
+    INDEX_TO_RULE,
+    NUM_RULES,
+    RULE_OWNER_A11Y_TREE,
+    RULE_OWNER_DOM,
+    RULE_OWNER_DOM_PAGE,
+    RULE_OWNER_RENDERED_VISUAL,
+    rule_indices_for_owners,
+)
 
 
 def max_node_probability_by_graph(
@@ -125,6 +133,7 @@ class Trainer:
         hard_neg_threshold: float = 0.1,
         hard_pos_threshold: float = 0.7,
         node_pos_weight_cap: float = 50.0,
+        node_hard_negative_ratio: float = 0.0,
         rule_pos_weight: float = 50.0,
         node_threshold: float = 0.5,
         rule_threshold: float = 0.5,
@@ -153,6 +162,7 @@ class Trainer:
         self.hard_neg_threshold = hard_neg_threshold
         self.hard_pos_threshold = hard_pos_threshold
         self.node_pos_weight_cap = node_pos_weight_cap
+        self.node_hard_negative_ratio = node_hard_negative_ratio
         self.rule_pos_weight = rule_pos_weight
         self.rule_label_smoothing = label_smoothing
         self.node_threshold = node_threshold
@@ -188,6 +198,16 @@ class Trainer:
             "val_graph_precision": [],
             "val_graph_recall": [],
         }
+
+    def _available_rule_mask(self, data: Data) -> torch.Tensor:
+        mask = getattr(data, "available_rule_mask", None)
+        if mask is None:
+            return torch.ones(NUM_RULES, dtype=torch.bool, device=self.device)
+        if mask.numel() != NUM_RULES and mask.numel() % NUM_RULES == 0:
+            mask = mask.reshape(-1, NUM_RULES)
+        if mask.dim() > 1:
+            mask = mask[0]
+        return mask.to(self.device).bool()
     
     def compute_loss_from_outputs(
         self,
@@ -200,6 +220,9 @@ class Trainer:
         metrics = {}
         total_loss = torch.tensor(0.0, device=self.device)
         
+        # Formula: L_node = -sum_i sum_{c in {0,1}} y_{i,c} log(y_hat_{i,c}).
+        # The implementation uses weighted cross-entropy and optional hard
+        # negative mining for the binary node violation head.
         # Node-level binary loss with aggressive class weighting
         if hasattr(data, "node_y") and data.node_y is not None:
             num_pos = (data.node_y == 1).sum().item()
@@ -212,7 +235,20 @@ class Trainer:
             else:
                 weights = None
             
-            node_loss = F.cross_entropy(node_logits, data.node_y, weight=weights)
+            if self.node_hard_negative_ratio > 0 and num_pos > 0 and num_neg > 0:
+                per_node_loss = F.cross_entropy(node_logits, data.node_y, reduction="none")
+                pos_mask = data.node_y == 1
+                neg_mask = data.node_y == 0
+                pos_loss = per_node_loss[pos_mask].mean()
+                neg_losses = per_node_loss[neg_mask]
+                hard_neg_count = min(
+                    neg_losses.numel(),
+                    max(1, int(num_pos * self.node_hard_negative_ratio)),
+                )
+                hard_neg_loss = torch.topk(neg_losses, k=hard_neg_count).values.mean()
+                node_loss = 0.5 * (pos_loss + hard_neg_loss)
+            else:
+                node_loss = F.cross_entropy(node_logits, data.node_y, weight=weights)
             
             node_preds = node_logits.argmax(dim=-1)
             node_acc = (node_preds == data.node_y).float().mean().item()
@@ -266,9 +302,21 @@ class Trainer:
             metrics["clean_page_node_loss"] = 0.0
             metrics["positive_page_node_evidence_loss"] = 0.0
         
+        # Formula: L_rule = BCEWithLogits(z_rule, y_rule), averaged over node-rule
+        # pairs after masking unavailable rules. pos_weight and hard-example
+        # weights compensate for sparse positive WCAG/axe labels.
         # Multi-label rule loss with hard negative mining and class balancing
         if hasattr(data, "node_y_multi") and data.node_y_multi is not None:
-            rule_targets = data.node_y_multi.to(self.device)
+            rule_mask = self._available_rule_mask(data)
+            rule_targets = data.node_y_multi.to(self.device)[:, rule_mask]
+            masked_rule_logits = node_rule_logits[:, rule_mask]
+            if rule_targets.numel() == 0:
+                metrics["rule_loss"] = 0.0
+                metrics["hard_neg"] = 0
+                metrics["hard_pos"] = 0
+                metrics["pos_weight_mean"] = 0.0
+                metrics["loss"] = total_loss.item()
+                return total_loss, metrics
             
             # Fixed rule-level positive weight keeps training stable across batches.
             pos_weight_val = self.rule_pos_weight
@@ -279,14 +327,14 @@ class Trainer:
             if self.rule_label_smoothing > 0:
                 smoothed_targets = rule_targets * (1.0 - self.rule_label_smoothing)
             per_sample_loss = F.binary_cross_entropy_with_logits(
-                node_rule_logits, smoothed_targets,
+                masked_rule_logits, smoothed_targets,
                 pos_weight=torch.tensor([pos_weight_val], device=self.device),
                 reduction="none"
             )
             
             # Hard negative mining: upweight misclassified examples
             with torch.no_grad():
-                rule_probs = torch.sigmoid(node_rule_logits)
+                rule_probs = torch.sigmoid(masked_rule_logits)
                 hard_neg_mask = (rule_probs > self.hard_neg_threshold) & (rule_targets == 0)
                 hard_pos_mask = (rule_probs < self.hard_pos_threshold) & (rule_targets == 1)
             
@@ -306,6 +354,7 @@ class Trainer:
             metrics["hard_pos"] = 0
             metrics["pos_weight_mean"] = 0.0
         
+        # Formula: L_graph = -sum_c y_c^graph log(y_hat_c^graph).
         # Graph-level loss
         if hasattr(data, "y") and data.y is not None:
             graph_loss = F.cross_entropy(graph_logits, data.y)
@@ -329,6 +378,9 @@ class Trainer:
                     num_graphs=data.y.numel(),
                 )
                 graph_probs = F.softmax(graph_logits, dim=-1)[:, 1]
+                # Formula: p_node^max = max_i P(y_i^node = 1),
+                # p_graph = P(y^graph = 1), and
+                # L_cons = (p_graph - p_node^max)^2.
                 graph_node_consistency_loss = F.mse_loss(graph_probs, node_evidence_probs)
                 total_loss += self.graph_node_consistency_loss_weight * graph_node_consistency_loss
             metrics["graph_node_consistency_loss"] = graph_node_consistency_loss.item()
@@ -337,6 +389,8 @@ class Trainer:
             metrics["graph_acc"] = 0.0
             metrics["graph_node_consistency_loss"] = 0.0
         
+        # Formula: L = lambda_node L_node + lambda_rule L_rule
+        # + lambda_graph L_graph + lambda_cons L_cons.
         metrics["loss"] = total_loss.item()
         
         return total_loss, metrics
@@ -417,6 +471,7 @@ class Trainer:
         rule_fp = torch.zeros(NUM_RULES, dtype=torch.long)
         rule_fn = torch.zeros(NUM_RULES, dtype=torch.long)
         rule_label_count = torch.zeros(NUM_RULES, dtype=torch.long)
+        rule_available = torch.zeros(NUM_RULES, dtype=torch.bool)
         has_node_labels = False
         has_rule_labels = False
         
@@ -444,8 +499,12 @@ class Trainer:
             # Collect multi-label rule predictions
             if hasattr(data, "node_y_multi"):
                 has_rule_labels = True
+                batch_rule_mask = self._available_rule_mask(data).cpu()
+                rule_available |= batch_rule_mask
                 rule_preds = (torch.sigmoid(node_rule_logits) >= self.rule_threshold).cpu()
                 rule_labels = data.node_y_multi.cpu().bool()
+                rule_preds[:, ~batch_rule_mask] = False
+                rule_labels[:, ~batch_rule_mask] = False
                 rule_tp += (rule_preds & rule_labels).sum(dim=0)
                 rule_fp += (rule_preds & ~rule_labels).sum(dim=0)
                 rule_fn += (~rule_preds & rule_labels).sum(dim=0)
@@ -495,9 +554,9 @@ class Trainer:
         
         # Multi-label rule metrics
         if has_rule_labels:
-            micro_tp = rule_tp.sum().item()
-            micro_fp = rule_fp.sum().item()
-            micro_fn = rule_fn.sum().item()
+            micro_tp = rule_tp[rule_available].sum().item()
+            micro_fp = rule_fp[rule_available].sum().item()
+            micro_fn = rule_fn[rule_available].sum().item()
             rule_precision_micro = micro_tp / (micro_tp + micro_fp) if (micro_tp + micro_fp) else 0.0
             rule_recall_micro = micro_tp / (micro_tp + micro_fn) if (micro_tp + micro_fn) else 0.0
             rule_f1_micro = (
@@ -516,12 +575,41 @@ class Trainer:
             metrics["rule_precision_micro"] = rule_precision_micro
             metrics["rule_recall_micro"] = rule_recall_micro
             metrics["rule_f1_micro"] = rule_f1_micro
-            metrics["rule_f1_macro"] = per_rule_f1_values.mean().item()
+            metrics["rule_f1_macro"] = (
+                per_rule_f1_values[rule_available].mean().item()
+                if rule_available.any()
+                else 0.0
+            )
+
+            def family_f1(name: str, owners: Tuple[str, ...]) -> None:
+                indices = torch.tensor(rule_indices_for_owners(owners), dtype=torch.long)
+                if indices.numel() == 0:
+                    metrics[name] = 0.0
+                    return
+                family_available = rule_available[indices]
+                if not family_available.any():
+                    metrics[name] = 0.0
+                    return
+                family_indices = indices[family_available]
+                tp = rule_tp[family_indices].sum().item()
+                fp = rule_fp[family_indices].sum().item()
+                fn = rule_fn[family_indices].sum().item()
+                precision = tp / (tp + fp) if (tp + fp) else 0.0
+                recall = tp / (tp + fn) if (tp + fn) else 0.0
+                metrics[name] = (
+                    2 * precision * recall / (precision + recall)
+                    if (precision + recall)
+                    else 0.0
+                )
+
+            family_f1("semantic_rule_f1", (RULE_OWNER_A11Y_TREE,))
+            family_f1("structure_rule_f1", (RULE_OWNER_DOM, RULE_OWNER_DOM_PAGE))
+            family_f1("visual_rule_f1", (RULE_OWNER_RENDERED_VISUAL,))
             
             # Per-rule metrics
             per_rule_f1 = {}
             for i in range(NUM_RULES):
-                if rule_label_count[i] > 0:  # Only report rules that appear in data
+                if rule_available[i] and rule_label_count[i] > 0:
                     per_rule_f1[INDEX_TO_RULE[i]] = round(per_rule_f1_values[i].item(), 4)
             
             # Top 5 best and worst performing rules
@@ -543,6 +631,13 @@ class Trainer:
                 0.8 * metrics.get("node_f1_pos", 0.0)
                 + 0.2 * metrics["graph_recall"]
             )
+            graph_source = getattr(loader.dataset[0], "graph_source", None) if len(loader.dataset) else None
+            if graph_source == "a11y-tree":
+                metrics["a11y_node_f1"] = metrics.get("node_f1_pos", 0.0)
+            elif graph_source == "rendered-visual":
+                metrics["rendered_node_f1"] = metrics.get("node_f1_pos", 0.0)
+            else:
+                metrics["dom_node_f1"] = metrics.get("node_f1_pos", 0.0)
             
             if len(torch.unique(graph_labels)) > 1:
                 metrics["graph_auc"] = roc_auc_score(graph_labels, graph_probs)

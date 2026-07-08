@@ -101,6 +101,7 @@ class DOMNode:
         # Visual features (populated later via Playwright)
         self.bbox = {"x": -1, "y": -1, "width": -1, "height": -1}
         self.is_visible = False
+        self.dom_path = get_dom_path(element) if not self.is_text else ""
         
         # Axe violation labels (populated later)
         self.axe_violations: List[str] = []
@@ -160,6 +161,32 @@ class DOMNode:
         return len(self.get_attribute_features())
 
 
+def get_dom_path(element) -> str:
+    """Return a stable-ish CSS path for a BeautifulSoup element."""
+    if isinstance(element, NavigableString) or not getattr(element, "name", None):
+        return ""
+
+    parts = []
+    current = element
+    while current is not None and getattr(current, "name", None):
+        tag = current.name.lower()
+        elem_id = current.attrs.get("id") if hasattr(current, "attrs") else None
+        if elem_id:
+            parts.append(f"{tag}#{elem_id}")
+            break
+
+        index = 1
+        sibling = current.previous_sibling
+        while sibling is not None:
+            if getattr(sibling, "name", None) == current.name:
+                index += 1
+            sibling = sibling.previous_sibling
+        parts.append(f"{tag}:nth-of-type({index})")
+        current = current.parent
+
+    return " > ".join(reversed(parts))
+
+
 def parse_html_to_graph(
     html_path: Path,
     include_text_nodes: bool = False,
@@ -187,6 +214,10 @@ def parse_html_to_graph(
     node_map: Dict[int, DOMNode] = {}
     edge_index: List[List[int]] = [[], []]
     node_id_counter = 0
+
+    # Formula: a webpage is represented as G = (V, E), where each parsed DOM
+    # element becomes a node v_i in V and each stored relationship below becomes
+    # a directed edge (v_parent, v_child) or sibling edge in E.
     
     def traverse(element, parent_id: Optional[int] = None):
         nonlocal node_id_counter
@@ -194,7 +225,6 @@ def parse_html_to_graph(
         if max_nodes is not None and node_id_counter >= max_nodes:
             return
         
-        # Skip comments and doctype
         if isinstance(element, NavigableString):
             if include_text_nodes and str(element).strip():
                 node = DOMNode(element, node_id_counter, parent_id)
@@ -227,6 +257,8 @@ def parse_html_to_graph(
     
     traverse(soup.html if soup.html else soup)
     
+    # Formula: sibling edges add reading-order neighbourhoods to E, so the GNN
+    # can pass messages between adjacent DOM elements as well as ancestors.
     # Add sibling edges (reading order)
     for node_id, node in node_map.items():
         if node.parent_id is not None:
@@ -272,45 +304,89 @@ def parse_html_to_graph(
     return data, node_map
 
 
-def add_spatial_edges(data: Data, node_map: Dict[int, DOMNode], threshold: float = 0.5) -> Data:
+def add_spatial_edges(
+    data: Data,
+    node_map: Dict[int, DOMNode],
+    threshold: float = 0.5,
+    max_neighbors: int = 8,
+    max_spatial_edges: int = 80_000,
+) -> Data:
     """
     Add spatial proximity edges based on rendered bounding boxes.
-    Two nodes are connected if their bounding boxes overlap or are nearby.
+    Two visible nodes are connected if their bounding boxes overlap or are nearby.
+
+    The old pairwise all-overlap version could create tens of millions of edges
+    when large container boxes overlapped most descendants. GAT memory scales
+    with edge count, so keep only a bounded local visual neighborhood.
     """
     if not node_map:
         return data
     
     spatial_src = []
     spatial_dst = []
-    
-    nodes = list(node_map.items())
-    for i, (id1, node1) in enumerate(nodes):
-        if node1.bbox["width"] < 0:
+
+    nodes = []
+    for node_id, node in node_map.items():
+        bbox = node.bbox
+        if (
+            not getattr(node, "is_visible", False)
+            or bbox["width"] <= 0
+            or bbox["height"] <= 0
+        ):
             continue
-        for j, (id2, node2) in enumerate(nodes[i+1:], start=i+1):
-            if node2.bbox["width"] < 0:
+        # Very large page containers overlap nearly everything and are already
+        # connected structurally through DOM edges.
+        if bbox["width"] * bbox["height"] > 1_000_000:
+            continue
+        center_x = bbox["x"] + bbox["width"] / 2
+        center_y = bbox["y"] + bbox["height"] / 2
+        nodes.append((center_y, center_x, node_id, node))
+
+    if len(nodes) < 2:
+        return data
+
+    nodes.sort()
+    neighbor_counts = {node_id: 0 for _, _, node_id, _ in nodes}
+    lookahead = max(16, max_neighbors * 4)
+
+    for i, (_, _, id1, node1) in enumerate(nodes):
+        if len(spatial_src) >= max_spatial_edges:
+            break
+        if neighbor_counts[id1] >= max_neighbors:
+            continue
+
+        x1, y1 = node1.bbox["x"], node1.bbox["y"]
+        w1, h1 = node1.bbox["width"], node1.bbox["height"]
+        center1_x, center1_y = x1 + w1 / 2, y1 + h1 / 2
+
+        for _, _, id2, node2 in nodes[i + 1:i + 1 + lookahead]:
+            if len(spatial_src) >= max_spatial_edges:
+                break
+            if neighbor_counts[id1] >= max_neighbors:
+                break
+            if neighbor_counts[id2] >= max_neighbors:
                 continue
-            
-            # Check if bounding boxes overlap or are close
-            x1, y1, w1, h1 = node1.bbox["x"], node1.bbox["y"], node1.bbox["width"], node1.bbox["height"]
-            x2, y2, w2, h2 = node2.bbox["x"], node2.bbox["y"], node2.bbox["width"], node2.bbox["height"]
-            
+
+            x2, y2 = node2.bbox["x"], node2.bbox["y"]
+            w2, h2 = node2.bbox["width"], node2.bbox["height"]
+
             # Simple IoU or distance check
             x_overlap = max(0, min(x1 + w1, x2 + w2) - max(x1, x2))
             y_overlap = max(0, min(y1 + h1, y2 + h2) - max(y1, y2))
-            
+
             if x_overlap > 0 and y_overlap > 0:
-                # Overlapping boxes
                 spatial_src.extend([id1, id2])
                 spatial_dst.extend([id2, id1])
+                neighbor_counts[id1] += 1
+                neighbor_counts[id2] += 1
             else:
-                # Check proximity (within threshold pixels)
-                center1_x, center1_y = x1 + w1/2, y1 + h1/2
-                center2_x, center2_y = x2 + w2/2, y2 + h2/2
+                center2_x, center2_y = x2 + w2 / 2, y2 + h2 / 2
                 dist = ((center1_x - center2_x)**2 + (center1_y - center2_y)**2) ** 0.5
                 if dist < threshold * max(w1, h1, w2, h2, 50):
                     spatial_src.extend([id1, id2])
                     spatial_dst.extend([id2, id1])
+                    neighbor_counts[id1] += 1
+                    neighbor_counts[id2] += 1
     
     if spatial_src:
         spatial_edges = torch.tensor([spatial_src, spatial_dst], dtype=torch.long)

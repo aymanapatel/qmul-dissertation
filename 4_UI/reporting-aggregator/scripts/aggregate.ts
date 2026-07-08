@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
-const AXE_DIR = resolve(ROOT, '../2_Data/browser-use/outputs/axe-core')
+const AXE_DIR = resolve(ROOT, '../../2_Data/browser-use/outputs/axe-core')
 const OUT_DIR = resolve(ROOT, 'public/data')
 
 const PAGE_FILE_RE = /^page-\d+_.*\.json$/

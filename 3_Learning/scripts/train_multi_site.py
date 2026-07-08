@@ -29,10 +29,19 @@ from torch.utils.data import WeightedRandomSampler
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from feature_extractor import FeatureExtractor, ProcessedPage
-from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM
+from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM, GRAPH_SOURCE_RENDERED_VISUAL
 from models import DOMAttentionNet
 from train import Trainer, get_device
-from wcag_rules import NUM_RULES
+from wcag_rules import GRAPH_SOURCE_TO_RULE_OWNERS, NUM_RULES, rule_ids_for_graph_source
+
+
+ARCHITECTURE_SINGLE = "single"
+ARCHITECTURE_MULTI_VIEW = "multi-view"
+MULTI_VIEW_SOURCES = (
+    GRAPH_SOURCE_A11Y_TREE,
+    GRAPH_SOURCE_DOM,
+    GRAPH_SOURCE_RENDERED_VISUAL,
+)
 
 
 def find_valid_sites(data_dir: Path) -> List[Path]:
@@ -47,6 +56,17 @@ def find_valid_sites(data_dir: Path) -> List[Path]:
     return valid_sites
 
 
+def cache_path_for_site(
+    site_dir: Path,
+    output_dir: Path,
+    graph_source: str,
+    architecture: str,
+) -> Path:
+    if architecture == ARCHITECTURE_MULTI_VIEW:
+        return output_dir / site_dir.name / f"{graph_source}.pt"
+    return output_dir / f"{site_dir.name}_{graph_source}.pt"
+
+
 def process_site(
     site_dir: Path,
     output_dir: Path,
@@ -54,10 +74,13 @@ def process_site(
     extract_visual: bool = False,
     graph_source: str = GRAPH_SOURCE_DOM,
     resume: bool = True,
+    architecture: str = ARCHITECTURE_SINGLE,
+    max_graph_nodes: Optional[int] = None,
+    max_graph_edges: Optional[int] = None,
 ) -> Optional[Data]:
     """Process a single site into a PyG Data object. Cache to disk."""
     site_name = site_dir.name
-    cache_path = output_dir / f"{site_name}_{graph_source}.pt"
+    cache_path = cache_path_for_site(site_dir, output_dir, graph_source, architecture)
 
     if resume and cache_path.exists():
         try:
@@ -77,7 +100,21 @@ def process_site(
                     f"  [cached] {site_name} — "
                     f"{page.data.num_nodes} nodes ({cached_graph_source})"
                 )
-                return page.data
+                if max_graph_nodes and page.data.num_nodes > max_graph_nodes:
+                    print(
+                        f"  [skip] {site_name}: {page.data.num_nodes} nodes exceeds "
+                        f"--max-graph-nodes {max_graph_nodes}"
+                    )
+                    return None
+                edge_count = page.data.edge_index.shape[1]
+                if max_graph_edges and edge_count > max_graph_edges:
+                    print(
+                        f"  [oversized cache] {site_name}: {edge_count} edges exceeds "
+                        f"--max-graph-edges {max_graph_edges} — reprocessing"
+                    )
+                    # Fall through to rebuild. New spatial edge construction is capped.
+                else:
+                    return page.data
         except Exception as e:
             print(f"  [cache corrupt] {site_name}: {e}")
 
@@ -104,12 +141,25 @@ def process_site(
         return None
 
     # Save cache
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
     page.save(cache_path)
     print(
         f"  [processed] {site_name} — "
         f"{page.data.num_nodes} nodes ({graph_source}), {num_violations} violation types, "
         f"{(page.data.node_y_multi.sum(dim=0) > 0).sum().item()} unique rules"
     )
+    if max_graph_nodes and page.data.num_nodes > max_graph_nodes:
+        print(
+            f"  [skip] {site_name}: {page.data.num_nodes} nodes exceeds "
+            f"--max-graph-nodes {max_graph_nodes}"
+        )
+        return None
+    if max_graph_edges and page.data.edge_index.shape[1] > max_graph_edges:
+        print(
+            f"  [skip] {site_name}: {page.data.edge_index.shape[1]} edges exceeds "
+            f"--max-graph-edges {max_graph_edges}"
+        )
+        return None
     return page.data
 
 
@@ -192,12 +242,426 @@ def split_data(
     return train_data, val_data, test_data, train_names, val_names, test_names
 
 
+def site_has_violations(site_dir: Path) -> int:
+    axe_path = site_dir / "page-0_home.json"
+    try:
+        with open(axe_path, "r", encoding="utf-8") as f:
+            report = json.load(f)
+        return 1 if report.get("violations") else 0
+    except Exception:
+        return 0
+
+
+def split_site_dirs(
+    valid_sites: List[Path],
+    train_ratio: float = 0.7,
+    val_ratio: float = 0.15,
+    random_state: int = 42,
+) -> Tuple[List[Path], List[Path], List[Path]]:
+    labels = np.array([site_has_violations(site) for site in valid_sites])
+    n = len(valid_sites)
+    indices = np.arange(n)
+    unique_labels, counts = np.unique(labels, return_counts=True)
+    min_class_size = counts.min() if len(counts) else 0
+
+    if min_class_size < 2 or n < 10:
+        np.random.seed(random_state)
+        np.random.shuffle(indices)
+        n_train = int(n * train_ratio)
+        n_val = int(n * val_ratio)
+        train_idx = indices[:n_train]
+        val_idx = indices[n_train:n_train + n_val]
+        test_idx = indices[n_train + n_val:]
+    else:
+        test_ratio = 1.0 - train_ratio - val_ratio
+        try:
+            sss1 = StratifiedShuffleSplit(
+                n_splits=1,
+                test_size=(val_ratio + test_ratio),
+                random_state=random_state,
+            )
+            train_idx, temp_idx = next(sss1.split(valid_sites, labels))
+            temp_labels = labels[temp_idx]
+            sss2 = StratifiedShuffleSplit(
+                n_splits=1,
+                test_size=(test_ratio / (val_ratio + test_ratio)),
+                random_state=random_state,
+            )
+            val_idx_rel, test_idx_rel = next(sss2.split(temp_idx, temp_labels))
+            val_idx = temp_idx[val_idx_rel]
+            test_idx = temp_idx[test_idx_rel]
+        except ValueError:
+            np.random.seed(random_state)
+            np.random.shuffle(indices)
+            n_train = int(n * train_ratio)
+            n_val = int(n * val_ratio)
+            train_idx = indices[:n_train]
+            val_idx = indices[n_train:n_train + n_val]
+            test_idx = indices[n_train + n_val:]
+
+    return (
+        [valid_sites[i] for i in train_idx],
+        [valid_sites[i] for i in val_idx],
+        [valid_sites[i] for i in test_idx],
+    )
+
+
+def load_existing_split(
+    model_dir: Path,
+    data_dir: Path,
+) -> Optional[Tuple[List[Path], List[Path], List[Path]]]:
+    split_path = model_dir / "split.json"
+    if not split_path.exists():
+        return None
+
+    try:
+        with open(split_path, "r", encoding="utf-8") as f:
+            split_info = json.load(f)
+    except Exception as e:
+        print(f"  [warn] Could not read {split_path}: {e}")
+        return None
+
+    split_paths: Dict[str, List[Path]] = {}
+    for split in ("train", "val", "test"):
+        site_names = split_info.get(split)
+        if not isinstance(site_names, list):
+            return None
+        paths = [data_dir / name for name in site_names]
+        missing = [path.name for path in paths if not path.exists()]
+        if missing:
+            print(
+                f"  [warn] Existing split has {len(missing)} missing {split} sites; "
+                "recomputing split"
+            )
+            return None
+        split_paths[split] = paths
+
+    return split_paths["train"], split_paths["val"], split_paths["test"]
+
+
+def serializable_metrics(metrics: Dict[str, object]) -> Dict[str, object]:
+    result = {}
+    for key, value in metrics.items():
+        if key in {"top_rules", "worst_rules"}:
+            result[key] = value
+        elif hasattr(value, "item"):
+            result[key] = value.item()
+        elif isinstance(value, (int, float, str, bool)):
+            result[key] = value
+        else:
+            try:
+                result[key] = float(value)
+            except Exception:
+                result[key] = str(value)
+    return result
+
+
+def existing_view_info(model_dir: Path, graph_source: str) -> Optional[Dict[str, object]]:
+    view_model_dir = model_dir / graph_source
+    checkpoint_path = view_model_dir / "best_model.pt"
+    if not checkpoint_path.exists():
+        return None
+
+    metrics_path = view_model_dir / "test_metrics.json"
+    test_metrics: Dict[str, object] = {}
+    if metrics_path.exists():
+        try:
+            with open(metrics_path, "r", encoding="utf-8") as f:
+                loaded = json.load(f)
+            if isinstance(loaded, dict):
+                test_metrics = loaded
+        except Exception as e:
+            print(f"  [warn] Could not read {metrics_path}: {e}")
+
+    return {
+        "graph_source": graph_source,
+        "model_dir": str(view_model_dir),
+        "checkpoint": str(checkpoint_path),
+        "rule_ids": list(rule_ids_for_graph_source(graph_source)),
+        "rule_owners": list(GRAPH_SOURCE_TO_RULE_OWNERS[graph_source]),
+        "test_metrics": test_metrics,
+    }
+
+
+def train_view(
+    args,
+    graph_source: str,
+    sites_by_split: Dict[str, List[Path]],
+    output_dir: Path,
+    model_dir: Path,
+    device: str,
+) -> Dict[str, object]:
+    print("\n" + "=" * 70)
+    print(f"Training multi-view specialist: {graph_source}")
+    print("=" * 70)
+    print(f"Rule owners: {', '.join(GRAPH_SOURCE_TO_RULE_OWNERS[graph_source])}")
+    print(f"Rules: {', '.join(rule_ids_for_graph_source(graph_source))}")
+
+    extractor = FeatureExtractor(device=device)
+    data_by_split: Dict[str, List[Data]] = {"train": [], "val": [], "test": []}
+    names_by_split: Dict[str, List[str]] = {"train": [], "val": [], "test": []}
+    skipped = 0
+
+    all_sites = sites_by_split["train"] + sites_by_split["val"] + sites_by_split["test"]
+    split_lookup = {
+        site.name: split
+        for split, sites in sites_by_split.items()
+        for site in sites
+    }
+
+    for i, site_dir in enumerate(all_sites, 1):
+        print(f"[{graph_source} {i}/{len(all_sites)}] ", end="")
+        data = process_site(
+            site_dir=site_dir,
+            output_dir=output_dir,
+            extractor=extractor,
+            extract_visual=args.visual or graph_source == GRAPH_SOURCE_RENDERED_VISUAL,
+            graph_source=graph_source,
+            resume=args.resume,
+            architecture=ARCHITECTURE_MULTI_VIEW,
+            max_graph_nodes=args.max_graph_nodes,
+            max_graph_edges=args.max_graph_edges,
+        )
+        if data is None:
+            skipped += 1
+            continue
+        split = split_lookup[site_dir.name]
+        data_by_split[split].append(data)
+        names_by_split[split].append(site_dir.name)
+
+    del extractor
+    gc.collect()
+    if device == "mps" and hasattr(torch, "mps"):
+        torch.mps.empty_cache()
+    elif device == "cuda":
+        torch.cuda.empty_cache()
+
+    train_data = data_by_split["train"]
+    val_data = data_by_split["val"]
+    test_data = data_by_split["test"]
+    if not train_data or not val_data:
+        raise RuntimeError(f"Not enough data for {graph_source}: train={len(train_data)} val={len(val_data)}")
+
+    print(
+        f"Loaded {len(train_data)} train / {len(val_data)} val / "
+        f"{len(test_data)} test graphs for {graph_source} ({skipped} skipped)"
+    )
+
+    text_dim, attr_dim = compute_feature_dims(train_data + val_data + test_data)
+    model = DOMAttentionNet(
+        num_tags=116,
+        tag_embed_dim=32,
+        attr_dim=attr_dim,
+        text_dim=text_dim,
+        hidden_dim=args.hidden,
+        num_node_classes=2,
+        num_graph_classes=2,
+        num_rules=NUM_RULES,
+        num_layers=args.layers,
+        heads=args.heads,
+        dropout=args.dropout,
+        pooling=args.pooling,
+    )
+
+    train_labels = np.array([d.y.item() for d in train_data])
+    class_counts = np.bincount(train_labels, minlength=2)
+    class_weights = np.zeros_like(class_counts, dtype=float)
+    nonzero_classes = class_counts > 0
+    class_weights[nonzero_classes] = 1.0 / class_counts[nonzero_classes]
+    sample_weights = class_weights[train_labels]
+    sampler = WeightedRandomSampler(
+        weights=sample_weights,
+        num_samples=len(train_data),
+        replacement=True,
+    )
+
+    train_loader = DataLoader(train_data, batch_size=args.batch_size, sampler=sampler)
+    val_loader = DataLoader(val_data, batch_size=args.batch_size, shuffle=False)
+    test_loader = DataLoader(test_data, batch_size=args.batch_size, shuffle=False)
+
+    trainer = Trainer(
+        model=model,
+        device=device,
+        lr=args.lr,
+        weight_decay=args.weight_decay,
+        node_loss_weight=args.node_loss_weight,
+        rule_loss_weight=args.rule_loss_weight,
+        graph_loss_weight=args.graph_loss_weight,
+        use_focal_loss=True,
+        focal_gamma=args.focal_gamma,
+        label_smoothing=args.rule_label_smoothing,
+        hard_neg_weight=args.hard_neg_weight,
+        hard_pos_weight=args.hard_pos_weight,
+        node_pos_weight_cap=args.node_pos_weight_cap,
+        node_hard_negative_ratio=args.node_hard_negative_ratio,
+        rule_pos_weight=args.rule_pos_weight,
+        node_threshold=args.node_threshold,
+        rule_threshold=args.rule_threshold,
+        selection_metric=args.selection_metric,
+        cache_clear_interval=args.clear_cache_every,
+        clean_page_node_loss_weight=args.clean_page_node_loss_weight,
+        positive_page_node_evidence_loss_weight=args.positive_page_node_evidence_loss_weight,
+        graph_node_consistency_loss_weight=args.graph_node_consistency_loss_weight,
+    )
+
+    view_model_dir = model_dir / graph_source
+    view_model_dir.mkdir(parents=True, exist_ok=True)
+    hparams = {
+        "architecture": ARCHITECTURE_MULTI_VIEW,
+        "num_tags": 116,
+        "tag_embed_dim": 32,
+        "hidden_dim": args.hidden,
+        "num_node_classes": 2,
+        "num_graph_classes": 2,
+        "num_rules": NUM_RULES,
+        "num_layers": args.layers,
+        "heads": args.heads,
+        "dropout": args.dropout,
+        "pooling": args.pooling,
+        "graph_source": graph_source,
+        "rule_ids": list(rule_ids_for_graph_source(graph_source)),
+        "rule_owners": list(GRAPH_SOURCE_TO_RULE_OWNERS[graph_source]),
+        "node_loss_weight": args.node_loss_weight,
+        "rule_loss_weight": args.rule_loss_weight,
+        "graph_loss_weight": args.graph_loss_weight,
+        "node_pos_weight_cap": args.node_pos_weight_cap,
+        "node_hard_negative_ratio": args.node_hard_negative_ratio,
+        "rule_pos_weight": args.rule_pos_weight,
+        "rule_label_smoothing": args.rule_label_smoothing,
+        "node_threshold": args.node_threshold,
+        "rule_threshold": args.rule_threshold,
+        "selection_metric": args.selection_metric,
+        "clean_page_node_loss_weight": args.clean_page_node_loss_weight,
+        "positive_page_node_evidence_loss_weight": args.positive_page_node_evidence_loss_weight,
+        "graph_node_consistency_loss_weight": args.graph_node_consistency_loss_weight,
+    }
+
+    history = trainer.fit(
+        train_loader=train_loader,
+        val_loader=val_loader,
+        epochs=args.epochs,
+        patience=args.patience,
+        save_path=view_model_dir / "best_model.pt",
+        last_save_path=view_model_dir / "last_model.pt",
+        hparams=hparams,
+    )
+    torch.save(history, view_model_dir / "history.pt")
+
+    trainer.load_best(view_model_dir / "best_model.pt")
+    test_metrics = trainer.evaluate(test_loader)
+    with open(view_model_dir / "test_metrics.json", "w", encoding="utf-8") as f:
+        json.dump(serializable_metrics(test_metrics), f, indent=2)
+
+    print(f"\n{graph_source} test node F1: {test_metrics.get('node_f1_pos', 0):.4f}")
+    print(f"{graph_source} test rule F1: {test_metrics.get('rule_f1_micro', 0):.4f}")
+
+    return {
+        "graph_source": graph_source,
+        "model_dir": str(view_model_dir),
+        "checkpoint": str(view_model_dir / "best_model.pt"),
+        "rule_ids": list(rule_ids_for_graph_source(graph_source)),
+        "rule_owners": list(GRAPH_SOURCE_TO_RULE_OWNERS[graph_source]),
+        "test_metrics": serializable_metrics(test_metrics),
+    }
+
+
+def run_multi_view_training(args, valid_sites: List[Path], output_dir: Path, model_dir: Path, device: str) -> None:
+    reused_split = False
+    existing_split = load_existing_split(model_dir, Path(args.data_dir)) if args.reuse_split else None
+    if existing_split:
+        train_sites, val_sites, test_sites = existing_split
+        reused_split = True
+        print(
+            "Reusing existing split: "
+            f"train={len(train_sites)} val={len(val_sites)} test={len(test_sites)}"
+        )
+    else:
+        train_sites, val_sites, test_sites = split_site_dirs(
+            valid_sites,
+            train_ratio=0.7,
+            val_ratio=0.15,
+            random_state=args.seed,
+        )
+    sites_by_split = {"train": train_sites, "val": val_sites, "test": test_sites}
+
+    split_info = {
+        "architecture": ARCHITECTURE_MULTI_VIEW,
+        "train": [site.name for site in train_sites],
+        "val": [site.name for site in val_sites],
+        "test": [site.name for site in test_sites],
+        "args": vars(args),
+        "reused_split": reused_split,
+    }
+    with open(model_dir / "split.json", "w", encoding="utf-8") as f:
+        json.dump(split_info, f, indent=2)
+
+    selected_sources = tuple(args.multi_view_sources or MULTI_VIEW_SOURCES)
+    views = []
+    for graph_source in MULTI_VIEW_SOURCES:
+        if graph_source not in selected_sources:
+            existing = existing_view_info(model_dir, graph_source)
+            if existing:
+                print(f"\nUsing existing multi-view specialist: {graph_source}")
+                views.append(existing)
+            else:
+                print(f"\nSkipping multi-view specialist without checkpoint: {graph_source}")
+            continue
+
+        if args.skip_completed_views:
+            existing = existing_view_info(model_dir, graph_source)
+            if existing:
+                print(f"\nSkipping completed multi-view specialist: {graph_source}")
+                views.append(existing)
+                continue
+
+        views.append(
+            train_view(
+                args=args,
+                graph_source=graph_source,
+                sites_by_split=sites_by_split,
+                output_dir=output_dir,
+                model_dir=model_dir,
+                device=device,
+            )
+        )
+
+    trained_sources = {view["graph_source"] for view in views}
+    missing_sources = [source for source in MULTI_VIEW_SOURCES if source not in trained_sources]
+    if missing_sources:
+        print(
+            "\nWarning: model bundle is incomplete; missing views: "
+            + ", ".join(missing_sources)
+        )
+
+    manifest = {
+        "architecture": ARCHITECTURE_MULTI_VIEW,
+        "views": {view["graph_source"]: view for view in views},
+        "split": "split.json",
+        "selection_metric": args.selection_metric,
+        "thresholds": {
+            "node_threshold": args.node_threshold,
+            "rule_threshold": args.rule_threshold,
+            "graph_threshold": 0.5,
+        },
+    }
+    with open(model_dir / "manifest.json", "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)
+    print(f"\nSaved multi-view model bundle manifest to {model_dir / 'manifest.json'}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Train DOM-GNN across multiple sites")
     # Data paths
     parser.add_argument("--data-dir", type=str, required=True, help="Directory containing site subdirectories")
     parser.add_argument("--output-dir", type=str, default="./graphs_multi", help="Directory to cache processed graphs")
     parser.add_argument("--model-dir", type=str, default="./models_multi", help="Directory to save trained models")
+    parser.add_argument(
+        "--architecture",
+        type=str,
+        default=ARCHITECTURE_SINGLE,
+        choices=[ARCHITECTURE_SINGLE, ARCHITECTURE_MULTI_VIEW],
+        help="Training architecture: legacy single view or multi-view specialists",
+    )
     # Processing
     parser.add_argument("--max-sites", type=int, default=None, help="Maximum number of sites (default: all)")
     parser.add_argument("--visual", action="store_true", help="Extract visual features (slower)")
@@ -205,10 +669,42 @@ def main():
         "--graph-source",
         type=str,
         default=GRAPH_SOURCE_DOM,
-        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE],
-        help="Graph source to build: dom or a11y-tree",
+        choices=[GRAPH_SOURCE_DOM, GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_RENDERED_VISUAL],
+        help="Graph source to build for --architecture single",
+    )
+    parser.add_argument(
+        "--multi-view-sources",
+        nargs="+",
+        choices=list(MULTI_VIEW_SOURCES),
+        default=None,
+        help=(
+            "Subset of multi-view specialists to train this run. "
+            "Existing checkpoints for omitted views are kept in the manifest when present."
+        ),
     )
     parser.add_argument("--resume", action="store_true", help="Skip already-cached graphs")
+    parser.add_argument(
+        "--skip-completed-views",
+        action="store_true",
+        help="For --architecture multi-view, reuse views that already have best_model.pt",
+    )
+    parser.add_argument(
+        "--reuse-split",
+        action="store_true",
+        help="For --architecture multi-view, reuse model-dir/split.json when present",
+    )
+    parser.add_argument(
+        "--max-graph-nodes",
+        type=int,
+        default=None,
+        help="Skip processed graphs with more than this many nodes",
+    )
+    parser.add_argument(
+        "--max-graph-edges",
+        type=int,
+        default=None,
+        help="Reprocess or skip graphs with more than this many edges",
+    )
     # Model
     parser.add_argument("--hidden", type=int, default=256, help="Hidden dimension")
     parser.add_argument("--layers", type=int, default=4, help="Number of GAT layers")
@@ -229,6 +725,12 @@ def main():
     parser.add_argument("--hard-neg-weight", type=float, default=10.0, help="Hard negative mining weight")
     parser.add_argument("--hard-pos-weight", type=float, default=5.0, help="Hard positive mining weight")
     parser.add_argument("--node-pos-weight-cap", type=float, default=50.0, help="Maximum positive class weight for node loss")
+    parser.add_argument(
+        "--node-hard-negative-ratio",
+        type=float,
+        default=0.0,
+        help="If >0, train node positives against this many hardest negative nodes per positive node",
+    )
     parser.add_argument("--rule-pos-weight", type=float, default=50.0, help="Positive class weight for rule loss")
     parser.add_argument("--node-threshold", type=float, default=0.5, help="Validation threshold for node violation predictions")
     parser.add_argument("--rule-threshold", type=float, default=0.5, help="Validation threshold for rule predictions")
@@ -266,6 +768,7 @@ def main():
     print(f"Output directory: {output_dir}")
     print(f"Model directory: {model_dir}")
     print(f"Device: {device}")
+    print(f"Architecture: {args.architecture}")
     print(f"Graph source: {args.graph_source}")
     print()
 
@@ -281,6 +784,11 @@ def main():
     if not valid_sites:
         print("No valid sites found! Exiting.")
         sys.exit(1)
+
+    if args.architecture == ARCHITECTURE_MULTI_VIEW:
+        run_multi_view_training(args, valid_sites, output_dir, model_dir, device)
+        print("\nDone!")
+        return
 
     print(f"\nPhase 2: Processing {len(valid_sites)} sites into graphs...")
     print("-" * 70)
@@ -299,6 +807,9 @@ def main():
             extract_visual=args.visual,
             graph_source=args.graph_source,
             resume=args.resume,
+            architecture=ARCHITECTURE_SINGLE,
+            max_graph_nodes=args.max_graph_nodes,
+            max_graph_edges=args.max_graph_edges,
         )
         if data is not None:
             data_list.append(data)
@@ -425,6 +936,7 @@ def main():
         hard_neg_weight=args.hard_neg_weight,
         hard_pos_weight=args.hard_pos_weight,
         node_pos_weight_cap=args.node_pos_weight_cap,
+        node_hard_negative_ratio=args.node_hard_negative_ratio,
         rule_pos_weight=args.rule_pos_weight,
         node_threshold=args.node_threshold,
         rule_threshold=args.rule_threshold,
@@ -436,6 +948,7 @@ def main():
     )
 
     hparams = {
+        "architecture": ARCHITECTURE_SINGLE,
         "num_tags": 116,
         "tag_embed_dim": 32,
         "hidden_dim": args.hidden,
@@ -451,6 +964,7 @@ def main():
         "rule_loss_weight": args.rule_loss_weight,
         "graph_loss_weight": args.graph_loss_weight,
         "node_pos_weight_cap": args.node_pos_weight_cap,
+        "node_hard_negative_ratio": args.node_hard_negative_ratio,
         "rule_pos_weight": args.rule_pos_weight,
         "rule_label_smoothing": args.rule_label_smoothing,
         "node_threshold": args.node_threshold,

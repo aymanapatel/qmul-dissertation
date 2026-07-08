@@ -173,8 +173,28 @@ def _collect_id_text(soup: BeautifulSoup) -> Dict[str, str]:
     for element in soup.find_all(True):
         element_id = element.attrs.get("id")
         if element_id:
-            id_to_text[str(element_id)] = element.get_text(separator=" ", strip=True)
+            id_to_text[str(element_id)] = _accessible_text(element)
     return id_to_text
+
+
+def _accessible_text(element) -> str:
+    """Text alternative approximation for static accessible-name features."""
+    if not hasattr(element, "find_all"):
+        return ""
+
+    parts = []
+    text = element.get_text(separator=" ", strip=True)
+    if text:
+        parts.append(text)
+
+    for descendant in element.find_all(["img", "svg", "input"]):
+        for attr_name in ("aria-label", "alt", "title", "value"):
+            value = _attr(descendant, attr_name).strip()
+            if value:
+                parts.append(value)
+                break
+
+    return " ".join(part for part in parts if part).strip()
 
 
 def _accessible_name(element, id_to_text: Dict[str, str]) -> str:
@@ -189,6 +209,12 @@ def _accessible_name(element, id_to_text: Dict[str, str]) -> str:
         value = _attr(element, attr_name).strip()
         if value:
             return value
+
+    tag = element.name.lower() if element.name else ""
+    if tag in {"a", "button", "summary"} or _is_focusable(element):
+        name = _accessible_text(element)
+        if name:
+            return name
 
     return element.get_text(separator=" ", strip=True) if hasattr(element, "get_text") else ""
 
