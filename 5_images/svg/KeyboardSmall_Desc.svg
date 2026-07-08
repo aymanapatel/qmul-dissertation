@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <rect x="0" y="0" width="1200" height="520" fill="#FFFFFF"/>
+  <text style="fill: rgb(17, 24, 39); font-family: Arial, Helvetica, sans-serif; font-size: 34px; font-weight: 700; text-anchor: middle; text-transform: uppercase; white-space: pre;" transform="matrix(1.08388, 0, 0, 1.816231, -52.09623, -75.741272)"><tspan x="600" y="50" style="baseline-shift: sub;">
+    Keyboard Navigation
+  </tspan></text>
+  <text style="fill: rgb(75, 85, 99); font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-style: italic; text-anchor: middle; white-space: pre;" x="596.077" y="68.87">
+    Essential keys for accessible web interaction
+  </text>
+  <rect x="90" y="115" width="1020" height="300" rx="24" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="3"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">
+    <rect x="125" y="150" width="155" height="72" rx="10" fill="#2563EB"/>
+    <text x="202.5" y="186" fill="white" style="white-space: pre;">TAB</text>
+    <rect x="295" y="150" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="347.5" y="186" fill="#334155" style="white-space: pre;">Q</text>
+    <rect x="415" y="150" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="467.5" y="186" fill="#334155" style="white-space: pre;">W</text>
+    <rect x="535" y="150" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="587.5" y="186" fill="#334155" style="white-space: pre;">E</text>
+    <rect x="655" y="150" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="707.5" y="186" fill="#334155" style="white-space: pre;">R</text>
+    <rect x="775" y="150" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="827.5" y="186" fill="#334155" style="white-space: pre;">T</text>
+    <rect x="895" y="150" width="180" height="72" rx="10" fill="#2563EB"/>
+    <text x="985" y="186" fill="white" style="white-space: pre;">RETURN</text>
+    <rect x="93.435" y="15.458" width="211.59" height="88.276" rx="10" style="fill: rgb(176, 201, 255); stroke: rgb(0, 0, 0); stroke-width: 4px;"/>
+    <rect x="5.497" y="435.785" width="217.437" height="80.709" rx="10" style="fill: rgb(176, 201, 255); stroke: rgb(0, 0, 0); stroke-width: 4px;" transform="matrix(0.999999, -0.001305, 0, 1.000001, 80.267319, -0.633)"/>
+    <rect x="453.09" y="423.53" width="300.829" height="80.709" rx="10" style="fill: rgb(176, 201, 255); transform-box: fill-box; transform-origin: 119.836% 43.3275%; stroke: rgb(0, 0, 0); stroke-width: 4px;"/>
+    <rect x="896.157" y="29.917" width="213.873" height="80.709" rx="10" style="fill: rgb(176, 201, 255); stroke: rgb(0, 0, 0); stroke-width: 4px;"/>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">
+    <rect x="125" y="238" width="210" height="72" rx="10" fill="#2563EB"/>
+    <text x="230" y="274" fill="white" style="white-space: pre;">SHIFT</text>
+    <rect x="350" y="238" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="402.5" y="274" fill="#334155" style="white-space: pre;">A</text>
+    <rect x="470" y="238" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="522.5" y="274" fill="#334155" style="white-space: pre;">S</text>
+    <rect x="590" y="238" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="642.5" y="274" fill="#334155" style="white-space: pre;">D</text>
+    <rect x="710" y="238" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="762.5" y="274" fill="#334155" style="white-space: pre;">F</text>
+    <rect x="830" y="238" width="105" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="882.5" y="274" fill="#334155" style="white-space: pre;">G</text>
+    <rect x="950" y="238" width="125" height="72" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="1012.5" y="274" fill="#334155" style="white-space: pre;">H</text>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle" dominant-baseline="middle">
+    <rect x="125" y="326" width="150" height="54" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="200" y="353" fill="#334155" font-size="18" style="white-space: pre;">CTRL</text>
+    <rect x="290" y="326" width="620" height="54" rx="10" fill="#2563EB"/>
+    <text x="600" y="353" fill="white" style="white-space: pre;">SPACEBAR</text>
+    <rect x="925" y="326" width="150" height="54" rx="10" fill="white" stroke="#CBD5E1"/>
+    <text x="1000" y="353" fill="#334155" font-size="18" style="white-space: pre;">CTRL</text>
+  </g>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#111827" transform="matrix(1, 0, 0, 1, -4.536608, -0.435443)">
+    <text x="99.425" y="459.287" font-size="22" font-weight="700" text-anchor="start" style="white-space: pre; font-size: 22px;">SHIFT + TAB</text>
+    <text x="594.988" y="445.531" font-size="22" font-weight="700" text-anchor="middle" style="white-space: pre; font-size: 22px;">SPACE</text>
+    <text x="1093.45" y="55.671" font-size="22" font-weight="700" text-anchor="end" style="white-space: pre; font-size: 22px;">RETURN</text>
+    <text style="fill: rgb(75, 85, 99); font-size: 22px; font-weight: 700; white-space: pre;" x="21.699" y="498.55" transform="matrix(1, 0, 0, 1, 78.784134, -16.489082)">Move to previous <tspan x="21.698999404907227" dy="1em">​</tspan>focusable element</text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" x="132.305" y="490.025"> </text>
+    <text style="fill: rgb(75, 85, 99); font-size: 22px; font-weight: 700; white-space: pre; stroke-width: 1; text-anchor: middle;" x="467.628" y="474.007" transform="matrix(1, 0, 0, 1, 130.028702, -8.251206)">Activate buttons &amp;<tspan x="467.62799072265625" dy="1em">​</tspan> controls</text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" x="529.941" y="476.739"> </text>
+    <text x="107.974" y="38.657" font-size="22" font-weight="700" text-anchor="start" style="white-space: pre; font-size: 22px; stroke-width: 1;">TAB</text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" x="13.176" y="82.166"> </text>
+    <text style="fill: rgb(75, 85, 99); font-size: 22px; font-weight: 700; white-space: pre; stroke-width: 1;" x="13.701" y="79.206" transform="matrix(1, 0, 0, 1, 89.439171, -9.997423)">Move to next <tspan x="13.701000213623047" dy="1em">​</tspan>focusable element</text>
+    <text style="fill: rgb(75, 85, 99); font-size: 22px; font-weight: 700; white-space: pre; stroke-width: 1; text-anchor: end;" x="768.937" y="491.487" transform="matrix(1, 0, 0, 1, 326.511383, -413.106842)">Activate Links or<tspan x="768.93701171875" dy="1em">​</tspan>Submit Actions</text>
+    <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" x="1077.49" y="542.702">Enter your text here</text>
+  </g>
+  <text style="white-space: pre; fill: rgb(51, 51, 51); font-family: Arial, sans-serif; font-size: 28px;" x="827.908" y="112.7"> </text>
+</svg>
