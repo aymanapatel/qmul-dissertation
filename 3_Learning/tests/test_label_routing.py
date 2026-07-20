@@ -68,3 +68,33 @@ def test_label_routing_by_graph_source(tmp_path):
         graph_source="rendered-visual",
     )
     assert int(visual_y.sum().item()) == 1
+
+
+def test_rendered_visual_label_kept_when_visibility_extraction_misses(tmp_path):
+    html = tmp_path / "page.html"
+    html.write_text(
+        """
+        <html><body>
+          <p id="low-contrast">Low contrast</p>
+        </body></html>
+        """,
+        encoding="utf-8",
+    )
+    contrast_report = tmp_path / "contrast.json"
+    write_axe_report(contrast_report, "color-contrast", "#low-contrast")
+
+    extractor = FeatureExtractor.__new__(FeatureExtractor)
+    visual_nodes = build_graph(html, "rendered-visual").node_map
+    for node in visual_nodes.values():
+        node.is_visible = False
+
+    visual_y, _ = extractor.load_axe_labels(
+        contrast_report,
+        visual_nodes,
+        graph_source="rendered-visual",
+    )
+
+    labelled_nodes = [node for node in visual_nodes.values() if node.axe_violations]
+    assert int(visual_y.sum().item()) == 1
+    assert labelled_nodes
+    assert labelled_nodes[0].visual_label_qa == ["rendered_label_on_nonvisible_or_unmatched_node"]
