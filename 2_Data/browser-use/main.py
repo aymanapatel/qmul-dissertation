@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 
 from auth import generate_random_password, get_saved_password, login, make_password, save_password, signup
 from axe import accept_cookies, inject_axe, run_axe, save_report, slug_from_url, summarize_reports
+from rendered_snapshot import capture_rendered_snapshot
 
 BASE_DIR = Path(__file__).resolve().parent
 INPUT_CSV = BASE_DIR / "domains.csv"
@@ -172,16 +173,7 @@ def save_domain_summary(reports: list[dict], path: Path, first_status: str | Non
 
 
 async def save_rendered_html(page, path: Path) -> None:
-    html = await page.evaluate(
-        """() => {
-            const doctype = document.doctype
-                ? `<!DOCTYPE ${document.doctype.name}${document.doctype.publicId ? ` PUBLIC "${document.doctype.publicId}"` : ''}${document.doctype.systemId ? ` "${document.doctype.systemId}"` : ''}>\\n`
-                : '';
-            return doctype + document.documentElement.outerHTML;
-        }"""
-    )
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(html, encoding="utf-8")
+    await capture_rendered_snapshot(page, path)
 
 
 def parse_urls_from_output(output: str, base_domain: str) -> list[str]:
