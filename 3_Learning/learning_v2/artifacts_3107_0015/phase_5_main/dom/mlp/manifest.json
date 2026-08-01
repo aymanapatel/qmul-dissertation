@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "pilot": true,
+  "graph_source": "dom",
+  "architecture": "mlp",
+  "feature_contract": {
+    "schema_version": 2,
+    "graph_source": "dom",
+    "feature_dim": 497,
+    "num_tags": 116,
+    "rendered_visual_feature_version": 0
+  },
+  "model_config": {
+    "architecture": "mlp",
+    "feature_dim": 497,
+    "num_tags": 116,
+    "num_rules": 1,
+    "tag_embedding_dim": 24,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "dropout": 0.2,
+    "heads": 4
+  },
+  "training_config": {
+    "cache_dir": "runs_v1/graphs/graphs_multi_5July_2200",
+    "inventory": "learning_v2/artifacts/phase_1_4/corpus_inventory.json",
+    "split": "learning_v2/artifacts/phase_1_4/governed_split.json",
+    "output_dir": "learning_v2/artifacts/phase_5_main",
+    "views": [
+      "dom",
+      "a11y-tree",
+      "rendered-visual"
+    ],
+    "architectures": [
+      "mlp",
+      "graphsage",
+      "gat"
+    ],
+    "max_sites": 90,
+    "max_nodes": 2500,
+    "epochs": 5,
+    "batch_size": 2,
+    "hidden": 64,
+    "layers": 2,
+    "heads": 4,
+    "dropout": 0.2,
+    "lr": 0.0005,
+    "negative_ratio": 8.0,
+    "minimum_negatives": 256,
+    "precision_floor": 0.25,
+    "seed": 42,
+    "device": "cpu"
+  },
+  "rules": [
+    {
+      "rule_id": "html-has-lang",
+      "global_rule_index": 25,
+      "owner": "dom-page",
+      "wcag_ids": [
+        "3.1.1"
+      ],
+      "category": "Language"
+    }
+  ],
+  "best_epoch": 5,
+  "best_validation_rule_f1": 0.0,
+  "test_metrics": "test_metrics.json"
+}

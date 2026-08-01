@@ -1,0 +1,47 @@
+{
+  "train": {
+    "area-alt": 1,
+    "aria-command-name": 57,
+    "aria-input-field-name": 12,
+    "button-name": 455,
+    "frame-title": 37,
+    "image-alt": 1797,
+    "input-button-name": 1,
+    "input-image-alt": 1,
+    "label": 38,
+    "link-name": 1693,
+    "role-img-alt": 221,
+    "select-name": 35,
+    "svg-img-alt": 64
+  },
+  "val": {
+    "area-alt": 1,
+    "aria-command-name": 1,
+    "aria-input-field-name": 5,
+    "button-name": 126,
+    "frame-title": 3,
+    "image-alt": 233,
+    "input-button-name": 1,
+    "input-image-alt": 1,
+    "label": 6,
+    "link-name": 367,
+    "role-img-alt": 4,
+    "select-name": 3,
+    "svg-img-alt": 12
+  },
+  "test": {
+    "area-alt": 0,
+    "aria-command-name": 2,
+    "aria-input-field-name": 0,
+    "button-name": 81,
+    "frame-title": 3,
+    "image-alt": 139,
+    "input-button-name": 1,
+    "input-image-alt": 2,
+    "label": 8,
+    "link-name": 356,
+    "role-img-alt": 1,
+    "select-name": 6,
+    "svg-img-alt": 21
+  }
+}

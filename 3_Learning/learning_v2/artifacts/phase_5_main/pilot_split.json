@@ -1,0 +1,43 @@
+{
+  "schema_version": 2,
+  "graph_source": "multi-view",
+  "rule_ids": [],
+  "train": [
+    "www.chewy.com",
+    "www.entrust.net",
+    "www.esa.int",
+    "www.fbi.gov",
+    "www.google.pl",
+    "www.hyatt.com",
+    "www.jimdofree.com",
+    "www.locaweb.com.br",
+    "www.microsoft365.com",
+    "www.mixcloud.com",
+    "www.ning.com",
+    "www.polovniautomobili.com",
+    "www.porsche.com",
+    "www.profi.ru",
+    "www.strato.de",
+    "www.t2.ru",
+    "www.tripadvisor.co.uk",
+    "www.userway.org",
+    "www.venturebeat.com",
+    "www.visa.com",
+    "www.wireshark.org"
+  ],
+  "val": [
+    "www.chinadaily.com.cn",
+    "www.mystrikingly.com",
+    "www.popularmechanics.com",
+    "www.ttnet.com.tr"
+  ],
+  "test": [
+    "www.hpdaas.com",
+    "www.lastpass.com",
+    "www.playinrace.com",
+    "www.pxf.io",
+    "www.vidgf.com"
+  ],
+  "seed": 42,
+  "split_hash": "7a9a99736f51b0ce4025836b8a6970c892acb943e97d55329b64ca29e476a98b"
+}

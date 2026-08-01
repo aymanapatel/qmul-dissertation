@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "source_thresholds": {
+    "a11y-tree:gat:image-alt": 0.35,
+    "a11y-tree:gat:label": 0.05,
+    "a11y-tree:gat:link-name": 0.65,
+    "a11y-tree:graphsage:image-alt": 0.7,
+    "a11y-tree:graphsage:label": 0.05,
+    "a11y-tree:graphsage:link-name": 0.65,
+    "a11y-tree:mlp:image-alt": 0.75,
+    "a11y-tree:mlp:label": 0.95,
+    "a11y-tree:mlp:link-name": 0.5,
+    "axe:color-contrast": 0.5,
+    "axe:html-has-lang": 0.5,
+    "axe:image-alt": 0.5,
+    "axe:label": 0.5,
+    "axe:link-name": 0.5,
+    "deterministic:color-contrast": 0.5,
+    "deterministic:html-has-lang": 0.5,
+    "deterministic:image-alt": 0.5,
+    "deterministic:label": 0.5,
+    "deterministic:link-name": 0.5,
+    "dom:gat:html-has-lang": 0.95,
+    "dom:graphsage:html-has-lang": 0.95,
+    "dom:mlp:html-has-lang": 0.95,
+    "rendered-visual:gat:color-contrast": 0.05,
+    "rendered-visual:graphsage:color-contrast": 0.1,
+    "rendered-visual:mlp:color-contrast": 0.05
+  },
+  "fail_threshold": 0.65,
+  "review_threshold": 0.35
+}

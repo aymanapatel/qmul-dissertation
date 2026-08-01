@@ -1,0 +1,11 @@
+{
+  "train": {
+    "html-has-lang": 2
+  },
+  "val": {
+    "html-has-lang": 1
+  },
+  "test": {
+    "html-has-lang": 3
+  }
+}

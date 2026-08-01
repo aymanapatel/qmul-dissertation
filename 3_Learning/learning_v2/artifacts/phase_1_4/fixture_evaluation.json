@@ -1,0 +1,204 @@
+{
+  "gold_count": 8,
+  "predicted_count": 8,
+  "missing_rules": [],
+  "unexpected_rules": [],
+  "exact_rule_multiset_match": true,
+  "predictions": [
+    {
+      "finding_id": "7c48eb18f21d4e2852bf",
+      "site_id": "mixed_issues",
+      "rule_id": "document-title",
+      "criterion_ids": [
+        "2.4.2"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 0,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1)",
+        "tag": "head",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "missing_or_empty_title"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    },
+    {
+      "finding_id": "09f8ec6e6fc7931b7cf8",
+      "site_id": "mixed_issues",
+      "rule_id": "html-has-lang",
+      "criterion_ids": [
+        "3.1.1"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 1,
+        "css_path": "html:nth-of-type(1)",
+        "tag": "html",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "missing_lang"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    },
+    {
+      "finding_id": "01c5d1e4d959c47d1828",
+      "site_id": "mixed_issues",
+      "rule_id": "image-alt",
+      "criterion_ids": [
+        "1.1.1"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 2,
+        "css_path": "img#missing-alt",
+        "tag": "img",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "missing_alt"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    },
+    {
+      "finding_id": "eb386521c3d2006c0de3",
+      "site_id": "mixed_issues",
+      "rule_id": "button-name",
+      "criterion_ids": [
+        "4.1.2"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 3,
+        "css_path": "button#unnamed",
+        "tag": "button",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "missing_accessible_name"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    },
+    {
+      "finding_id": "a6994a13bd78692befe7",
+      "site_id": "mixed_issues",
+      "rule_id": "link-name",
+      "criterion_ids": [
+        "2.4.4",
+        "4.1.2"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 4,
+        "css_path": "a#empty-link",
+        "tag": "a",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "missing_accessible_name"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    },
+    {
+      "finding_id": "a91e541d8d458ba8da26",
+      "site_id": "mixed_issues",
+      "rule_id": "label",
+      "criterion_ids": [
+        "4.1.2"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 5,
+        "css_path": "input#unlabelled-input",
+        "tag": "input",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "missing_programmatic_label"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    },
+    {
+      "finding_id": "3fc87bf8650d5fd07a08",
+      "site_id": "mixed_issues",
+      "rule_id": "meta-viewport",
+      "criterion_ids": [
+        "1.4.4"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 6,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(2)",
+        "tag": "meta",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "zoom_restricted",
+        "content": "width=device-width,maximum-scale=1,user-scalable=no"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    },
+    {
+      "finding_id": "2f3b75b118b6284f2939",
+      "site_id": "mixed_issues",
+      "rule_id": "nested-interactive",
+      "criterion_ids": [
+        "4.1.2"
+      ],
+      "detector": "deterministic-html",
+      "node": {
+        "node_id": 7,
+        "css_path": "button#outer",
+        "tag": "button",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "status": "fail",
+      "impact": null,
+      "confidence": 1.0,
+      "evidence": {
+        "reason": "interactive_descendant",
+        "descendant": "button#outer > a:nth-of-type(1)"
+      },
+      "human_review_required": false,
+      "schema_version": 1
+    }
+  ]
+}

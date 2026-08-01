@@ -1,0 +1,14 @@
+{
+  "train": {
+    "document-title": 4,
+    "html-has-lang": 13
+  },
+  "val": {
+    "document-title": 1,
+    "html-has-lang": 2
+  },
+  "test": {
+    "document-title": 2,
+    "html-has-lang": 3
+  }
+}

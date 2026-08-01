@@ -1,0 +1,50 @@
+{
+  "schema_version": 2,
+  "precision_floor": 0.25,
+  "recommended": {
+    "node_threshold": 0.05,
+    "page_threshold": 0.1,
+    "rule_thresholds": {
+      "image-alt": 0.1,
+      "link-name": 0.95
+    }
+  },
+  "node": {
+    "threshold": 0.05,
+    "precision": 0.011428571428571429,
+    "recall": 0.6666666666666666,
+    "f1": 0.02247191011235955,
+    "predicted_positive": 175,
+    "actual_positive": 3,
+    "supported": true
+  },
+  "page": {
+    "threshold": 0.1,
+    "precision": 0.6666666666666666,
+    "recall": 1.0,
+    "f1": 0.8,
+    "predicted_positive": 3,
+    "actual_positive": 2,
+    "supported": true
+  },
+  "rules": {
+    "image-alt": {
+      "threshold": 0.1,
+      "precision": 0.008849557522123894,
+      "recall": 1.0,
+      "f1": 0.017543859649122806,
+      "predicted_positive": 113,
+      "actual_positive": 1,
+      "supported": true
+    },
+    "link-name": {
+      "threshold": 0.95,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "predicted_positive": 0,
+      "actual_positive": 2,
+      "supported": true
+    }
+  }
+}

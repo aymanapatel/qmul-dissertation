@@ -1,0 +1,1167 @@
+{
+  "schema_version": 1,
+  "phase": 8,
+  "status": "weak_label_retrieval_pilot",
+  "terminology": {
+    "flat_vector_rag": "TF-IDF exemplar/evidence RAG",
+    "graph_constrained_rag": "Graph-RAG using explicit typed-edge traversal before the same TF-IDF scorer"
+  },
+  "knowledge_version": "w3c-wcag22-2026-08-01",
+  "split_hash": "b2c549d3c46587c028cb71788d410cf98c276f6bc02561d46f353f3c2df1adb6",
+  "query_count": 21,
+  "knowledge_record_count": 9,
+  "training_exemplar_count": 857,
+  "index_site_count": 31,
+  "supported_rules": [
+    "color-contrast",
+    "html-has-lang",
+    "image-alt",
+    "label",
+    "link-name"
+  ],
+  "budget": {
+    "top_k": 5,
+    "context_characters": 5000
+  },
+  "metrics": {
+    "no_rag": {
+      "condition": "no_rag",
+      "query_count": 21,
+      "top_k": 5,
+      "context_character_budget": 5000,
+      "mean_recall_at_k": 0.0,
+      "mrr": 0.0,
+      "mean_ndcg_at_k": 0.0,
+      "source_correctness": 0.0,
+      "traceability": 1.0,
+      "record_type_diversity": 0.0,
+      "repair_pattern_diversity": 0.0,
+      "empty_retrieval_rate": 1.0,
+      "leakage_count": 0,
+      "latency_seconds": 2.9708025977015495e-05,
+      "mean_latency_ms": 0.0014146679036674045,
+      "per_query": [
+        {
+          "query_id": "q-595ebcc81dd2483a1d9f",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-c333bf889f14664bfe52",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-30ba3a42a955a115aa0d",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-f9d1eb5f3f23aedb90e4",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-61b775322057cbd81aab",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-b43e0a5aee0b040a8d5b",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-95d28c408bd8a941c55c",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-9ee55d0cba7a09ab36ff",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-04ae18b8a1f189a9b19c",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-5bbc58d01dfb398d29d5",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-885819f83377251c3f30",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-46c9fddad632981b71e7",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-461ce2e658aa491fe3dc",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-24f4c0f10794c96e5052",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-96e076d7ddf0ec59d616",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-07f09843b52af20ac015",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-6849748191fea8ac1d19",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-3bab8901666cc5f65045",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-09466c4acde6c0e69a1a",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-605433d2648a9042999c",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        },
+        {
+          "query_id": "q-b0a1982c71323691764f",
+          "retrieved_ids": [],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.0,
+          "repair_pattern_diversity": 0.0,
+          "leakage_record_ids": [],
+          "empty": true
+        }
+      ]
+    },
+    "flat_vector_rag": {
+      "condition": "flat_vector_rag",
+      "query_count": 21,
+      "top_k": 5,
+      "context_character_budget": 5000,
+      "mean_recall_at_k": 0.047619047619047616,
+      "mrr": 0.009523809523809525,
+      "mean_ndcg_at_k": 0.018421562249263886,
+      "source_correctness": 0.7619047619047619,
+      "traceability": 1.0,
+      "record_type_diversity": 0.20952380952380953,
+      "repair_pattern_diversity": 0.2761904761904762,
+      "empty_retrieval_rate": 0.0,
+      "leakage_count": 0,
+      "latency_seconds": 0.019314458826556802,
+      "mean_latency_ms": 0.9197361345979429,
+      "per_query": [
+        {
+          "query_id": "q-595ebcc81dd2483a1d9f",
+          "retrieved_ids": [
+            "ex-5f4c1f27101792d872bd",
+            "ex-4415e0d1d4fe46c98d88",
+            "ex-368d8586ed5b40d52b85",
+            "ex-c9fbe42f029a11dbf413",
+            "ex-0825e3a267bfbf940cd6"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-c333bf889f14664bfe52",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.6,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-30ba3a42a955a115aa0d",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.4,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-f9d1eb5f3f23aedb90e4",
+          "retrieved_ids": [
+            "ex-97c074c1c7c1987b4c73",
+            "ex-2baa9514f35cbb3657de",
+            "ex-3f2931f479791cf110fd",
+            "ex-afb560a623139b8a932c",
+            "ex-dba2b51262915245e01d"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-61b775322057cbd81aab",
+          "retrieved_ids": [
+            "ex-368d8586ed5b40d52b85",
+            "ex-4415e0d1d4fe46c98d88",
+            "ex-09a2e9f394e5ca482bf8",
+            "ex-c9fbe42f029a11dbf413",
+            "ex-5f4c1f27101792d872bd"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-b43e0a5aee0b040a8d5b",
+          "retrieved_ids": [
+            "ex-a2f37a035de2a078f315",
+            "ex-902b90c2178b941e316c",
+            "ex-af733c5bf9af3afd6d57",
+            "ex-0b0ed6d9bcc3e79ce861",
+            "ex-cd146572e2e1a61fed27"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-95d28c408bd8a941c55c",
+          "retrieved_ids": [
+            "ex-00907c9b59bc5e650b9a",
+            "ex-0d23e27d02244e619280",
+            "ex-0d325d1f997d50528c3e",
+            "ex-7b3bf4ba9a8a5f261e38",
+            "ex-92839940f94a3b70864b"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-9ee55d0cba7a09ab36ff",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.6,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-04ae18b8a1f189a9b19c",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.4,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-5bbc58d01dfb398d29d5",
+          "retrieved_ids": [
+            "ex-798ab5f0b3a3bcd786ae",
+            "ex-8c230062b292508d90fb",
+            "ex-cb26970ee88245a02259",
+            "ex-5b32f207b34566568689",
+            "ex-5178d84416932477eb1e"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-885819f83377251c3f30",
+          "retrieved_ids": [
+            "ex-54df2993c5f5a86c6bca",
+            "ex-71663f9b0ee6b1600125",
+            "ex-9b6f05733c40f400402f",
+            "ex-ec5f57765132e4e25a4e",
+            "ex-361272d71e517d7115ad"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-46c9fddad632981b71e7",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.6,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-461ce2e658aa491fe3dc",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.4,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-24f4c0f10794c96e5052",
+          "retrieved_ids": [
+            "ex-798ab5f0b3a3bcd786ae",
+            "ex-8c230062b292508d90fb",
+            "ex-cb26970ee88245a02259",
+            "ex-5178d84416932477eb1e",
+            "w3c-H57"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.38685280723454163,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.4,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-96e076d7ddf0ec59d616",
+          "retrieved_ids": [
+            "ex-798ab5f0b3a3bcd786ae",
+            "ex-8c230062b292508d90fb",
+            "ex-cb26970ee88245a02259",
+            "ex-5b32f207b34566568689",
+            "ex-5178d84416932477eb1e"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-07f09843b52af20ac015",
+          "retrieved_ids": [
+            "ex-d6c3dfb04cb92a57fed7",
+            "ex-621cca3cadc804930b3e",
+            "ex-c92a6232aaf528126f1d",
+            "ex-cff765e7af24f9e38cbf",
+            "ex-e1adf23f22571bea9ba2"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-6849748191fea8ac1d19",
+          "retrieved_ids": [
+            "ex-caa15afef69506f80a7b",
+            "ex-0d325d1f997d50528c3e",
+            "ex-c23f1dc8f26eb5682868",
+            "ex-d6c3dfb04cb92a57fed7",
+            "ex-de165ba7b94510dc1539"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-3bab8901666cc5f65045",
+          "retrieved_ids": [
+            "ex-621cca3cadc804930b3e",
+            "ex-cff765e7af24f9e38cbf",
+            "ex-68ce49524fcd4f10ace4",
+            "ex-c92a6232aaf528126f1d",
+            "ex-b64331d2f1814a1ef866"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-09466c4acde6c0e69a1a",
+          "retrieved_ids": [
+            "ex-4415e0d1d4fe46c98d88",
+            "ex-368d8586ed5b40d52b85",
+            "ex-c9fbe42f029a11dbf413",
+            "ex-de520c96b059c073d8ab",
+            "ex-3707c28c2811cebff200"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-605433d2648a9042999c",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.6,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-b0a1982c71323691764f",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-b2251f9ec9a5e907c355",
+            "ex-662b206e79c24cbd151f",
+            "ex-95ad3f25d2a784de928a",
+            "ex-5dfd52411aa78fcb0236"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 0.4,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.4,
+          "leakage_record_ids": [],
+          "empty": false
+        }
+      ]
+    },
+    "graph_constrained_rag": {
+      "condition": "graph_constrained_rag",
+      "query_count": 21,
+      "top_k": 5,
+      "context_character_budget": 5000,
+      "mean_recall_at_k": 0.09523809523809523,
+      "mrr": 0.05714285714285714,
+      "mean_ndcg_at_k": 0.0660406098683115,
+      "source_correctness": 1.0,
+      "traceability": 1.0,
+      "record_type_diversity": 0.24761904761904763,
+      "repair_pattern_diversity": 0.21428571428571427,
+      "empty_retrieval_rate": 0.0,
+      "leakage_count": 0,
+      "latency_seconds": 0.014331292128190398,
+      "mean_latency_ms": 0.6824424822947809,
+      "per_query": [
+        {
+          "query_id": "q-595ebcc81dd2483a1d9f",
+          "retrieved_ids": [
+            "ex-5f4c1f27101792d872bd",
+            "ex-4415e0d1d4fe46c98d88",
+            "ex-368d8586ed5b40d52b85",
+            "ex-c9fbe42f029a11dbf413",
+            "ex-0825e3a267bfbf940cd6"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-c333bf889f14664bfe52",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-662b206e79c24cbd151f",
+            "ex-5dfd52411aa78fcb0236",
+            "ex-505a30350329bb0781f2",
+            "ex-c79985eeb5155d445f95"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-30ba3a42a955a115aa0d",
+          "retrieved_ids": [
+            "ex-b2251f9ec9a5e907c355",
+            "ex-95ad3f25d2a784de928a",
+            "ex-509037c7e712b2cf0088",
+            "ex-b4342541782fafa91114",
+            "ex-05b8ea7846b1ee43b0f8"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-f9d1eb5f3f23aedb90e4",
+          "retrieved_ids": [
+            "ex-97c074c1c7c1987b4c73",
+            "ex-2baa9514f35cbb3657de",
+            "ex-3f2931f479791cf110fd",
+            "ex-afb560a623139b8a932c",
+            "ex-dba2b51262915245e01d"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-61b775322057cbd81aab",
+          "retrieved_ids": [
+            "ex-368d8586ed5b40d52b85",
+            "ex-4415e0d1d4fe46c98d88",
+            "ex-09a2e9f394e5ca482bf8",
+            "ex-c9fbe42f029a11dbf413",
+            "ex-5f4c1f27101792d872bd"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-b43e0a5aee0b040a8d5b",
+          "retrieved_ids": [
+            "ex-a2f37a035de2a078f315",
+            "ex-902b90c2178b941e316c",
+            "ex-af733c5bf9af3afd6d57",
+            "ex-0b0ed6d9bcc3e79ce861",
+            "ex-cd146572e2e1a61fed27"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-95d28c408bd8a941c55c",
+          "retrieved_ids": [
+            "ex-00907c9b59bc5e650b9a",
+            "ex-0d23e27d02244e619280",
+            "ex-0d325d1f997d50528c3e",
+            "ex-92839940f94a3b70864b",
+            "ex-e10cc371119e77cccbe7"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-9ee55d0cba7a09ab36ff",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-662b206e79c24cbd151f",
+            "ex-5dfd52411aa78fcb0236",
+            "ex-c79985eeb5155d445f95",
+            "ex-9ac7773f9be180be6a83"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-04ae18b8a1f189a9b19c",
+          "retrieved_ids": [
+            "ex-b2251f9ec9a5e907c355",
+            "ex-95ad3f25d2a784de928a",
+            "ex-509037c7e712b2cf0088",
+            "ex-b4342541782fafa91114",
+            "ex-d3ac0a0e6795f0dc5275"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-5bbc58d01dfb398d29d5",
+          "retrieved_ids": [
+            "ex-798ab5f0b3a3bcd786ae",
+            "ex-8c230062b292508d90fb",
+            "ex-cb26970ee88245a02259",
+            "ex-5b32f207b34566568689",
+            "ex-5178d84416932477eb1e"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-885819f83377251c3f30",
+          "retrieved_ids": [
+            "ex-54df2993c5f5a86c6bca",
+            "ex-71663f9b0ee6b1600125",
+            "ex-9b6f05733c40f400402f",
+            "ex-ec5f57765132e4e25a4e",
+            "ex-361272d71e517d7115ad"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-46c9fddad632981b71e7",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-662b206e79c24cbd151f",
+            "ex-5dfd52411aa78fcb0236",
+            "ex-505a30350329bb0781f2",
+            "ex-c79985eeb5155d445f95"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-461ce2e658aa491fe3dc",
+          "retrieved_ids": [
+            "ex-b2251f9ec9a5e907c355",
+            "ex-95ad3f25d2a784de928a",
+            "ex-509037c7e712b2cf0088",
+            "ex-05b8ea7846b1ee43b0f8",
+            "ex-b4342541782fafa91114"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-24f4c0f10794c96e5052",
+          "retrieved_ids": [
+            "ex-798ab5f0b3a3bcd786ae",
+            "ex-8c230062b292508d90fb",
+            "ex-cb26970ee88245a02259",
+            "ex-5178d84416932477eb1e",
+            "w3c-H57"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 0.2,
+          "ndcg_at_k": 0.38685280723454163,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.4,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-96e076d7ddf0ec59d616",
+          "retrieved_ids": [
+            "ex-798ab5f0b3a3bcd786ae",
+            "ex-8c230062b292508d90fb",
+            "ex-cb26970ee88245a02259",
+            "ex-5b32f207b34566568689",
+            "ex-5178d84416932477eb1e"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-07f09843b52af20ac015",
+          "retrieved_ids": [
+            "ex-d6c3dfb04cb92a57fed7",
+            "ex-621cca3cadc804930b3e",
+            "ex-c92a6232aaf528126f1d",
+            "ex-cff765e7af24f9e38cbf",
+            "ex-e1adf23f22571bea9ba2"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-6849748191fea8ac1d19",
+          "retrieved_ids": [
+            "ex-caa15afef69506f80a7b",
+            "ex-0d325d1f997d50528c3e",
+            "ex-c23f1dc8f26eb5682868",
+            "ex-92839940f94a3b70864b",
+            "ex-2dee568f15153087faf6"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-3bab8901666cc5f65045",
+          "retrieved_ids": [
+            "ex-621cca3cadc804930b3e",
+            "ex-cff765e7af24f9e38cbf",
+            "ex-68ce49524fcd4f10ace4",
+            "ex-c92a6232aaf528126f1d",
+            "ex-b64331d2f1814a1ef866"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-09466c4acde6c0e69a1a",
+          "retrieved_ids": [
+            "w3c-F68",
+            "w3c-H44"
+          ],
+          "recall_at_k": 1.0,
+          "reciprocal_rank": 1.0,
+          "ndcg_at_k": 1.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 1.0,
+          "repair_pattern_diversity": 0.5,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-605433d2648a9042999c",
+          "retrieved_ids": [
+            "ex-3f8b04785a3ac66accfc",
+            "ex-662b206e79c24cbd151f",
+            "ex-5dfd52411aa78fcb0236",
+            "ex-c79985eeb5155d445f95",
+            "ex-6bae7bbde90a0a2f8ea6"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        },
+        {
+          "query_id": "q-b0a1982c71323691764f",
+          "retrieved_ids": [
+            "ex-b2251f9ec9a5e907c355",
+            "ex-95ad3f25d2a784de928a",
+            "ex-509037c7e712b2cf0088",
+            "ex-b4342541782fafa91114",
+            "ex-f093f170bcbcd14f3f71"
+          ],
+          "recall_at_k": 0.0,
+          "reciprocal_rank": 0.0,
+          "ndcg_at_k": 0.0,
+          "source_correctness": 1.0,
+          "traceability": 1.0,
+          "record_type_diversity": 0.2,
+          "repair_pattern_diversity": 0.2,
+          "leakage_record_ids": [],
+          "empty": false
+        }
+      ]
+    }
+  },
+  "retrieval_lists_differing": 11,
+  "exit_gate": {
+    "heldout_absent_from_index": true,
+    "near_templates_absent_from_index": true,
+    "all_retrieved_sources_traceable": true,
+    "zero_retrieval_leakage": true,
+    "graph_condition_meaningfully_different": true,
+    "same_corpus_and_budget": true
+  },
+  "limitations": [
+    "Queries are axe-derived weak-label findings rather than independently verified repair cases.",
+    "Gold relevance is defined from the versioned rule/criterion links in the curated knowledge records.",
+    "Phase 8 evaluates retrieval and prompt grounding only; it does not claim generated or validated repair success."
+  ]
+}

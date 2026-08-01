@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "precision_floor": 0.25,
+  "recommended": {
+    "node_threshold": 0.5,
+    "page_threshold": 0.9,
+    "rule_thresholds": {
+      "image-alt": 0.25,
+      "label": 0.05,
+      "link-name": 0.75
+    }
+  },
+  "node": {
+    "threshold": 0.5,
+    "precision": 0.8176470588235294,
+    "recall": 0.8742138364779874,
+    "f1": 0.8449848024316109,
+    "predicted_positive": 170,
+    "actual_positive": 159,
+    "supported": true
+  },
+  "page": {
+    "threshold": 0.9,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "predicted_positive": 2,
+    "actual_positive": 2,
+    "supported": true
+  },
+  "rules": {
+    "image-alt": {
+      "threshold": 0.25,
+      "precision": 0.801980198019802,
+      "recall": 0.9878048780487805,
+      "f1": 0.8852459016393442,
+      "predicted_positive": 101,
+      "actual_positive": 82,
+      "supported": true
+    },
+    "label": {
+      "threshold": 0.05,
+      "precision": 0.011235955056179775,
+      "recall": 0.3333333333333333,
+      "f1": 0.021739130434782608,
+      "predicted_positive": 89,
+      "actual_positive": 3,
+      "supported": true
+    },
+    "link-name": {
+      "threshold": 0.75,
+      "precision": 0.8181818181818182,
+      "recall": 0.8513513513513513,
+      "f1": 0.8344370860927152,
+      "predicted_positive": 77,
+      "actual_positive": 74,
+      "supported": true
+    }
+  }
+}

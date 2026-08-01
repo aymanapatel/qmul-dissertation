@@ -1,0 +1,40 @@
+{
+  "schema_version": 2,
+  "precision_floor": 0.25,
+  "recommended": {
+    "node_threshold": 0.25,
+    "page_threshold": 0.2,
+    "rule_thresholds": {
+      "color-contrast": 0.25
+    }
+  },
+  "node": {
+    "threshold": 0.25,
+    "precision": 0.6410256410256411,
+    "recall": 0.9259259259259259,
+    "f1": 0.7575757575757577,
+    "predicted_positive": 39,
+    "actual_positive": 27,
+    "supported": true
+  },
+  "page": {
+    "threshold": 0.2,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "predicted_positive": 2,
+    "actual_positive": 2,
+    "supported": true
+  },
+  "rules": {
+    "color-contrast": {
+      "threshold": 0.25,
+      "precision": 0.6410256410256411,
+      "recall": 0.9259259259259259,
+      "f1": 0.7575757575757577,
+      "predicted_positive": 39,
+      "actual_positive": 27,
+      "supported": true
+    }
+  }
+}

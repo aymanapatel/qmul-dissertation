@@ -666,10 +666,25 @@ class Trainer:
             self.model.load_state_dict(checkpoint["model_state_dict"])
             if "optimizer_state_dict" in checkpoint:
                 self.optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+            if "scheduler_state_dict" in checkpoint:
+                self.scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
             start_epoch = int(checkpoint.get("epoch", -1)) + 1
             best_metric_value = checkpoint.get(
                 "selection_metric_value", checkpoint.get("val_f1", best_metric_value)
             )
+            patience_counter = int(checkpoint.get("patience_counter", 0))
+            if (
+                "patience_counter" not in checkpoint
+                and save_path is not None
+                and save_path.exists()
+            ):
+                best_checkpoint = torch.load(
+                    save_path,
+                    map_location="cpu",
+                    weights_only=False,
+                )
+                best_epoch = int(best_checkpoint.get("epoch", start_epoch - 1))
+                patience_counter = max(0, start_epoch - best_epoch - 1)
             checkpoint_metric = checkpoint.get("selection_metric", self.selection_metric)
             if checkpoint_metric != self.selection_metric:
                 print(
@@ -679,7 +694,8 @@ class Trainer:
             has_saved = True
             print(
                 f"Resuming training from {resume_from} at epoch {start_epoch + 1} "
-                f"(best {self.selection_metric}={best_metric_value:.4f})"
+                f"(best {self.selection_metric}={best_metric_value:.4f}, "
+                f"early-stop counter={patience_counter}/{patience})"
             )
         
         for epoch in range(start_epoch, epochs):
@@ -757,6 +773,8 @@ class Trainer:
                             "val_f1": best_metric_value,
                             "selection_metric": self.selection_metric,
                             "selection_metric_value": best_metric_value,
+                            "patience_counter": patience_counter,
+                            "scheduler_state_dict": self.scheduler.state_dict(),
                         }
                         if hparams:
                             checkpoint["hparams"] = hparams
@@ -781,6 +799,8 @@ class Trainer:
                         "selection_metric": self.selection_metric,
                         "selection_metric_value": best_metric_value,
                         "last_metric_value": current_metric,
+                        "patience_counter": patience_counter,
+                        "scheduler_state_dict": self.scheduler.state_dict(),
                     }
                     if hparams:
                         checkpoint["hparams"] = hparams
@@ -798,6 +818,8 @@ class Trainer:
                 "val_f1": best_metric_value,
                 "selection_metric": self.selection_metric,
                 "selection_metric_value": best_metric_value,
+                "patience_counter": patience_counter,
+                "scheduler_state_dict": self.scheduler.state_dict(),
             }
             if hparams:
                 checkpoint["hparams"] = hparams
