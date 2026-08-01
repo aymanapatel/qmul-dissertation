@@ -1,0 +1,37 @@
+{
+  "schema_version": 2,
+  "graph_source": "multi-view",
+  "rule_ids": [],
+  "train": [
+    "www.adguard.com",
+    "www.chewy.com",
+    "www.coloros.com",
+    "www.com.com",
+    "www.csdn.net",
+    "www.dalyfeds.com",
+    "www.drupal.org",
+    "www.iionads.com",
+    "www.isnssdk.com",
+    "www.knt9.xyz",
+    "www.leroymerlin.es",
+    "www.nontondrama.my",
+    "www.romsfun.com",
+    "www.square.site",
+    "www.swishapps.ai",
+    "www.winvidplay.com",
+    "www.y2mate.nu"
+  ],
+  "val": [
+    "www.deped.gov.ph",
+    "www.hasznaltauto.hu",
+    "www.thrtle.com",
+    "www.tidal.com"
+  ],
+  "test": [
+    "www.adidas.com",
+    "www.canva.site",
+    "www.chicagotribune.com"
+  ],
+  "seed": 42,
+  "split_hash": "24d647c66bd2659c9929de8e4e4d24040a31052e8e469b90b2330ea9fc572677"
+}

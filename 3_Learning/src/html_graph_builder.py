@@ -6,11 +6,19 @@ Nodes = HTML elements, Edges = parent-child + sibling + spatial relationships.
 """
 
 from pathlib import Path
+from math import sqrt
 from typing import Dict, List, Optional, Tuple
 
 import torch
 from bs4 import BeautifulSoup, NavigableString
 from torch_geometric.data import Data
+
+
+# Keep these elements in the parsed document so the rendered-visual extractor
+# can serialize the page with its original CSS intact, but do not turn them
+# into graph nodes. In particular, decomposing <style> here made every later
+# visual extraction render an unstyled page.
+NON_GRAPH_TAGS = {"script", "style", "noscript"}
 
 
 # Tag vocabulary: most common HTML tags + special tokens
@@ -101,13 +109,32 @@ class DOMNode:
         # Visual features (populated later via Playwright)
         self.bbox = {"x": -1, "y": -1, "width": -1, "height": -1}
         self.is_visible = False
+        self.visual = {
+            "foreground_rgb": [-1, -1, -1],
+            "background_rgb": [-1, -1, -1],
+            "contrast_ratio": -1.0,
+            "font_size": -1.0,
+            "font_weight": -1.0,
+            "required_contrast_ratio": -1.0,
+            "contrast_deficit": -1.0,
+            "has_direct_text": False,
+            "opacity": -1.0,
+            "text_decoration_underline": False,
+            "link_color_delta": -1.0,
+            "scrollable": False,
+            "focusable": False,
+            "clipped": False,
+            "in_viewport": False,
+            "visual_match_found": False,
+        }
+        self.visual_label_qa: List[str] = []
         self.dom_path = get_dom_path(element) if not self.is_text else ""
         
         # Axe violation labels (populated later)
         self.axe_violations: List[str] = []
         self.axe_impact: Optional[str] = None
     
-    def get_attribute_features(self) -> torch.Tensor:
+    def get_attribute_features(self, include_visual_details: bool = False) -> torch.Tensor:
         """Extract binary attribute features."""
         features = []
         
@@ -153,6 +180,46 @@ class DOMNode:
         features.append(self.bbox["width"] / 1920.0 if self.bbox["width"] >= 0 else -1.0)
         features.append(self.bbox["height"] / 1080.0 if self.bbox["height"] >= 0 else -1.0)
         features.append(1.0 if self.is_visible else 0.0)
+
+        if include_visual_details:
+            max_color_delta = sqrt(3 * (255 ** 2))
+            fg = self.visual.get("foreground_rgb", [-1, -1, -1])
+            bg = self.visual.get("background_rgb", [-1, -1, -1])
+            for channel in fg:
+                features.append(float(channel) / 255.0 if channel >= 0 else -1.0)
+            for channel in bg:
+                features.append(float(channel) / 255.0 if channel >= 0 else -1.0)
+            contrast_ratio = float(self.visual.get("contrast_ratio", -1.0))
+            font_size = float(self.visual.get("font_size", -1.0))
+            font_weight = float(self.visual.get("font_weight", -1.0))
+            required_contrast_ratio = float(self.visual.get("required_contrast_ratio", -1.0))
+            contrast_deficit = float(self.visual.get("contrast_deficit", -1.0))
+            opacity = float(self.visual.get("opacity", -1.0))
+            link_color_delta = float(self.visual.get("link_color_delta", -1.0))
+            features.append(min(contrast_ratio / 21.0, 1.0) if contrast_ratio >= 0 else -1.0)
+            features.append(min(font_size / 72.0, 1.0) if font_size >= 0 else -1.0)
+            features.append(min(font_weight / 900.0, 1.0) if font_weight >= 0 else -1.0)
+            features.append(max(0.0, min(opacity, 1.0)) if opacity >= 0 else -1.0)
+            features.append(1.0 if self.visual.get("text_decoration_underline") else 0.0)
+            features.append(min(link_color_delta / max_color_delta, 1.0) if link_color_delta >= 0 else -1.0)
+            features.append(1.0 if self.visual.get("scrollable") else 0.0)
+            features.append(1.0 if self.visual.get("focusable") else 0.0)
+            features.append(1.0 if self.visual.get("clipped") else 0.0)
+            features.append(1.0 if self.visual.get("in_viewport") else 0.0)
+            features.append(1.0 if self.visual.get("visual_match_found") else 0.0)
+            # Append new feature versions so old checkpoints can safely trim
+            # the tail without shifting the meaning of their original inputs.
+            features.append(
+                min(required_contrast_ratio / 4.5, 1.0)
+                if required_contrast_ratio >= 0
+                else -1.0
+            )
+            features.append(
+                max(0.0, min(contrast_deficit, 1.0))
+                if contrast_deficit >= 0
+                else -1.0
+            )
+            features.append(1.0 if self.visual.get("has_direct_text") else 0.0)
         
         return torch.tensor(features, dtype=torch.float32)
     
@@ -207,10 +274,6 @@ def parse_html_to_graph(
     with open(html_path, "r", encoding="utf-8") as f:
         soup = BeautifulSoup(f.read(), "lxml")
     
-    # Remove script and style tags (they don't affect visual accessibility tree)
-    for tag in soup.find_all(["script", "style", "noscript"]):
-        tag.decompose()
-    
     node_map: Dict[int, DOMNode] = {}
     edge_index: List[List[int]] = [[], []]
     node_id_counter = 0
@@ -237,6 +300,9 @@ def parse_html_to_graph(
             return
         
         if element.name is None:
+            return
+
+        if element.name.lower() in NON_GRAPH_TAGS:
             return
         
         # Create node

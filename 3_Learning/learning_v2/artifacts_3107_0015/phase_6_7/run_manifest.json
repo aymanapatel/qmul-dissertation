@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "phase": "6-7",
+  "seed": 42,
+  "bootstrap_samples": 1000,
+  "device": "cpu",
+  "inputs": {
+    "phase5_dir": "learning_v2/artifacts_3107_0015/phase_5_main",
+    "cache_dir": "runs_v1/graphs/graphs_multi_5July_2200",
+    "corpus_dir": "../2_Data/browser-use/outputs/axe-core",
+    "registry": "../configs/wcag_criteria.json",
+    "registry_sha256": "d842b706c96c933a9e6136a6bbf28aead71f632132a74c86df9fe24dd950d44d",
+    "pilot_split_sha256": "bba546c81d09a54e3350974bcfe4f6327d2f0cc264a68c0cc573d0687c2033a2",
+    "truth_source": "axe_weak_labels",
+    "truth_file": null,
+    "truth_file_sha256": null
+  },
+  "frozen_policy": {
+    "schema_version": 1,
+    "source_thresholds": {
+      "a11y-tree:gat:image-alt": 0.35,
+      "a11y-tree:gat:label": 0.05,
+      "a11y-tree:gat:link-name": 0.65,
+      "a11y-tree:graphsage:image-alt": 0.7,
+      "a11y-tree:graphsage:label": 0.05,
+      "a11y-tree:graphsage:link-name": 0.65,
+      "a11y-tree:mlp:image-alt": 0.75,
+      "a11y-tree:mlp:label": 0.95,
+      "a11y-tree:mlp:link-name": 0.5,
+      "axe:color-contrast": 0.5,
+      "axe:html-has-lang": 0.5,
+      "axe:image-alt": 0.5,
+      "axe:label": 0.5,
+      "axe:link-name": 0.5,
+      "deterministic:color-contrast": 0.5,
+      "deterministic:html-has-lang": 0.5,
+      "deterministic:image-alt": 0.5,
+      "deterministic:label": 0.5,
+      "deterministic:link-name": 0.5,
+      "dom:gat:html-has-lang": 0.95,
+      "dom:graphsage:html-has-lang": 0.95,
+      "dom:mlp:html-has-lang": 0.95,
+      "rendered-visual:gat:color-contrast": 0.05,
+      "rendered-visual:graphsage:color-contrast": 0.1,
+      "rendered-visual:mlp:color-contrast": 0.05
+    },
+    "fail_threshold": 0.65,
+    "review_threshold": 0.35
+  },
+  "final_test_consumed": false,
+  "outputs": [
+    "phase_6_fusion_policy.json",
+    "phase_6_routing_decisions.json",
+    "fused_findings.json",
+    "phase_7_detection_study.json"
+  ]
+}

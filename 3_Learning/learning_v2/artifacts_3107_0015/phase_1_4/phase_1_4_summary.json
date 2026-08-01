@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "phases": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "corpus": "../2_Data/browser-use/outputs/axe-core",
+  "complete_sites": 704,
+  "unique_html": 702,
+  "split_hash": "60b7e25c62a71990c6e889eddf4c0c6ca4c2cffa12bb70319ebd816dd628c68d",
+  "evidence_sample": {
+    "completed": 12,
+    "failed": 0
+  },
+  "fixture_exact_match": true,
+  "baseline_metrics": {
+    "unit": "site_rule_pair",
+    "tp": 597,
+    "fp": 1104,
+    "fn": 890,
+    "precision": 0.3509700176366843,
+    "recall": 0.4014794889038332,
+    "f1": 0.3745294855708909,
+    "predicted_pairs": 1701,
+    "actual_pairs": 1487
+  },
+  "outputs": {
+    "environment": "environment.json",
+    "inventory": "corpus_inventory.json",
+    "split": "governed_split.json",
+    "fixture_evaluation": "fixture_evaluation.json",
+    "deterministic_baseline": "deterministic_baseline.json"
+  }
+}

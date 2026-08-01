@@ -1,0 +1,11 @@
+{
+  "train": {
+    "color-contrast": 8
+  },
+  "val": {
+    "color-contrast": 27
+  },
+  "test": {
+    "color-contrast": 13
+  }
+}

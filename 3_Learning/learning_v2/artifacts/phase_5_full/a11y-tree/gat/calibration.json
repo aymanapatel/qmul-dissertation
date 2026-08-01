@@ -1,0 +1,160 @@
+{
+  "schema_version": 2,
+  "precision_floor": 0.25,
+  "recommended": {
+    "node_threshold": 0.95,
+    "page_threshold": 0.9,
+    "rule_thresholds": {
+      "area-alt": 0.95,
+      "aria-command-name": 0.15,
+      "aria-input-field-name": 0.95,
+      "button-name": 0.65,
+      "frame-title": 0.95,
+      "image-alt": 0.95,
+      "input-button-name": 0.95,
+      "input-image-alt": 0.95,
+      "label": 0.2,
+      "link-name": 0.9,
+      "role-img-alt": 0.6,
+      "select-name": 0.95,
+      "svg-img-alt": 0.5
+    }
+  },
+  "node": {
+    "threshold": 0.95,
+    "precision": 0.731638418079096,
+    "recall": 0.6806833114323259,
+    "f1": 0.7052416609938734,
+    "predicted_positive": 708,
+    "actual_positive": 761,
+    "supported": true
+  },
+  "page": {
+    "threshold": 0.9,
+    "precision": 0.9047619047619048,
+    "recall": 0.9047619047619048,
+    "f1": 0.9047619047619048,
+    "predicted_positive": 42,
+    "actual_positive": 42,
+    "supported": true
+  },
+  "rules": {
+    "area-alt": {
+      "threshold": 0.95,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "predicted_positive": 0,
+      "actual_positive": 1,
+      "supported": true
+    },
+    "aria-command-name": {
+      "threshold": 0.15,
+      "precision": 0.009009009009009009,
+      "recall": 1.0,
+      "f1": 0.01785714285714286,
+      "predicted_positive": 111,
+      "actual_positive": 1,
+      "supported": true
+    },
+    "aria-input-field-name": {
+      "threshold": 0.95,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "predicted_positive": 0,
+      "actual_positive": 5,
+      "supported": true
+    },
+    "button-name": {
+      "threshold": 0.65,
+      "precision": 0.4653846153846154,
+      "recall": 0.9603174603174603,
+      "f1": 0.6269430051813472,
+      "predicted_positive": 260,
+      "actual_positive": 126,
+      "supported": true
+    },
+    "frame-title": {
+      "threshold": 0.95,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "predicted_positive": 0,
+      "actual_positive": 3,
+      "supported": true
+    },
+    "image-alt": {
+      "threshold": 0.95,
+      "precision": 0.6758409785932722,
+      "recall": 0.9484978540772532,
+      "f1": 0.7892857142857144,
+      "predicted_positive": 327,
+      "actual_positive": 233,
+      "supported": true
+    },
+    "input-button-name": {
+      "threshold": 0.95,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "predicted_positive": 0,
+      "actual_positive": 1,
+      "supported": true
+    },
+    "input-image-alt": {
+      "threshold": 0.95,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "predicted_positive": 0,
+      "actual_positive": 1,
+      "supported": true
+    },
+    "label": {
+      "threshold": 0.2,
+      "precision": 0.016129032258064516,
+      "recall": 0.3333333333333333,
+      "f1": 0.03076923076923077,
+      "predicted_positive": 124,
+      "actual_positive": 6,
+      "supported": true
+    },
+    "link-name": {
+      "threshold": 0.9,
+      "precision": 0.7482352941176471,
+      "recall": 0.8664850136239782,
+      "f1": 0.8030303030303032,
+      "predicted_positive": 425,
+      "actual_positive": 367,
+      "supported": true
+    },
+    "role-img-alt": {
+      "threshold": 0.6,
+      "precision": 0.8,
+      "recall": 1.0,
+      "f1": 0.888888888888889,
+      "predicted_positive": 5,
+      "actual_positive": 4,
+      "supported": true
+    },
+    "select-name": {
+      "threshold": 0.95,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "predicted_positive": 0,
+      "actual_positive": 3,
+      "supported": true
+    },
+    "svg-img-alt": {
+      "threshold": 0.5,
+      "precision": 0.5,
+      "recall": 0.9166666666666666,
+      "f1": 0.6470588235294118,
+      "predicted_positive": 22,
+      "actual_positive": 12,
+      "supported": true
+    }
+  }
+}

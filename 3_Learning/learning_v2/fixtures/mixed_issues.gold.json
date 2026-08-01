@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "source": "controlled_fixture",
+  "findings": [
+    {"rule_id": "document-title", "target": "head"},
+    {"rule_id": "html-has-lang", "target": "html"},
+    {"rule_id": "meta-viewport", "target": "meta[name=viewport]"},
+    {"rule_id": "image-alt", "target": "#missing-alt"},
+    {"rule_id": "button-name", "target": "#unnamed"},
+    {"rule_id": "link-name", "target": "#empty-link"},
+    {"rule_id": "label", "target": "#unlabelled-input"},
+    {"rule_id": "nested-interactive", "target": "#outer"}
+  ]
+}
+

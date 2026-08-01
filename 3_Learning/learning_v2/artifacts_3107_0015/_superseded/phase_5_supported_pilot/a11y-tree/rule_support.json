@@ -1,0 +1,11 @@
+{
+  "train": {
+    "frame-title": 1
+  },
+  "val": {
+    "frame-title": 0
+  },
+  "test": {
+    "frame-title": 0
+  }
+}

@@ -1,0 +1,3003 @@
+{
+  "schema_version": 1,
+  "criteria": {
+    "1.1.1": {
+      "criterion_id": "1.1.1",
+      "name": "Non-text Content",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "missing-accessible-name"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "DOM node/role/name",
+        "image URL or rendered pixels",
+        "nearby headings/captions/link text",
+        "whether the asset is decorative",
+        "functional"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "area-alt",
+        "aria-meter-name",
+        "aria-progressbar-name",
+        "image-alt",
+        "input-image-alt",
+        "object-alt",
+        "role-img-alt",
+        "svg-img-alt"
+      ]
+    },
+    "1.2.1": {
+      "criterion_id": "1.2.1",
+      "name": "Audio-only and Video-only",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Audio-only/video-only media",
+        "transcript or alternative link",
+        "surrounding page context",
+        "and whether the alternative includes all spoken",
+        "visual"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.2.2": {
+      "criterion_id": "1.2.2",
+      "name": "Captions Prerecorded",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Video/audio tracks",
+        "caption files",
+        "language",
+        "timing",
+        "speaker identification"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.2.3": {
+      "criterion_id": "1.2.3",
+      "name": "Audio Description or Media Alternative",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Prerecorded video",
+        "audio description track or full text alternative",
+        "transcript details for visual-only information",
+        "and page context for what visual actions must be described."
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.2.4": {
+      "criterion_id": "1.2.4",
+      "name": "Captions Live",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Live media stream",
+        "captioning mechanism",
+        "latency",
+        "speaker identification",
+        "and evidence that live captions are available during the event."
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.2.5": {
+      "criterion_id": "1.2.5",
+      "name": "Audio Description Prerecorded",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Prerecorded video",
+        "audio description track or alternate version",
+        "visual information not present in audio",
+        "and timing constraints for descriptions."
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.2.6": {
+      "criterion_id": "1.2.6",
+      "name": "Sign Language",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Media files",
+        "track/transcript/description/sign-language alternatives",
+        "language",
+        "timing",
+        "speaker identification"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.2.7": {
+      "criterion_id": "1.2.7",
+      "name": "Extended Audio Description",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Media files",
+        "track/transcript/description/sign-language alternatives",
+        "language",
+        "timing",
+        "speaker identification"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.2.8": {
+      "criterion_id": "1.2.8",
+      "name": "Media Alternative",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Media files",
+        "track/transcript/description/sign-language alternatives",
+        "language",
+        "timing",
+        "speaker identification"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.2.9": {
+      "criterion_id": "1.2.9",
+      "name": "Audio-only Live",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "excluded",
+      "issue_family_ids": [
+        "media-alternative-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Media files",
+        "track/transcript/description/sign-language alternatives",
+        "language",
+        "timing",
+        "speaker identification"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "1.3.1": {
+      "criterion_id": "1.3.1",
+      "name": "Info and Relationships",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "broken-form-labelling",
+        "poor-semantic-structure"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "visual"
+      ],
+      "required_evidence": [
+        "DOM structure",
+        "computed accessibility tree",
+        "headings/lists/tables/forms/landmarks",
+        "labels/instructions",
+        "CSS layout"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "aria-required-children",
+        "aria-required-parent",
+        "definition-list",
+        "dlitem",
+        "list",
+        "listitem"
+      ]
+    },
+    "1.3.2": {
+      "criterion_id": "1.3.2",
+      "name": "Meaningful Sequence",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "visual"
+      ],
+      "required_evidence": [
+        "DOM structure",
+        "computed accessibility tree",
+        "headings/lists/tables/forms/landmarks",
+        "labels/instructions",
+        "CSS layout"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.3.3": {
+      "criterion_id": "1.3.3",
+      "name": "Sensory Characteristics",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "DOM structure",
+        "computed accessibility tree",
+        "headings/lists/tables/forms/landmarks",
+        "labels/instructions",
+        "CSS layout"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.3.4": {
+      "criterion_id": "1.3.4",
+      "name": "Orientation",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "DOM structure",
+        "computed accessibility tree",
+        "headings/lists/tables/forms/landmarks",
+        "labels/instructions",
+        "CSS layout"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.3.5": {
+      "criterion_id": "1.3.5",
+      "name": "Identify Input Purpose",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "control",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Form fields",
+        "autocomplete attributes",
+        "input purpose",
+        "labels",
+        "field type"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "autocomplete-valid"
+      ]
+    },
+    "1.3.6": {
+      "criterion_id": "1.3.6",
+      "name": "Identify Purpose",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "DOM structure",
+        "computed accessibility tree",
+        "headings/lists/tables/forms/landmarks",
+        "labels/instructions",
+        "CSS layout"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.1": {
+      "criterion_id": "1.4.1",
+      "name": "Use of Color",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "link-in-text-block"
+      ]
+    },
+    "1.4.2": {
+      "criterion_id": "1.4.2",
+      "name": "Audio Control",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.3": {
+      "criterion_id": "1.4.3",
+      "name": "Contrast Minimum",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "low-contrast"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [
+        "visual"
+      ],
+      "required_evidence": [
+        "Rendered text",
+        "foreground/background colors",
+        "font size/weight",
+        "images of text",
+        "disabled/inactive state exclusions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "color-contrast"
+      ]
+    },
+    "1.4.4": {
+      "criterion_id": "1.4.4",
+      "name": "Resize Text",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "meta-viewport"
+      ]
+    },
+    "1.4.5": {
+      "criterion_id": "1.4.5",
+      "name": "Images of Text",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.6": {
+      "criterion_id": "1.4.6",
+      "name": "Contrast Enhanced",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [
+        "visual"
+      ],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.7": {
+      "criterion_id": "1.4.7",
+      "name": "Low or No Background Audio",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.8": {
+      "criterion_id": "1.4.8",
+      "name": "Visual Presentation",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.9": {
+      "criterion_id": "1.4.9",
+      "name": "Images of Text No Exception",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.10": {
+      "criterion_id": "1.4.10",
+      "name": "Reflow",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Responsive layout at 320 CSS px width and 256 CSS px height",
+        "zoom behavior",
+        "scroll directions",
+        "sticky elements",
+        "data tables/canvas exceptions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.11": {
+      "criterion_id": "1.4.11",
+      "name": "Non-text Contrast",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "low-contrast"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Rendered component boundaries",
+        "focus/hover/selected states",
+        "icons",
+        "charts",
+        "CSS colors"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "1.4.12": {
+      "criterion_id": "1.4.12",
+      "name": "Text Spacing",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Rendered screenshots",
+        "CSS colors",
+        "text/background pairs",
+        "images of text",
+        "controls/states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "avoid-inline-spacing"
+      ]
+    },
+    "1.4.13": {
+      "criterion_id": "1.4.13",
+      "name": "Content on Hover or Focus",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Hover/focus-triggered content",
+        "dismissal behavior",
+        "pointer movement behavior",
+        "persistence",
+        "keyboard focus handling"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.1.1": {
+      "criterion_id": "2.1.1",
+      "name": "Keyboard",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "keyboard-focus-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "All interactive controls",
+        "keyboard event handling",
+        "focusability",
+        "operation sequence",
+        "custom widgets"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "scrollable-region-focusable"
+      ]
+    },
+    "2.1.2": {
+      "criterion_id": "2.1.2",
+      "name": "No Keyboard Trap",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "keyboard-focus-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "All interactive controls",
+        "keyboard event handling",
+        "focusability",
+        "operation sequence",
+        "custom widgets"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.1.3": {
+      "criterion_id": "2.1.3",
+      "name": "Keyboard No Exception",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "All interactive controls",
+        "keyboard event handling",
+        "focusability",
+        "operation sequence",
+        "custom widgets"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "scrollable-region-focusable"
+      ]
+    },
+    "2.1.4": {
+      "criterion_id": "2.1.4",
+      "name": "Character Key Shortcuts",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "All interactive controls",
+        "keyboard event handling",
+        "focusability",
+        "operation sequence",
+        "custom widgets"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.2.1": {
+      "criterion_id": "2.2.1",
+      "name": "Timing Adjustable",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Timeouts",
+        "sessions",
+        "moving/blinking/updating content",
+        "interruptions",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": [
+        "meta-refresh"
+      ]
+    },
+    "2.2.2": {
+      "criterion_id": "2.2.2",
+      "name": "Pause, Stop, Hide",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Timeouts",
+        "sessions",
+        "moving/blinking/updating content",
+        "interruptions",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": [
+        "blink",
+        "marquee"
+      ]
+    },
+    "2.2.3": {
+      "criterion_id": "2.2.3",
+      "name": "No Timing",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Timeouts",
+        "sessions",
+        "moving/blinking/updating content",
+        "interruptions",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.2.4": {
+      "criterion_id": "2.2.4",
+      "name": "Interruptions",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Timeouts",
+        "sessions",
+        "moving/blinking/updating content",
+        "interruptions",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.2.5": {
+      "criterion_id": "2.2.5",
+      "name": "Re-authenticating",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Timeouts",
+        "sessions",
+        "moving/blinking/updating content",
+        "interruptions",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.2.6": {
+      "criterion_id": "2.2.6",
+      "name": "Timeouts",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Timeouts",
+        "sessions",
+        "moving/blinking/updating content",
+        "interruptions",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.3.1": {
+      "criterion_id": "2.3.1",
+      "name": "Three Flashes or Below Threshold",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Animation/video assets",
+        "flashing frequency",
+        "pixel area",
+        "contrast of flashes",
+        "motion triggers"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.3.2": {
+      "criterion_id": "2.3.2",
+      "name": "Three Flashes",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Animation/video assets",
+        "flashing frequency",
+        "pixel area",
+        "contrast of flashes",
+        "motion triggers"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.3.3": {
+      "criterion_id": "2.3.3",
+      "name": "Animation from Interactions",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Animation/video assets",
+        "flashing frequency",
+        "pixel area",
+        "contrast of flashes",
+        "motion triggers"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.4.1": {
+      "criterion_id": "2.4.1",
+      "name": "Bypass Blocks",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "poor-semantic-structure"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.2": {
+      "criterion_id": "2.4.2",
+      "name": "Page Titled",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "control",
+      "issue_family_ids": [
+        "poor-semantic-structure"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Document title",
+        "route/page state",
+        "app shell behavior",
+        "iframe titles",
+        "and whether title identifies topic or purpose."
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "document-title"
+      ]
+    },
+    "2.4.3": {
+      "criterion_id": "2.4.3",
+      "name": "Focus Order",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "keyboard-focus-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "visual",
+        "interaction"
+      ],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.4": {
+      "criterion_id": "2.4.4",
+      "name": "Link Purpose In Context",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "unclear-link-button-purpose"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Links",
+        "accessible names",
+        "surrounding sentence/paragraph/list/table/header context",
+        "destination URLs",
+        "and repeated link handling."
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "area-alt",
+        "link-name"
+      ]
+    },
+    "2.4.5": {
+      "criterion_id": "2.4.5",
+      "name": "Multiple Ways",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.6": {
+      "criterion_id": "2.4.6",
+      "name": "Headings and Labels",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "missing-accessible-name",
+        "poor-semantic-structure"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.7": {
+      "criterion_id": "2.4.7",
+      "name": "Focus Visible",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "keyboard-focus-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "Focusable elements",
+        "CSS focus styles",
+        "custom widgets",
+        "all states/themes",
+        "keyboard navigation"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.8": {
+      "criterion_id": "2.4.8",
+      "name": "Location",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.9": {
+      "criterion_id": "2.4.9",
+      "name": "Link Purpose Link Only",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "unclear-link-button-purpose"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "semantic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.10": {
+      "criterion_id": "2.4.10",
+      "name": "Section Headings",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.11": {
+      "criterion_id": "2.4.11",
+      "name": "Focus Not Obscured Minimum",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "keyboard-focus-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "Focus indicator bounds",
+        "occluding sticky content",
+        "viewport screenshots",
+        "scroll position",
+        "and every focusable state."
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "2.4.12": {
+      "criterion_id": "2.4.12",
+      "name": "Focus Not Obscured Enhanced",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "Page title",
+        "landmarks",
+        "headings",
+        "skip links",
+        "links and destinations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.4.13": {
+      "criterion_id": "2.4.13",
+      "name": "Focus Appearance",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "keyboard-focus-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "Focus indicator size",
+        "contrast",
+        "thickness/area",
+        "adjacent colors",
+        "and all component focus states."
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.1": {
+      "criterion_id": "2.5.1",
+      "name": "Pointer Gestures",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "touch-pointer-target-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Pointer gestures",
+        "target sizes/spacing",
+        "pointer down/up behavior",
+        "accessible names vs visible labels",
+        "drag alternatives"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.2": {
+      "criterion_id": "2.5.2",
+      "name": "Pointer Cancellation",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Pointer gestures",
+        "target sizes/spacing",
+        "pointer down/up behavior",
+        "accessible names vs visible labels",
+        "drag alternatives"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.3": {
+      "criterion_id": "2.5.3",
+      "name": "Label in Name",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "unclear-link-button-purpose"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Visible control text",
+        "accessible names",
+        "aria-label/labelledby",
+        "icon text",
+        "speech input expectations"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.4": {
+      "criterion_id": "2.5.4",
+      "name": "Motion Actuation",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Pointer gestures",
+        "target sizes/spacing",
+        "pointer down/up behavior",
+        "accessible names vs visible labels",
+        "drag alternatives"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.5": {
+      "criterion_id": "2.5.5",
+      "name": "Target Size Enhanced",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "touch-pointer-target-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [
+        "visual"
+      ],
+      "required_evidence": [
+        "Clickable/tappable target dimensions",
+        "spacing",
+        "zoom",
+        "exceptions",
+        "inline text links"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.6": {
+      "criterion_id": "2.5.6",
+      "name": "Concurrent Input Mechanisms",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Pointer gestures",
+        "target sizes/spacing",
+        "pointer down/up behavior",
+        "accessible names vs visible labels",
+        "drag alternatives"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.7": {
+      "criterion_id": "2.5.7",
+      "name": "Dragging Movements",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "touch-pointer-target-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Pointer gestures",
+        "target sizes/spacing",
+        "pointer down/up behavior",
+        "accessible names vs visible labels",
+        "drag alternatives"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "2.5.8": {
+      "criterion_id": "2.5.8",
+      "name": "Target Size Minimum",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "touch-pointer-target-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [
+        "visual"
+      ],
+      "required_evidence": [
+        "Target size",
+        "spacing",
+        "inline/essential/equivalent exceptions",
+        "viewport breakpoints",
+        "CSS pixels"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.1.1": {
+      "criterion_id": "3.1.1",
+      "name": "Language of Page",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "control",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "HTML lang attribute",
+        "primary page language",
+        "document title/body content",
+        "iframes",
+        "and server-rendered vs client-rendered output."
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "html-has-lang",
+        "html-lang-valid"
+      ]
+    },
+    "3.1.2": {
+      "criterion_id": "3.1.2",
+      "name": "Language of Parts",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "control",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "semantic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Language changes within text",
+        "spans/quotes/foreign phrases",
+        "lang attributes on changed-language passages",
+        "and exceptions for names/technical terms."
+      ],
+      "automation": "manual",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": [
+        "valid-lang"
+      ]
+    },
+    "3.1.3": {
+      "criterion_id": "3.1.3",
+      "name": "Unusual Words",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "semantic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page language",
+        "language changes",
+        "abbreviations",
+        "jargon",
+        "reading level"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.1.4": {
+      "criterion_id": "3.1.4",
+      "name": "Abbreviations",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "semantic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page language",
+        "language changes",
+        "abbreviations",
+        "jargon",
+        "reading level"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.1.5": {
+      "criterion_id": "3.1.5",
+      "name": "Reading Level",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "semantic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page language",
+        "language changes",
+        "abbreviations",
+        "jargon",
+        "reading level"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.1.6": {
+      "criterion_id": "3.1.6",
+      "name": "Pronunciation",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "semantic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Page language",
+        "language changes",
+        "abbreviations",
+        "jargon",
+        "reading level"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.2.1": {
+      "criterion_id": "3.2.1",
+      "name": "On Focus",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "dynamic-content-not-announced"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "Focus/input event behavior",
+        "unexpected navigation/dialogs",
+        "repeated navigation/components across pages",
+        "help placement",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.2.2": {
+      "criterion_id": "3.2.2",
+      "name": "On Input",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "dynamic-content-not-announced"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Focus/input event behavior",
+        "unexpected navigation/dialogs",
+        "repeated navigation/components across pages",
+        "help placement",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.2.3": {
+      "criterion_id": "3.2.3",
+      "name": "Consistent Navigation",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Focus/input event behavior",
+        "unexpected navigation/dialogs",
+        "repeated navigation/components across pages",
+        "help placement",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.2.4": {
+      "criterion_id": "3.2.4",
+      "name": "Consistent Identification",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "visual",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Focus/input event behavior",
+        "unexpected navigation/dialogs",
+        "repeated navigation/components across pages",
+        "help placement",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.2.5": {
+      "criterion_id": "3.2.5",
+      "name": "Change on Request",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Focus/input event behavior",
+        "unexpected navigation/dialogs",
+        "repeated navigation/components across pages",
+        "help placement",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.2.6": {
+      "criterion_id": "3.2.6",
+      "name": "Consistent Help",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Focus/input event behavior",
+        "unexpected navigation/dialogs",
+        "repeated navigation/components across pages",
+        "help placement",
+        "warnings"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.3.1": {
+      "criterion_id": "3.3.1",
+      "name": "Error Identification",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "broken-form-labelling"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "visual",
+        "interaction"
+      ],
+      "required_evidence": [
+        "Form validation errors",
+        "submitted invalid states",
+        "inline/global error messages",
+        "programmatic associations",
+        "and field values."
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.3.2": {
+      "criterion_id": "3.3.2",
+      "name": "Labels or Instructions",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "missing-accessible-name",
+        "broken-form-labelling"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Form labels",
+        "instructions",
+        "required indicators",
+        "constraints",
+        "examples"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.3.3": {
+      "criterion_id": "3.3.3",
+      "name": "Error Suggestion",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "broken-form-labelling"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Form labels/instructions",
+        "validation logic",
+        "submitted invalid states",
+        "error messages",
+        "suggestions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.3.4": {
+      "criterion_id": "3.3.4",
+      "name": "Error Prevention Legal, Financial, Data",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "authentication-error-prevention-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Legal",
+        "financial",
+        "or data-modifying submissions",
+        "confirmation steps",
+        "review screens"
+      ],
+      "automation": "manual",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": true,
+      "axe_rule_ids": []
+    },
+    "3.3.5": {
+      "criterion_id": "3.3.5",
+      "name": "Help",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "semantic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Form labels/instructions",
+        "validation logic",
+        "submitted invalid states",
+        "error messages",
+        "suggestions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.3.6": {
+      "criterion_id": "3.3.6",
+      "name": "Error Prevention All",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "manual",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Form labels/instructions",
+        "validation logic",
+        "submitted invalid states",
+        "error messages",
+        "suggestions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.3.7": {
+      "criterion_id": "3.3.7",
+      "name": "Redundant Entry",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "authentication-error-prevention-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Form labels/instructions",
+        "validation logic",
+        "submitted invalid states",
+        "error messages",
+        "suggestions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.3.8": {
+      "criterion_id": "3.3.8",
+      "name": "Accessible Authentication Minimum",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "authentication-error-prevention-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Form labels/instructions",
+        "validation logic",
+        "submitted invalid states",
+        "error messages",
+        "suggestions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "3.3.9": {
+      "criterion_id": "3.3.9",
+      "name": "Accessible Authentication Enhanced",
+      "wcag_version": "2.2",
+      "level": "AAA",
+      "status": "active",
+      "scope": "stretch",
+      "issue_family_ids": [
+        "authentication-error-prevention-issue"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [
+        "semantic"
+      ],
+      "required_evidence": [
+        "Form labels/instructions",
+        "validation logic",
+        "submitted invalid states",
+        "error messages",
+        "suggestions"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "4.1.1": {
+      "criterion_id": "4.1.1",
+      "name": "Parsing",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "legacy",
+      "scope": "stretch",
+      "issue_family_ids": [],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "deterministic",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "HTML parsing validity",
+        "duplicate IDs",
+        "malformed markup",
+        "start/end tags",
+        "ARIA references"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "human_approved",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    },
+    "4.1.2": {
+      "criterion_id": "4.1.2",
+      "name": "Name, Role, Value",
+      "wcag_version": "2.2",
+      "level": "A",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "missing-accessible-name",
+        "unclear-link-button-purpose"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "structural",
+      "secondary_detectors": [
+        "interaction"
+      ],
+      "required_evidence": [
+        "Accessibility tree",
+        "roles",
+        "names",
+        "values",
+        "states"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "axe_weak_labels",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": [
+        "area-alt",
+        "aria-allowed-attr",
+        "aria-command-name",
+        "aria-hidden-focus",
+        "aria-input-field-name",
+        "aria-prohibited-attr",
+        "aria-required-attr",
+        "aria-roles",
+        "aria-toggle-field-name",
+        "aria-tooltip-name",
+        "aria-valid-attr",
+        "aria-valid-attr-value",
+        "button-name",
+        "frame-title",
+        "input-button-name",
+        "input-image-alt",
+        "label",
+        "link-name",
+        "nested-interactive",
+        "select-name",
+        "summary-name"
+      ]
+    },
+    "4.1.3": {
+      "criterion_id": "4.1.3",
+      "name": "Status Messages",
+      "wcag_version": "2.2",
+      "level": "AA",
+      "status": "active",
+      "scope": "core",
+      "issue_family_ids": [
+        "dynamic-content-not-announced"
+      ],
+      "candidate_generators": [
+        "axe",
+        "custom_rules",
+        "graph_patterns"
+      ],
+      "primary_detector": "interaction",
+      "secondary_detectors": [],
+      "required_evidence": [
+        "Dynamic status messages",
+        "validation/toast/loading updates",
+        "live-region markup",
+        "timing",
+        "focus behavior"
+      ],
+      "automation": "assisted",
+      "ground_truth_source": "manual_review",
+      "repair_policy": "sandbox_validated",
+      "validation_steps": [
+        "targeted_retest",
+        "regression_check"
+      ],
+      "human_review_required": false,
+      "axe_rule_ids": []
+    }
+  }
+}

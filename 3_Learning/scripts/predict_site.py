@@ -222,19 +222,28 @@ def rule_is_compatible_with_node(rule_id: str, node) -> bool:
     return True
 
 
-def get_top_rules(rule_probs, top_k=3, graph_source=None, node=None, threshold=0.1):
+def get_top_rules(
+    rule_probs,
+    top_k=3,
+    graph_source=None,
+    node=None,
+    threshold=0.1,
+    rule_thresholds: dict[str, float] | None = None,
+):
     """Get top-k predicted rules for a node."""
     if graph_source:
         mask = rule_mask_for_graph_source(graph_source)
         rule_probs = rule_probs.clone()
         rule_probs[~mask] = 0.0
-    top_indices = rule_probs.argsort(descending=True)[:top_k]
     rules = []
-    for idx in top_indices:
+    for idx in rule_probs.argsort(descending=True):
         probability = float(rule_probs[idx].item())
-        if probability <= threshold:
-            continue
         rule_id = INDEX_TO_RULE[idx.item()]
+        rule_threshold = threshold
+        if rule_thresholds and rule_id in rule_thresholds:
+            rule_threshold = float(rule_thresholds[rule_id])
+        if probability <= rule_threshold:
+            continue
         if node is not None and not rule_is_compatible_with_node(rule_id, node):
             continue
         rules.append(
@@ -242,10 +251,13 @@ def get_top_rules(rule_probs, top_k=3, graph_source=None, node=None, threshold=0
                 "rule_id": rule_id,
                 "axe_rule_id": rule_id,
                 "probability": round(probability, 4),
+                "threshold": round(rule_threshold, 4),
                 "source_view": graph_source_for_rule(rule_id),
                 "wcag_ids": list(rule_wcag_ids(rule_id)),
             }
         )
+        if len(rules) >= top_k:
+            break
     return rules
 
 
@@ -268,6 +280,120 @@ def calibration_value(calibration: dict, key: str, default: float) -> float:
     if key in recommended:
         return float(recommended[key])
     return default
+
+
+def _threshold_from_mapping(mapping: dict, key: str, default: float) -> float:
+    if not isinstance(mapping, dict):
+        return default
+    thresholds = mapping.get("thresholds", {})
+    if isinstance(thresholds, dict) and key in thresholds:
+        return float(thresholds[key])
+    if key in mapping:
+        return float(mapping[key])
+    recommended = mapping.get("recommended", {})
+    if isinstance(recommended, dict) and key in recommended:
+        return float(recommended[key])
+    return default
+
+
+def view_thresholds(
+    args,
+    calibration: dict,
+    manifest: dict | None,
+    source_view: str,
+    base_node_threshold: float,
+    base_graph_threshold: float,
+    base_rule_threshold: float,
+) -> dict:
+    """Resolve global, per-view, and per-rule thresholds for a prediction view."""
+    view_manifest = ((manifest or {}).get("views", {}) or {}).get(source_view, {})
+    view_calibration = (calibration.get("views", {}) or {}).get(source_view, {})
+    legacy_view_calibration = (calibration.get("view_thresholds", {}) or {}).get(source_view, {})
+    calibration_graph_source = calibration.get("graph_source")
+    has_view_calibration = bool(calibration.get("views") or calibration.get("view_thresholds"))
+    scoped_calibration = {}
+    if calibration and not has_view_calibration:
+        if calibration_graph_source is None or calibration_graph_source == source_view:
+            scoped_calibration = calibration
+
+    node_threshold = base_node_threshold
+    graph_threshold = base_graph_threshold
+    rule_threshold = base_rule_threshold
+
+    for source in (view_manifest, scoped_calibration, legacy_view_calibration, view_calibration):
+        node_threshold = _threshold_from_mapping(source, "node_threshold", node_threshold)
+        graph_threshold = _threshold_from_mapping(source, "graph_threshold", graph_threshold)
+        rule_threshold = _threshold_from_mapping(source, "rule_threshold", rule_threshold)
+
+    if args.threshold is not None:
+        node_threshold = args.threshold
+    if args.graph_threshold is not None:
+        graph_threshold = args.graph_threshold
+    if args.rule_threshold is not None:
+        rule_threshold = args.rule_threshold
+
+    rule_thresholds: dict[str, float] = {}
+    if args.rule_threshold is None:
+        for source in (manifest or {}, view_manifest, scoped_calibration, legacy_view_calibration, view_calibration):
+            direct = source.get("rule_thresholds", {}) if isinstance(source, dict) else {}
+            if isinstance(direct, dict):
+                rule_thresholds.update({str(rule): float(value) for rule, value in direct.items()})
+            rules = source.get("rules", {}) if isinstance(source, dict) else {}
+            if isinstance(rules, dict):
+                for rule, value in rules.items():
+                    if isinstance(value, dict):
+                        rule_thresholds[str(rule)] = _threshold_from_mapping(value, "rule_threshold", rule_threshold)
+                    else:
+                        rule_thresholds[str(rule)] = float(value)
+
+    return {
+        "node_threshold": float(node_threshold),
+        "graph_threshold": float(graph_threshold),
+        "rule_threshold": float(rule_threshold),
+        "rule_thresholds": rule_thresholds,
+    }
+
+
+def checkpoint_feature_dims(checkpoint: dict, fallback_attr_dim: int, fallback_text_dim: int) -> tuple[int, int]:
+    """Infer the feature dimensions a checkpoint expects."""
+    hparams = checkpoint.get("hparams", {})
+    state = checkpoint.get("model_state_dict", {})
+    tag_embed_dim = int(hparams.get("tag_embed_dim", 32))
+    text_dim = int(hparams.get("text_dim", fallback_text_dim))
+    attr_dim = hparams.get("attr_dim")
+    if attr_dim is not None:
+        return int(attr_dim), text_dim
+    input_weight = state.get("input_proj.weight")
+    if input_weight is not None:
+        return int(input_weight.shape[1] - tag_embed_dim - text_dim), text_dim
+    return fallback_attr_dim, text_dim
+
+
+def align_data_features(data, expected_attr_dim: int, expected_text_dim: int):
+    """Pad or trim extracted features to the width expected by a checkpoint."""
+    current_text_dim = (
+        data.text_embeddings.shape[1]
+        if hasattr(data, "text_embeddings") and data.text_embeddings is not None
+        else expected_text_dim
+    )
+    current_attr_dim = data.x.shape[1] - current_text_dim
+    attr = data.x[:, :current_attr_dim]
+    text = data.x[:, current_attr_dim:]
+
+    if current_attr_dim > expected_attr_dim:
+        attr = attr[:, :expected_attr_dim]
+    elif current_attr_dim < expected_attr_dim:
+        pad = torch.zeros(attr.shape[0], expected_attr_dim - current_attr_dim, dtype=attr.dtype)
+        attr = torch.cat([attr, pad], dim=-1)
+
+    if current_text_dim > expected_text_dim:
+        text = text[:, :expected_text_dim]
+    elif current_text_dim < expected_text_dim:
+        pad = torch.zeros(text.shape[0], expected_text_dim - current_text_dim, dtype=text.dtype)
+        text = torch.cat([text, pad], dim=-1)
+
+    data.x = torch.cat([attr, text], dim=-1)
+    return data
 
 
 def load_axe_summary(axe_path: Path | None) -> dict:
@@ -307,6 +433,7 @@ def make_prediction_entry(
     status: str,
     source_view: str | None = None,
     rule_threshold: float = 0.1,
+    rule_thresholds: dict[str, float] | None = None,
 ) -> dict:
     """Build a JSON-safe prediction/candidate entry."""
     predicted_rules = get_top_rules(
@@ -315,6 +442,7 @@ def make_prediction_entry(
         graph_source=source_view,
         node=node,
         threshold=rule_threshold,
+        rule_thresholds=rule_thresholds,
     )
     primary_rule = predicted_rules[0] if predicted_rules else {}
     return {
@@ -330,9 +458,12 @@ def make_prediction_entry(
         "status": status,
         "attributes": dict(node.attrs),
         "text_preview": node.text_content[:100] if node.text_content else "",
+        "visual": getattr(node, "visual", {}),
+        "label_qa": list(getattr(node, "visual_label_qa", [])),
         "predicted_rules": predicted_rules,
         "node_threshold": node_threshold,
         "rule_threshold": rule_threshold,
+        "rule_threshold_overrides": rule_thresholds or {},
     }
 
 
@@ -358,20 +489,25 @@ def build_model_from_checkpoint(checkpoint: dict, attr_dim: int, text_dim: int) 
 
 def page_thresholds(args, calibration: dict, manifest: dict | None = None) -> tuple[float, float, float]:
     manifest_thresholds = (manifest or {}).get("thresholds", {})
+    effective_calibration = calibration
+    if manifest and calibration.get("graph_source") and not (
+        calibration.get("views") or calibration.get("view_thresholds")
+    ):
+        effective_calibration = {}
     node_threshold = (
         args.threshold
         if args.threshold is not None
-        else calibration_value(calibration, "node_threshold", manifest_thresholds.get("node_threshold", 0.5))
+        else calibration_value(effective_calibration, "node_threshold", manifest_thresholds.get("node_threshold", 0.5))
     )
     graph_threshold = (
         args.graph_threshold
         if args.graph_threshold is not None
-        else calibration_value(calibration, "graph_threshold", manifest_thresholds.get("graph_threshold", 0.5))
+        else calibration_value(effective_calibration, "graph_threshold", manifest_thresholds.get("graph_threshold", 0.5))
     )
     rule_threshold = (
         args.rule_threshold
         if args.rule_threshold is not None
-        else calibration_value(calibration, "rule_threshold", manifest_thresholds.get("rule_threshold", 0.5))
+        else calibration_value(effective_calibration, "rule_threshold", manifest_thresholds.get("rule_threshold", 0.5))
     )
     return node_threshold, graph_threshold, rule_threshold
 
@@ -385,7 +521,7 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
     with open(manifest_path, "r", encoding="utf-8") as f:
         manifest = json.load(f)
 
-    node_threshold, graph_threshold, rule_threshold = page_thresholds(args, calibration, manifest)
+    base_node_threshold, base_graph_threshold, base_rule_threshold = page_thresholds(args, calibration, manifest)
     axe_summary = load_axe_summary(axe_path)
     extractor = FeatureExtractor(device=device)
 
@@ -411,7 +547,7 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
         page = extractor.process_page(
             html_path=html_path,
             axe_report_path=axe_path,
-            extract_visual=True,
+            extract_visual=source_view == GRAPH_SOURCE_RENDERED_VISUAL,
             graph_source=source_view,
         )
         text_dim = (
@@ -420,8 +556,27 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
             else 384
         )
         attr_dim = page.data.x.shape[1] - text_dim
-        model = build_model_from_checkpoint(checkpoint, attr_dim=attr_dim, text_dim=text_dim)
+        expected_attr_dim, expected_text_dim = checkpoint_feature_dims(
+            checkpoint,
+            fallback_attr_dim=attr_dim,
+            fallback_text_dim=text_dim,
+        )
+        page.data = align_data_features(page.data, expected_attr_dim, expected_text_dim)
+        model = build_model_from_checkpoint(checkpoint, attr_dim=expected_attr_dim, text_dim=expected_text_dim)
         results = predict_page(model, page.data, device=device)
+        thresholds = view_thresholds(
+            args=args,
+            calibration=calibration,
+            manifest=manifest,
+            source_view=source_view,
+            base_node_threshold=base_node_threshold,
+            base_graph_threshold=base_graph_threshold,
+            base_rule_threshold=base_rule_threshold,
+        )
+        node_threshold = thresholds["node_threshold"]
+        graph_threshold = thresholds["graph_threshold"]
+        rule_threshold = thresholds["rule_threshold"]
+        rule_threshold_overrides = thresholds["rule_thresholds"]
 
         node_probs = results["node_probs"]
         rule_probs = results["rule_probs"]
@@ -433,7 +588,7 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
             actionable_mask[nid] = node.tag in ACTIONABLE_TAGS
         filtered_probs = node_probs.clone()
         filtered_probs[~actionable_mask] = 0.0
-        if hasattr(page.data, "rendered_visible_mask"):
+        if source_view == GRAPH_SOURCE_RENDERED_VISUAL and hasattr(page.data, "rendered_visible_mask"):
             filtered_probs[~page.data.rendered_visible_mask.cpu().bool()] = 0.0
 
         view_node_evidence = filtered_probs.max().item() if filtered_probs.numel() else 0.0
@@ -459,6 +614,7 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
                 status="raw_candidate",
                 source_view=source_view,
                 rule_threshold=rule_threshold,
+                rule_thresholds=rule_threshold_overrides,
             )
             entry["rank"] = rank
 
@@ -495,17 +651,17 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
             "node_evidence_probability": round(view_node_evidence, 4),
             "nodes_over_threshold": raw_over_threshold,
             "rule_compatible_nodes_over_threshold": len(compatible_predicted_node_ids),
+            "node_threshold": node_threshold,
+            "graph_threshold": graph_threshold,
+            "rule_threshold": rule_threshold,
+            "rule_threshold_overrides": rule_threshold_overrides,
+            "expected_attr_dim": expected_attr_dim,
+            "expected_text_dim": expected_text_dim,
             "rule_ids": view.get("rule_ids", []),
         }
 
     page_violation_prob = max(page_graph_prob, page_evidence_prob)
-    page_is_likely_violation = page_violation_prob >= graph_threshold
-    if not page_is_likely_violation:
-        for entry in predicted_violations:
-            entry["status"] = "model_warning_on_likely_clean_page"
-            entry["predicted_violation"] = False
-        candidate_warnings.extend(predicted_violations)
-        predicted_violations = []
+    page_is_likely_violation = page_violation_prob >= base_graph_threshold
 
     precision = (
         gt_totals["true_positives"] / (gt_totals["true_positives"] + gt_totals["false_positives"])
@@ -521,7 +677,7 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
     print("\n" + "=" * 70)
     print("MULTI-VIEW PREDICTION SUMMARY")
     print("=" * 70)
-    print(f"Page violation probability: {page_violation_prob:.4f} (threshold={graph_threshold:.4f})")
+    print(f"Page violation probability: {page_violation_prob:.4f} (threshold={base_graph_threshold:.4f})")
     print(f"Predicted violations: {len(predicted_violations)}")
     print(f"Candidate warnings: {len(candidate_warnings)}")
     if axe_path:
@@ -539,12 +695,13 @@ def run_multi_view_prediction(args, html_path: Path, axe_path: Path | None, cali
                 "page_violation_probability": round(page_violation_prob, 4),
                 "graph_violation_probability": round(page_graph_prob, 4),
                 "node_evidence_probability": round(page_evidence_prob, 4),
-                "graph_threshold": graph_threshold,
+                "graph_threshold": base_graph_threshold,
                 "page_prediction": "likely_violation" if page_is_likely_violation else "likely_clean",
+                "page_gate_applied_to_nodes": False,
                 "predicted_violation_count": len(predicted_violations),
                 "candidate_warning_count": len(candidate_warnings),
-                "node_threshold": node_threshold,
-                "rule_threshold": rule_threshold,
+                "node_threshold": base_node_threshold,
+                "rule_threshold": base_rule_threshold,
                 "views": view_summaries,
             },
             "predicted_violations": predicted_violations,
@@ -722,21 +879,13 @@ def main():
     )
     attr_dim = page.data.x.shape[1] - text_dim
 
-    model = DOMAttentionNet(
-        num_tags=hparams.get("num_tags", 116),
-        tag_embed_dim=hparams.get("tag_embed_dim", 32),
-        attr_dim=attr_dim,
-        text_dim=text_dim,
-        hidden_dim=hparams.get("hidden_dim", 256),
-        num_node_classes=hparams.get("num_node_classes", 2),
-        num_graph_classes=hparams.get("num_graph_classes", 2),
-        num_rules=hparams.get("num_rules", NUM_RULES),
-        num_layers=hparams.get("num_layers", 4),
-        heads=hparams.get("heads", 4),
-        dropout=hparams.get("dropout", 0.3),
-        pooling=hparams.get("pooling", "mean"),
+    expected_attr_dim, expected_text_dim = checkpoint_feature_dims(
+        checkpoint,
+        fallback_attr_dim=attr_dim,
+        fallback_text_dim=text_dim,
     )
-    model.load_state_dict(checkpoint["model_state_dict"])
+    page.data = align_data_features(page.data, expected_attr_dim, expected_text_dim)
+    model = build_model_from_checkpoint(checkpoint, attr_dim=expected_attr_dim, text_dim=expected_text_dim)
     print(
         f"Loaded model (GAT-{hparams.get('hidden_dim', 256)}x{hparams.get('num_layers', 4)}, {hparams.get('num_rules', NUM_RULES)} rules)"
     )
@@ -748,21 +897,24 @@ def main():
     node_probs = results["node_probs"]
     rule_probs = results["rule_probs"]
     graph_prob = results["graph_violation_prob"]
-    node_threshold = (
-        args.threshold
-        if args.threshold is not None
-        else calibration_value(calibration, "node_threshold", 0.5)
+    base_node_threshold, base_graph_threshold, base_rule_threshold = page_thresholds(
+        args,
+        calibration,
+        None,
     )
-    graph_threshold = (
-        args.graph_threshold
-        if args.graph_threshold is not None
-        else calibration_value(calibration, "graph_threshold", 0.5)
+    thresholds = view_thresholds(
+        args=args,
+        calibration=calibration,
+        manifest=None,
+        source_view=args.graph_source,
+        base_node_threshold=base_node_threshold,
+        base_graph_threshold=base_graph_threshold,
+        base_rule_threshold=base_rule_threshold,
     )
-    rule_threshold = (
-        args.rule_threshold
-        if args.rule_threshold is not None
-        else calibration_value(calibration, "rule_threshold", 0.5)
-    )
+    node_threshold = thresholds["node_threshold"]
+    graph_threshold = thresholds["graph_threshold"]
+    rule_threshold = thresholds["rule_threshold"]
+    rule_threshold_overrides = thresholds["rule_thresholds"]
     axe_summary = load_axe_summary(axe_path)
 
     # Filter to actionable tags
@@ -791,9 +943,9 @@ def main():
     print(f"Page violation probability: {page_violation_prob:.4f} (threshold={graph_threshold:.4f})")
     print(f"Page prediction: {page_prediction}")
     raw_over_threshold = int((filtered_probs >= node_threshold).sum().item())
-    confirmed_over_threshold = raw_over_threshold if page_is_likely_violation else 0
+    confirmed_over_threshold = raw_over_threshold
     print(f"Nodes with violation prob >= {node_threshold}: {raw_over_threshold}")
-    print(f"Confirmed node violations after page decision: {confirmed_over_threshold}")
+    print(f"Confirmed node candidates before rule compatibility: {confirmed_over_threshold}")
 
     # Top-K predictions stay as a compact raw view, while confirmed
     # violations/candidates below include every node above the report floor.
@@ -825,6 +977,7 @@ def main():
             graph_source=args.graph_source,
             node=node,
             threshold=rule_threshold,
+            rule_thresholds=rule_threshold_overrides,
         )
         rule_str = (
             ", ".join([f"{r['rule_id']}({r['probability']:.2f})" for r in top_rules])
@@ -833,7 +986,7 @@ def main():
         )
 
         over_node_threshold = prob >= node_threshold
-        confirmed_violation = page_is_likely_violation and over_node_threshold and bool(top_rules)
+        confirmed_violation = over_node_threshold and bool(top_rules)
         if rank <= args.top_k:
             marker = " [VIOLATION]" if confirmed_violation else ""
             print(f"{rank:<6} {idx:<6} {tag:<12} {prob:.4f}  {rule_str}{marker}")
@@ -847,6 +1000,7 @@ def main():
                 status="raw_candidate",
                 source_view=args.graph_source,
                 rule_threshold=rule_threshold,
+                rule_thresholds=rule_threshold_overrides,
             )
             raw_entry["rank"] = rank
             raw_top_predictions.append(raw_entry)
@@ -862,16 +1016,13 @@ def main():
                     status="predicted_violation",
                     source_view=args.graph_source,
                     rule_threshold=rule_threshold,
+                    rule_thresholds=rule_threshold_overrides,
                 )
             )
             compatible_predicted_node_ids.add(idx)
         elif prob >= 0.2:
             status = "candidate_warning"
-            if not page_is_likely_violation and over_node_threshold:
-                status = "model_warning_on_likely_clean_page"
-                if axe_summary.get("available") and axe_summary.get("violation_count") == 0:
-                    status = "false_positive_against_axe"
-            elif over_node_threshold and not top_rules:
+            if over_node_threshold and not top_rules:
                 status = "candidate_incompatible_rule"
             candidate_warnings.append(
                 make_prediction_entry(
@@ -883,6 +1034,7 @@ def main():
                     status=status,
                     source_view=args.graph_source,
                     rule_threshold=rule_threshold,
+                    rule_thresholds=rule_threshold_overrides,
                 )
             )
 
@@ -896,9 +1048,8 @@ def main():
 
     if has_ground_truth:
         predictions = torch.zeros(len(page.node_map), dtype=torch.long)
-        if page_is_likely_violation:
-            for nid in compatible_predicted_node_ids:
-                predictions[nid] = 1
+        for nid in compatible_predicted_node_ids:
+            predictions[nid] = 1
         node_y = page.data.node_y.cpu().long()
 
         true_violations = (node_y == 1).sum().item()
@@ -958,13 +1109,17 @@ def main():
                 "page_violation_probability": round(page_violation_prob, 4),
                 "graph_threshold": graph_threshold,
                 "page_prediction": page_prediction,
-                "node_predictions_suppressed_by_page_gate": raw_over_threshold > 0 and not page_is_likely_violation,
-                "node_predictions_gated": raw_over_threshold > 0 and not page_is_likely_violation,
+                "page_gate_applied_to_nodes": False,
+                "node_predictions_suppressed_by_page_gate": False,
+                "node_predictions_gated": False,
                 "predicted_violation_count": len(predicted_violations),
                 "candidate_warning_count": len(candidate_warnings),
                 "threshold": node_threshold,
                 "node_threshold": node_threshold,
                 "rule_threshold": rule_threshold,
+                "rule_threshold_overrides": rule_threshold_overrides,
+                "expected_attr_dim": expected_attr_dim,
+                "expected_text_dim": expected_text_dim,
                 "graph_source": getattr(page.data, "graph_source", args.graph_source),
             },
             "predicted_violations": predicted_violations,

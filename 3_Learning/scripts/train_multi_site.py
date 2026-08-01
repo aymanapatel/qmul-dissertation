@@ -28,7 +28,11 @@ from torch.utils.data import WeightedRandomSampler
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from feature_extractor import FeatureExtractor, ProcessedPage
+from feature_extractor import (
+    RENDERED_VISUAL_FEATURE_VERSION,
+    FeatureExtractor,
+    ProcessedPage,
+)
 from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM, GRAPH_SOURCE_RENDERED_VISUAL
 from models import DOMAttentionNet
 from train import Trainer, get_device
@@ -94,6 +98,15 @@ def process_site(
                 print(
                     f"  [graph-source mismatch] {site_name} "
                     f"({cached_graph_source} != {graph_source}) — reprocessing"
+                )
+            elif (
+                graph_source == GRAPH_SOURCE_RENDERED_VISUAL
+                and getattr(page.data, "rendered_visual_feature_version", None)
+                != RENDERED_VISUAL_FEATURE_VERSION
+            ):
+                print(
+                    f"  [outdated visual cache] {site_name} — reprocessing "
+                    f"(expected feature version {RENDERED_VISUAL_FEATURE_VERSION})"
                 )
             else:
                 print(
@@ -510,6 +523,8 @@ def train_view(
         "architecture": ARCHITECTURE_MULTI_VIEW,
         "num_tags": 116,
         "tag_embed_dim": 32,
+        "attr_dim": attr_dim,
+        "text_dim": text_dim,
         "hidden_dim": args.hidden,
         "num_node_classes": 2,
         "num_graph_classes": 2,
@@ -536,14 +551,31 @@ def train_view(
         "graph_node_consistency_loss_weight": args.graph_node_consistency_loss_weight,
     }
 
+    save_path = view_model_dir / "best_model.pt"
+    last_save_path = view_model_dir / "last_model.pt"
+    resume_path = None
+    if args.resume_training:
+        if args.resume_checkpoint:
+            resume_path = Path(args.resume_checkpoint)
+        elif last_save_path.exists():
+            resume_path = last_save_path
+        else:
+            resume_path = save_path
+        if not resume_path.exists():
+            raise FileNotFoundError(
+                f"Cannot resume {graph_source} training: checkpoint not found at "
+                f"{resume_path}"
+            )
+
     history = trainer.fit(
         train_loader=train_loader,
         val_loader=val_loader,
         epochs=args.epochs,
         patience=args.patience,
-        save_path=view_model_dir / "best_model.pt",
-        last_save_path=view_model_dir / "last_model.pt",
+        save_path=save_path,
+        last_save_path=last_save_path,
         hparams=hparams,
+        resume_from=resume_path,
     )
     torch.save(history, view_model_dir / "history.pt")
 

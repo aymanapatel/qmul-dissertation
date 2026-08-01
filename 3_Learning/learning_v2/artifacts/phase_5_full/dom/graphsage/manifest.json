@@ -1,0 +1,194 @@
+{
+  "schema_version": 2,
+  "pilot": true,
+  "graph_source": "dom",
+  "architecture": "graphsage",
+  "feature_contract": {
+    "schema_version": 2,
+    "graph_source": "dom",
+    "feature_dim": 497,
+    "num_tags": 116,
+    "rendered_visual_feature_version": 0
+  },
+  "model_config": {
+    "architecture": "graphsage",
+    "feature_dim": 497,
+    "num_tags": 116,
+    "num_rules": 15,
+    "tag_embedding_dim": 24,
+    "hidden_dim": 64,
+    "num_layers": 2,
+    "dropout": 0.2,
+    "heads": 4
+  },
+  "training_config": {
+    "cache_dir": "runs_v1/graphs/graphs_multi_5July_2200",
+    "inventory": "learning_v2/artifacts/phase_1_4/corpus_inventory.json",
+    "split": "learning_v2/artifacts/phase_1_4/governed_split.json",
+    "output_dir": "learning_v2/artifacts/phase_5_full",
+    "views": [
+      "dom",
+      "a11y-tree",
+      "rendered-visual"
+    ],
+    "architectures": [
+      "mlp",
+      "graphsage",
+      "gat"
+    ],
+    "max_sites": 704,
+    "max_nodes": 10000,
+    "epochs": 5,
+    "batch_size": 2,
+    "hidden": 64,
+    "layers": 2,
+    "heads": 4,
+    "dropout": 0.2,
+    "lr": 0.0005,
+    "negative_ratio": 8.0,
+    "minimum_negatives": 256,
+    "precision_floor": 0.25,
+    "seed": 42,
+    "device": "cpu"
+  },
+  "rules": [
+    {
+      "rule_id": "aria-allowed-attr",
+      "global_rule_index": 1,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "ARIA"
+    },
+    {
+      "rule_id": "aria-hidden-focus",
+      "global_rule_index": 3,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "ARIA"
+    },
+    {
+      "rule_id": "aria-prohibited-attr",
+      "global_rule_index": 7,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "ARIA"
+    },
+    {
+      "rule_id": "aria-required-attr",
+      "global_rule_index": 8,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "ARIA"
+    },
+    {
+      "rule_id": "aria-required-children",
+      "global_rule_index": 9,
+      "owner": "dom",
+      "wcag_ids": [
+        "1.3.1"
+      ],
+      "category": "Structure"
+    },
+    {
+      "rule_id": "aria-required-parent",
+      "global_rule_index": 10,
+      "owner": "dom",
+      "wcag_ids": [
+        "1.3.1"
+      ],
+      "category": "Structure"
+    },
+    {
+      "rule_id": "aria-roles",
+      "global_rule_index": 11,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "ARIA"
+    },
+    {
+      "rule_id": "aria-valid-attr",
+      "global_rule_index": 14,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "ARIA"
+    },
+    {
+      "rule_id": "aria-valid-attr-value",
+      "global_rule_index": 15,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "ARIA"
+    },
+    {
+      "rule_id": "document-title",
+      "global_rule_index": 23,
+      "owner": "dom-page",
+      "wcag_ids": [
+        "2.4.2"
+      ],
+      "category": "Page metadata"
+    },
+    {
+      "rule_id": "html-has-lang",
+      "global_rule_index": 25,
+      "owner": "dom-page",
+      "wcag_ids": [
+        "3.1.1"
+      ],
+      "category": "Language"
+    },
+    {
+      "rule_id": "html-lang-valid",
+      "global_rule_index": 26,
+      "owner": "dom-page",
+      "wcag_ids": [
+        "3.1.1"
+      ],
+      "category": "Language"
+    },
+    {
+      "rule_id": "list",
+      "global_rule_index": 33,
+      "owner": "dom",
+      "wcag_ids": [
+        "1.3.1"
+      ],
+      "category": "Structure"
+    },
+    {
+      "rule_id": "listitem",
+      "global_rule_index": 34,
+      "owner": "dom",
+      "wcag_ids": [
+        "1.3.1"
+      ],
+      "category": "Structure"
+    },
+    {
+      "rule_id": "nested-interactive",
+      "global_rule_index": 38,
+      "owner": "dom",
+      "wcag_ids": [
+        "4.1.2"
+      ],
+      "category": "Interaction"
+    }
+  ],
+  "best_epoch": 3,
+  "best_validation_rule_f1": 0.18006993006993008,
+  "test_metrics": "test_metrics.json"
+}

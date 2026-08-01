@@ -1,0 +1,60 @@
+{
+  "schema_version": 2,
+  "precision_floor": 0.25,
+  "recommended": {
+    "node_threshold": 0.5,
+    "page_threshold": 0.9,
+    "rule_thresholds": {
+      "image-alt": 0.5,
+      "label": 0.1,
+      "link-name": 0.7
+    }
+  },
+  "node": {
+    "threshold": 0.5,
+    "precision": 0.8100558659217877,
+    "recall": 0.9119496855345912,
+    "f1": 0.8579881656804734,
+    "predicted_positive": 179,
+    "actual_positive": 159,
+    "supported": true
+  },
+  "page": {
+    "threshold": 0.9,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "predicted_positive": 2,
+    "actual_positive": 2,
+    "supported": true
+  },
+  "rules": {
+    "image-alt": {
+      "threshold": 0.5,
+      "precision": 0.803921568627451,
+      "recall": 1.0,
+      "f1": 0.891304347826087,
+      "predicted_positive": 102,
+      "actual_positive": 82,
+      "supported": true
+    },
+    "label": {
+      "threshold": 0.1,
+      "precision": 0.0136986301369863,
+      "recall": 0.3333333333333333,
+      "f1": 0.02631578947368421,
+      "predicted_positive": 73,
+      "actual_positive": 3,
+      "supported": true
+    },
+    "link-name": {
+      "threshold": 0.7,
+      "precision": 0.8181818181818182,
+      "recall": 0.8513513513513513,
+      "f1": 0.8344370860927152,
+      "predicted_positive": 77,
+      "actual_positive": 74,
+      "supported": true
+    }
+  }
+}

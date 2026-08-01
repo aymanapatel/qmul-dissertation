@@ -1,0 +1,4912 @@
+{
+  "site_id": "www.acesso.gov.pt",
+  "source_url": "https://www.acesso.gov.pt",
+  "html_path": "../2_Data/browser-use/outputs/axe-core/www.acesso.gov.pt/0.html",
+  "axe_path": "../2_Data/browser-use/outputs/axe-core/www.acesso.gov.pt/page-0_home.json",
+  "html_sha256": "d718257443d52692b7a6147d28dfe3077fd2ffda2c31c4b9eedf9f9d4f09f964",
+  "axe_sha256": "b25f1d4a8344e65e8499af1c8f0218f626831bdf6a99ae010bac330ad1f0305b",
+  "collector_version": "snapshot-1",
+  "nodes": [
+    {
+      "identity": {
+        "node_id": 0,
+        "css_path": "html:nth-of-type(1)",
+        "tag": "html",
+        "parent_id": null,
+        "frame": "main"
+      },
+      "attributes": {
+        "lang": "pt"
+      },
+      "text": "acesso.gov.pt Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancia",
+      "accessible_name": "acesso.gov.pt Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de ",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 1,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1)",
+        "tag": "head",
+        "parent_id": 0,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "acesso.gov.pt",
+      "accessible_name": "acesso.gov.pt",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 2,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(1)",
+        "tag": "meta",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "charset": "UTF-8"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 3,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > style:nth-of-type(1)",
+        "tag": "style",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "type": "text/css"
+      },
+      "text": ":root, :host {\n  --fa-font-solid: normal 900 1em/1 \"Font Awesome 6 Solid\";\n  --fa-font-regular: normal 400 1em/1 \"Font Awesome 6 Regular\";\n  --fa-font-light: normal 300 1em/1 \"Font Awesome 6 Light\";\n  --fa-font-thin: normal 100 1em/1 \"Font Awesome 6 Thin\";\n  --fa-font-duotone: normal 900 1em/1 \"Font Awesome 6 Duotone\";\n  --fa-font-sharp-solid: normal 900 1em/1 \"Font Awesome 6 Sharp\";\n  --fa-font-sharp-regular: normal 400 1em/1 \"Font Awesome 6 Sharp\";\n  --fa-font-sharp-light: normal 300 1em/1 \"Fo",
+      "accessible_name": ":root, :host {\n  --fa-font-solid: normal 900 1em/1 \"Font Awesome 6 Solid\";\n  --fa-font-regular: normal 400 1em/1 \"Font Awesome 6 Regular\";\n  --fa-font-light: normal 300 1em/1 \"Font Awesome 6 Light\";\n  --fa-font-thin: normal 100 1em/1 \"Font Awesome 6 Thin\";\n  --fa-font-duotone: normal 900 1em/1 \"Font",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 4,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(1)",
+        "tag": "link",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "rel": [
+          "shortcut",
+          "icon"
+        ],
+        "href": "/autentica_static/icons/favicon.ico"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 5,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(2)",
+        "tag": "link",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "rel": [
+          "apple-touch-icon"
+        ],
+        "href": "/autentica_static/icons/apple-touch-icon.png"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 6,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > meta:nth-of-type(2)",
+        "tag": "meta",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "name": "viewport",
+        "content": "width=device-width, initial-scale=1.0"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 7,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > title:nth-of-type(1)",
+        "tag": "title",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "acesso.gov.pt",
+      "accessible_name": "acesso.gov.pt",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 8,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > script:nth-of-type(1)",
+        "tag": "script",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "type": "text/javascript",
+        "src": "/autentica_static/js/ie-remove-tags.js"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 9,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(3)",
+        "tag": "link",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "rel": [
+          "prerender"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 10,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > script:nth-of-type(2)",
+        "tag": "script",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "type": "module",
+        "crossorigin": "",
+        "src": "/autentica_static/bundles/error404.html-CJR3O5eK.js"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 11,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(4)",
+        "tag": "link",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "rel": [
+          "modulepreload"
+        ],
+        "crossorigin": "",
+        "href": "/autentica_static/bundles/modal-dados-pessoais-BIyGBb9Q.js"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 12,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > link:nth-of-type(5)",
+        "tag": "link",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "rel": [
+          "stylesheet"
+        ],
+        "crossorigin": "",
+        "href": "/autentica_static/bundles/modal-dados-pessoais-8E7KIWSN.css"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 13,
+        "css_path": "html:nth-of-type(1) > head:nth-of-type(1) > style:nth-of-type(2)",
+        "tag": "style",
+        "parent_id": 1,
+        "frame": "main"
+      },
+      "attributes": {
+        "data-emotion": "css",
+        "data-s": ""
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 14,
+        "css_path": "html:nth-of-type(1) > body:nth-of-type(1)",
+        "tag": "body",
+        "parent_id": 0,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7",
+      "accessible_name": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados d",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 15,
+        "css_path": "div#root-data",
+        "tag": "div",
+        "parent_id": 14,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "root-data",
+        "data-session-user-nif": "",
+        "data-session-user-username": ""
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 16,
+        "css_path": "div#root",
+        "tag": "div",
+        "parent_id": 14,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "root"
+      },
+      "text": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7",
+      "accessible_name": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados d",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 17,
+        "css_path": "div#root > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 16,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "at-ui-root"
+        ]
+      },
+      "text": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7",
+      "accessible_name": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados d",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 18,
+        "css_path": "div#root > div:nth-of-type(1) > main:nth-of-type(1)",
+        "tag": "main",
+        "parent_id": 17,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7",
+      "accessible_name": "Ir para o conte\u00fado principal Abrir Menu de Navega\u00e7\u00e3o Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados d",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 19,
+        "css_path": "div#root > div:nth-of-type(1) > main:nth-of-type(1) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 18,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "#content",
+        "class": [
+          "tabbable-hidden"
+        ]
+      },
+      "text": "Ir para o conte\u00fado principal",
+      "accessible_name": "Ir para o conte\u00fado principal",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 20,
+        "css_path": "div#_headerMobile_e1cdv_1",
+        "tag": "div",
+        "parent_id": 18,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_headerMobile_e1cdv_1",
+        "class": [
+          "d-flex",
+          "d-md-none"
+        ]
+      },
+      "text": "Abrir Menu de Navega\u00e7\u00e3o",
+      "accessible_name": "Abrir Menu de Navega\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 21,
+        "css_path": "div#_headerMobile_e1cdv_1 > button:nth-of-type(1)",
+        "tag": "button",
+        "parent_id": 20,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Abrir Menu de Navega\u00e7\u00e3o",
+      "accessible_name": "Abrir Menu de Navega\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 22,
+        "css_path": "div#_headerMobile_e1cdv_1 > button:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 21,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "bars",
+        "class": [
+          "svg-inline--fa",
+          "fa-bars",
+          "at-ui-icon",
+          "at-ui-icon--3xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 448 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 23,
+        "css_path": "div#_headerMobile_e1cdv_1 > button:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 22,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 24,
+        "css_path": "div#_headerMobile_e1cdv_1 > button:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 21,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Abrir Menu de Navega\u00e7\u00e3o",
+      "accessible_name": "Abrir Menu de Navega\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 25,
+        "css_path": "div#_headerMobile_e1cdv_1 > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 20,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://www.portaldasfinancas.gov.pt",
+        "target": "_blank",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 26,
+        "css_path": "div#_headerMobile_e1cdv_1 > a:nth-of-type(1) > img:nth-of-type(1)",
+        "tag": "img",
+        "parent_id": 25,
+        "frame": "main"
+      },
+      "attributes": {
+        "src": "https://static.portaldasfinancas.gov.pt/app/pfstatic_static/images/logo-at.svg",
+        "width": "120",
+        "height": "37.5",
+        "alt": "Logo AT",
+        "title": "Autoridade Tribut\u00e1ria e Aduaneira"
+      },
+      "text": "",
+      "accessible_name": "Autoridade Tribut\u00e1ria e Aduaneira",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 27,
+        "css_path": "div#_navContainer_e1cdv_1",
+        "tag": "div",
+        "parent_id": 18,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_navContainer_e1cdv_1"
+      },
+      "text": "Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comuni",
+      "accessible_name": "Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 28,
+        "css_path": "div#_navMenu_e1cdv_1",
+        "tag": "div",
+        "parent_id": 27,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_navMenu_e1cdv_1",
+        "class": [
+          "d-md-none",
+          "collapse"
+        ]
+      },
+      "text": "Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comuni",
+      "accessible_name": "Sem sess\u00e3o iniciada Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 29,
+        "css_path": "div#_infoPessoal_e1cdv_1",
+        "tag": "div",
+        "parent_id": 28,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_infoPessoal_e1cdv_1"
+      },
+      "text": "Sem sess\u00e3o iniciada",
+      "accessible_name": "Sem sess\u00e3o iniciada",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 30,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2)",
+        "tag": "div",
+        "parent_id": 28,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navBar_e1cdv_156",
+          "px-1",
+          "py-4",
+          "my-2",
+          "mx-0",
+          "overflow-auto",
+          "h-100",
+          "row"
+        ]
+      },
+      "text": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mens",
+      "accessible_name": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Ges",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 31,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1)",
+        "tag": "ul",
+        "parent_id": 30,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "px-0",
+          "mx-0",
+          "list-unstyled",
+          "d-flex",
+          "flex-column",
+          "gap-4"
+        ]
+      },
+      "text": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mens",
+      "accessible_name": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Ges",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 32,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "tag": "li",
+        "parent_id": 31,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": []
+      },
+      "text": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Ges",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 33,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > p:nth-of-type(1)",
+        "tag": "p",
+        "parent_id": 32,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navGroupTitle_e1cdv_161",
+          "mb-3"
+        ]
+      },
+      "text": "Autentica\u00e7\u00e3o",
+      "accessible_name": "Autentica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 34,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1)",
+        "tag": "ul",
+        "parent_id": 32,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "d-flex",
+          "flex-column",
+          "gap-2",
+          "m-0",
+          "list-unstyled"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utiliz",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 35,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "tag": "li",
+        "parent_id": 34,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 36,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 35,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/v2/loginForm?partID=PFAP&path=/geral/dashboard",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 37,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 36,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 38,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 37,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-lcemSmjqgs7L",
+        "data-prefix": "fas",
+        "data-icon": "right-to-bracket",
+        "class": [
+          "svg-inline--fa",
+          "fa-right-to-bracket",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 39,
+        "css_path": "title#svg-inline--fa-title-lcemSmjqgs7L",
+        "tag": "title",
+        "parent_id": 38,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-lcemSmjqgs7L"
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 40,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 38,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M217.9 105.9L340.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L217.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1L32 320c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM352 416l64 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l64 0c53 0 96 43 96 96l0 256c0 53-43 96-96 96l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 41,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 37,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 42,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 37,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 43,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 37,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 44,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 43,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 45,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "tag": "li",
+        "parent_id": 34,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Criar Conta Criar Conta Criar Conta",
+      "accessible_name": "Criar Conta Criar Conta Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 46,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 45,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/unauthed/novoUtilizadorForm?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Criar Conta Criar Conta Criar Conta",
+      "accessible_name": "Criar Conta Criar Conta Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 47,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 46,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Criar Conta Criar Conta Criar Conta",
+      "accessible_name": "Criar Conta Criar Conta Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 48,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 47,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-6rYqx2X9Sbc6",
+        "data-prefix": "fas",
+        "data-icon": "user-pen",
+        "class": [
+          "svg-inline--fa",
+          "fa-user-pen",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 640 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 49,
+        "css_path": "title#svg-inline--fa-title-6rYqx2X9Sbc6",
+        "tag": "title",
+        "parent_id": 48,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-6rYqx2X9Sbc6"
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 50,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 48,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H322.8c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1H178.3zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 51,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 47,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 52,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 47,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 53,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 47,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 54,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 53,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 55,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "tag": "li",
+        "parent_id": 34,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 56,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 55,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/unauthed/recuperarSenhaEscolhaForm?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 57,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 56,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 58,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 57,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-9pq31f1nbaOQ",
+        "data-prefix": "fas",
+        "data-icon": "user-lock",
+        "class": [
+          "svg-inline--fa",
+          "fa-user-lock",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 640 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 59,
+        "css_path": "title#svg-inline--fa-title-9pq31f1nbaOQ",
+        "tag": "title",
+        "parent_id": 58,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-9pq31f1nbaOQ"
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 60,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 58,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H392.6c-5.4-9.4-8.6-20.3-8.6-32V352c0-2.1 .1-4.2 .3-6.3c-31-26-71-41.7-114.6-41.7H178.3zM528 240c17.7 0 32 14.3 32 32v48H496V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 61,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 57,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 62,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 57,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 63,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 57,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 64,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 63,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 65,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)",
+        "tag": "li",
+        "parent_id": 34,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "accessible_name": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 66,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 65,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/consultarDadosAcesso?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "accessible_name": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 67,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 66,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "accessible_name": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 68,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 67,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-MMQloS1lOzZj",
+        "data-prefix": "fas",
+        "data-icon": "address-card",
+        "class": [
+          "svg-inline--fa",
+          "fa-address-card",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 576 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 69,
+        "css_path": "title#svg-inline--fa-title-MMQloS1lOzZj",
+        "tag": "title",
+        "parent_id": 68,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-MMQloS1lOzZj"
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 70,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 68,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 256h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zm256-32H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 71,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 67,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 72,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 67,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 73,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 67,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 74,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 73,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 75,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5)",
+        "tag": "li",
+        "parent_id": 34,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "accessible_name": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 76,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 75,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/pessoal/contactos/dadosPessoais",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "accessible_name": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 77,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 76,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "accessible_name": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 78,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 77,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-aNvzfuRXZmjk",
+        "data-prefix": "fas",
+        "data-icon": "address-book",
+        "class": [
+          "svg-inline--fa",
+          "fa-address-book",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 79,
+        "css_path": "title#svg-inline--fa-title-aNvzfuRXZmjk",
+        "tag": "title",
+        "parent_id": 78,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-aNvzfuRXZmjk"
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 80,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 78,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M96 0C60.7 0 32 28.7 32 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H96zM208 288h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H144c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zM512 80c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V80zM496 192c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm16 144c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V336z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 81,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 77,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 82,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 77,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 83,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 77,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 84,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 83,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 85,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6)",
+        "tag": "li",
+        "parent_id": 34,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 86,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 85,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/gestaoDeUtilizadores/consulta?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 87,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 86,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 88,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 87,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-XQhzLTXsFm3x",
+        "data-prefix": "fas",
+        "data-icon": "users-gear",
+        "class": [
+          "svg-inline--fa",
+          "fa-users-gear",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 640 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 89,
+        "css_path": "title#svg-inline--fa-title-XQhzLTXsFm3x",
+        "tag": "title",
+        "parent_id": 88,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-XQhzLTXsFm3x"
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 90,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 88,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM320 320c24 0 45.9-8.8 62.7-23.3c2.5-3.7 5.2-7.3 8-10.7c2.7-3.3 5.7-6.1 9-8.3C410 262.3 416 243.9 416 224c0-53-43-96-96-96s-96 43-96 96s43 96 96 96zm65.4 60.2c-10.3-5.9-18.1-16.2-20.8-28.2H261.3C187.7 352 128 411.7 128 485.3c0 14.7 11.9 26.7 26.7 26.7H455.2c-2.1-5.2-3.2-10.9-3.2-16.4v-3c-1.3-.7-2.7-1.5-4-2.3l-2.6 1.5c-16.8 9.7-40.5 8-54.7-9.7c-4.5-5.6-8.6-11.5-12.4-17.6l-.1-.2-.1-.2-2.4-4.1-.1-.2-.1-.2c-3.4-6.2-6.4-12.6-9-19.3c-8.2-21.2 2.2-42.6 19-52.3l2.7-1.5c0-.8 0-1.5 0-2.3s0-1.5 0-2.3l-2.7-1.5zM533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 17.4-3.5 33.9-9.7 49c2.5 .9 4.9 2 7.1 3.3l2.6 1.5c1.3-.8 2.6-1.6 4-2.3v-3c0-19.4 13.3-39.1 35.8-42.6c7.9-1.2 16-1.9 24.2-1.9s16.3 .6 24.2 1.9c22.5 3.5 35.8 23.2 35.8 42.6v3c1.3 .7 2.7 1.5 4 2.3l2.6-1.5c16.8-9.7 40.5-8 54.7 9.7c2.3 2.8 4.5 5.8 6.6 8.7c-2.1-57.1-49-102.7-106.6-102.7zm91.3 163.9c6.3-3.6 9.5-11.1 6.8-18c-2.1-5.5-4.6-10.8-7.4-15.9l-2.3-4c-3.1-5.1-6.5-9.9-10.2-14.5c-4.6-5.7-12.7-6.7-19-3l-2.9 1.7c-9.2 5.3-20.4 4-29.6-1.3s-16.1-14.5-16.1-25.1v-3.4c0-7.3-4.9-13.8-12.1-14.9c-6.5-1-13.1-1.5-19.9-1.5s-13.4 .5-19.9 1.5c-7.2 1.1-12.1 7.6-12.1 14.9v3.4c0 10.6-6.9 19.8-16.1 25.1s-20.4 6.6-29.6 1.3l-2.9-1.7c-6.3-3.6-14.4-2.6-19 3c-3.7 4.6-7.1 9.5-10.2 14.6l-2.3 3.9c-2.8 5.1-5.3 10.4-7.4 15.9c-2.6 6.8 .5 14.3 6.8 17.9l2.9 1.7c9.2 5.3 13.7 15.8 13.7 26.4s-4.5 21.1-13.7 26.4l-3 1.7c-6.3 3.6-9.5 11.1-6.8 17.9c2.1 5.5 4.6 10.7 7.4 15.8l2.4 4.1c3 5.1 6.4 9.9 10.1 14.5c4.6 5.7 12.7 6.7 19 3l2.9-1.7c9.2-5.3 20.4-4 29.6 1.3s16.1 14.5 16.1 25.1v3.4c0 7.3 4.9 13.8 12.1 14.9c6.5 1 13.1 1.5 19.9 1.5s13.4-.5 19.9-1.5c7.2-1.1 12.1-7.6 12.1-14.9v-3.4c0-10.6 6.9-19.8 16.1-25.1s20.4-6.6 29.6-1.3l2.9 1.7c6.3 3.6 14.4 2.6 19-3c3.7-4.6 7.1-9.4 10.1-14.5l2.4-4.2c2.8-5.1 5.3-10.3 7.4-15.8c2.6-6.8-.5-14.3-6.8-17.9l-3-1.7c-9.2-5.3-13.7-15.8-13.7-26.4s4.5-21.1 13.7-26.4l3-1.7zM472 384a40 40 0 1 1 80 0 40 40 0 1 1 -80 0z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 91,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 87,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 92,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 87,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 93,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 87,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 94,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 93,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 95,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "tag": "li",
+        "parent_id": 31,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": []
+      },
+      "text": "Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "accessible_name": "Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 96,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > p:nth-of-type(1)",
+        "tag": "p",
+        "parent_id": 95,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navGroupTitle_e1cdv_161",
+          "mb-3"
+        ]
+      },
+      "text": "Portal das Finan\u00e7as",
+      "accessible_name": "Portal das Finan\u00e7as",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 97,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1)",
+        "tag": "ul",
+        "parent_id": 95,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "d-flex",
+          "flex-column",
+          "gap-2",
+          "m-0",
+          "list-unstyled"
+        ]
+      },
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 98,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "tag": "li",
+        "parent_id": 97,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 99,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 98,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/geral/dashboard",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 100,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 99,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 101,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 100,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-aI12bdumJN2X",
+        "data-prefix": "fas",
+        "data-icon": "house-user",
+        "class": [
+          "svg-inline--fa",
+          "fa-house-user",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 576 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "A Minha Area",
+      "accessible_name": "A Minha Area",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 102,
+        "css_path": "title#svg-inline--fa-title-aI12bdumJN2X",
+        "tag": "title",
+        "parent_id": 101,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-aI12bdumJN2X"
+      },
+      "text": "A Minha Area",
+      "accessible_name": "A Minha Area",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 103,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 101,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24zM352 224a64 64 0 1 0 -128 0 64 64 0 1 0 128 0zm-96 96c-44.2 0-80 35.8-80 80c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16c0-44.2-35.8-80-80-80H256z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 104,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 100,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "A Minha Area",
+      "accessible_name": "A Minha Area",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 105,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 100,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "A Minha \u00c1rea",
+      "accessible_name": "A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 106,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 100,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 107,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 106,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 108,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "tag": "li",
+        "parent_id": 97,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 109,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 108,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/notificacoes/gerircanais/todos.html",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 110,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 109,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 111,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 110,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-Qdnmcv3313rc",
+        "data-prefix": "fas",
+        "data-icon": "address-book",
+        "class": [
+          "svg-inline--fa",
+          "fa-address-book",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 112,
+        "css_path": "title#svg-inline--fa-title-Qdnmcv3313rc",
+        "tag": "title",
+        "parent_id": 111,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-Qdnmcv3313rc"
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 113,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 111,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M96 0C60.7 0 32 28.7 32 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H96zM208 288h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H144c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zM512 80c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V80zM496 192c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm16 144c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V336z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 114,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 110,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 115,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 110,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 116,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 110,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 117,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 116,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 118,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "tag": "li",
+        "parent_id": 97,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Mensagens Mensagens Mensagens",
+      "accessible_name": "Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 119,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 118,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/geral/dashboard/consultarMensagens",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Mensagens Mensagens Mensagens",
+      "accessible_name": "Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 120,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 119,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Mensagens Mensagens Mensagens",
+      "accessible_name": "Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 121,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 120,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-EBgTek4ISTbf",
+        "data-prefix": "fas",
+        "data-icon": "message",
+        "class": [
+          "svg-inline--fa",
+          "fa-message",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 122,
+        "css_path": "title#svg-inline--fa-title-EBgTek4ISTbf",
+        "tag": "title",
+        "parent_id": 121,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-EBgTek4ISTbf"
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 123,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 121,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64h96v80c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L309.3 416H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 124,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 120,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 125,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 120,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 126,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 120,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 127,
+        "css_path": "div#_navMenu_e1cdv_1 > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 126,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 128,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2)",
+        "tag": "div",
+        "parent_id": 27,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_leftCol_e1cdv_136",
+          "d-none",
+          "d-md-flex"
+        ]
+      },
+      "text": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mens",
+      "accessible_name": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Ges",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 129,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 128,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "mx-0",
+          "row"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 130,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(1) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 129,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://www.portaldasfinancas.gov.pt",
+        "target": "_blank",
+        "rel": [
+          "noopener",
+          "noreferrer"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 131,
+        "css_path": "img#_iconAT_e1cdv_1",
+        "tag": "img",
+        "parent_id": 130,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_iconAT_e1cdv_1",
+        "class": [
+          "px-0"
+        ],
+        "src": "https://static.portaldasfinancas.gov.pt/app/pfstatic_static/images/logo-at.svg",
+        "width": "212",
+        "height": "65",
+        "alt": "Logo AT"
+      },
+      "text": "",
+      "accessible_name": "Logo AT",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 132,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2)",
+        "tag": "div",
+        "parent_id": 128,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navBar_e1cdv_156",
+          "px-1",
+          "py-4",
+          "my-2",
+          "mx-0",
+          "overflow-auto",
+          "h-100",
+          "row"
+        ]
+      },
+      "text": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mens",
+      "accessible_name": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Ges",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 133,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1)",
+        "tag": "ul",
+        "parent_id": 132,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "px-0",
+          "mx-0",
+          "list-unstyled",
+          "d-flex",
+          "flex-column",
+          "gap-4"
+        ]
+      },
+      "text": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mens",
+      "accessible_name": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Ges",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 134,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "tag": "li",
+        "parent_id": 133,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": []
+      },
+      "text": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Autentica\u00e7\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Ges",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 135,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > p:nth-of-type(1)",
+        "tag": "p",
+        "parent_id": 134,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navGroupTitle_e1cdv_161",
+          "mb-3"
+        ]
+      },
+      "text": "Autentica\u00e7\u00e3o",
+      "accessible_name": "Autentica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 136,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1)",
+        "tag": "ul",
+        "parent_id": 134,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "d-flex",
+          "flex-column",
+          "gap-2",
+          "m-0",
+          "list-unstyled"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o Criar Conta Criar Conta Criar Conta Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso Dados de Acesso Dados de Acesso Dados de Acesso Dados de Contacto Dados de Contacto Dados de Contacto Gest\u00e3o de Utilizadores Gest\u00e3o de Utiliz",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 137,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "tag": "li",
+        "parent_id": 136,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 138,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 137,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/v2/loginForm?partID=PFAP&path=/geral/dashboard",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 139,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 138,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o Iniciar Sess\u00e3o Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 140,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 139,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-enPLCyAYit6l",
+        "data-prefix": "fas",
+        "data-icon": "right-to-bracket",
+        "class": [
+          "svg-inline--fa",
+          "fa-right-to-bracket",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 141,
+        "css_path": "title#svg-inline--fa-title-enPLCyAYit6l",
+        "tag": "title",
+        "parent_id": 140,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-enPLCyAYit6l"
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 142,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 140,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M217.9 105.9L340.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L217.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1L32 320c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM352 416l64 0c17.7 0 32-14.3 32-32l0-256c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32l64 0c53 0 96 43 96 96l0 256c0 53-43 96-96 96l-64 0c-17.7 0-32-14.3-32-32s14.3-32 32-32z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 143,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 139,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 144,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 139,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 145,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 139,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 146,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 145,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 147,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "tag": "li",
+        "parent_id": 136,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Criar Conta Criar Conta Criar Conta",
+      "accessible_name": "Criar Conta Criar Conta Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 148,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 147,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/unauthed/novoUtilizadorForm?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Criar Conta Criar Conta Criar Conta",
+      "accessible_name": "Criar Conta Criar Conta Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 149,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 148,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Criar Conta Criar Conta Criar Conta",
+      "accessible_name": "Criar Conta Criar Conta Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 150,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 149,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-8b9B5ttx8TVF",
+        "data-prefix": "fas",
+        "data-icon": "user-pen",
+        "class": [
+          "svg-inline--fa",
+          "fa-user-pen",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 640 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 151,
+        "css_path": "title#svg-inline--fa-title-8b9B5ttx8TVF",
+        "tag": "title",
+        "parent_id": 150,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-8b9B5ttx8TVF"
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 152,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 150,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H322.8c-3.1-8.8-3.7-18.4-1.4-27.8l15-60.1c2.8-11.3 8.6-21.5 16.8-29.7l40.3-40.3c-32.1-31-75.7-50.1-123.9-50.1H178.3zm435.5-68.3c-15.6-15.6-40.9-15.6-56.6 0l-29.4 29.4 71 71 29.4-29.4c15.6-15.6 15.6-40.9 0-56.6l-14.4-14.4zM375.9 417c-4.1 4.1-7 9.2-8.4 14.9l-15 60.1c-1.4 5.5 .2 11.2 4.2 15.2s9.7 5.6 15.2 4.2l60.1-15c5.6-1.4 10.8-4.3 14.9-8.4L576.1 358.7l-71-71L375.9 417z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 153,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 149,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 154,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 149,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Criar Conta",
+      "accessible_name": "Criar Conta",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 155,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 149,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 156,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 155,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 157,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "tag": "li",
+        "parent_id": 136,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 158,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 157,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/unauthed/recuperarSenhaEscolhaForm?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 159,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 158,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso Recuperar Senha de Acesso Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 160,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 159,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-E1L0ZkBRyS8i",
+        "data-prefix": "fas",
+        "data-icon": "user-lock",
+        "class": [
+          "svg-inline--fa",
+          "fa-user-lock",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 640 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 161,
+        "css_path": "title#svg-inline--fa-title-E1L0ZkBRyS8i",
+        "tag": "title",
+        "parent_id": 160,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-E1L0ZkBRyS8i"
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 162,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 160,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H392.6c-5.4-9.4-8.6-20.3-8.6-32V352c0-2.1 .1-4.2 .3-6.3c-31-26-71-41.7-114.6-41.7H178.3zM528 240c17.7 0 32 14.3 32 32v48H496V272c0-17.7 14.3-32 32-32zm-80 32v48c-17.7 0-32 14.3-32 32V480c0 17.7 14.3 32 32 32H608c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32V272c0-44.2-35.8-80-80-80s-80 35.8-80 80z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 163,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 159,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 164,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 159,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Recuperar Senha de Acesso",
+      "accessible_name": "Recuperar Senha de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 165,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 159,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 166,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 165,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 167,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4)",
+        "tag": "li",
+        "parent_id": 136,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "accessible_name": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 168,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 167,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/consultarDadosAcesso?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "accessible_name": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 169,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 168,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "accessible_name": "Dados de Acesso Dados de Acesso Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 170,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 169,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-74e7fLI26ZUt",
+        "data-prefix": "fas",
+        "data-icon": "address-card",
+        "class": [
+          "svg-inline--fa",
+          "fa-address-card",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 576 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 171,
+        "css_path": "title#svg-inline--fa-title-74e7fLI26ZUt",
+        "tag": "title",
+        "parent_id": 170,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-74e7fLI26ZUt"
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 172,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 170,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 256h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zm256-32H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 173,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 169,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 174,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 169,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Dados de Acesso",
+      "accessible_name": "Dados de Acesso",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 175,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 169,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 176,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(4) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 175,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 177,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5)",
+        "tag": "li",
+        "parent_id": 136,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "accessible_name": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 178,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 177,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/pessoal/contactos/dadosPessoais",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "accessible_name": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 179,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 178,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "accessible_name": "Dados de Contacto Dados de Contacto Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 180,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 179,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-s50l8CHeFieF",
+        "data-prefix": "fas",
+        "data-icon": "address-book",
+        "class": [
+          "svg-inline--fa",
+          "fa-address-book",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 181,
+        "css_path": "title#svg-inline--fa-title-s50l8CHeFieF",
+        "tag": "title",
+        "parent_id": 180,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-s50l8CHeFieF"
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 182,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 180,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M96 0C60.7 0 32 28.7 32 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H96zM208 288h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H144c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zM512 80c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V80zM496 192c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm16 144c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V336z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 183,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 179,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 184,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 179,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Dados de Contacto",
+      "accessible_name": "Dados de Contacto",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 185,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 179,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 186,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(5) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 185,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 187,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6)",
+        "tag": "li",
+        "parent_id": 136,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 188,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 187,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "/gestaoDeUtilizadores/consulta?partID=PFAP",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 189,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 188,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 190,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 189,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-wHDuQjlKoMN1",
+        "data-prefix": "fas",
+        "data-icon": "users-gear",
+        "class": [
+          "svg-inline--fa",
+          "fa-users-gear",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 640 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 191,
+        "css_path": "title#svg-inline--fa-title-wHDuQjlKoMN1",
+        "tag": "title",
+        "parent_id": 190,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-wHDuQjlKoMN1"
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 192,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 190,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M144 160A80 80 0 1 0 144 0a80 80 0 1 0 0 160zm368 0A80 80 0 1 0 512 0a80 80 0 1 0 0 160zM0 298.7C0 310.4 9.6 320 21.3 320H234.7c.2 0 .4 0 .7 0c-26.6-23.5-43.3-57.8-43.3-96c0-7.6 .7-15 1.9-22.3c-13.6-6.3-28.7-9.7-44.6-9.7H106.7C47.8 192 0 239.8 0 298.7zM320 320c24 0 45.9-8.8 62.7-23.3c2.5-3.7 5.2-7.3 8-10.7c2.7-3.3 5.7-6.1 9-8.3C410 262.3 416 243.9 416 224c0-53-43-96-96-96s-96 43-96 96s43 96 96 96zm65.4 60.2c-10.3-5.9-18.1-16.2-20.8-28.2H261.3C187.7 352 128 411.7 128 485.3c0 14.7 11.9 26.7 26.7 26.7H455.2c-2.1-5.2-3.2-10.9-3.2-16.4v-3c-1.3-.7-2.7-1.5-4-2.3l-2.6 1.5c-16.8 9.7-40.5 8-54.7-9.7c-4.5-5.6-8.6-11.5-12.4-17.6l-.1-.2-.1-.2-2.4-4.1-.1-.2-.1-.2c-3.4-6.2-6.4-12.6-9-19.3c-8.2-21.2 2.2-42.6 19-52.3l2.7-1.5c0-.8 0-1.5 0-2.3s0-1.5 0-2.3l-2.7-1.5zM533.3 192H490.7c-15.9 0-31 3.5-44.6 9.7c1.3 7.2 1.9 14.7 1.9 22.3c0 17.4-3.5 33.9-9.7 49c2.5 .9 4.9 2 7.1 3.3l2.6 1.5c1.3-.8 2.6-1.6 4-2.3v-3c0-19.4 13.3-39.1 35.8-42.6c7.9-1.2 16-1.9 24.2-1.9s16.3 .6 24.2 1.9c22.5 3.5 35.8 23.2 35.8 42.6v3c1.3 .7 2.7 1.5 4 2.3l2.6-1.5c16.8-9.7 40.5-8 54.7 9.7c2.3 2.8 4.5 5.8 6.6 8.7c-2.1-57.1-49-102.7-106.6-102.7zm91.3 163.9c6.3-3.6 9.5-11.1 6.8-18c-2.1-5.5-4.6-10.8-7.4-15.9l-2.3-4c-3.1-5.1-6.5-9.9-10.2-14.5c-4.6-5.7-12.7-6.7-19-3l-2.9 1.7c-9.2 5.3-20.4 4-29.6-1.3s-16.1-14.5-16.1-25.1v-3.4c0-7.3-4.9-13.8-12.1-14.9c-6.5-1-13.1-1.5-19.9-1.5s-13.4 .5-19.9 1.5c-7.2 1.1-12.1 7.6-12.1 14.9v3.4c0 10.6-6.9 19.8-16.1 25.1s-20.4 6.6-29.6 1.3l-2.9-1.7c-6.3-3.6-14.4-2.6-19 3c-3.7 4.6-7.1 9.5-10.2 14.6l-2.3 3.9c-2.8 5.1-5.3 10.4-7.4 15.9c-2.6 6.8 .5 14.3 6.8 17.9l2.9 1.7c9.2 5.3 13.7 15.8 13.7 26.4s-4.5 21.1-13.7 26.4l-3 1.7c-6.3 3.6-9.5 11.1-6.8 17.9c2.1 5.5 4.6 10.7 7.4 15.8l2.4 4.1c3 5.1 6.4 9.9 10.1 14.5c4.6 5.7 12.7 6.7 19 3l2.9-1.7c9.2-5.3 20.4-4 29.6 1.3s16.1 14.5 16.1 25.1v3.4c0 7.3 4.9 13.8 12.1 14.9c6.5 1 13.1 1.5 19.9 1.5s13.4-.5 19.9-1.5c7.2-1.1 12.1-7.6 12.1-14.9v-3.4c0-10.6 6.9-19.8 16.1-25.1s20.4-6.6 29.6-1.3l2.9 1.7c6.3 3.6 14.4 2.6 19-3c3.7-4.6 7.1-9.4 10.1-14.5l2.4-4.2c2.8-5.1 5.3-10.3 7.4-15.8c2.6-6.8-.5-14.3-6.8-17.9l-3-1.7c-9.2-5.3-13.7-15.8-13.7-26.4s4.5-21.1 13.7-26.4l3-1.7zM472 384a40 40 0 1 1 80 0 40 40 0 1 1 -80 0z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 193,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 189,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 194,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 189,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Gest\u00e3o de Utilizadores",
+      "accessible_name": "Gest\u00e3o de Utilizadores",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 195,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 189,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 196,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(6) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 195,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 197,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "tag": "li",
+        "parent_id": 133,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": []
+      },
+      "text": "Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "accessible_name": "Portal das Finan\u00e7as A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 198,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > p:nth-of-type(1)",
+        "tag": "p",
+        "parent_id": 197,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navGroupTitle_e1cdv_161",
+          "mb-3"
+        ]
+      },
+      "text": "Portal das Finan\u00e7as",
+      "accessible_name": "Portal das Finan\u00e7as",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 199,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1)",
+        "tag": "ul",
+        "parent_id": 197,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "d-flex",
+          "flex-column",
+          "gap-2",
+          "m-0",
+          "list-unstyled"
+        ]
+      },
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 200,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1)",
+        "tag": "li",
+        "parent_id": 199,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 201,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 200,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/geral/dashboard",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 202,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 201,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "accessible_name": "A Minha Area A Minha Area A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 203,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 202,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-L54J5f14czB4",
+        "data-prefix": "fas",
+        "data-icon": "house-user",
+        "class": [
+          "svg-inline--fa",
+          "fa-house-user",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 576 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "A Minha Area",
+      "accessible_name": "A Minha Area",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 204,
+        "css_path": "title#svg-inline--fa-title-L54J5f14czB4",
+        "tag": "title",
+        "parent_id": 203,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-L54J5f14czB4"
+      },
+      "text": "A Minha Area",
+      "accessible_name": "A Minha Area",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 205,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 203,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c.2 35.5-28.5 64.3-64 64.3H128.1c-35.3 0-64-28.7-64-64V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24zM352 224a64 64 0 1 0 -128 0 64 64 0 1 0 128 0zm-96 96c-44.2 0-80 35.8-80 80c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16c0-44.2-35.8-80-80-80H256z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 206,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 202,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "A Minha Area",
+      "accessible_name": "A Minha Area",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 207,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 202,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "A Minha \u00c1rea",
+      "accessible_name": "A Minha \u00c1rea",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 208,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 202,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 209,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 208,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 210,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2)",
+        "tag": "li",
+        "parent_id": 199,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 211,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 210,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/notificacoes/gerircanais/todos.html",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 212,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 211,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 213,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 212,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-2uOu57Cnrvx0",
+        "data-prefix": "fas",
+        "data-icon": "address-book",
+        "class": [
+          "svg-inline--fa",
+          "fa-address-book",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 214,
+        "css_path": "title#svg-inline--fa-title-2uOu57Cnrvx0",
+        "tag": "title",
+        "parent_id": 213,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-2uOu57Cnrvx0"
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 215,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 213,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M96 0C60.7 0 32 28.7 32 64V448c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H96zM208 288h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H144c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zM512 80c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V80zM496 192c-8.8 0-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm16 144c0-8.8-7.2-16-16-16s-16 7.2-16 16v64c0 8.8 7.2 16 16 16s16-7.2 16-16V336z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 216,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 212,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 217,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 212,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "accessible_name": "Prefer\u00eancias de Comunica\u00e7\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 218,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 212,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 219,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 218,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 220,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3)",
+        "tag": "li",
+        "parent_id": 199,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "Mensagens Mensagens Mensagens",
+      "accessible_name": "Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 221,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 220,
+        "frame": "main"
+      },
+      "attributes": {
+        "href": "https://sitfiscal.portaldasfinancas.gov.pt/geral/dashboard/consultarMensagens",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "w-100",
+          "justify-content-start",
+          "_linkButton_e1cdv_171"
+        ]
+      },
+      "text": "Mensagens Mensagens Mensagens",
+      "accessible_name": "Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 222,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 221,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_linkButtonContents_e1cdv_206",
+          "w-100"
+        ]
+      },
+      "text": "Mensagens Mensagens Mensagens",
+      "accessible_name": "Mensagens Mensagens Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 223,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 222,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-labelledby": "svg-inline--fa-title-wxxqfPR0Scjg",
+        "data-prefix": "fas",
+        "data-icon": "message",
+        "class": [
+          "svg-inline--fa",
+          "fa-message",
+          "at-ui-icon",
+          "at-ui-icon--xl"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512",
+        "aria-hidden": "true",
+        "focusable": "false"
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 224,
+        "css_path": "title#svg-inline--fa-title-wxxqfPR0Scjg",
+        "tag": "title",
+        "parent_id": 223,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "svg-inline--fa-title-wxxqfPR0Scjg"
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 225,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 223,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64h96v80c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L309.3 416H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 226,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 222,
+        "frame": "main"
+      },
+      "attributes": {
+        "style": "position: absolute; border: 0px; width: 1px; height: 1px; padding: 0px; margin: -1px; overflow: hidden; clip: rect(0px, 0px, 0px, 0px); white-space: nowrap; overflow-wrap: normal;"
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 227,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 222,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_navItemText_e1cdv_218"
+        ]
+      },
+      "text": "Mensagens",
+      "accessible_name": "Mensagens",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 228,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2)",
+        "tag": "svg",
+        "parent_id": 222,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "angle-right",
+        "class": [
+          "svg-inline--fa",
+          "fa-angle-right",
+          "at-ui-icon",
+          "at-ui-icon--xl",
+          "p-0",
+          "d-block",
+          "d-md-none",
+          "ms-auto"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 320 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 229,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(3) > a:nth-of-type(1) > div:nth-of-type(1) > svg:nth-of-type(2) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 228,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 230,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(3)",
+        "tag": "div",
+        "parent_id": 128,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "mx-0",
+          "row-gap-3",
+          "row"
+        ]
+      },
+      "text": "Como tratamos os seus dados pessoais?",
+      "accessible_name": "Como tratamos os seus dados pessoais?",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 231,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(3) > button:nth-of-type(1)",
+        "tag": "button",
+        "parent_id": 230,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "mx-auto",
+          "_comoProcessamos_e1cdv_11",
+          "p-0"
+        ],
+        "type": "button",
+        "aria-haspopup": "dialog",
+        "aria-expanded": "false",
+        "aria-controls": "radix-:r0:",
+        "data-state": "closed"
+      },
+      "text": "Como tratamos os seus dados pessoais?",
+      "accessible_name": "Como tratamos os seus dados pessoais?",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 232,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 230,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "px-0",
+          "mx-0",
+          "column-gap-2",
+          "row-gap-4",
+          "row-gap-md-2",
+          "px-2",
+          "row"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 233,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(3)",
+        "tag": "div",
+        "parent_id": 27,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "_rightCol_e1cdv_225",
+          "d-md-flex",
+          "d-flex"
+        ]
+      },
+      "text": "Sem sess\u00e3o iniciada Iniciar Sess\u00e3o A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar Como tratamos os seus dados pessoais? 6.0.19-11126 - 2026-03-17",
+      "accessible_name": "Sem sess\u00e3o iniciada Iniciar Sess\u00e3o A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar Como tratamos os seus dados pessoais? 6.0.19-11126 - 2026-03-17",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 234,
+        "css_path": "div#_infoHeaderContainer_e1cdv_1",
+        "tag": "div",
+        "parent_id": 233,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_infoHeaderContainer_e1cdv_1",
+        "class": [
+          "w-100",
+          "mx-0",
+          "d-none",
+          "d-md-block"
+        ]
+      },
+      "text": "Sem sess\u00e3o iniciada Iniciar Sess\u00e3o",
+      "accessible_name": "Sem sess\u00e3o iniciada Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 235,
+        "css_path": "div#_infoHeader_e1cdv_1",
+        "tag": "div",
+        "parent_id": 234,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_infoHeader_e1cdv_1",
+        "class": [
+          "w-100",
+          "mx-0",
+          "d-flex",
+          "row"
+        ]
+      },
+      "text": "Sem sess\u00e3o iniciada Iniciar Sess\u00e3o",
+      "accessible_name": "Sem sess\u00e3o iniciada Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 236,
+        "css_path": "div#_infoHeader_e1cdv_1 > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 235,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "px-0",
+          "col"
+        ]
+      },
+      "text": "Sem sess\u00e3o iniciada",
+      "accessible_name": "Sem sess\u00e3o iniciada",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 237,
+        "css_path": "div#_infoHeader_e1cdv_1 > div:nth-of-type(2)",
+        "tag": "div",
+        "parent_id": 235,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "px-0",
+          "justify-content-center",
+          "col"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 238,
+        "css_path": "div#_infoHeader_e1cdv_1 > div:nth-of-type(3)",
+        "tag": "div",
+        "parent_id": 235,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "px-0",
+          "col"
+        ]
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 239,
+        "css_path": "div#_infoHeader_e1cdv_1 > div:nth-of-type(3) > a:nth-of-type(1)",
+        "tag": "a",
+        "parent_id": 238,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "ms-auto"
+        ],
+        "href": "/v2/loginForm?partID=PFAP&path=/geral/dashboard"
+      },
+      "text": "Iniciar Sess\u00e3o",
+      "accessible_name": "Iniciar Sess\u00e3o",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 240,
+        "css_path": "div#content",
+        "tag": "div",
+        "parent_id": 233,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "content",
+        "class": [
+          "mx-0",
+          "_content_e1cdv_26",
+          "row"
+        ]
+      },
+      "text": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar",
+      "accessible_name": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 241,
+        "css_path": "div#content > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 240,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "p-0",
+          "d-flex",
+          "gap-4",
+          "flex-column",
+          "flex-md-row",
+          "justify-content-center"
+        ]
+      },
+      "text": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar",
+      "accessible_name": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 242,
+        "css_path": "div#content > div:nth-of-type(1) > svg:nth-of-type(1)",
+        "tag": "svg",
+        "parent_id": 241,
+        "frame": "main"
+      },
+      "attributes": {
+        "aria-hidden": "true",
+        "focusable": "false",
+        "data-prefix": "fas",
+        "data-icon": "triangle-exclamation",
+        "class": [
+          "svg-inline--fa",
+          "fa-triangle-exclamation",
+          "at-ui-icon",
+          "at-ui-icon--8xl",
+          "at-ui-icon--warning"
+        ],
+        "role": "img",
+        "xmlns": "http://www.w3.org/2000/svg",
+        "viewbox": "0 0 512 512"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": "img"
+    },
+    {
+      "identity": {
+        "node_id": 243,
+        "css_path": "div#content > div:nth-of-type(1) > svg:nth-of-type(1) > path:nth-of-type(1)",
+        "tag": "path",
+        "parent_id": 242,
+        "frame": "main"
+      },
+      "attributes": {
+        "fill": "currentColor",
+        "d": "M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 244,
+        "css_path": "div#content > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 241,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "d-flex",
+          "flex-column"
+        ]
+      },
+      "text": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar",
+      "accessible_name": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o. Voltar",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 245,
+        "css_path": "div#content > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+        "tag": "h1",
+        "parent_id": 244,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "mb-4",
+          "errorPageHeader"
+        ]
+      },
+      "text": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o.",
+      "accessible_name": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o.",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 246,
+        "css_path": "div#content > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1) > b:nth-of-type(1)",
+        "tag": "b",
+        "parent_id": 245,
+        "frame": "main"
+      },
+      "attributes": {},
+      "text": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o.",
+      "accessible_name": "A funcionalidade a que est\u00e1 a tentar aceder pode ter mudado de endere\u00e7o.",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 247,
+        "css_path": "div#content > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 244,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "d-flex",
+          "justify-content-end"
+        ]
+      },
+      "text": "Voltar",
+      "accessible_name": "Voltar",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 248,
+        "css_path": "div#content > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+        "tag": "button",
+        "parent_id": 247,
+        "frame": "main"
+      },
+      "attributes": {
+        "type": "button",
+        "class": [
+          "at-ui-button",
+          "at-ui-button--neutral",
+          "primaryButton",
+          "w-auto"
+        ]
+      },
+      "text": "Voltar",
+      "accessible_name": "Voltar",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 249,
+        "css_path": "div#_footerMobile_e1cdv_1",
+        "tag": "div",
+        "parent_id": 233,
+        "frame": "main"
+      },
+      "attributes": {
+        "id": "_footerMobile_e1cdv_1",
+        "class": [
+          "d-md-none",
+          "mx-0",
+          "row"
+        ]
+      },
+      "text": "Como tratamos os seus dados pessoais?",
+      "accessible_name": "Como tratamos os seus dados pessoais?",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 250,
+        "css_path": "div#_footerMobile_e1cdv_1 > button:nth-of-type(1)",
+        "tag": "button",
+        "parent_id": 249,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "mx-auto",
+          "_comoProcessamos_e1cdv_11",
+          "p-0"
+        ],
+        "type": "button",
+        "aria-haspopup": "dialog",
+        "aria-expanded": "false",
+        "aria-controls": "radix-:r3:",
+        "data-state": "closed"
+      },
+      "text": "Como tratamos os seus dados pessoais?",
+      "accessible_name": "Como tratamos os seus dados pessoais?",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 251,
+        "css_path": "div#_footerMobile_e1cdv_1 > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 249,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "px-0",
+          "mx-0",
+          "column-gap-2",
+          "row-gap-4",
+          "row-gap-md-2",
+          "row"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 252,
+        "css_path": "div#_navContainer_e1cdv_1 > div:nth-of-type(3) > span:nth-of-type(1)",
+        "tag": "span",
+        "parent_id": 233,
+        "frame": "main"
+      },
+      "attributes": {
+        "class": [
+          "version"
+        ]
+      },
+      "text": "6.0.19-11126 - 2026-03-17",
+      "accessible_name": "6.0.19-11126 - 2026-03-17",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 253,
+        "css_path": "div#root > div:nth-of-type(1) > div:nth-of-type(1)",
+        "tag": "div",
+        "parent_id": 17,
+        "frame": "main"
+      },
+      "attributes": {
+        "role": "region",
+        "aria-label": "Notifica\u00e7\u00f5es (F8)",
+        "tabindex": "-1",
+        "style": "pointer-events: none;"
+      },
+      "text": "",
+      "accessible_name": "Notifica\u00e7\u00f5es (F8)",
+      "role": "region"
+    },
+    {
+      "identity": {
+        "node_id": 254,
+        "css_path": "div#root > div:nth-of-type(1) > div:nth-of-type(1) > ol:nth-of-type(1)",
+        "tag": "ol",
+        "parent_id": 253,
+        "frame": "main"
+      },
+      "attributes": {
+        "tabindex": "-1",
+        "class": [
+          "at-ui-toast__viewport"
+        ]
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 255,
+        "css_path": "html:nth-of-type(1) > body:nth-of-type(1) > script:nth-of-type(1)",
+        "tag": "script",
+        "parent_id": 14,
+        "frame": "main"
+      },
+      "attributes": {
+        "type": "text/javascript"
+      },
+      "text": "function stringOrNull(value){return value ? value : null}\n  function parseBoolean(value) {return value !== null && value !== undefined && String(value).toLowerCase() === \"true\"}",
+      "accessible_name": "function stringOrNull(value){return value ? value : null}\n  function parseBoolean(value) {return value !== null && value !== undefined && String(value).toLowerCase() === \"true\"}",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 256,
+        "css_path": "html:nth-of-type(1) > body:nth-of-type(1) > script:nth-of-type(2)",
+        "tag": "script",
+        "parent_id": 14,
+        "frame": "main"
+      },
+      "attributes": {
+        "type": "text/javascript"
+      },
+      "text": "document.addEventListener('readystatechange', function (event) {\n    if (event.target.readyState === \"complete\") {\n\n      var model = {\n        isExternalSP: parseBoolean(''),\n        pfAppUrl: `https://sitfiscal.portaldasfinancas.gov.pt/geral`,\n        urlDadosContacto: `https://sitfiscal.portaldasfinancas.gov.pt/pessoal/contactos/dadosPessoais`,\n        urlPfNotificacoes: `https://sitfiscal.portaldasfinancas.gov.pt/notificacoes/gerircanais/todos.html`,\n        urlPortal: `https://www.portaldas",
+      "accessible_name": "document.addEventListener('readystatechange', function (event) {\n    if (event.target.readyState === \"complete\") {\n\n      var model = {\n        isExternalSP: parseBoolean(''),\n        pfAppUrl: `https://sitfiscal.portaldasfinancas.gov.pt/geral`,\n        urlDadosContacto: `https://sitfiscal.portaldas",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 257,
+        "css_path": "html:nth-of-type(1) > body:nth-of-type(1) > script:nth-of-type(3)",
+        "tag": "script",
+        "parent_id": 14,
+        "frame": "main"
+      },
+      "attributes": {
+        "nomodule": ""
+      },
+      "text": "!function(){var e=document,t=e.createElement(\"script\");if(!(\"noModule\"in t)&&\"onbeforeload\"in t){var n=!1;e.addEventListener(\"beforeload\",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute(\"nomodule\")||!n)return;e.preventDefault()}),!0),t.type=\"module\",t.src=\".\",e.head.appendChild(t),t.remove()}}();",
+      "accessible_name": "!function(){var e=document,t=e.createElement(\"script\");if(!(\"noModule\"in t)&&\"onbeforeload\"in t){var n=!1;e.addEventListener(\"beforeload\",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute(\"nomodule\")||!n)return;e.preventDefault()}),!0),t.type=\"module\",t.src=\".\",e.head.appendChild(t),t",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 258,
+        "css_path": "script#vite-legacy-polyfill",
+        "tag": "script",
+        "parent_id": 14,
+        "frame": "main"
+      },
+      "attributes": {
+        "nomodule": "",
+        "crossorigin": "",
+        "id": "vite-legacy-polyfill",
+        "src": "/autentica_static/bundles/polyfills-legacy-lnohdEou.js"
+      },
+      "text": "",
+      "accessible_name": "",
+      "role": ""
+    },
+    {
+      "identity": {
+        "node_id": 259,
+        "css_path": "script#vite-legacy-entry",
+        "tag": "script",
+        "parent_id": 14,
+        "frame": "main"
+      },
+      "attributes": {
+        "nomodule": "",
+        "crossorigin": "",
+        "id": "vite-legacy-entry",
+        "data-src": "/autentica_static/bundles/error404.html-legacy-HK06xrED.js"
+      },
+      "text": "System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))",
+      "accessible_name": "System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))",
+      "role": ""
+    }
+  ],
+  "browser_evidence": {},
+  "collection_failures": [],
+  "schema_version": 1
+}
