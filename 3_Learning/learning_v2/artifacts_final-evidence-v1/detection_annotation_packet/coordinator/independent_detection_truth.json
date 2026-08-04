@@ -1,0 +1,6198 @@
+{
+  "schema_version": 1,
+  "annotation_protocol": "dual_independent_then_adjudicated",
+  "pairs": [
+    {
+      "case_id": "case-fefddbe3155ed2a8c0fd",
+      "site_id": "www.kwai.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d196566e035ea708b836",
+      "site_id": "www.kwai.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-cdf72f682404e9d3dc9a",
+      "site_id": "www.kwai.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-79acdef2f523ca4b4416",
+      "site_id": "www.kwai.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5535088daafb54b54b3a",
+      "site_id": "www.russianfood.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ea2b0cf02db4541b52cb",
+      "site_id": "www.russianfood.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-54c8ea725d50a24bebc2",
+      "site_id": "www.russianfood.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1bfcf9865e4f02c390b6",
+      "site_id": "www.russianfood.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1674110d4d4f470c65a1",
+      "site_id": "www.bilibili.tv",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ee0d9dce99c7ac0b951f",
+      "site_id": "www.bilibili.tv",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-463d673c4f771f6853af",
+      "site_id": "www.bilibili.tv",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c41ae39f18ba7ac887b0",
+      "site_id": "www.bilibili.tv",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-390d2c0dbeb4fa5c11d8",
+      "site_id": "www.edna.ru",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-303df69910a62ca10247",
+      "site_id": "www.edna.ru",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-974510f8bebb104b3516",
+      "site_id": "www.edna.ru",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-aea8a8e1a79ee692f215",
+      "site_id": "www.edna.ru",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-86ff28697030ec56d0b0",
+      "site_id": "www.filmweb.pl",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-166529c1ef2f2d42a31a",
+      "site_id": "www.filmweb.pl",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e0d0bf02fdfaf5d0308c",
+      "site_id": "www.filmweb.pl",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f6593ce4c88d72de72ec",
+      "site_id": "www.filmweb.pl",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e3ee4c45a36051cc88f8",
+      "site_id": "www.furaffinity.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a37b51bac8c0a5332e95",
+      "site_id": "www.furaffinity.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-226e693de72f8fc462c4",
+      "site_id": "www.furaffinity.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-02e66620a6014466eed4",
+      "site_id": "www.furaffinity.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-550e299d9b040f510f3f",
+      "site_id": "www.gamewith.jp",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0a89f05958028c741139",
+      "site_id": "www.gamewith.jp",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5a1e692197ffca81041a",
+      "site_id": "www.gamewith.jp",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0146e9c2a89630a603df",
+      "site_id": "www.gamewith.jp",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ac7fad40a9dbc37fda00",
+      "site_id": "www.gazzetta.it",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-598ae3ac336febbef401",
+      "site_id": "www.gazzetta.it",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e27b68c92477d85846d6",
+      "site_id": "www.gazzetta.it",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-23e8eda04bc797060039",
+      "site_id": "www.gazzetta.it",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f4f35f9f04a5d2f818c5",
+      "site_id": "www.moloco.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2c3ed9900c3043ba622e",
+      "site_id": "www.moloco.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-06edbc77be4dc4d1ed91",
+      "site_id": "www.moloco.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-22147ba6493206a32425",
+      "site_id": "www.moloco.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-aa1504a54dbc638aaf0b",
+      "site_id": "www.polybuzz.ai",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4d7ea3fb2a8e92aa81f6",
+      "site_id": "www.polybuzz.ai",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-866e2bed067220215bc4",
+      "site_id": "www.polybuzz.ai",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b25840ce71ccf9d90794",
+      "site_id": "www.polybuzz.ai",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c3a56a7a8df3ba7bb736",
+      "site_id": "www.calculator.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-48bb2c907dd36e815c2c",
+      "site_id": "www.calculator.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a0633c772339c95396c0",
+      "site_id": "www.calculator.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-feb8231033feec12d44a",
+      "site_id": "www.calculator.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ef3f9331a3a8acbcb8f1",
+      "site_id": "www.cam.ac.uk",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8199057972970e516948",
+      "site_id": "www.cam.ac.uk",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f5ef3c9041f9bf7d6eeb",
+      "site_id": "www.cam.ac.uk",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2a64b573498be12944d5",
+      "site_id": "www.cam.ac.uk",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fd960bfd1aa8a8d0a352",
+      "site_id": "www.redfin.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f4edca8712a3d0ac20a3",
+      "site_id": "www.redfin.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1c1c4f61f9022315fecc",
+      "site_id": "www.redfin.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e54da55eb8bc512433c3",
+      "site_id": "www.redfin.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a60ef88c793ec2c5ab5c",
+      "site_id": "www.sofascore.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2e972fee95203e82fdb4",
+      "site_id": "www.sofascore.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-37a1d4b39e02c1f5f268",
+      "site_id": "www.sofascore.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-dcd3f0ab844222d5b6f5",
+      "site_id": "www.sofascore.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-924a4222830280912374",
+      "site_id": "www.agora.io",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-dbe025a54bcb4cbb497d",
+      "site_id": "www.agora.io",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ef1865b3da62ee4ad176",
+      "site_id": "www.agora.io",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-be5eea4e97da71611cfa",
+      "site_id": "www.agora.io",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9d73f3f33026004e1223",
+      "site_id": "www.ampproject.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c6ac49f6e008749173f4",
+      "site_id": "www.ampproject.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6948f326dfd9ac842635",
+      "site_id": "www.ampproject.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d4e4b72f74f368dc2032",
+      "site_id": "www.ampproject.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-30b6f53a554113efcdca",
+      "site_id": "www.bild.de",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-81c597f5e3e8ede59791",
+      "site_id": "www.bild.de",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-266c5705a8d232b95dbd",
+      "site_id": "www.bild.de",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-be8898356b64b9b8d933",
+      "site_id": "www.bild.de",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6532ff5afe5c84f8da6b",
+      "site_id": "www.cloud.microsoft",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1eeac2046fbe1490b3d0",
+      "site_id": "www.cloud.microsoft",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5f968f37fc1e092f579d",
+      "site_id": "www.cloud.microsoft",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bfcf0de8749747fabc14",
+      "site_id": "www.cloud.microsoft",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f8296cfb1e444b7bf35b",
+      "site_id": "www.cookielaw.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-39f3e2ddbfc5745a9d83",
+      "site_id": "www.cookielaw.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1154ce71c1586b16a2f8",
+      "site_id": "www.cookielaw.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-91314c277827071c25b8",
+      "site_id": "www.cookielaw.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-dfd2fa2b818813e38ec6",
+      "site_id": "www.dbankcloud.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b7a203baae3a99bbd679",
+      "site_id": "www.dbankcloud.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-53da2ad1ea752ada4ffb",
+      "site_id": "www.dbankcloud.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b5c7e97660caea7918e4",
+      "site_id": "www.dbankcloud.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b5f10fb5278737c26b55",
+      "site_id": "www.espn.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1a623874d94609b2f27a",
+      "site_id": "www.espn.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3d5e6430ffd5cbfc742e",
+      "site_id": "www.espn.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fdfc3723bfebe0396ef4",
+      "site_id": "www.espn.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2821b239297b6d6ae542",
+      "site_id": "www.goal.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-36fe8c9ff4aded5c27d0",
+      "site_id": "www.goal.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-307c8b9a3b0217152b36",
+      "site_id": "www.goal.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-422e1a823c09afef96f7",
+      "site_id": "www.goal.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8043d36229893d50312c",
+      "site_id": "www.hik-connect.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b32991285d4419d9b2f2",
+      "site_id": "www.hik-connect.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b0521a039fa121170baa",
+      "site_id": "www.hik-connect.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c1be4df4d1805421988d",
+      "site_id": "www.hik-connect.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-48a54db3feab67482967",
+      "site_id": "www.hotjar.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7cf69d58ad343d459c5e",
+      "site_id": "www.hotjar.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-cd8a80cf4ce4ff47b169",
+      "site_id": "www.hotjar.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-81fec18ce482dcbe8a6d",
+      "site_id": "www.hotjar.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c16ad8f35b9e0443909d",
+      "site_id": "www.mangafire.to",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-de312f3b2a88b33ee21e",
+      "site_id": "www.mangafire.to",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-18cb95135622c621d9e6",
+      "site_id": "www.mangafire.to",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-05fdc48883f5356b053b",
+      "site_id": "www.mangafire.to",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-98c9ae2b34d319404308",
+      "site_id": "www.marca.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-03bbe89292e7de8bfd1e",
+      "site_id": "www.marca.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c71f8bba7b3ed910d53f",
+      "site_id": "www.marca.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7b30315f3411d69f752f",
+      "site_id": "www.marca.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bb3eac8680d2bfac13c3",
+      "site_id": "www.mysql.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6b051e38357239c87755",
+      "site_id": "www.mysql.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-283d7e3033059680c27f",
+      "site_id": "www.mysql.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-44219761b3872ba7df58",
+      "site_id": "www.mysql.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-00fb0712b3a54827a4e8",
+      "site_id": "www.nikkei.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-10d1c99eb2aa64b185d9",
+      "site_id": "www.nikkei.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5fcaf679c303174996cf",
+      "site_id": "www.nikkei.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bb25e91db181979afbfa",
+      "site_id": "www.nikkei.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fd482ef393e2fc517cfa",
+      "site_id": "www.onelink.me",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8ce6bc9b02367ed64aac",
+      "site_id": "www.onelink.me",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4d6e27ea74217fe9a330",
+      "site_id": "www.onelink.me",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c277694c46d6315fa935",
+      "site_id": "www.onelink.me",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3a9bbbdac452624f2690",
+      "site_id": "www.ovhcloud.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6f74b03f0442a7b838f3",
+      "site_id": "www.ovhcloud.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1d8120f508f64ea26b2a",
+      "site_id": "www.ovhcloud.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-83c014bdad0b776a4787",
+      "site_id": "www.ovhcloud.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-151bb332f5a645764812",
+      "site_id": "www.pandora.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-61b1f9ba149c6dbef3a9",
+      "site_id": "www.pandora.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e685ccb9dd12b28b2aed",
+      "site_id": "www.pandora.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a5e5c7354d09aad69496",
+      "site_id": "www.pandora.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-307022714db1b71f22db",
+      "site_id": "www.property24.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1bbba58c1757dba3bb2a",
+      "site_id": "www.property24.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2cc1225aa0c80ba97ce7",
+      "site_id": "www.property24.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fa23e858a8f640ae708a",
+      "site_id": "www.property24.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b0c2aed31bdfd761c9bd",
+      "site_id": "www.riotgames.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b4ce7b4184b1fb529369",
+      "site_id": "www.riotgames.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8c8755b2c24b2c4f8b10",
+      "site_id": "www.riotgames.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2a4c25c5faf1c0edfe53",
+      "site_id": "www.riotgames.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-36c719346a2f748b4470",
+      "site_id": "www.shopee.co.id",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a68ee6fa998122ed6b8a",
+      "site_id": "www.shopee.co.id",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bc4095b77d7c0dad0a97",
+      "site_id": "www.shopee.co.id",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1c1831495edf5c35801a",
+      "site_id": "www.shopee.co.id",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3e8bce27367b0798568b",
+      "site_id": "www.sportradar.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e7400c3540814d0570f9",
+      "site_id": "www.sportradar.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9d95683bbd0cb4ed8328",
+      "site_id": "www.sportradar.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bf0af534b8f94a13b674",
+      "site_id": "www.sportradar.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-28f1c444ea2b40f69bd3",
+      "site_id": "www.tailscale.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-40f00bd1024038c5f0f8",
+      "site_id": "www.tailscale.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-61bceda52d5647a0d944",
+      "site_id": "www.tailscale.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e251f84dd277e49a9158",
+      "site_id": "www.tailscale.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ae24b0bb1888b5a8229a",
+      "site_id": "www.tokyomotion.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5231301b5dee1bf226b5",
+      "site_id": "www.tokyomotion.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-445f55a6924443a70872",
+      "site_id": "www.tokyomotion.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a389fdf0b5ada37671f4",
+      "site_id": "www.tokyomotion.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c0cbb667b10bdd9145a7",
+      "site_id": "www.tp-link.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d40a2237cac4531ad93d",
+      "site_id": "www.tp-link.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bd0e551c30fc76301d19",
+      "site_id": "www.tp-link.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3d69f0a08557f5416b3d",
+      "site_id": "www.tp-link.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-50ac9b804af7a097525d",
+      "site_id": "www.ubi.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5a306125f4f8b5179624",
+      "site_id": "www.ubi.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b51fdcaf772ad1969892",
+      "site_id": "www.ubi.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0299bcd4b4292bdaf8f4",
+      "site_id": "www.ubi.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a52f220227cd0c9d9f5e",
+      "site_id": "www.weebly.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-85eebc8756242361f043",
+      "site_id": "www.weebly.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-097d124d6285719f86c5",
+      "site_id": "www.weebly.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-240bb155ae3c58fff696",
+      "site_id": "www.weebly.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d12176b5759ee2194f1b",
+      "site_id": "www.wired.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-92b639b8f5cd4a0ab9a0",
+      "site_id": "www.wired.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4ce3cabf0ed288d7ba92",
+      "site_id": "www.wired.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-dc6ce61ef3bdb1291228",
+      "site_id": "www.wired.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-23809fb565c7e3a98ebd",
+      "site_id": "www.wp.pl",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-800899a2fd6b99d3e273",
+      "site_id": "www.wp.pl",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-54a7e5588d08d0b61faf",
+      "site_id": "www.wp.pl",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-754a37edd22404ae89c4",
+      "site_id": "www.wp.pl",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-18dd2bf9d4e21046cf97",
+      "site_id": "www.wpguardian.io",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-94b2308dd6f4eeebc21b",
+      "site_id": "www.wpguardian.io",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e2cbc897fd16a4131d72",
+      "site_id": "www.wpguardian.io",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-731301fd53847ad47fbc",
+      "site_id": "www.wpguardian.io",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6d6029ad1d5768b1ea91",
+      "site_id": "www.wps.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a3a455db6af7e69d5ec4",
+      "site_id": "www.wps.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-be0054cee75126225264",
+      "site_id": "www.wps.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7ff7dbbace79b831da67",
+      "site_id": "www.wps.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6d090c23638f2942ea11",
+      "site_id": "www.18comic.vip",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-db2a3125d05f51549211",
+      "site_id": "www.18comic.vip",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d2efafa857308694607a",
+      "site_id": "www.18comic.vip",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e5525a166cce843b1467",
+      "site_id": "www.18comic.vip",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7ee8af6d11d8ceff532c",
+      "site_id": "www.ad.nl",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6e7ebc390870a98fe4ac",
+      "site_id": "www.ad.nl",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9c7bb3a0263a1e7f21c9",
+      "site_id": "www.ad.nl",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5d7453c75231efd14ef3",
+      "site_id": "www.ad.nl",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ef1481aa8ef6cedf88ac",
+      "site_id": "www.aftonbladet.se",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7cb96b4820199cca4523",
+      "site_id": "www.aftonbladet.se",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0aee3f8c15facda2996d",
+      "site_id": "www.aftonbladet.se",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0aedaf892dc60a7a7b05",
+      "site_id": "www.aftonbladet.se",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e15e8f9619b7b43eae8f",
+      "site_id": "www.ajio.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-67e8bdbd1438130d50be",
+      "site_id": "www.ajio.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-14fec2a79a67f57f2f59",
+      "site_id": "www.ajio.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5c9e33d8aff5f64ff902",
+      "site_id": "www.ajio.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-17bddb124d9425ae7cc8",
+      "site_id": "www.akismet.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-15c5dbee024827c63389",
+      "site_id": "www.akismet.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-150e3abfcf65d94f1bd8",
+      "site_id": "www.akismet.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1ec5a91da4d271060a84",
+      "site_id": "www.akismet.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-461be63252b36ca445b1",
+      "site_id": "www.apa.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-75023e24f9731996117c",
+      "site_id": "www.apa.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-33d680eaad580df9d14d",
+      "site_id": "www.apa.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bdc3b2ea03aec092c73f",
+      "site_id": "www.apa.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4d9a0d5ee4abddc13875",
+      "site_id": "www.arcgis.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f746adf8308572fe594b",
+      "site_id": "www.arcgis.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-865ca4ddf7ad53659a90",
+      "site_id": "www.arcgis.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6ca470760382c6cf489f",
+      "site_id": "www.arcgis.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e6c6dfc129dba3bc41cd",
+      "site_id": "www.autodesk.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b0e4d200377515316a1c",
+      "site_id": "www.autodesk.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b6e7520d49ac4ce8a918",
+      "site_id": "www.autodesk.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6b92bf886958f67b2a7b",
+      "site_id": "www.autodesk.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c40c8e1404bf16831b14",
+      "site_id": "www.blackberry.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-49f9bf27d981f6693401",
+      "site_id": "www.blackberry.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ad5f34445d5f7ce2c998",
+      "site_id": "www.blackberry.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7541373dd0022724520f",
+      "site_id": "www.blackberry.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4783897937f5291a77b5",
+      "site_id": "www.blooket.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-df492501721cbffd8d01",
+      "site_id": "www.blooket.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-14f83756ff27d9968dea",
+      "site_id": "www.blooket.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-74fdc3cd9ac0a1772172",
+      "site_id": "www.blooket.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b2901f7ee987e7e488a8",
+      "site_id": "www.box.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-981d0d1009bfaca7187d",
+      "site_id": "www.box.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-99d40747aadd5c0d690a",
+      "site_id": "www.box.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-516fbc8cf01005c4a53e",
+      "site_id": "www.box.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-dc364cc2c0a627cb88bd",
+      "site_id": "www.canva.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ff07a136120350141c43",
+      "site_id": "www.canva.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2679c10d776d1c99b955",
+      "site_id": "www.canva.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6dd649ac3851054102f8",
+      "site_id": "www.canva.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-cc5999aa1aeb82d3d39d",
+      "site_id": "www.claude.ai",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9b6b5a18d3c60ef0956d",
+      "site_id": "www.claude.ai",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1ab2ee19b4c56eb2dd9d",
+      "site_id": "www.claude.ai",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fe1936670ec816d26e03",
+      "site_id": "www.claude.ai",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e1cc75897b0751c6039a",
+      "site_id": "www.deviantart.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b90bc0ce254617e49b8d",
+      "site_id": "www.deviantart.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0e3049771b99aedc51c1",
+      "site_id": "www.deviantart.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8daf1efe581f4a88f980",
+      "site_id": "www.deviantart.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e943d25446e254c58eaa",
+      "site_id": "www.digitaloceanspaces.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-36c2798aa08a96a04b89",
+      "site_id": "www.digitaloceanspaces.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-aba2df1db48677840a05",
+      "site_id": "www.digitaloceanspaces.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1ac43f0a3a32f50162e6",
+      "site_id": "www.digitaloceanspaces.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5027be1da7900c1848aa",
+      "site_id": "www.discord.gg",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b5c2d2c00b012a5a1985",
+      "site_id": "www.discord.gg",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-452bb5b0f2ef8313b7d6",
+      "site_id": "www.discord.gg",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4b35df96dc367c394132",
+      "site_id": "www.discord.gg",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-141fafeb29b850c56d35",
+      "site_id": "www.dmm.co.jp",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1b1eb933f6d99d4a650e",
+      "site_id": "www.dmm.co.jp",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e759f0a7766586504d75",
+      "site_id": "www.dmm.co.jp",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fbb4d1cbe0d0a759d1b6",
+      "site_id": "www.dmm.co.jp",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ed068cda5648e1606659",
+      "site_id": "www.dreamhost.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ca09ff3ffc89564ed4da",
+      "site_id": "www.dreamhost.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ea11b2e55513b972dbe3",
+      "site_id": "www.dreamhost.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4a9fdb04d05f9cf01bdb",
+      "site_id": "www.dreamhost.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a4b2861ff7a57832d90c",
+      "site_id": "www.drom.ru",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-18c981b1ea6b19d3b5a4",
+      "site_id": "www.drom.ru",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2128425d4f0521e2a9a7",
+      "site_id": "www.drom.ru",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8904d3d2a539a2a79e69",
+      "site_id": "www.drom.ru",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6c2e62f530b5c2caff60",
+      "site_id": "www.ebay.it",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0efb91fa7950e474da61",
+      "site_id": "www.ebay.it",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-de34a2844f3cc45c9646",
+      "site_id": "www.ebay.it",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-036c8834ef1fe0e00427",
+      "site_id": "www.ebay.it",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-77f5e2113d37aaad2ba1",
+      "site_id": "www.ecosia.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-be9dbfc3c651e64f156e",
+      "site_id": "www.ecosia.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ff3fb5388b590e08d862",
+      "site_id": "www.ecosia.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-78b9d97af53f1aef6f85",
+      "site_id": "www.ecosia.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-43e8f86096e4ae199ef4",
+      "site_id": "www.emag.ro",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-daf29a8cdc0fb7fa0f12",
+      "site_id": "www.emag.ro",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-63ec98c37cef4f637719",
+      "site_id": "www.emag.ro",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e2abcf26a7e4bec262af",
+      "site_id": "www.emag.ro",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9fa805dbb2a5cde679fd",
+      "site_id": "www.fanfiction.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-400cdb6c72136f4b46df",
+      "site_id": "www.fanfiction.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-19dbcedbbae10b83bfb9",
+      "site_id": "www.fanfiction.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3cce464309ad32ce1bb6",
+      "site_id": "www.fanfiction.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-431af9ecccff2ef6cc3a",
+      "site_id": "www.fast.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9d2afa25d01775a79c60",
+      "site_id": "www.fast.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a8b7f311ac736cb77169",
+      "site_id": "www.fast.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ee2800c8bdd31f619ba9",
+      "site_id": "www.fast.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-116388d02af1f8be1596",
+      "site_id": "www.finn.no",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9db9a8b9d66128cbf76e",
+      "site_id": "www.finn.no",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c4fa1d9eef72b0f8ae2e",
+      "site_id": "www.finn.no",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-be04229121bc33b74af8",
+      "site_id": "www.finn.no",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0925b70dda2c36a58a31",
+      "site_id": "www.forter.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a5fb240363d228c2166b",
+      "site_id": "www.forter.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b6e2d58f3c42ad5c843f",
+      "site_id": "www.forter.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8fde59a88ad86b1b42ed",
+      "site_id": "www.forter.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7e762f666f6d6bd621ce",
+      "site_id": "www.foxnews.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bda53d25dd9d9793a357",
+      "site_id": "www.foxnews.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e373df2114343284625c",
+      "site_id": "www.foxnews.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5dad077aaa9a842d9ea0",
+      "site_id": "www.foxnews.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e422d70def14e14dfcf9",
+      "site_id": "www.frontiersin.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1962db4490a775a2f2f8",
+      "site_id": "www.frontiersin.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2f5666f872dd9dbcb1d4",
+      "site_id": "www.frontiersin.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0793df713364c895e8f1",
+      "site_id": "www.frontiersin.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-05ce9d9ce3216bef092b",
+      "site_id": "www.fuq.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-88c46aab057bf487dae7",
+      "site_id": "www.fuq.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-62d37bb6763139c9b3a0",
+      "site_id": "www.fuq.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-47091a47e7ac3f97c43b",
+      "site_id": "www.fuq.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f15c920d57b28ca94153",
+      "site_id": "www.github.io",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-cab0130df2f4c213c8b2",
+      "site_id": "www.github.io",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-02057af46175e2aaac22",
+      "site_id": "www.github.io",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9c6439442cc842adf85d",
+      "site_id": "www.github.io",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-142aa26288420a5849a0",
+      "site_id": "www.groww.in",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e2147440eaede6cee144",
+      "site_id": "www.groww.in",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a092ec712eb884f48702",
+      "site_id": "www.groww.in",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bc6b09d27f7e2a6feaba",
+      "site_id": "www.groww.in",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2c11e70c7e53e43e3368",
+      "site_id": "www.hurriyet.com.tr",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9cea8ec55a50b1fc8904",
+      "site_id": "www.hurriyet.com.tr",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-61796cba7213495b62b1",
+      "site_id": "www.hurriyet.com.tr",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7c9d735b751f499cc9b3",
+      "site_id": "www.hurriyet.com.tr",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0647fd7f7d205be5ab71",
+      "site_id": "www.ilovepdf.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-23f1a5e19db8730aca88",
+      "site_id": "www.ilovepdf.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a7192dea041c1d232a96",
+      "site_id": "www.ilovepdf.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-38ba6680c65d3b5cfc05",
+      "site_id": "www.ilovepdf.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9ee51ba6ccd6606acc0a",
+      "site_id": "www.inps.it",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9a7da9bd6230b1dc2aa3",
+      "site_id": "www.inps.it",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-acdad210529e5f26b859",
+      "site_id": "www.inps.it",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-322c5634ba7eb5fe8f4d",
+      "site_id": "www.inps.it",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-42a7efc9df36ca009777",
+      "site_id": "www.internetwarriors.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b2a4abe8b0de02fbce11",
+      "site_id": "www.internetwarriors.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8ba9333493a1f9e0b7e4",
+      "site_id": "www.internetwarriors.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-060f8c9742adfa902f7e",
+      "site_id": "www.internetwarriors.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-673b8f5c8a14a11839d3",
+      "site_id": "www.issuu.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ea38e3c30f25b70c7b54",
+      "site_id": "www.issuu.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-25f5069e4cef1a69ce68",
+      "site_id": "www.issuu.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b0554fa3de44b9114fc6",
+      "site_id": "www.issuu.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-666d7eeaf0dd032585aa",
+      "site_id": "www.jotform.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e0dcea8b56de397a9c1e",
+      "site_id": "www.jotform.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-17fa2265b0f3fa12a401",
+      "site_id": "www.jotform.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-90a01f7d6307061501ce",
+      "site_id": "www.jotform.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bad556ad9ee62560b589",
+      "site_id": "www.jw.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-708c3a164bb8a82a6332",
+      "site_id": "www.jw.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0efb991dfb70a4d25381",
+      "site_id": "www.jw.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-aae30ed985ccb68e5dcb",
+      "site_id": "www.jw.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d416c32ee5685491455b",
+      "site_id": "www.kleinanzeigen.de",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6435219a6fbddac9b78c",
+      "site_id": "www.kleinanzeigen.de",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fba987498eedef330dce",
+      "site_id": "www.kleinanzeigen.de",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d77bb069f76f594c2965",
+      "site_id": "www.kleinanzeigen.de",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-508c550d779a366419c1",
+      "site_id": "www.listcrawler.eu",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fa06d6f96c72d15a5110",
+      "site_id": "www.listcrawler.eu",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-dbbd9649fa9a0c468cf5",
+      "site_id": "www.listcrawler.eu",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4335e19c85283da8b6c3",
+      "site_id": "www.listcrawler.eu",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-73015b34279b1071f140",
+      "site_id": "www.mangabuff.ru",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6a4d7c6ea62dabb414ae",
+      "site_id": "www.mangabuff.ru",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-96d1c7778627ad4dedea",
+      "site_id": "www.mangabuff.ru",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-818d5f1fbc4aaec4aac3",
+      "site_id": "www.mangabuff.ru",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-987a9a556b0958b3eac5",
+      "site_id": "www.markmonitor.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3681f5d659ac0eb16c8b",
+      "site_id": "www.markmonitor.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2feb0c69dbc160d839fb",
+      "site_id": "www.markmonitor.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e9dd3a2864b1a52ef1f0",
+      "site_id": "www.markmonitor.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5ddad4187d850d066f8f",
+      "site_id": "www.marktplaats.nl",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ff3cc54476e33a880393",
+      "site_id": "www.marktplaats.nl",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6c86ec1c298a990fb335",
+      "site_id": "www.marktplaats.nl",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a98241a44e2f3c43f47c",
+      "site_id": "www.marktplaats.nl",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2adf5c5aff64cbc2aa91",
+      "site_id": "www.meraki.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d61ea05cd657e447b164",
+      "site_id": "www.meraki.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ec3bea0c0283da0b6aae",
+      "site_id": "www.meraki.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-898e874f64f47192e9f6",
+      "site_id": "www.meraki.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-806cf42497518ebc1291",
+      "site_id": "www.microsoft.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0b7853465307a3d57692",
+      "site_id": "www.microsoft.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5690ffe8d286ecc81b42",
+      "site_id": "www.microsoft.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f8e0341a755cfce3ae52",
+      "site_id": "www.microsoft.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-86c9466dfe71635713f4",
+      "site_id": "www.myinstants.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6e6957d174612b1627d9",
+      "site_id": "www.myinstants.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-33ae2fdad35db0283d41",
+      "site_id": "www.myinstants.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-06efec68cb3045afb5be",
+      "site_id": "www.myinstants.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-eb518fbfcd22e4cf349b",
+      "site_id": "www.namu.wiki",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3f9380f2ad84f87e26eb",
+      "site_id": "www.namu.wiki",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-93ac65125c40c90514da",
+      "site_id": "www.namu.wiki",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ebacc3d1c1eac94e069c",
+      "site_id": "www.namu.wiki",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8586d5864e9eddddc8ad",
+      "site_id": "www.naukri.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1bc2b4396f74866a34c5",
+      "site_id": "www.naukri.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bffbf58a5ef91daf9e26",
+      "site_id": "www.naukri.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-955727e87f04de627f3c",
+      "site_id": "www.naukri.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6f85ce4617dc49a2e1fc",
+      "site_id": "www.notion.so",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-17390e35c028b36249c7",
+      "site_id": "www.notion.so",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6b4f261d521dd5f09571",
+      "site_id": "www.notion.so",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1f4500d575e8f109f654",
+      "site_id": "www.notion.so",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d0c9c0faed49bf8fac1d",
+      "site_id": "www.odoo.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6de300f8529eddc5cd7d",
+      "site_id": "www.odoo.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-cb3cc3ed157032a0f95b",
+      "site_id": "www.odoo.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-643bbfec922aa81aee5a",
+      "site_id": "www.odoo.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e3b0b0be93e4405cab00",
+      "site_id": "www.outbrain.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-93282948a1643fc1d5bf",
+      "site_id": "www.outbrain.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ab1e5002126ae5aeed9b",
+      "site_id": "www.outbrain.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-aca8e33bf149ae65a5f5",
+      "site_id": "www.outbrain.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2bc343f55ff743e8a030",
+      "site_id": "www.outlook.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-67011d5efb094912eca8",
+      "site_id": "www.outlook.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-138033f4a95f61223004",
+      "site_id": "www.outlook.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c1babd7c165db688df53",
+      "site_id": "www.outlook.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4a4f81e185064d756cf2",
+      "site_id": "www.ox.ac.uk",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8be20f8ca759c3a0888f",
+      "site_id": "www.ox.ac.uk",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-63ac5709b801bf78e122",
+      "site_id": "www.ox.ac.uk",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ef1c5b50933813fd2fb2",
+      "site_id": "www.ox.ac.uk",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9d1984d071c9a1581990",
+      "site_id": "www.pccc.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c517d6d790f72496c4cc",
+      "site_id": "www.pccc.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-278e4c46e88ba61241f5",
+      "site_id": "www.pccc.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8ac6b33e2e1b7b68beb5",
+      "site_id": "www.pccc.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a7663e8b8a43f254b79b",
+      "site_id": "www.pexels.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-31f27d292fba165ad835",
+      "site_id": "www.pexels.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e0f88c83a56fdfa01612",
+      "site_id": "www.pexels.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4d281bd28a9326e35917",
+      "site_id": "www.pexels.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7e9cb0a3682c76cd7654",
+      "site_id": "www.pinterest.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ab6e2d051d89f04f531f",
+      "site_id": "www.pinterest.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ffbaa25052ac65858ae1",
+      "site_id": "www.pinterest.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bfa99b8a764de8b86b0e",
+      "site_id": "www.pinterest.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a938fe977e00e5bfe0d1",
+      "site_id": "www.postgresql.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2e19248216060f6e5961",
+      "site_id": "www.postgresql.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e965b4ed1c6fe2cb21e6",
+      "site_id": "www.postgresql.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-aa655c26c043db51d82e",
+      "site_id": "www.postgresql.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4dd5775659411c76a643",
+      "site_id": "www.ppomppu.co.kr",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-78533da1d720a263e905",
+      "site_id": "www.ppomppu.co.kr",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5363a736f234ade704d2",
+      "site_id": "www.ppomppu.co.kr",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-023195e271bdbf7dd1cb",
+      "site_id": "www.ppomppu.co.kr",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-911086c52844d6bb0e92",
+      "site_id": "www.rackspace.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8fa69b8d0b26a431f5e7",
+      "site_id": "www.rackspace.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1a67a7bd916408c2d943",
+      "site_id": "www.rackspace.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bf9808990a591c646d1b",
+      "site_id": "www.rackspace.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-33cc2c02e6f6d74d6676",
+      "site_id": "www.rakuten.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-61483026d60d782b1461",
+      "site_id": "www.rakuten.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3c6175701c7f7b1f9dcb",
+      "site_id": "www.rakuten.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-427ac776a0ed8571f438",
+      "site_id": "www.rakuten.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1f231e7a7ae71900139a",
+      "site_id": "www.reuters.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5fb6d1afced650936adc",
+      "site_id": "www.reuters.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-936acd2549b2a01f3b35",
+      "site_id": "www.reuters.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-675f4de93ee9cd648424",
+      "site_id": "www.reuters.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c2bd4d8bcb36ed7a4d57",
+      "site_id": "www.rutube.ru",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-bc3f4b9cad81b0e1a2c8",
+      "site_id": "www.rutube.ru",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-81088e90f12cab5d7789",
+      "site_id": "www.rutube.ru",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-368be47af5daf261b204",
+      "site_id": "www.rutube.ru",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-c6845fcee7c7f97faaae",
+      "site_id": "www.sciencedaily.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-49fc484d99ab38c3212b",
+      "site_id": "www.sciencedaily.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-079df9347357e3d772ca",
+      "site_id": "www.sciencedaily.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5416928ed7a26f7c9c80",
+      "site_id": "www.sciencedaily.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4aad642faea1fac9cf9d",
+      "site_id": "www.sciencedirect.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a8fd14873676a0ce52ef",
+      "site_id": "www.sciencedirect.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4d6eefb2d3d56aa46044",
+      "site_id": "www.sciencedirect.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4bdf503da5826f177b99",
+      "site_id": "www.sciencedirect.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8fad011f0ee6b575877d",
+      "site_id": "www.shopify.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f8720e27324af7ea2fcd",
+      "site_id": "www.shopify.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-b35507b5c6bf8141b4ca",
+      "site_id": "www.shopify.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-dfe9fc4ba21ab08e7c5a",
+      "site_id": "www.shopify.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0b069c264ea23b8bd3cc",
+      "site_id": "www.simpcity.cr",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2160f3956e928d25a635",
+      "site_id": "www.simpcity.cr",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e22294fdc88631415924",
+      "site_id": "www.simpcity.cr",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-3350304a2e326bb5a052",
+      "site_id": "www.simpcity.cr",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-65b2d19b95c75f1b8db7",
+      "site_id": "www.sinoptik.ua",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a36a5a177f5c3cb7531a",
+      "site_id": "www.sinoptik.ua",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8037c7405371a8f059cf",
+      "site_id": "www.sinoptik.ua",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a18a39256b49fa4bfbc7",
+      "site_id": "www.sinoptik.ua",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5708fb12943b95ee4eae",
+      "site_id": "www.skyhigh.cloud",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-86ecded6ff0982c3dbc6",
+      "site_id": "www.skyhigh.cloud",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1a454986f126e8f574ec",
+      "site_id": "www.skyhigh.cloud",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ecc146e4adb773a0c730",
+      "site_id": "www.skyhigh.cloud",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-913d134a7c60be24d4a5",
+      "site_id": "www.skype.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8f927bb8eff71da08f5f",
+      "site_id": "www.skype.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7fc0c43123c306a59def",
+      "site_id": "www.skype.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-52723aab9713804fac71",
+      "site_id": "www.skype.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-433d360daa23e7059a2e",
+      "site_id": "www.smartthings.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a5b5cf593a12cd3ce7cf",
+      "site_id": "www.smartthings.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8cfb920d0607d6471510",
+      "site_id": "www.smartthings.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-25bfcd12137840e53673",
+      "site_id": "www.smartthings.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7ba5cf24e6104cfd1fe2",
+      "site_id": "www.sotwe.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5ef81c10bae705c542b7",
+      "site_id": "www.sotwe.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2d904633c44f5200c22e",
+      "site_id": "www.sotwe.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-07aa8a9e8e796ceaee16",
+      "site_id": "www.sotwe.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-80bab90dc7cabcf44e9b",
+      "site_id": "www.speedtest.net",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-efa92a4bdae1931c4c63",
+      "site_id": "www.speedtest.net",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0fd202e14df77f60a825",
+      "site_id": "www.speedtest.net",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f93f9ea5519956284582",
+      "site_id": "www.speedtest.net",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a2233fd57ffa54276627",
+      "site_id": "www.tabletki.ua",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-48f17e2d95e5d6b05e3f",
+      "site_id": "www.tabletki.ua",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-31bab897150d672559ab",
+      "site_id": "www.tabletki.ua",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-36bde0ed5559b2fdca28",
+      "site_id": "www.tabletki.ua",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-224ac9bc3df213fcc5f3",
+      "site_id": "www.tagesschau.de",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-6cf7489cb4dc0e84b64a",
+      "site_id": "www.tagesschau.de",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5b26cb762628fa59ee70",
+      "site_id": "www.tagesschau.de",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-5e394db6ffc57e71a6e2",
+      "site_id": "www.tagesschau.de",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f9939a27ba0f1f0e4a2b",
+      "site_id": "www.telegraph.co.uk",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-22ce171a00d12ec5fdc0",
+      "site_id": "www.telegraph.co.uk",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a8612f3c6e7c468f03f7",
+      "site_id": "www.telegraph.co.uk",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-f63bb8157a3b6f305566",
+      "site_id": "www.telegraph.co.uk",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-fdd1492011b59bd92617",
+      "site_id": "www.theverge.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-73f7baa1bdcf8820188e",
+      "site_id": "www.theverge.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a27775941e69fd5d0bda",
+      "site_id": "www.theverge.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-28f8befb62cc91a2cca3",
+      "site_id": "www.theverge.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-862a2fc24ff82ef774af",
+      "site_id": "www.thexh.live",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-048cecee09efe1c98aa8",
+      "site_id": "www.thexh.live",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-507e2f4899bdc8809e8f",
+      "site_id": "www.thexh.live",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1c59555e2e0c66f9e766",
+      "site_id": "www.thexh.live",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a9d1948609b2fdde4915",
+      "site_id": "www.trello.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-03d754f950b2bf2e59c0",
+      "site_id": "www.trello.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-edfd20060f611095e2d4",
+      "site_id": "www.trello.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-20b43bc30c9847a6f415",
+      "site_id": "www.trello.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d6807cc85b5daf8541c2",
+      "site_id": "www.un.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-0a4a304168bda1a2e5b2",
+      "site_id": "www.un.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d76b309bf665a8324242",
+      "site_id": "www.un.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-a08fa913989484071ccb",
+      "site_id": "www.un.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-ef272319fdc1400341e1",
+      "site_id": "www.upenn.edu",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-72f7ca0caa6cf4c98ab5",
+      "site_id": "www.upenn.edu",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8af127d38fe4a8030782",
+      "site_id": "www.upenn.edu",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8c8af80d3d6cb0740063",
+      "site_id": "www.upenn.edu",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-185bf127a36a77033cbe",
+      "site_id": "www.wix.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-22d4b450d7c70b9f066c",
+      "site_id": "www.wix.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-39ce81ec188ebdce0607",
+      "site_id": "www.wix.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-e9e5979cab609541510d",
+      "site_id": "www.wix.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-22db64e94837948b2bec",
+      "site_id": "www.wixsite.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-1241c1f01468b88e4a2d",
+      "site_id": "www.wixsite.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-baeeedf8ed54564a1da6",
+      "site_id": "www.wixsite.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-06d1334ca09052dfbd04",
+      "site_id": "www.wixsite.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-8d8f1777f832ed470bb7",
+      "site_id": "www.wordpress.org",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-06c016b486b6927de986",
+      "site_id": "www.wordpress.org",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-2ab7f0e05450eb713923",
+      "site_id": "www.wordpress.org",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-768e446d01f0af4f648f",
+      "site_id": "www.wordpress.org",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-58d3d5beda4a3505583b",
+      "site_id": "www.wsj.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-21cb0863361d4fd19c61",
+      "site_id": "www.wsj.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-33b52b1cd95c0644d796",
+      "site_id": "www.wsj.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-7d9e25e7e440b57e7b27",
+      "site_id": "www.wsj.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-d771b33e2ba00878c309",
+      "site_id": "www.xiaomi.com",
+      "criterion_id": "1.1.1",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-792f1d94d79a5ba54c1e",
+      "site_id": "www.xiaomi.com",
+      "criterion_id": "1.4.3",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-9d3d480659a5b0999e62",
+      "site_id": "www.xiaomi.com",
+      "criterion_id": "2.4.4",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    },
+    {
+      "case_id": "case-4efe4198fcff3ef27640",
+      "site_id": "www.xiaomi.com",
+      "criterion_id": "4.1.2",
+      "status": null,
+      "annotator_ids": [
+        "annotator-1",
+        "annotator-2"
+      ],
+      "adjudicated": false,
+      "evidence": ""
+    }
+  ]
+}
