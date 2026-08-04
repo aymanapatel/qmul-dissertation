@@ -1,7 +1,10 @@
-"""Capture an HTML snapshot together with live computed visual features."""
+"""Capture aligned HTML, visual, accessibility-tree, and screenshot evidence."""
 
 import json
+import base64
+from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 
 SNAPSHOT_VERSION = 1
@@ -156,13 +159,9 @@ CAPTURE_SCRIPT = r"""() => {
         : '';
     const html = doctype + document.documentElement.outerHTML;
 
-    for (const oldMarker of oldMarkers) {
-        if (oldMarker.hadMarker) {
-            oldMarker.node.setAttribute('data-gnn-node-id', oldMarker.marker);
-        } else {
-            oldMarker.node.removeAttribute('data-gnn-node-id');
-        }
-    }
+    // Keep the markers attached until Python has captured the DOM and AX tree.
+    // Store node references in the page so cleanup can restore pre-existing values.
+    globalThis.__gnnSnapshotOldMarkers = oldMarkers;
 
     return {
         html,
@@ -176,14 +175,149 @@ CAPTURE_SCRIPT = r"""() => {
 }"""
 
 
-async def capture_rendered_snapshot(page, html_path: Path) -> Path:
-    """Write marked-up HTML and an adjacent ``*.visual.json`` sidecar."""
-    snapshot = await page.evaluate(CAPTURE_SCRIPT)
-    html_path.parent.mkdir(parents=True, exist_ok=True)
-    html_path.write_text(snapshot["html"], encoding="utf-8")
-    visual_path = html_path.with_suffix(".visual.json")
-    visual_path.write_text(
-        json.dumps(snapshot["visual"], indent=2, ensure_ascii=False),
-        encoding="utf-8",
+CLEANUP_SCRIPT = r"""() => {
+    const oldMarkers = globalThis.__gnnSnapshotOldMarkers || [];
+    for (const oldMarker of oldMarkers) {
+        if (oldMarker.hadMarker) {
+            oldMarker.node.setAttribute('data-gnn-node-id', oldMarker.marker);
+        } else {
+            oldMarker.node.removeAttribute('data-gnn-node-id');
+        }
+    }
+    delete globalThis.__gnnSnapshotOldMarkers;
+}"""
+
+
+def _attribute_map(node: dict[str, Any]) -> dict[str, str]:
+    attributes = node.get("attributes") or []
+    return {
+        str(attributes[index]): str(attributes[index + 1])
+        for index in range(0, len(attributes) - 1, 2)
+    }
+
+
+def build_backend_marker_map(root: dict[str, Any]) -> dict[str, str]:
+    """Map CDP backend DOM node ids to the temporary snapshot marker ids."""
+    mapping: dict[str, str] = {}
+
+    def visit(node: dict[str, Any]) -> None:
+        backend_id = node.get("backendNodeId")
+        marker = _attribute_map(node).get("data-gnn-node-id")
+        if backend_id is not None and marker is not None:
+            mapping[str(backend_id)] = marker
+        for key in ("children", "shadowRoots", "pseudoElements"):
+            for child in node.get(key) or []:
+                visit(child)
+        content_document = node.get("contentDocument")
+        if isinstance(content_document, dict):
+            visit(content_document)
+
+    visit(root)
+    return mapping
+
+
+async def _session_id(page):
+    if hasattr(page, "_ensure_session"):
+        return await page._ensure_session()
+    value = page.session_id
+    return await value if hasattr(value, "__await__") else value
+
+
+async def capture_page_screenshot(page, session_id: str, path: Path) -> None:
+    """Capture the audited page target, not BrowserSession's focused tab."""
+    result = await page._client.send.Page.captureScreenshot(
+        {"format": "png", "captureBeyondViewport": True},
+        session_id=session_id,
     )
-    return visual_path
+    encoded = result.get("data") if isinstance(result, dict) else None
+    if not encoded:
+        raise RuntimeError("page-targeted CDP screenshot returned no data")
+    path.write_bytes(base64.b64decode(encoded, validate=True))
+
+
+async def capture_rendered_snapshot(
+    page,
+    html_path: Path,
+    *,
+    ax_path: Path | None = None,
+    screenshot_path: Path | None = None,
+) -> dict[str, Path]:
+    """Atomically write a same-session aligned evidence bundle.
+
+    The DOM markers remain live through the CDP DOM/AX captures and screenshot.
+    A failure raises and leaves no newly staged final bundle.
+    """
+    visual_path = html_path.with_suffix(".visual.json")
+    ax_path = ax_path or html_path.with_suffix(".ax.json")
+    screenshot_path = screenshot_path or html_path.with_suffix(".png")
+    paths = {
+        "html": html_path,
+        "visual": visual_path,
+        "ax": ax_path,
+        "screenshot": screenshot_path,
+    }
+    for path in paths.values():
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+    staged = {
+        "html": html_path.with_name(f".{html_path.name}.tmp"),
+        "visual": visual_path.with_name(f".{visual_path.name}.tmp"),
+        "ax": ax_path.with_name(f".{ax_path.name}.tmp"),
+        "screenshot": screenshot_path.with_name(f".{screenshot_path.stem}.tmp{screenshot_path.suffix}"),
+    }
+
+    try:
+        snapshot = await page.evaluate(CAPTURE_SCRIPT)
+        if isinstance(snapshot, str):
+            snapshot = json.loads(snapshot)
+        session_id = await _session_id(page)
+        document = await page._client.send.DOM.getDocument(
+            {"depth": -1, "pierce": True}, session_id=session_id
+        )
+        ax_result = await page._client.send.Accessibility.getFullAXTree(
+            {}, session_id=session_id
+        )
+        backend_to_marker = build_backend_marker_map(document["root"])
+
+        await capture_page_screenshot(page, session_id, staged["screenshot"])
+
+        ax_nodes = ax_result.get("nodes") or []
+        mapped_ax_nodes = sum(
+            1
+            for node in ax_nodes
+            if str(node.get("backendDOMNodeId")) in backend_to_marker
+        )
+        ax_payload = {
+            "version": SNAPSHOT_VERSION,
+            "captured_at": datetime.now(UTC).isoformat(),
+            "captured_url": snapshot["visual"].get("captured_url"),
+            "viewport": snapshot["visual"].get("viewport"),
+            "nodes": ax_nodes,
+            "backend_dom_to_snapshot_node": backend_to_marker,
+            "mapping_stats": {
+                "dom_nodes_with_marker": len(backend_to_marker),
+                "ax_nodes": len(ax_nodes),
+                "ax_nodes_mapped_to_snapshot": mapped_ax_nodes,
+            },
+        }
+        staged["html"].write_text(snapshot["html"], encoding="utf-8")
+        staged["visual"].write_text(
+            json.dumps(snapshot["visual"], indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+        staged["ax"].write_text(
+            json.dumps(ax_payload, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+
+        for key, path in paths.items():
+            temporary = staged[key]
+            if not temporary.is_file() or temporary.stat().st_size == 0:
+                raise RuntimeError(f"required snapshot artifact was not written: {path}")
+        for key, path in paths.items():
+            staged[key].replace(path)
+        return paths
+    finally:
+        try:
+            await page.evaluate(CLEANUP_SCRIPT)
+        finally:
+            for temporary in staged.values():
+                temporary.unlink(missing_ok=True)
