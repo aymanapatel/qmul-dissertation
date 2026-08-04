@@ -33,7 +33,7 @@ load_dotenv(BASE_DIR / ".env")
 
 parser = argparse.ArgumentParser(description="Run axe-core accessibility audits on websites.")
 parser.add_argument("--no-nav", action="store_true", help="Skip navigation link extraction; only audit the current page after login.")
-parser.add_argument("--no-nav-landing-page", action="store_true", help="Skip authentication and navigation extraction; only audit the public landing page.")
+parser.add_argument("--no-auth", action="store_true", help="Skip authentication and navigation extraction; only audit the public landing page.")
 parser.add_argument("--site", type=str, help="Run on a single site directly (bypasses CSV).")
 parser.add_argument("--signup", action="store_true", help="Sign up for a new account instead of logging in. Password will be saved to .env.passwords.")
 parser.add_argument("--workers", type=int, default=1, help="Number of domains to process in parallel.")
@@ -44,6 +44,24 @@ parser.add_argument("--skip-existing-output", action="store_true", help="Skip do
 parser.add_argument("--no-csv-status", action="store_true", help="Do not update domains.csv while running.")
 parser.add_argument("--settle-seconds", type=float, default=2.0, help="Seconds to wait after page load before running axe-core.")
 parser.add_argument("--page-timeout-ms", type=int, default=PAGE_LOAD_TIMEOUT_MS, help="Page navigation timeout in milliseconds.")
+parser.add_argument(
+    "--capture-ready-timeout",
+    type=float,
+    default=30.0,
+    help="Maximum seconds to wait for loaders to disappear and the DOM to stabilize before evidence capture.",
+)
+parser.add_argument(
+    "--capture-stable-seconds",
+    type=float,
+    default=2.0,
+    help="Seconds the rendered DOM must remain stable before evidence capture.",
+)
+parser.add_argument(
+    "--output-dir",
+    type=Path,
+    default=OUTPUT_DIR,
+    help=f"Evidence output directory (default: {OUTPUT_DIR}).",
+)
 parser.add_argument(
     "--start-row",
     "--source-row",
@@ -172,8 +190,13 @@ def save_domain_summary(reports: list[dict], path: Path, first_status: str | Non
     return summary
 
 
-async def save_rendered_html(page, path: Path) -> None:
-    await capture_rendered_snapshot(page, path)
+async def save_rendered_html(page, path: Path) -> dict[str, Path]:
+    return await capture_rendered_snapshot(
+        page,
+        path,
+        ax_path=path.with_suffix(".ax.json"),
+        screenshot_path=path.with_suffix(".png"),
+    )
 
 
 def parse_urls_from_output(output: str, base_domain: str) -> list[str]:
@@ -390,6 +413,86 @@ async def pre_page_waiting(page, url: str) -> None:
         print(f"  Cookie prompt handling skipped on {url}: {e}")
 
 
+CAPTURE_READINESS_SCRIPT = r"""() => {
+    const viewportArea = Math.max(innerWidth * innerHeight, 1);
+    const selectors = [
+        '[aria-busy="true"]', '[aria-label*="loading" i]', '[aria-label*="loader" i]',
+        '[class*="loading" i]', '[class*="loader" i]', '[class*="spinner" i]',
+        '[id*="loading" i]', '[id*="loader" i]', '[id*="spinner" i]'
+    ];
+    const candidates = Array.from(document.querySelectorAll(selectors.join(',')));
+    const visibleLoaders = candidates.filter((node) => {
+        const rect = node.getBoundingClientRect();
+        const style = getComputedStyle(node);
+        const visible = rect.width > 0 && rect.height > 0 && style.display !== 'none' &&
+            style.visibility !== 'hidden' && Number(style.opacity) > 0;
+        if (!visible) return false;
+        const areaRatio = (rect.width * rect.height) / viewportArea;
+        const coversViewport = areaRatio >= 0.20 ||
+            (rect.width >= innerWidth * 0.8 && rect.height >= innerHeight * 0.8);
+        const explicitlyBusy = node.getAttribute('aria-busy') === 'true';
+        return coversViewport || explicitlyBusy;
+    });
+    const body = document.body;
+    const fingerprint = [
+        document.querySelectorAll('*').length,
+        body ? body.innerHTML.length : 0,
+        body ? (body.innerText || '').trim().length : 0,
+        body ? body.scrollWidth : 0,
+        body ? body.scrollHeight : 0,
+    ].join(':');
+    return {
+        ready_state: document.readyState,
+        visible_loader_count: visibleLoaders.length,
+        loader: visibleLoaders.length
+            ? `${visibleLoaders[0].tagName.toLowerCase()}#${visibleLoaders[0].id}.${visibleLoaders[0].className}`.slice(0, 200)
+            : '',
+        fingerprint,
+    };
+}"""
+
+
+async def wait_for_capture_readiness(
+    page,
+    url: str,
+    *,
+    timeout_seconds: float,
+    stable_seconds: float,
+) -> None:
+    """Wait until the live page is loaded, loader-free, and observably stable."""
+    loop = asyncio.get_running_loop()
+    deadline = loop.time() + timeout_seconds
+    stable_since: float | None = None
+    previous_fingerprint: str | None = None
+    last_state: dict = {}
+
+    while loop.time() < deadline:
+        raw = await page.evaluate(CAPTURE_READINESS_SCRIPT)
+        state = json.loads(raw) if isinstance(raw, str) else raw
+        if not isinstance(state, dict):
+            state = {}
+        last_state = state
+        ready = state.get("ready_state") == "complete"
+        loader_free = int(state.get("visible_loader_count") or 0) == 0
+        fingerprint = str(state.get("fingerprint") or "")
+
+        if ready and loader_free and fingerprint and fingerprint == previous_fingerprint:
+            stable_since = stable_since or loop.time()
+            if loop.time() - stable_since >= stable_seconds:
+                return
+        else:
+            stable_since = None
+        previous_fingerprint = fingerprint
+        await asyncio.sleep(min(0.5, max(deadline - loop.time(), 0)))
+
+    loader = last_state.get("loader") or "none detected"
+    raise TimeoutError(
+        f"page did not become capture-ready within {timeout_seconds:g}s "
+        f"(ready_state={last_state.get('ready_state')}, "
+        f"visible_loaders={last_state.get('visible_loader_count')}, loader={loader}): {url}"
+    )
+
+
 async def analyze_page(
     page,
     url: str,
@@ -398,6 +501,8 @@ async def analyze_page(
     html_path: Path,
     settle_seconds: float,
     timeout_ms: int,
+    capture_ready_timeout: float,
+    capture_stable_seconds: float,
 ) -> tuple[dict | None, bool]:
     try:
         has_response, content_type = await navigate_page(page, url, timeout_ms=timeout_ms)
@@ -419,10 +524,22 @@ async def analyze_page(
     await pre_page_waiting(page, url)
 
     try:
-        await save_rendered_html(page, html_path)
-        print(f"  Saved rendered HTML → {html_path.name}")
+        await wait_for_capture_readiness(
+            page,
+            url,
+            timeout_seconds=capture_ready_timeout,
+            stable_seconds=capture_stable_seconds,
+        )
     except Exception as e:
-        print(f"  Failed to save rendered HTML for {url}: {e}")
+        print(f"  Page not ready for evidence capture: {e}")
+        return None, False
+
+    try:
+        artifacts = await save_rendered_html(page, html_path)
+        print(f"  Saved same-session evidence → {', '.join(path.name for path in artifacts.values())}")
+    except Exception as e:
+        print(f"  Failed to capture required same-session evidence for {url}: {e}")
+        return None, False
 
     try:
         await inject_axe(page)
@@ -449,12 +566,12 @@ async def update_domain_status_locked(csv_lock: asyncio.Lock, domain: str, **kwa
 
 
 async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lock: asyncio.Lock) -> None:
-    domain_dir = OUTPUT_DIR / safe_dir_name(domain)
+    domain_dir = args.output_dir / safe_dir_name(domain)
     domain_dir.mkdir(parents=True, exist_ok=True)
     all_reports: list[dict] = []
     first_status: str | None = None
 
-    if args.no_nav_landing_page:
+    if args.no_auth:
         print(f"[{domain}] --no-nav-landing-page set, analyzing landing page only")
         profile = make_browser_profile(args)
         browser_session = BrowserSession(browser_profile=profile)
@@ -469,6 +586,8 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
                 html_path=domain_dir / "0.html",
                 settle_seconds=args.settle_seconds,
                 timeout_ms=args.page_timeout_ms,
+                capture_ready_timeout=args.capture_ready_timeout,
+                capture_stable_seconds=args.capture_stable_seconds,
             )
             if not_rendered and update_csv_status:
                 await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
@@ -551,6 +670,8 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
                     html_path=domain_dir / "0.html",
                     settle_seconds=args.settle_seconds,
                     timeout_ms=args.page_timeout_ms,
+                    capture_ready_timeout=args.capture_ready_timeout,
+                    capture_stable_seconds=args.capture_stable_seconds,
                 )
                 if not_rendered and update_csv_status:
                     await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
@@ -575,6 +696,8 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
                         html_path=domain_dir / "0.html",
                         settle_seconds=args.settle_seconds,
                         timeout_ms=args.page_timeout_ms,
+                        capture_ready_timeout=args.capture_ready_timeout,
+                        capture_stable_seconds=args.capture_stable_seconds,
                     )
                     if not_rendered and update_csv_status:
                         await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
@@ -602,6 +725,8 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
                         html_path=domain_dir / f"{i}.html",
                         settle_seconds=args.settle_seconds,
                         timeout_ms=args.page_timeout_ms,
+                        capture_ready_timeout=args.capture_ready_timeout,
+                        capture_stable_seconds=args.capture_stable_seconds,
                     )
                     if i == 0 and not_rendered and update_csv_status:
                         await update_domain_status_locked(csv_lock, domain, first_status=NOT_RENDERED_STATUS)
@@ -629,7 +754,7 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
 
 async def main():
     args = parser.parse_args()
-    if args.no_nav_landing_page and (args.no_nav or args.signup):
+    if args.no_auth and (args.no_nav or args.signup):
         parser.error("--no-nav-landing-page cannot be combined with --no-nav or --signup")
     if args.start_row < 1:
         parser.error("--start-row/--source-row must be 1 or greater")
@@ -645,11 +770,18 @@ async def main():
         parser.error("--settle-seconds must be 0 or greater")
     if args.page_timeout_ms < 1000:
         parser.error("--page-timeout-ms must be at least 1000")
+    if args.capture_ready_timeout <= 0:
+        parser.error("--capture-ready-timeout must be greater than 0")
+    if args.capture_stable_seconds < 0:
+        parser.error("--capture-stable-seconds must be 0 or greater")
+    if args.capture_stable_seconds >= args.capture_ready_timeout:
+        parser.error("--capture-stable-seconds must be less than --capture-ready-timeout")
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    args.output_dir = args.output_dir.expanduser().resolve()
+    args.output_dir.mkdir(parents=True, exist_ok=True)
 
     llm = None
-    if not args.no_nav_landing_page:
+    if not args.no_auth:
         llm = ChatOpenRouter(
             model="kimi-k2.6",
             base_url=os.getenv("OPENCODE_GO_URL"),
@@ -661,7 +793,7 @@ async def main():
         update_csv_status = False
     else:
         completion_field = "scrapped_full"
-        if args.no_nav_landing_page or args.no_nav:
+        if args.no_auth or args.no_nav:
             completion_field = "scrapped_first"
         domains = read_domains(
             INPUT_CSV,
@@ -682,7 +814,7 @@ async def main():
     async def run_domain(domain: str) -> None:
         async with semaphore:
             try:
-                if args.skip_existing_output and (OUTPUT_DIR / safe_dir_name(domain) / "summary.json").exists():
+                if args.skip_existing_output and (args.output_dir / safe_dir_name(domain) / "summary.json").exists():
                     print(f"[{domain}] Skipping existing output")
                     return
                 await process_domain(domain, args, llm, update_csv_status, csv_lock)

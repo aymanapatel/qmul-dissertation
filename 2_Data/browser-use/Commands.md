@@ -72,6 +72,21 @@ Run only the automated axe-core WCAG checks (no screen reader):
 python main.py --site example.com
 ```
 
+### Audit Multiple Sites Directly
+
+Pass multiple domains after `--site`. Use `--workers` to process more than one
+domain concurrently:
+
+```bash
+python main.py --site example.com example.org example.net --workers 3
+```
+
+The flag can also be repeated. Duplicate domains are processed only once:
+
+```bash
+python main.py --site example.com --site example.org --workers 2
+```
+
 ### axe-core + Guidepup VoiceOver Tests
 
 Run axe-core **and** VoiceOver screen reader navigation tests:
@@ -352,6 +367,9 @@ npx @guidepup/setup
 
 # axe-core only
 python main.py --site example.com
+
+# Multiple sites directly (three concurrent workers)
+python main.py --site example.com example.org example.net --workers 3
 
 # axe-core + VoiceOver (audible)
 python main.py --site example.com --guidepup
