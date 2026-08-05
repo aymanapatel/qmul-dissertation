@@ -1,7 +1,7 @@
 # TODO Now — Final evidence corpus and Phase 3 preparation
 
 This is the execution order for the new HTML, visual sidecars, and axe reports in
-`2_Data/browser-use/outputs/final-evidence-v1/axe-core`, based on `Plan_v3.md`.
+`2_Data/browser-use/outputs/dataset_v3.0/axe-core`, based on `Plan_v3.md`.
 
 
 
@@ -42,7 +42,7 @@ python3 -u main.py \
   --settle-seconds 2 \
   --capture-ready-timeout 60 \
   --capture-stable-seconds 3 \
-  --output-dir outputs/final-evidence-v1/axe-core
+  --output-dir outputs/dataset_v3.0/axe-core
 ```
 
 Verified 2026-08-04: the governed split contains **858 / 858 complete bundles**
@@ -56,8 +56,8 @@ python3 - <<'PY'
 from pathlib import Path
 
 import json
-root = Path('outputs/final-evidence-v1/axe-core')
-split = json.loads(Path('../../3_Learning/learning_v2/artifacts_final-evidence-v1/phase_1_4/governed_split.json').read_text())
+root = Path('outputs/dataset_v3.0/axe-core')
+split = json.loads(Path('../../3_Learning/learning_v2/artifacts_dataset_v3.0/phase_1_4/governed_split.json').read_text())
 required = {'0.html', '0.visual.json', '0.ax.json', '0.png', 'page-0_home.json'}
 sites = [root / site for partition in ('train', 'val', 'test') for site in split[partition]]
 for path in sites:
@@ -71,7 +71,7 @@ PY
 Once this succeeds, all Phase 1 onward commands must use:
 
 ```text
-../2_Data/browser-use/outputs/final-evidence-v1/axe-core
+../2_Data/browser-use/outputs/dataset_v3.0/axe-core
 ```
 
 instead of the old `outputs/axe-core` directory.
@@ -96,8 +96,8 @@ time-based criteria, and 10 issue families.
 
 ```bash
 .venv/bin/python -u -m learning_v2.pipeline \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_1_4 \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_1_4 \
   --seed 42 --evidence-sites 30
 ```
 
@@ -108,10 +108,10 @@ time-based criteria, and 10 issue families.
 
 ```bash
 jq '{complete_sites,unique_html,split_hash,fixture_exact_match}' \
-  learning_v2/artifacts_final-evidence-v1/phase_1_4/phase_1_4_summary.json
+  learning_v2/artifacts_dataset_v3.0/phase_1_4/phase_1_4_summary.json
 
 jq '{train:(.train|length),val:(.val|length),test:(.test|length),split_hash}' \
-  learning_v2/artifacts_final-evidence-v1/phase_1_4/governed_split.json
+  learning_v2/artifacts_dataset_v3.0/phase_1_4/governed_split.json
 ```
 
 - [ ] Add a fail-closed aligned-bundle admission check to `learning_v2.pipeline`.
@@ -128,8 +128,8 @@ jq '{train:(.train|length),val:(.val|length),test:(.test|length),split_hash}' \
 
 ```bash
 .venv/bin/python -u -m learning_v2.regenerate_visual_cache \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
-  --split learning_v2/artifacts_final-evidence-v1/phase_1_4/governed_split.json \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
+  --split learning_v2/artifacts_dataset_v3.0/phase_1_4/governed_split.json \
   --output-dir runs_final_v1/graphs/rendered_visual_v2 \
   --selection-rules image-alt label link-name color-contrast \
   --positive-fraction 0.6 \
@@ -159,8 +159,8 @@ cd /Users/aymanpatel/Desktop/Uni/Dissertation/3_Learning
 source .venv/bin/activate
 
 python -u -m learning_v2.build_same_session_ax_cache \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
-  --split learning_v2/artifacts_final-evidence-v1/phase_1_4/governed_split.json \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
+  --split learning_v2/artifacts_dataset_v3.0/phase_1_4/governed_split.json \
   --output-dir runs_final_v1/graphs/same_session_ax_v1 \
   --selection-rules image-alt label link-name \
   --positive-fraction 0.6 \
@@ -175,7 +175,7 @@ Then audit the cache:
 python -u -m learning_v2.cache_audit \
   --cache-dir runs_final_v1/graphs/same_session_ax_v1 \
   --views a11y-tree \
-  --output learning_v2/artifacts_final-evidence-v1/phase_2_same_session_ax_cache_audit.json
+  --output learning_v2/artifacts_dataset_v3.0/phase_2_same_session_ax_cache_audit.json
 ```
 
 ### Historical AX limitation
@@ -187,7 +187,7 @@ same-session live browser AX tree required by `Plan_v3.md`.
 `runs_final_v1/graphs/reconstructed_ax_v1` is a clearly labelled historical
 pilot only. Do not use it for final training or Phase 3 selection.
 
-## Phase 2 exit-gate gaps before starting Phase 3 annotation
+## [x] Phase 2 exit-gate gaps before starting Phase 3 annotation
 
 - [LATER] Add deterministic fixtures and repeat-capture tests for focus, hover,
       modal/overlay, expanded/collapsed, validation, and selected states.
@@ -226,7 +226,7 @@ python - <<'PY'
 import json
 from pathlib import Path
 
-root = Path('../2_Data/browser-use/outputs/final-evidence-v1/axe-core')
+root = Path('../2_Data/browser-use/outputs/dataset_v3.0/axe-core')
 values = []
 
 for path in sorted(root.glob('*/0.ax.json')):
@@ -265,8 +265,8 @@ PY
 
      ```bash
      python -u -m learning_v2.build_same_session_ax_cache \
-       --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
-       --split learning_v2/artifacts_final-evidence-v1/phase_1_4/governed_split.json \
+       --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
+       --split learning_v2/artifacts_dataset_v3.0/phase_1_4/governed_split.json \
        --output-dir runs_final_v1/graphs/same_session_ax_v1 \
        --selection-rules image-alt label link-name \
        --positive-fraction 0.6 \
@@ -281,7 +281,7 @@ PY
      python -u -m learning_v2.cache_audit \
        --cache-dir runs_final_v1/graphs/same_session_ax_v1 \
        --views a11y-tree \
-       --output learning_v2/artifacts_final-evidence-v1/phase_2_same_session_ax_cache_audit.json
+       --output learning_v2/artifacts_dataset_v3.0/phase_2_same_session_ax_cache_audit.json
      ```
 
   3. [x] Inspect capture outcomes and the threshold exclusions:
@@ -336,7 +336,7 @@ PY
 **Phase 3 may start only after these three checks are resolved or explicitly
 documented as exclusions.**
 
-## Phase 3 — Independent detection truth
+## [x] Phase 3 — Independent detection truth
 
 - [x] After the final graph cohort and split are frozen, create a styled,
       blinded annotation packet:
@@ -344,14 +344,14 @@ documented as exclusions.**
 ```bash
 .venv/bin/python -u -m learning_v2.annotation_packet \
   --split runs_final_v1/graphs/same_session_ax_v1/collection_split.json \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
   --registry ../configs/wcag_criteria.json \
-  --output-dir learning_v2/artifacts_final-evidence-v1/detection_annotation_packet \
+  --output-dir learning_v2/artifacts_dataset_v3.0/detection_annotation_packet \
   --rule-ids image-alt label link-name color-contrast \
   --seed 42 --network-timeout-ms 60000
 ```
 
-- [ ] Complete `rater_1.json` and `rater_2.json` independently.
+- [x] Complete `rater_1.json` and `rater_2.json` independently.
 
 Example
 
@@ -367,136 +367,171 @@ Example
 ```
 
 
-- [ ] Adjudicate every disagreement with evidence.
-- [ ] Finalize truth:
+- [x] Adjudicate every disagreement with evidence.
+- [x] Finalize truth:
 
 ```bash
 .venv/bin/python -u -m learning_v2.annotation_finalize \
-  --packet-dir learning_v2/artifacts_final-evidence-v1/detection_annotation_packet \
-  --output learning_v2/artifacts_final-evidence-v1/detection_annotation_packet/final_independent_detection_truth.json
+  --packet-dir learning_v2/artifacts_dataset_v3.0/detection_annotation_packet \
+  --output learning_v2/artifacts_dataset_v3.0/detection_annotation_packet/final_independent_detection_truth.json
 ```
 
-## Phase 5 — Specialist training
+## Phase 5 — Final exact-split specialist training
 
-- [ ] Train feature-matched accessibility-tree models only after the
+The previous `phase_5_live_ax`, `phase_5_visual`, and `phase_5_multiview`
+artifacts are bounded 30-site pilot runs. They must not be used for the final
+study. Their checkpoints were trained on 21/4/5 sites even though the old
+multiview assembly attached the 599/127/129 collector split.
+
+### [x] Freeze the independently annotated evaluation split without modifying
+the final truth file:
+
+```bash
+.venv/bin/python -u -m learning_v2.final_evaluation_split \
+  --governed-split runs_final_v1/graphs/same_session_ax_v1/collection_split.json \
+  --truth-file learning_v2/artifacts_dataset_v3.0/detection_annotation_packet/final_independent_detection_truth.json \
+  --output learning_v2/artifacts_dataset_v3.0/final_evaluation_split.json
+```
+
+Expected: 599 train, 127 validation, 101 test, 404 truth pairs, and 28
+documented exclusions with no imputed labels.
+
+
+### [x] Train feature-matched accessibility-tree models only after the
       same-session cache audit passes:
 
 ```bash
 .venv/bin/python -u -m learning_v2.experiment \
   --cache-dir runs_final_v1/graphs/same_session_ax_v1 \
-  --inventory learning_v2/artifacts_final-evidence-v1/phase_1_4/corpus_inventory.json \
-  --split runs_final_v1/graphs/same_session_ax_v1/collection_split.json \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_5_live_ax \
+  --inventory learning_v2/artifacts_dataset_v3.0/phase_1_4/corpus_inventory.json \
+  --split learning_v2/artifacts_dataset_v3.0/final_evaluation_split.json \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_5_live_ax_final_v2 \
   --views a11y-tree --architectures mlp graphsage gat \
   --rule-ids image-alt label link-name \
-  --max-nodes 10000 --epochs 20 --batch-size 2 \
+  --split-mode governed --max-nodes 0 \
+  --min-train-positive-sites 5 --min-val-positive-sites 2 \
+  --epochs 20 --patience 5 --batch-size 2 \
   --hidden 64 --layers 2 --precision-floor 0.25 \
   --seed 42 --device mps
 ```
 
-- [ ] Train rendered specialists:
+### [x] Train rendered specialists:
 
 ```bash
 .venv/bin/python -u -m learning_v2.experiment \
   --cache-dir runs_final_v1/graphs/rendered_visual_v2 \
-  --inventory learning_v2/artifacts_final-evidence-v1/phase_1_4/corpus_inventory.json \
-  --split runs_final_v1/graphs/rendered_visual_v2/collection_split.json \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_5_visual \
+  --inventory learning_v2/artifacts_dataset_v3.0/phase_1_4/corpus_inventory.json \
+  --split learning_v2/artifacts_dataset_v3.0/final_evaluation_split.json \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_5_visual_final_v2 \
   --views rendered-visual --architectures mlp graphsage gat \
   --rule-ids color-contrast \
-  --max-nodes 10000 --epochs 20 --batch-size 2 \
+  --split-mode governed --max-nodes 0 \
+  --min-train-positive-sites 5 --min-val-positive-sites 2 \
+  --epochs 20 --patience 5 --batch-size 1 \
   --hidden 64 --layers 2 --precision-floor 0.8 \
-  --seed 42 --device cpu
+  --seed 42 --device mps
 ```
 
-- [ ] Run the visual ablation:
+The run must stop explicitly if a requested rule lacks support or if no
+validation threshold meets the predeclared precision floor. Do not add the
+pilot-only override flags for final training.
+
+### [o] Run the visual ablation after the final rendered run succeeds:
+
+The final rendered specialist retains its strict precision-floor gate. An
+ablated variant that cannot attain that floor uses its validation-only
+maximum-F1 fallback threshold; the unmet floor remains explicitly recorded in
+that run's `calibration.json`, `manifest.json`, and the aggregate ablation
+report. This is an ablation measurement, not a deployable-model acceptance.
 
 ```bash
 .venv/bin/python -u -m learning_v2.visual_ablation \
   --cache-dir runs_final_v1/graphs/rendered_visual_v2 \
-  --split learning_v2/artifacts_final-evidence-v1/phase_5_visual/pilot_split.json \
-  --output-dir learning_v2/artifacts_final-evidence-v1/visual_ablation \
+  --split learning_v2/artifacts_dataset_v3.0/phase_5_visual_final_v2/governed_split.json \
+  --output-dir learning_v2/artifacts_dataset_v3.0/visual_ablation_final_v2 \
+  --rule-ids color-contrast \
   --variants full without_visual_features without_spatial_edges structure_only \
   --architectures mlp graphsage --seeds 41 42 43 \
-  --epochs 20 --batch-size 2 --bootstrap-samples 5000 --device cpu
+  --epochs 20 --patience 5 --batch-size 1 --bootstrap-samples 5000 --device mps \
+  --resume
 ```
 
-- [ ] Assemble aligned views. Both collector splits must be identical:
+### [ ] Assemble aligned views. The assembler now rejects model/split mismatch:
 
 ```bash
 .venv/bin/python -u -m learning_v2.assemble_multiview_bundle \
-  --split runs_final_v1/graphs/same_session_ax_v1/collection_split.json \
+  --split learning_v2/artifacts_dataset_v3.0/final_evaluation_split.json \
   --view-cache a11y-tree=runs_final_v1/graphs/same_session_ax_v1 \
   --view-cache rendered-visual=runs_final_v1/graphs/rendered_visual_v2 \
-  --view-model a11y-tree=learning_v2/artifacts_final-evidence-v1/phase_5_live_ax \
-  --view-model rendered-visual=learning_v2/artifacts_final-evidence-v1/phase_5_visual \
-  --output-cache runs_final_v1/graphs/multiview \
-  --output-phase5 learning_v2/artifacts_final-evidence-v1/phase_5_multiview
+  --view-model a11y-tree=learning_v2/artifacts_dataset_v3.0/phase_5_live_ax_final_v2 \
+  --view-model rendered-visual=learning_v2/artifacts_dataset_v3.0/phase_5_visual_final_v2 \
+  --output-cache runs_final_v1/graphs/multiview_final_v2 \
+  --output-phase5 learning_v2/artifacts_dataset_v3.0/phase_5_multiview_final_v2
 ```
 
 ## Phases 6–7 — Routing, fusion, and detection study
 
-- [ ] Run a weak-label diagnostic, not a final superiority claim:
+### [ ] Run a weak-label diagnostic, not a final superiority claim:
 
 ```bash
 .venv/bin/python -u -m learning_v2.study \
-  --phase5-dir learning_v2/artifacts_final-evidence-v1/phase_5_multiview \
-  --cache-dir runs_final_v1/graphs/multiview \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
+  --phase5-dir learning_v2/artifacts_dataset_v3.0/phase_5_multiview_final_v2 \
+  --cache-dir runs_final_v1/graphs/multiview_final_v2 \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
   --registry ../configs/wcag_criteria.json \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_6_7_weak_label \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_6_7_weak_label \
   --views a11y-tree rendered-visual \
   --architectures mlp graphsage gat \
   --truth-source axe_weak_labels \
   --bootstrap-samples 2000 --seed 42 --device cpu
 ```
 
-- [ ] After independent truth is finalized, consume the test set once:
+### [x] After independent truth is finalized, consume the test set once:
 
 ```bash
 .venv/bin/python -u -m learning_v2.study \
-  --phase5-dir learning_v2/artifacts_final-evidence-v1/phase_5_multiview \
-  --cache-dir runs_final_v1/graphs/multiview \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
+  --phase5-dir learning_v2/artifacts_dataset_v3.0/phase_5_multiview_final_v2 \
+  --cache-dir runs_final_v1/graphs/multiview_final_v2 \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
   --registry ../configs/wcag_criteria.json \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_6_7_final \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_6_7_final \
   --views a11y-tree rendered-visual \
   --architectures mlp graphsage gat \
   --truth-source independent_manual \
-  --truth-file learning_v2/artifacts_final-evidence-v1/detection_annotation_packet/final_independent_detection_truth.json \
+  --truth-file learning_v2/artifacts_dataset_v3.0/detection_annotation_packet/final_independent_detection_truth.json \
   --final --bootstrap-samples 5000 --seed 42 --device cpu
 ```
 
 ## Phase 8 — Retrieval
 
-- [ ] Rebuild the training-only index, queries, retrieval evaluation, and
+### [x] Rebuild the training-only index, queries, retrieval evaluation, and
       generator inputs:
 
 ```bash
 .venv/bin/python -u -m accessibility_system.phase8 \
-  --phase5-dir learning_v2/artifacts_final-evidence-v1/phase_5_multiview \
-  --split learning_v2/artifacts_final-evidence-v1/phase_5_multiview/pilot_split.json \
-  --inventory learning_v2/artifacts_final-evidence-v1/phase_1_4/corpus_inventory.json \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_8 \
+  --phase5-dir learning_v2/artifacts_dataset_v3.0/phase_5_multiview_final_v2 \
+  --split learning_v2/artifacts_dataset_v3.0/phase_5_multiview_final_v2/governed_split.json \
+  --inventory learning_v2/artifacts_dataset_v3.0/phase_1_4/corpus_inventory.json \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_8 \
   --top-k 5 --context-characters 5000 --max-queries 100
 
 jq '.exit_gate' \
-  learning_v2/artifacts_final-evidence-v1/phase_8/phase_8_retrieval_evaluation.json
+  learning_v2/artifacts_dataset_v3.0/phase_8/phase_8_retrieval_evaluation.json
 ```
 
 Every Phase 8 exit-gate value must be `true`.
 
 ## Phase 9 — Structured repair generation and validation
 
-- [ ] Smoke-test one proposal first:
+### [ ] Smoke-test one proposal first:
 
 ```bash
 .venv/bin/python -u -m accessibility_system.phase9 \
-  --generator-inputs learning_v2/artifacts_final-evidence-v1/phase_8/generator_inputs.json \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
+  --generator-inputs learning_v2/artifacts_dataset_v3.0/phase_8/generator_inputs.json \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
   --axe-js ../2_Data/browser-use/axe-core.min.js \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_9_smoke \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_9_smoke \
   --condition graph_constrained_rag \
   --api-mode chat_completions \
   --base-url https://openrouter.ai/api/v1 \
@@ -510,10 +545,10 @@ Every Phase 8 exit-gate value must be `true`.
 
 ```bash
 .venv/bin/python -u -m accessibility_system.phase9 \
-  --generator-inputs learning_v2/artifacts_final-evidence-v1/phase_8/generator_inputs.json \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
+  --generator-inputs learning_v2/artifacts_dataset_v3.0/phase_8/generator_inputs.json \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
   --axe-js ../2_Data/browser-use/axe-core.min.js \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_9/graph_constrained_rag \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_9/graph_constrained_rag \
   --condition graph_constrained_rag \
   --api-mode chat_completions \
   --base-url https://openrouter.ai/api/v1 \
@@ -523,40 +558,40 @@ Every Phase 8 exit-gate value must be `true`.
 
 ## Phase 10 — Matched repair study
 
-- [ ] Run the deterministic control through the same validator:
+### [ ] Run the deterministic control through the same validator:
 
 ```bash
 .venv/bin/python -u -m accessibility_system.deterministic_repair \
-  --generator-inputs learning_v2/artifacts_final-evidence-v1/phase_8/generator_inputs.json \
-  --corpus-dir ../2_Data/browser-use/outputs/final-evidence-v1/axe-core \
+  --generator-inputs learning_v2/artifacts_dataset_v3.0/phase_8/generator_inputs.json \
+  --corpus-dir ../2_Data/browser-use/outputs/dataset_v3.0/axe-core \
   --axe-js ../2_Data/browser-use/axe-core.min.js \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_9/deterministic_template \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_9/deterministic_template \
   --max-proposals 30
 ```
 
-- [ ] Aggregate matched conditions after all four Phase 9 reports exist:
+### [ ] Aggregate matched conditions after all four Phase 9 reports exist:
 
 ```bash
 .venv/bin/python -u -m accessibility_system.evaluation.repair_study \
-  --run deterministic_template=learning_v2/artifacts_final-evidence-v1/phase_9/deterministic_template/phase_9_report.json \
-  --run no_rag=learning_v2/artifacts_final-evidence-v1/phase_9/no_rag/phase_9_report.json \
-  --run flat_vector_rag=learning_v2/artifacts_final-evidence-v1/phase_9/flat_vector_rag/phase_9_report.json \
-  --run graph_constrained_rag=learning_v2/artifacts_final-evidence-v1/phase_9/graph_constrained_rag/phase_9_report.json \
-  --generator-inputs learning_v2/artifacts_final-evidence-v1/phase_8/generator_inputs.json \
-  --output-dir learning_v2/artifacts_final-evidence-v1/phase_10 \
+  --run deterministic_template=learning_v2/artifacts_dataset_v3.0/phase_9/deterministic_template/phase_9_report.json \
+  --run no_rag=learning_v2/artifacts_dataset_v3.0/phase_9/no_rag/phase_9_report.json \
+  --run flat_vector_rag=learning_v2/artifacts_dataset_v3.0/phase_9/flat_vector_rag/phase_9_report.json \
+  --run graph_constrained_rag=learning_v2/artifacts_dataset_v3.0/phase_9/graph_constrained_rag/phase_9_report.json \
+  --generator-inputs learning_v2/artifacts_dataset_v3.0/phase_8/generator_inputs.json \
+  --output-dir learning_v2/artifacts_dataset_v3.0/phase_10 \
   --bootstrap-samples 5000 --seed 42
 ```
 
-- [ ] Create and complete the condition-blinded human repair-rating packet.
-- [ ] Rerun the Phase 10 aggregation with finalized human ratings.
+### [ ] Create and complete the condition-blinded human repair-rating packet.
+### [ ] Rerun the Phase 10 aggregation with finalized human ratings.
 
 ## Final verification
 
-- [ ] Run the complete suite and preserve JUnit evidence:
+### [ ] Run the complete suite and preserve JUnit evidence:
 
 ```bash
 .venv/bin/python -m pytest -q \
-  --junitxml=learning_v2/artifacts_final-evidence-v1/verification/pytest.xml
+  --junitxml=learning_v2/artifacts_dataset_v3.0/verification/pytest.xml
 ```
 
 ## Current blockers before a dissertation-final run
