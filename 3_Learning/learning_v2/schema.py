@@ -20,6 +20,8 @@ class FeatureContract:
     feature_dim: int
     num_tags: int
     rendered_visual_feature_version: int
+    feature_variant: str = "full"
+    live_ax_feature_version: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -40,6 +42,8 @@ class FeatureContract:
             feature_dim=int(data.x.shape[1]),
             num_tags=max(116, int(data.tag_indices.max().item()) + 1 if data.tag_indices.numel() else 116),
             rendered_visual_feature_version=int(getattr(data, "rendered_visual_feature_version", 0)),
+            feature_variant=str(getattr(data, "feature_variant", "full")),
+            live_ax_feature_version=int(getattr(data, "live_ax_feature_version", 0)),
         )
 
     def validate(self, data: Data) -> None:
@@ -58,9 +62,14 @@ class FeatureContract:
                 "Rendered feature version mismatch: "
                 f"checkpoint={self.rendered_visual_feature_version}, data={actual_visual_version}"
             )
+        actual_variant = str(getattr(data, "feature_variant", "full"))
+        if actual_variant != self.feature_variant:
+            raise ValueError(f"Feature variant mismatch: checkpoint={self.feature_variant}, data={actual_variant}")
+        actual_live_ax = int(getattr(data, "live_ax_feature_version", 0))
+        if actual_live_ax != self.live_ax_feature_version:
+            raise ValueError(f"Live AX feature version mismatch: checkpoint={self.live_ax_feature_version}, data={actual_live_ax}")
 
 
 def inference_fingerprint(data: Data) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     """Return the only tensors a model may consume."""
     return data.x, data.edge_index, data.tag_indices
-

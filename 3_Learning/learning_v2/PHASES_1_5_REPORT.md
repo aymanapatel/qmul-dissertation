@@ -122,6 +122,10 @@ be reported explicitly.
 
 ## Phase 5 — Specialist comparison
 
+### Post-run cache audit correction (2026-08-03)
+
+The historical cache was subsequently audited rather than trusted by filename. All 678 `rendered-visual` cache files have feature width 497, visual feature version 0, and no visual-match mask. The current versioned rendered collector emits width 517 and visual feature version 2. Therefore, every historical row labelled “Rendered visual” below is retained only as a legacy rendered-graph pilot; it is **not evidence that style/contrast visual cues improved prediction**. The canonical experiment now fails closed on this cache unless `--allow-legacy-rendered` is passed solely for reproduction. A new visual-cue claim requires regenerated version-2 graphs and the controlled `learning_v2.visual_ablation` study.
+
 Executed configuration:
 
 - 90 governed, duplicate-safe sites;
@@ -289,4 +293,3 @@ dissertation-scale evaluation.
 - per-view `rule_support.json` and per-view/per-architecture checkpoints,
   calibration, histories, manifests, and test metrics beneath
   `artifacts/phase_5_full/`.
-

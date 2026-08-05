@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 import torch
+from sklearn.metrics import precision_recall_curve
 
 from .metrics import PredictionArrays
 
@@ -21,11 +22,56 @@ def _scores(probabilities: torch.Tensor, labels: torch.Tensor, threshold: float)
 
 
 def choose_threshold(probabilities: torch.Tensor, labels: torch.Tensor, *, precision_floor: float = 0.0) -> dict:
-    candidates = [_scores(probabilities, labels, value / 20) for value in range(1, 20)]
-    supported = [entry for entry in candidates if entry["precision"] >= precision_floor]
-    pool = supported or candidates
-    best = max(pool, key=lambda entry: (entry["f1"], entry["recall"], entry["threshold"]))
-    return {**best, "supported": bool(labels.bool().any())}
+    probabilities = probabilities.detach().float().cpu().flatten()
+    labels = labels.detach().bool().cpu().flatten()
+    label_supported = bool(labels.any())
+    if not probabilities.numel() or not label_supported:
+        return {
+            "threshold": 1.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "predicted_positive": 0,
+            "actual_positive": int(labels.sum()),
+            "supported": label_supported,
+            "precision_floor_met": False,
+            "candidate_count": 0,
+        }
+
+    # Evaluate every distinct validation score. This avoids the historical
+    # coarse 0.05 grid, which could miss the only threshold satisfying the
+    # predeclared precision floor.
+    curve_precision, curve_recall, thresholds = precision_recall_curve(
+        labels.numpy().astype(int), probabilities.numpy()
+    )
+    candidates = []
+    for index, threshold in enumerate(thresholds):
+        precision = float(curve_precision[index])
+        recall = float(curve_recall[index])
+        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+        predicted_positive = int((probabilities >= float(threshold)).sum())
+        candidates.append({
+            "threshold": float(threshold),
+            "precision": precision,
+            "recall": recall,
+            "f1": f1,
+            "predicted_positive": predicted_positive,
+            "actual_positive": int(labels.sum()),
+        })
+    unconstrained = max(candidates, key=lambda entry: (entry["f1"], entry["recall"], entry["threshold"]))
+    eligible = [
+        entry for entry in candidates
+        if entry["predicted_positive"] > 0 and entry["precision"] >= precision_floor
+    ]
+    precision_floor_met = bool(eligible)
+    best = max(eligible, key=lambda entry: (entry["f1"], entry["recall"], entry["threshold"])) if eligible else unconstrained
+    return {
+        **best,
+        "supported": True,
+        "precision_floor_met": precision_floor_met,
+        "candidate_count": len(candidates),
+        "unconstrained_best": unconstrained,
+    }
 
 
 def calibrate_predictions(arrays: PredictionArrays, rule_ids: list[str], *, precision_floor: float = 0.55) -> dict:
@@ -52,4 +98,3 @@ def calibrate_predictions(arrays: PredictionArrays, rule_ids: list[str], *, prec
 
 def save_calibration(path: Path, calibration: dict) -> None:
     path.write_text(json.dumps(calibration, indent=2), encoding="utf-8")
-

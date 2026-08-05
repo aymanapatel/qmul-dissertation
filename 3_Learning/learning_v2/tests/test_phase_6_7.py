@@ -3,7 +3,7 @@ import pytest
 from learning_v2.contracts import Candidate, DetectorObservation
 from learning_v2.fusion import FusionPolicy, RegistryRouter, fuse_observations, validate_fused_provenance
 from learning_v2.catalog.criteria import CriterionRecord, CriterionRegistry
-from learning_v2.study import MethodOutput, bootstrap_ci, evaluate_method
+from learning_v2.study import MethodOutput, _load_independent_truth, bootstrap_ci, evaluate_method
 
 
 def observation(detector, status, confidence, *, error=None):
@@ -82,3 +82,21 @@ def test_final_claim_rejects_weak_labels():
     from learning_v2.study import run_study
     with pytest.raises(ValueError, match="independent_manual"):
         run_study(Namespace(final=True, truth_source="axe_weak_labels"))
+
+
+def test_independent_truth_must_cover_every_pair_and_be_dual_adjudicated(tmp_path):
+    import json
+    universe = {("a", "1"), ("b", "1")}
+    path = tmp_path / "truth.json"
+    path.write_text(json.dumps({"pairs": [
+        {"site_id": "a", "criterion_id": "1", "status": "fail", "adjudicated": True, "annotator_ids": ["x", "y"]},
+    ]}), encoding="utf-8")
+    with pytest.raises(ValueError, match="incomplete"):
+        _load_independent_truth(path, universe)
+    path.write_text(json.dumps({"annotation_protocol": "dual", "pairs": [
+        {"site_id": site, "criterion_id": "1", "status": "fail" if site == "a" else "pass", "adjudicated": True, "annotator_ids": ["x", "y"]}
+        for site in ("a", "b")
+    ]}), encoding="utf-8")
+    truth, metadata = _load_independent_truth(path, universe)
+    assert truth == {("a", "1")}
+    assert metadata["dual_annotated"] is True

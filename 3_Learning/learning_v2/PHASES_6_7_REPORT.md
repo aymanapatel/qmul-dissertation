@@ -7,6 +7,8 @@ Held-out split hash: `b2c549d3c46587c028cb71788d410cf98c276f6bc02561d46f353f3c2d
 
 ## Outcome
 
+**Post-run cache correction (2026-08-03):** the nominal rendered-visual checkpoint used by this historical pilot has feature version 0 and width 497, so the `visual_specialist` row is not evidence of style/contrast visual cues. It remains in the table for reproducibility. The study runner now rejects this checkpoint by default and always rejects it for `--final`.
+
 Phase 6 is implemented with registry-driven multi-specialist routing,
 source/rule thresholds frozen from Phase 5 validation data, evidence-preserving
 fusion, conflict recording, and abstention. Phase 7 is implemented and executed

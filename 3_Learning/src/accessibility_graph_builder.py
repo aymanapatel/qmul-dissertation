@@ -15,7 +15,7 @@ import torch
 from bs4 import BeautifulSoup, NavigableString
 from torch_geometric.data import Data
 
-from html_graph_builder import DOMNode, get_tag_index
+from html_graph_builder import DOMNode, EDGE_PARENT_CHILD, EDGE_SIBLING, get_tag_index
 
 
 LANDMARK_TAG_TO_ROLE = {
@@ -256,6 +256,7 @@ def parse_html_to_a11y_graph(html_path: Path) -> Tuple[Data, Dict[int, DOMNode]]
     id_to_text = _collect_id_text(soup)
     node_map: Dict[int, DOMNode] = {}
     edge_index: List[List[int]] = [[], []]
+    edge_types: List[int] = []
     node_id_counter = 0
 
     def traverse(element, accessible_parent_id: Optional[int] = None):
@@ -286,6 +287,7 @@ def parse_html_to_a11y_graph(html_path: Path) -> Tuple[Data, Dict[int, DOMNode]]
             if accessible_parent_id is not None:
                 edge_index[0].append(accessible_parent_id)
                 edge_index[1].append(current_id)
+                edge_types.append(EDGE_PARENT_CHILD)
                 node_map[accessible_parent_id].children.append(current_id)
 
             current_accessible_parent = current_id
@@ -305,6 +307,7 @@ def parse_html_to_a11y_graph(html_path: Path) -> Tuple[Data, Dict[int, DOMNode]]
         for left, right in zip(siblings, siblings[1:]):
             edge_index[0].extend([left, right])
             edge_index[1].extend([right, left])
+            edge_types.extend([EDGE_SIBLING, EDGE_SIBLING])
 
     tag_indices = torch.tensor([get_tag_index(node.tag) for node in node_map.values()], dtype=torch.long)
     attr_features = torch.stack([node.get_attribute_features() for node in node_map.values()])
@@ -317,6 +320,7 @@ def parse_html_to_a11y_graph(html_path: Path) -> Tuple[Data, Dict[int, DOMNode]]
     data = Data(
         x=attr_features,
         edge_index=edge_index_tensor,
+        edge_type=torch.tensor(edge_types, dtype=torch.long),
         tag_indices=tag_indices,
         node_y=torch.zeros(len(node_map), dtype=torch.long),
         y=torch.tensor([0], dtype=torch.long),

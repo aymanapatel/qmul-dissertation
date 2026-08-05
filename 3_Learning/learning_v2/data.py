@@ -12,6 +12,7 @@ from sklearn.model_selection import train_test_split
 from torch_geometric.data import Data
 
 from .schema import FeatureContract
+from .feature_layout import STRUCTURAL_ATTRIBUTE_DIM, RENDERED_VISUAL_ATTRIBUTE_DIM
 
 
 def discover_cached_graphs(cache_dir: Path, graph_source: str) -> dict[str, Path]:
@@ -36,6 +37,7 @@ def sanitise_graph(
     require_labels: bool,
     site_id: str = "",
     cache_path: str = "",
+    feature_variant: str = "full",
 ) -> Data:
     actual_source = getattr(raw, "graph_source", None)
     if actual_source != graph_source:
@@ -45,10 +47,34 @@ def sanitise_graph(
         edge_index=raw.edge_index.detach().cpu().long(),
         tag_indices=raw.tag_indices.detach().cpu().long(),
     )
+    if hasattr(raw, "edge_type"):
+        graph.edge_type = raw.edge_type.detach().cpu().long()
     graph.graph_source = graph_source
     graph.site_id = site_id
     graph.cache_path = cache_path
     graph.rendered_visual_feature_version = int(getattr(raw, "rendered_visual_feature_version", 0))
+    graph.live_ax_feature_version = int(getattr(raw, "live_ax_feature_version", 0))
+    graph.live_accessibility_tree = bool(getattr(raw, "live_accessibility_tree", False))
+    for name in ("backend_dom_node_ids", "dom_indices"):
+        value = getattr(raw, name, None)
+        if value is not None:
+            setattr(graph, name, value.detach().cpu().long())
+    if feature_variant not in {"full", "without_visual_features", "without_spatial_edges", "structure_only"}:
+        raise ValueError(f"Unknown feature variant: {feature_variant}")
+    if feature_variant != "full":
+        if graph_source != "rendered-visual":
+            raise ValueError("Visual feature variants apply only to rendered-visual graphs")
+        if graph.x.shape[1] < STRUCTURAL_ATTRIBUTE_DIM + RENDERED_VISUAL_ATTRIBUTE_DIM:
+            raise ValueError("Rendered feature tail is absent; regenerate the visual cache before ablation")
+        if feature_variant in {"without_visual_features", "structure_only"}:
+            graph.x[:, STRUCTURAL_ATTRIBUTE_DIM:STRUCTURAL_ATTRIBUTE_DIM + RENDERED_VISUAL_ATTRIBUTE_DIM] = 0.0
+        if feature_variant in {"without_spatial_edges", "structure_only"}:
+            if not hasattr(graph, "edge_type"):
+                raise ValueError("Typed edges are required for the spatial-edge ablation")
+            keep = graph.edge_type != 2
+            graph.edge_index = graph.edge_index[:, keep]
+            graph.edge_type = graph.edge_type[keep]
+    graph.feature_variant = feature_variant
     for name in ("rendered_visible_mask", "visual_match_found_mask", "rendered_visual_label_qa_mask"):
         value = getattr(raw, name, None)
         if value is not None:
@@ -69,10 +95,10 @@ def sanitise_graph(
     return graph
 
 
-def load_cached_graph(path: Path, *, graph_source: str, rule_indices: Sequence[int], require_labels: bool) -> Data:
+def load_cached_graph(path: Path, *, graph_source: str, rule_indices: Sequence[int], require_labels: bool, feature_variant: str = "full") -> Data:
     return sanitise_graph(
         _load_raw_graph(path), graph_source=graph_source, rule_indices=rule_indices,
-        require_labels=require_labels, site_id=path.parent.name, cache_path=str(path),
+        require_labels=require_labels, site_id=path.parent.name, cache_path=str(path), feature_variant=feature_variant,
     )
 
 
@@ -146,13 +172,12 @@ def load_split(path: Path, *, available_sites: set[str] | None = None) -> dict:
 
 def load_graphs(
     site_ids: Iterable[str], graph_paths: dict[str, Path], *, graph_source: str,
-    rule_indices: Sequence[int], contract: FeatureContract | None = None,
+    rule_indices: Sequence[int], contract: FeatureContract | None = None, feature_variant: str = "full",
 ) -> list[Data]:
     graphs = []
     for site_id in site_ids:
-        graph = load_cached_graph(graph_paths[site_id], graph_source=graph_source, rule_indices=rule_indices, require_labels=True)
+        graph = load_cached_graph(graph_paths[site_id], graph_source=graph_source, rule_indices=rule_indices, require_labels=True, feature_variant=feature_variant)
         if contract is not None:
             contract.validate(graph)
         graphs.append(graph)
     return graphs
-

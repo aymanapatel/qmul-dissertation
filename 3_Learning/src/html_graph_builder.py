@@ -20,6 +20,10 @@ from torch_geometric.data import Data
 # visual extraction render an unstyled page.
 NON_GRAPH_TAGS = {"script", "style", "noscript"}
 
+EDGE_PARENT_CHILD = 0
+EDGE_SIBLING = 1
+EDGE_SPATIAL = 2
+
 
 # Tag vocabulary: most common HTML tags + special tokens
 TAG_VOCAB = {
@@ -276,6 +280,7 @@ def parse_html_to_graph(
     
     node_map: Dict[int, DOMNode] = {}
     edge_index: List[List[int]] = [[], []]
+    edge_types: List[int] = []
     node_id_counter = 0
 
     # Formula: a webpage is represented as G = (V, E), where each parsed DOM
@@ -295,6 +300,7 @@ def parse_html_to_graph(
                 if parent_id is not None:
                     edge_index[0].append(parent_id)
                     edge_index[1].append(node_id_counter)
+                    edge_types.append(EDGE_PARENT_CHILD)
                     node_map[parent_id].children.append(node_id_counter)
                 node_id_counter += 1
             return
@@ -315,6 +321,7 @@ def parse_html_to_graph(
         if parent_id is not None:
             edge_index[0].append(parent_id)
             edge_index[1].append(current_id)
+            edge_types.append(EDGE_PARENT_CHILD)
             node_map[parent_id].children.append(current_id)
         
         # Recurse on children
@@ -336,10 +343,12 @@ def parse_html_to_graph(
                     # Previous sibling
                     edge_index[0].append(siblings[idx - 1])
                     edge_index[1].append(node_id)
+                    edge_types.append(EDGE_SIBLING)
                 if idx < len(siblings) - 1:
                     # Next sibling
                     edge_index[0].append(node_id)
                     edge_index[1].append(siblings[idx + 1])
+                    edge_types.append(EDGE_SIBLING)
     
     # Build PyG Data
     tag_indices = torch.tensor([get_tag_index(node.tag) for node in node_map.values()], dtype=torch.long)
@@ -360,6 +369,7 @@ def parse_html_to_graph(
     data = Data(
         x=x,
         edge_index=edge_index_tensor,
+        edge_type=torch.tensor(edge_types, dtype=torch.long),
         tag_indices=tag_indices,
         node_y=node_labels,
         y=graph_label,
@@ -456,6 +466,14 @@ def add_spatial_edges(
     
     if spatial_src:
         spatial_edges = torch.tensor([spatial_src, spatial_dst], dtype=torch.long)
+        existing_types = getattr(
+            data, "edge_type",
+            torch.full((data.edge_index.shape[1],), EDGE_PARENT_CHILD, dtype=torch.long),
+        )
         data.edge_index = torch.cat([data.edge_index, spatial_edges], dim=1)
+        data.edge_type = torch.cat([
+            existing_types,
+            torch.full((spatial_edges.shape[1],), EDGE_SPATIAL, dtype=torch.long),
+        ])
     
     return data
