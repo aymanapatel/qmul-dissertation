@@ -29,10 +29,41 @@ from .contracts import Candidate
 from .models import ModelConfig, build_model
 from .rules import rule_metadata
 from .schema import FeatureContract
+from .feature_layout import MINIMUM_RENDERED_FEATURE_DIM, RENDERED_VISUAL_FEATURE_VERSION
 
 
 Pair = tuple[str, str]  # site, criterion
 RulePair = tuple[str, str]  # site, rule
+
+
+def _load_independent_truth(path: Path, universe: set[Pair]) -> tuple[set[Pair], dict]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    rows = payload.get("pairs", [])
+    by_pair = {}
+    for item in rows:
+        pair = (str(item.get("site_id", "")), str(item.get("criterion_id", "")))
+        if not all(pair) or pair in by_pair:
+            raise ValueError("Independent truth needs one unique record per site/criterion pair")
+        if item.get("status") not in {"pass", "fail"}:
+            raise ValueError("Independent truth status must be pass or fail")
+        if not item.get("adjudicated"):
+            raise ValueError(f"Independent truth pair is not adjudicated: {pair}")
+        if len(set(item.get("annotator_ids", []))) < 2:
+            raise ValueError(f"Independent truth pair needs at least two annotators: {pair}")
+        by_pair[pair] = item
+    unknown = set(by_pair) - universe
+    missing = universe - set(by_pair)
+    if unknown:
+        raise ValueError(f"Independent truth contains pairs outside the frozen study universe: {sorted(unknown)[:3]}")
+    if missing:
+        raise ValueError(f"Independent truth is incomplete; missing {len(missing)} frozen pairs")
+    truth = {pair for pair, item in by_pair.items() if item["status"] == "fail"}
+    return truth, {
+        "annotation_protocol": payload.get("annotation_protocol"),
+        "pair_count": len(by_pair),
+        "dual_annotated": True,
+        "adjudicated": True,
+    }
 
 
 def _sha256(path: Path) -> str:
@@ -41,6 +72,37 @@ def _sha256(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def _validate_eval_split(eval_split: dict, cache_dir: Path, corpus_dir: Path, views: Iterable[str]) -> dict:
+    """Validate a documented evaluation split against caches and corpus.
+
+    Returns the provenance block embedded in the report. The split must have
+    non-empty disjoint partitions, and every test site must be observable in
+    every requested view cache and in the axe corpus.
+    """
+    from .data import validate_split
+
+    validate_split(eval_split)
+    test_sites = list(eval_split["test"])
+    for view in views:
+        cached = set(discover_cached_graphs(cache_dir, view))
+        missing = sorted(set(test_sites) - cached)
+        if missing:
+            raise ValueError(f"Evaluation split test sites lack {view} cached graphs: {missing[:3]}")
+    missing_corpus = sorted(site for site in test_sites if not (corpus_dir / site).is_dir())
+    if missing_corpus:
+        raise ValueError(f"Evaluation split test sites missing from the axe corpus: {missing_corpus[:3]}")
+    exclusions = eval_split.get("exclusions", [])
+    undocumented = [item for item in exclusions if not item.get("reason_code") or not str(item.get("reason", "")).strip()]
+    if undocumented:
+        raise ValueError(f"Evaluation split exclusions must each record reason_code and reason: {undocumented[:1]}")
+    return {
+        "test_site_count": len(test_sites),
+        "documented_exclusions": len(exclusions),
+        "excluded_sites": [item.get("site_id") for item in exclusions],
+        "split_hash": eval_split.get("split_hash"),
+    }
 
 
 @dataclass
@@ -254,7 +316,42 @@ def run_study(args: argparse.Namespace) -> dict:
     output_path = args.output_dir / "phase_7_detection_study.json"
     if args.final and output_path.exists():
         raise FileExistsError(f"Frozen final result already exists: {output_path}")
-    phase5 = args.phase5_dir; split = json.loads((phase5 / "pilot_split.json").read_text())
+    phase5 = args.phase5_dir
+    comparison = json.loads((phase5 / "comparison.json").read_text(encoding="utf-8"))
+    split_path = phase5 / comparison.get("split", "pilot_split.json")
+    split = json.loads(split_path.read_text(encoding="utf-8"))
+    evaluation_provenance = _validate_eval_split(split, args.cache_dir, args.corpus_dir, args.views)
+    if args.final:
+        if comparison.get("pilot", True) or comparison.get("split_mode") != "governed":
+            raise ValueError("Final testing requires Phase 5 models trained and bundled in exact governed split mode")
+        if split.get("status") != "frozen_independent_manual_evaluation_split":
+            raise ValueError("Final testing requires the documented independent-manual evaluation split")
+        expected_truth_hash = split.get("provenance", {}).get("independent_truth_sha256")
+        if not expected_truth_hash or expected_truth_hash != _sha256(Path(truth_file)):
+            raise ValueError("Final truth file does not match the digest frozen in the evaluation split")
+    if "rendered-visual" in args.views:
+        legacy = []
+        for architecture in args.architectures:
+            manifest = json.loads((phase5 / "rendered-visual" / architecture / "manifest.json").read_text())
+            contract = manifest.get("feature_contract", {})
+            if int(contract.get("rendered_visual_feature_version", 0)) < RENDERED_VISUAL_FEATURE_VERSION or int(contract.get("feature_dim", 0)) < MINIMUM_RENDERED_FEATURE_DIM:
+                legacy.append(architecture)
+        if legacy and (args.final or not getattr(args, "allow_legacy_rendered", False)):
+            raise ValueError(
+                "Rendered specialist checkpoints do not contain versioned visual cues. "
+                "Regenerate/retrain before the final study; --allow-legacy-rendered is for pilot reproduction only."
+            )
+    if "a11y-tree" in args.views:
+        static = []
+        for architecture in args.architectures:
+            manifest = json.loads((phase5 / "a11y-tree" / architecture / "manifest.json").read_text())
+            if int(manifest.get("feature_contract", {}).get("live_ax_feature_version", 0)) < 1:
+                static.append(architecture)
+        if static and (args.final or not getattr(args, "allow_static_a11y", False)):
+            raise ValueError(
+                "Accessibility-tree checkpoints use the static HTML approximation. "
+                "Regenerate/retrain on Chromium AX graphs; --allow-static-a11y is for pilot reproduction only."
+            )
     sites = list(split["test"])
     model_raw = {}
     supported_rules = set()
@@ -280,15 +377,9 @@ def run_study(args: argparse.Namespace) -> dict:
                 deterministic_predictions.add((site, finding.rule_id)); deterministic_scores[(site, finding.rule_id)] = 1.0
     deterministic_latency = time.perf_counter() - deterministic_started
     axe_output = _to_criterion_output(sites, supported_rules, axe_scores, truth_rules, supported_rules, axe_latency)
+    annotation = None
     if args.truth_source == "independent_manual":
-        manual = json.loads(Path(truth_file).read_text(encoding="utf-8"))
-        truth = {
-            (str(item["site_id"]), str(item["criterion_id"]))
-            for item in manual.get("pairs", []) if item.get("status") == "fail"
-        }
-        unknown = truth - universe
-        if unknown:
-            raise ValueError(f"Independent truth contains pairs outside the frozen study universe: {sorted(unknown)[:3]}")
+        truth, annotation = _load_independent_truth(Path(truth_file), universe)
     else:
         truth = set(axe_output.predictions)
     deterministic = _to_criterion_output(sites, supported_rules, deterministic_scores, deterministic_predictions, supported_rules, deterministic_latency)
@@ -379,8 +470,10 @@ def run_study(args: argparse.Namespace) -> dict:
         "study_status": "final" if args.final else "weak_label_pilot",
         "final_test_consumed": bool(args.final),
         "truth_source": args.truth_source,
+        "annotation": annotation,
         "truth_limitation": None if args.truth_source == "independent_manual" else "axe is both weak-label truth and a required baseline; axe metrics are circular and not evidence of generalisation",
         "split_hash": split.get("split_hash"),
+        "evaluation_split": evaluation_provenance,
         "sites": sites,
         "site_count": len(sites),
         "supported_rules": sorted(supported_rules),
@@ -412,7 +505,8 @@ def run_study(args: argparse.Namespace) -> dict:
             "phase5_dir": str(args.phase5_dir), "cache_dir": str(args.cache_dir),
             "corpus_dir": str(args.corpus_dir), "registry": str(args.registry),
             "registry_sha256": _sha256(args.registry),
-            "pilot_split_sha256": _sha256(args.phase5_dir / "pilot_split.json"),
+            "evaluation_split": str(split_path),
+            "evaluation_split_sha256": _sha256(split_path),
             "truth_source": args.truth_source,
             "truth_file": str(truth_file) if truth_file else None,
             "truth_file_sha256": _sha256(Path(truth_file)) if truth_file else None,
@@ -441,6 +535,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--bootstrap-samples", type=int, default=1000)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--device", default="cpu")
+    parser.add_argument("--allow-legacy-rendered", action="store_true", help="Reproduce historical pilot only; forbidden for --final")
+    parser.add_argument("--allow-static-a11y", action="store_true", help="Reproduce static a11y-tree pilot only; forbidden for --final")
     return parser.parse_args()
 
 

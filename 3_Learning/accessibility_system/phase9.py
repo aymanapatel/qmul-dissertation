@@ -71,6 +71,15 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _reason_summary(reasons: list[str], *, limit: int = 1000) -> str:
+    """Produce one safe, concise log field from structured rejection reasons."""
+    cleaned = [" ".join(str(reason).split()) for reason in reasons if str(reason).strip()]
+    if not cleaned:
+        return "unspecified"
+    message = "; ".join(cleaned)
+    return message if len(message) <= limit else f"{message[:limit - 3]}..."
+
+
 def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, Any]:
     run_started = time.perf_counter()
     inputs = json.loads(args.generator_inputs.read_text(encoding="utf-8"))
@@ -88,6 +97,9 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
     requested_model = getattr(args, "model", None)
     generator = generator or OpenAIRepairGenerator(
         model=requested_model, base_url=base_url, api_mode=api_mode,
+        request_timeout_seconds=getattr(args, "request_timeout_seconds", None),
+        http_logger=LOGGER,
+        log_http_bodies=bool(getattr(args, "log_http_bodies", False)),
     )
     effective_model = str(getattr(generator, "model", requested_model or "provider_default"))
     LOGGER.info(
@@ -99,6 +111,7 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
     fatal_error: dict[str, str] | None = None
     for index, item in enumerate(selected, start=1):
         attempt_started = time.perf_counter()
+        stop_after_attempt = False
         finding = item.get("original_finding", {})
         site_id = str(finding.get("site_id", ""))
         source_path = args.corpus_dir / site_id / "0.html"
@@ -159,7 +172,10 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
             }
             if policy_errors:
                 attempt.update(status="rejected", policy_errors=policy_errors)
-                LOGGER.warning("attempt_rejected index=%d category=grounding_policy errors=%d", index, len(policy_errors))
+                LOGGER.warning(
+                    "attempt_rejected index=%d category=grounding_policy reasons=%s",
+                    index, _reason_summary(policy_errors),
+                )
             else:
                 validation_finding = dict(finding)
                 truth = repair_truth.get(str(item.get("query_id")))
@@ -176,10 +192,22 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
                     run_browser=not args.skip_browser,
                 )
                 attempt.update(status=validation.outcome, validation=validation.model_dump(mode="json"))
-                LOGGER.info(
-                    "attempt_complete index=%d outcome=%s target_resolved=%s regressions=%d review_reasons=%d",
-                    index, validation.outcome, validation.target_resolved, len(validation.new_regressions), len(validation.human_review_reasons),
-                )
+                if validation.outcome == "rejected":
+                    rejection_reasons = list(validation.rejection_reasons) or list(validation.human_review_reasons)
+                    LOGGER.warning(
+                        "attempt_rejected index=%d category=validation reasons=%s",
+                        index, _reason_summary(rejection_reasons),
+                    )
+                else:
+                    LOGGER.info(
+                        "attempt_complete index=%d outcome=%s target_resolved=%s regressions=%d review_reasons=%d",
+                        index, validation.outcome, validation.target_resolved, len(validation.new_regressions), len(validation.human_review_reasons),
+                    )
+                    stop_after_attempt = (
+                        validation.outcome == "accepted" and bool(getattr(args, "stop_on_accepted", False))
+                    ) or bool(
+                        getattr(args, "stop_on_non_rejected", False)
+                    )
         except Exception as exc:
             category = _error_category(exc); safe_error = _safe_error(exc)
             status = "generation_authentication_failed" if category == "authentication_failed" else "generation_or_input_failed"
@@ -189,6 +217,13 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
                 fatal_error = {"category": category, "message": safe_error}
         attempt["duration_seconds"] = time.perf_counter() - attempt_started
         attempts.append(attempt)
+        if stop_after_attempt:
+            LOGGER.info(
+                "run_stop index=%d outcome=%s reason=%s",
+                index, attempt["status"],
+                "first_accepted_outcome" if attempt["status"] == "accepted" and getattr(args, "stop_on_accepted", False) else "first_non_rejected_outcome",
+            )
+            break
 
     counts = Counter(str(item["status"]) for item in attempts)
     report = {
@@ -244,6 +279,10 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
             "api_mode": api_mode, "base_url": base_url,
             "max_proposals": args.max_proposals, "skip_browser": args.skip_browser,
             "generation_retries": max(0, int(getattr(args, "generation_retries", 1))),
+            "stop_on_non_rejected": bool(getattr(args, "stop_on_non_rejected", False)),
+            "stop_on_accepted": bool(getattr(args, "stop_on_accepted", False)),
+            "request_timeout_seconds": getattr(args, "request_timeout_seconds", None),
+            "log_http_bodies": bool(getattr(args, "log_http_bodies", False)),
         },
         "outputs": output_hashes,
     }
@@ -263,8 +302,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--base-url", help="OpenAI-compatible API root, for example https://provider.example/v1; never include /chat/completions")
     parser.add_argument("--max-proposals", type=int, default=10)
     parser.add_argument("--generation-retries", type=int, default=1, help="Retry schema-invalid provider output; authentication and other fatal errors are never retried")
+    parser.add_argument(
+        "--request-timeout-seconds", type=float, default=90.0,
+        help="Maximum time for one provider request; prevents a stalled endpoint from blocking the bounded run",
+    )
     parser.add_argument("--repair-truth", type=Path, help="Independent oracle file used only by validation and never sent to the generator")
     parser.add_argument("--skip-browser", action="store_true")
+    parser.add_argument(
+        "--log-http-bodies", action="store_true",
+        help="Include redacted, truncated HTTP JSON request/response bodies in phase_9.log; metadata is always logged",
+    )
+    parser.add_argument(
+        "--stop-on-non-rejected", action="store_true",
+        help="Stop after the first accepted or requires_human_review validation outcome; generation failures never stop the run",
+    )
+    parser.add_argument(
+        "--stop-on-accepted", action="store_true",
+        help="Stop only after the first accepted validation outcome; rejected and human-review outcomes continue",
+    )
     parser.add_argument("--log-level", choices=("DEBUG", "INFO", "WARNING", "ERROR"), default="INFO")
     return parser.parse_args()
 

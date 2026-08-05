@@ -6,9 +6,12 @@ then the local .env file (python-dotenv)
 
 from __future__ import annotations
 
+import hashlib
 import json
+import logging
 from typing import Any
 
+import httpx
 from openai import OpenAI
 
 from .contracts import GenerationResult, RepairProposal
@@ -17,6 +20,8 @@ from ..env_import import EnvConfigError, load_all
 
 DEFAULT_MODEL = "gpt-5.6-sol"
 PLACEHOLDER_KEY = "REPLACE_WITH_OPENAI_API_KEY"
+SENSITIVE_HTTP_HEADERS = frozenset({"authorization", "proxy-authorization", "cookie", "set-cookie", "x-api-key"})
+SENSITIVE_PAYLOAD_KEYS = frozenset({"api_key", "apikey", "authorization", "token", "secret", "password"})
 
 
 SYSTEM_PROMPT = """You generate bounded accessibility repair proposals, not free-form patches.
@@ -69,6 +74,64 @@ def _model_dump(value: Any) -> dict[str, Any]:
     return {"value": str(value)}
 
 
+def _redact_payload(value: Any) -> Any:
+    """Recursively redact common secret-bearing fields before diagnostic logging."""
+    if isinstance(value, dict):
+        return {
+            str(key): "[REDACTED]" if str(key).lower().replace("-", "_") in SENSITIVE_PAYLOAD_KEYS else _redact_payload(item)
+            for key, item in value.items()
+        }
+    if isinstance(value, list):
+        return [_redact_payload(item) for item in value]
+    return value
+
+
+def _http_body_log(body: bytes, *, include_body: bool, limit: int = 4000) -> str:
+    """Return a bounded body diagnostic, never exposing values under secret keys."""
+    digest = hashlib.sha256(body).hexdigest()
+    prefix = f"bytes={len(body)} sha256={digest}"
+    if not include_body or not body:
+        return prefix
+    try:
+        parsed = _redact_payload(json.loads(body.decode("utf-8")))
+        rendered = json.dumps(parsed, ensure_ascii=False, separators=(",", ":"))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        rendered = body.decode("utf-8", errors="replace")
+    rendered = " ".join(rendered.split())
+    return f"{prefix} body={rendered[:limit]}{'...' if len(rendered) > limit else ''}"
+
+
+def _safe_http_headers(headers: httpx.Headers) -> dict[str, str]:
+    return {
+        key: "[REDACTED]" if key.lower() in SENSITIVE_HTTP_HEADERS else value
+        for key, value in headers.items()
+        if key.lower() in {"authorization", "proxy-authorization", "cookie", "set-cookie", "x-api-key", "content-type", "accept", "user-agent", "x-request-id", "openai-request-id", "retry-after"}
+    }
+
+
+def _http_event_hooks(logger: logging.Logger, *, include_bodies: bool) -> dict[str, list]:
+    def request_hook(request: httpx.Request) -> None:
+        safe_url = str(request.url.copy_with(query=None))
+        logger.info(
+            "http_request method=%s url=%s headers=%s %s",
+            request.method, safe_url, _safe_http_headers(request.headers),
+            _http_body_log(request.content, include_body=include_bodies),
+        )
+
+    def response_hook(response: httpx.Response) -> None:
+        # Chat-completions is non-streaming. Reading here caches the body for
+        # the OpenAI SDK while making its status/body available for diagnosis.
+        response.read()
+        safe_url = str(response.request.url.copy_with(query=None))
+        logger.info(
+            "http_response status=%d url=%s headers=%s %s",
+            response.status_code, safe_url, _safe_http_headers(response.headers),
+            _http_body_log(response.content, include_body=include_bodies),
+        )
+
+    return {"request": [request_hook], "response": [response_hook]}
+
+
 class OpenAIRepairGenerator:
     """Generate schema-constrained proposals with an injected or real client."""
 
@@ -80,6 +143,9 @@ class OpenAIRepairGenerator:
         base_url: str | None = None,
         api_mode: str | None = None,
         model: str | None = None,
+        request_timeout_seconds: float | None = None,
+        http_logger: logging.Logger | None = None,
+        log_http_bodies: bool = False,
     ) -> None:
         if client is None:
             env: dict[str, str | None] = {}
@@ -90,6 +156,14 @@ class OpenAIRepairGenerator:
             key = api_key if api_key is not None else (env.get("api_key"))
             explicit_key = _validate_key(key)
             client_options: dict[str, Any] = {"api_key": explicit_key}
+            if request_timeout_seconds is not None:
+                client_options["timeout"] = float(request_timeout_seconds)
+            if http_logger is not None:
+                http_client = httpx.Client(
+                    timeout=float(request_timeout_seconds) if request_timeout_seconds is not None else None,
+                    event_hooks=_http_event_hooks(http_logger, include_bodies=log_http_bodies),
+                )
+                client_options["http_client"] = http_client
             resolved_base_url = base_url or env.get("base_url")
             if resolved_base_url:
                 client_options["base_url"] = resolved_base_url.rstrip("/")

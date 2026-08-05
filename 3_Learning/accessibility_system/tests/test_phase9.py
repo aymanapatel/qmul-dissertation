@@ -8,9 +8,9 @@ from types import SimpleNamespace
 import pytest
 from pydantic import ValidationError
 
-from accessibility_system.phase9 import _configure_logging, run as run_phase9
+from accessibility_system.phase9 import _configure_logging, _reason_summary, run as run_phase9
 from accessibility_system.repair.contracts import GenerationResult, RepairOperation, RepairProposal
-from accessibility_system.repair.generator import OpenAIRepairGenerator, _validate_key
+from accessibility_system.repair.generator import OpenAIRepairGenerator, _http_body_log, _validate_key
 from accessibility_system.repair.patches import PatchApplicationError, apply_typed_patch
 from accessibility_system.repair.policy import proposal_policy_errors
 from accessibility_system.repair.validators import _visual_change_independently_verified, validate_repair
@@ -188,6 +188,17 @@ def test_live_client_uses_env_when_no_explicit_api_key(monkeypatch):
     assert captured["base_url"] == "https://env.example/v1"
 
 
+def test_http_body_logging_redacts_secret_fields_and_can_omit_body():
+    body = json.dumps({"api_key": "secret-value", "nested": {"token": "another-secret"}, "ok": "visible"}).encode()
+    metadata = _http_body_log(body, include_body=False)
+    detailed = _http_body_log(body, include_body=True)
+    assert "secret-value" not in metadata
+    assert "secret-value" not in detailed
+    assert "another-secret" not in detailed
+    assert '"api_key":"[REDACTED]"' in detailed
+    assert '"ok":"visible"' in detailed
+
+
 def test_patch_is_atomic_typed_and_rejects_unsafe_attribute():
     source = valid_html()
     patched, evidence = apply_typed_patch(source, proposal())
@@ -357,6 +368,37 @@ def test_phase9_respects_requested_api_mode(tmp_path):
     assert report["model"] == "mock-responses-model"
 
 
+def test_phase9_passes_request_timeout_to_live_generator(monkeypatch, tmp_path):
+    corpus = tmp_path / "corpus" / "fixture"
+    corpus.mkdir(parents=True)
+    (corpus / "0.html").write_text(valid_html(), encoding="utf-8")
+    inputs_path = tmp_path / "generator_inputs.json"
+    inputs_path.write_text(json.dumps([generator_input()]), encoding="utf-8")
+    captured = {}
+
+    class Generator:
+        model = "mock"
+
+        def __init__(self, **kwargs):
+            captured.update(kwargs)
+
+        def generate(self, item):
+            return GenerationResult(
+                proposal=proposal(), response_id="response-1", model=self.model,
+                usage={}, refusal=None,
+            )
+
+    monkeypatch.setattr("accessibility_system.phase9.OpenAIRepairGenerator", Generator)
+    args = argparse.Namespace(
+        generator_inputs=inputs_path, corpus_dir=tmp_path / "corpus", axe_js=AXE_JS,
+        output_dir=tmp_path / "phase9", condition="graph_constrained_rag", model="mock",
+        api_mode="responses", base_url="https://example.invalid/v1", max_proposals=1,
+        skip_browser=True, request_timeout_seconds=37.5,
+    )
+    run_phase9(args)
+    assert captured["request_timeout_seconds"] == 37.5
+
+
 def test_phase9_logs_redacted_root_cause_and_skips_after_auth_failure(tmp_path):
     corpus = tmp_path / "corpus" / "fixture"
     corpus.mkdir(parents=True)
@@ -389,3 +431,41 @@ def test_phase9_logs_redacted_root_cause_and_skips_after_auth_failure(tmp_path):
     combined = log_path.read_text(encoding="utf-8") + json.dumps(report)
     assert "authentication_failed" in combined
     assert "sk-secret" not in combined
+
+
+def test_phase9_logs_rejection_reason_and_stops_on_first_non_rejected(tmp_path):
+    corpus = tmp_path / "corpus" / "fixture"
+    corpus.mkdir(parents=True)
+    (corpus / "0.html").write_text(valid_html(), encoding="utf-8")
+    inputs_path = tmp_path / "generator_inputs.json"
+    inputs_path.write_text(json.dumps([generator_input(query_id=f"query-{index}") for index in range(3)]), encoding="utf-8")
+
+    class MixedGenerator:
+        calls = 0
+
+        def generate(self, item):
+            self.calls += 1
+            if self.calls == 1:
+                invalid = proposal(proposal_id="proposal-1", query_id=item["query_id"], cited_record_ids=[])
+                return GenerationResult(proposal=invalid, response_id="one", model="mock", usage={}, refusal=None)
+            review = proposal(
+                proposal_id="proposal-2", query_id=item["query_id"], decision="requires_human_review", operations=[],
+                requires_human_review=True, human_review_reasons=["Context needs review."],
+            )
+            return GenerationResult(proposal=review, response_id="two", model="mock", usage={}, refusal=None)
+
+    args = argparse.Namespace(
+        generator_inputs=inputs_path, corpus_dir=tmp_path / "corpus", axe_js=AXE_JS,
+        output_dir=tmp_path / "phase9", condition="graph_constrained_rag", model="mock",
+        api_mode="responses", base_url=None, max_proposals=3, skip_browser=True,
+        stop_on_non_rejected=True,
+    )
+    log_path = _configure_logging(args.output_dir, "INFO")
+    report = run_phase9(args, generator=MixedGenerator())
+
+    assert report["attempt_count"] == 2
+    assert report["outcome_counts"] == {"rejected": 1, "requires_human_review": 1}
+    log = log_path.read_text(encoding="utf-8")
+    assert "attempt_rejected index=1 category=grounding_policy reasons=" in log
+    assert "run_stop index=2 outcome=requires_human_review" in log
+    assert _reason_summary(["one\n two"]) == "one two"
