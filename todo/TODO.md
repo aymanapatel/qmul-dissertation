@@ -1,12 +1,3 @@
-
-# Playwright collector
-- [] browser DOM
-
-- [] a11y tree 
-
-- [] rendered state collection
-
-
 # Controlled fixtures
 
 Build test pages for:
