@@ -13,7 +13,7 @@ from .data import split_hash
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_ROOT / "src"))
+sys.path.insert(0, str(PROJECT_ROOT / "learning_v1" / "src"))
 
 from feature_extractor import FeatureExtractor, ProcessedPage, RENDERED_VISUAL_FEATURE_VERSION  # noqa: E402
 from graph_sources import GRAPH_SOURCE_RENDERED_VISUAL  # noqa: E402

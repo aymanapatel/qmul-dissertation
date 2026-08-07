@@ -11,7 +11,7 @@ from typing import Iterable
 
 from bs4 import BeautifulSoup, Tag
 
-from src.wcag_rules import RULE_BY_ID
+from learning_v1.src.wcag_rules import RULE_BY_ID
 
 from .contracts import Finding, NodeIdentity
 from .evidence import _css_path, complete_site_dirs
@@ -133,4 +133,3 @@ def run_corpus_baseline(corpus_dir: Path, site_ids: set[str] | None = None) -> d
         "axe_rule_counts": dict(sorted(Counter(f.rule_id for f in truth).items())),
         "failure_count": len(failures), "failures": failures,
     }
-

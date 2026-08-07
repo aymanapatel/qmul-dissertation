@@ -9,9 +9,9 @@ Output: Suggestions as JSON. Suggestion and not final fix
 
 Example:
     ./.venv/bin/python scripts/smoke_remediation.py \
-      --html ../2_Data/browser-use/outputs/axe-core/www.furaffinity.net/0.html \
-      --prediction reports/gnn_batch_100/predictions/www.furaffinity.net.json \
-      --output reports/remediation_smoke_furaffinity.json \
+      --html ../../2_Data/browser-use/outputs/axe-core/www.furaffinity.net/0.html \
+      --prediction ../reports/gnn_batch_100/predictions/www.furaffinity.net.json \
+      --output ../reports/remediation_smoke_furaffinity.json \
       --max-candidates 10
 """
 

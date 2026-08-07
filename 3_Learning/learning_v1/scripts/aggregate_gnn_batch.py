@@ -21,8 +21,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from wcag_rules import graph_source_for_rule
 
 
-DEFAULT_REPORT_DIR = Path("3_Learning/reports/gnn_batch_100")
-DEFAULT_AXE_DIR = Path("2_Data/browser-use/outputs/axe-core")
+LEARNING_ROOT = Path(__file__).resolve().parents[2]
+REPOSITORY_ROOT = LEARNING_ROOT.parent
+DEFAULT_REPORT_DIR = LEARNING_ROOT / "reports/gnn_batch_100"
+DEFAULT_AXE_DIR = REPOSITORY_ROOT / "2_Data/browser-use/outputs/axe-core"
 
 
 def load_json(path: Path) -> dict[str, Any]:

@@ -18,7 +18,7 @@ from .data import split_hash
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(PROJECT_ROOT / "src"))
+sys.path.insert(0, str(PROJECT_ROOT / "learning_v1" / "src"))
 
 from html_graph_builder import DOMNode, EDGE_PARENT_CHILD, EDGE_SIBLING, get_tag_index  # noqa: E402
 from wcag_rules import NUM_RULES, RULE_INDEX, rule_mask_for_graph_source  # noqa: E402

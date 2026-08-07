@@ -3,7 +3,7 @@
 Visualize training-log metrics for dissertation figures.
 
 Example:
-  python3 3_Learning/scripts/visualize_training_log.py \
+  python3 3_Learning/learning_v1/scripts/visualize_training_log.py \
     --log path/to/training.log
 """
 
@@ -21,7 +21,8 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 
 
-DEFAULT_OUTPUT_DIR = Path("3_Learning/reports/training_log_visualization")
+LEARNING_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_OUTPUT_DIR = LEARNING_ROOT / "reports/training_log_visualization"
 DEFAULT_FORMATS = ("png", "pdf")
 
 COLORS = {
