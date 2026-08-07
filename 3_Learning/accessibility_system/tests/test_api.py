@@ -98,6 +98,27 @@ def test_live_suggestion_endpoint_scans_input_and_returns_structured_llm_output(
                 ),
             )
 
+    def fake_specialist_runner(site_dir, output_dir):
+        return {
+            "architecture": "graphsage",
+            "training_artifacts": "frozen/phase5",
+            "fusion_policy": "frozen/policy.json",
+            "model_runs": [{
+                "view": "a11y-tree", "architecture": "graphsage",
+                "axe_used_for_prediction": False, "node_count": 8, "edge_count": 7,
+                "rules": [], "findings": [],
+            }],
+            "findings": [{
+                "rule_id": "image-alt", "criterion_id": "1.1.1",
+                "graph_view": "a11y-tree", "architecture": "graphsage",
+                "detector_id": "a11y-tree:graphsage:image-alt",
+                "probability": 0.91, "threshold": 0.7,
+                "routing_status": "fail", "routing_confidence": 0.82,
+                "human_review_required": False, "wcag_ids": ["1.1.1"],
+                "evidence": {"selector": "#hero", "html": '<img id="hero">', "text": ""},
+            }],
+        }
+
     monkeypatch.setattr("accessibility_system.api._safe_public_url", lambda value: None)
     inputs = tmp_path / "inputs.json"; inputs.write_text("[]")
     axe = tmp_path / "axe.js"; axe.write_text("")
@@ -105,6 +126,7 @@ def test_live_suggestion_endpoint_scans_input_and_returns_structured_llm_output(
         generator_inputs=inputs, corpus_dir=tmp_path / "corpus", axe_js=axe,
         runs_dir=tmp_path / "runs", suggestion_scanner=fake_scanner,
         suggestion_generator_factory=FakeGenerator,
+        suggestion_specialist_runner=fake_specialist_runner,
     ))
     accepted = client.post("/v1/suggestion-audits", json={"url": "https://input.example/page", "max_suggestions": 1})
     assert accepted.status_code == 202
@@ -121,3 +143,6 @@ def test_live_suggestion_endpoint_scans_input_and_returns_structured_llm_output(
     assert result["suggestions"][0]["model"] == "test-structured-model"
     assert result["suggestions"][0]["decision"] == "requires_human_review"
     assert result["suggestions"][0]["operations"] == []
+    assert result["suggestions"][0]["model_evidence"]["graph_view"] == "a11y-tree"
+    assert result["specialist"]["architecture"] == "graphsage"
+    assert result["specialist"]["model_runs"][0]["axe_used_for_prediction"] is False

@@ -109,10 +109,14 @@ curl -X POST http://127.0.0.1:8000/v1/suggestion-audits \
   -d '{"url":"https://www.w3.org/","max_suggestions":5}'
 ```
 
-The job captures that page, runs axe-core, and makes a structured LLM call for
-each selected finding. Its result contains a screenshot and ordered
-suggestions. No proposed operation is applied to the source page. The focused
-interface for this route is in `4_UI/learning-v2-demo`.
+The job captures same-session HTML, visual and live-AX evidence, builds the two
+`learning_v2` graph views, runs the frozen GraphSAGE checkpoints and fusion
+policy, and makes a structured LLM call for each routed specialist finding.
+Axe is retained as independent scan evidence and is not part of the GNN
+inference fingerprint. The result contains a screenshot, checkpoint
+probabilities, frozen thresholds and ordered suggestions. No proposed
+operation is applied to the source page. The focused interface for this route
+is in `4_UI/learning-v2-demo`.
 
 Scan public sites:
 
