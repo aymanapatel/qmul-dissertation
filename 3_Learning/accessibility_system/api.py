@@ -25,6 +25,7 @@ from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 from .phase9 import _configure_logging, run as run_phase9
 from .repair.generator import OpenAIRepairGenerator
+from learning_v2.live_inference import capture_aligned_page, run_live_specialists
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -147,9 +148,9 @@ def scan_sites(
                 violations = _normalise_violations(report)
                 screenshot_artifact = None
                 if screenshot_dir is not None:
-                    screenshot_dir.mkdir(parents=True, exist_ok=True)
-                    screenshot_artifact = f"page-{len(sites) + 1}.png"
-                    page.screenshot(path=screenshot_dir / screenshot_artifact, full_page=True)
+                    evidence_dir = screenshot_dir / "live_page"
+                    capture_aligned_page(page, evidence_dir, report)
+                    screenshot_artifact = "live_page/page.png"
                 sites.append({
                     "url": url, "final_url": page.url, "status": "completed", "started_at": started,
                     "completed_at": _now(), "violation_count": len(violations),
@@ -219,9 +220,79 @@ def _suggestion_inputs(site: dict[str, Any], limit: int) -> list[dict[str, Any]]
     return values
 
 
+def _specialist_suggestion_inputs(
+    site: dict[str, Any], specialist_report: dict[str, Any], limit: int,
+) -> list[dict[str, Any]]:
+    """Convert trained-model findings into bounded LLM generator inputs."""
+
+    axe_by_rule = {str(item.get("id")): item for item in site.get("violations", [])}
+    hostname = urlparse(str(site.get("final_url") or site.get("url") or "")).hostname or "unknown"
+    values = []
+    seen: set[tuple[str, str]] = set()
+    for finding in specialist_report.get("findings", []):
+        rule_id = str(finding["rule_id"])
+        evidence = finding.get("evidence", {})
+        selector = str(evidence.get("selector") or "html")
+        issue_key = (rule_id, selector)
+        if issue_key in seen:
+            continue
+        seen.add(issue_key)
+        identity = f"{hostname}:{rule_id}:{finding.get('criterion_id')}:{selector}:{len(values) + 1}"
+        finding_id = "gnn-" + hashlib.sha256(identity.encode("utf-8")).hexdigest()[:16]
+        axe = axe_by_rule.get(rule_id, {})
+        probability = float(finding["probability"])
+        threshold = float(finding["threshold"])
+        values.append({
+            "query_id": f"suggest-{finding_id}",
+            "condition": "no_rag",
+            "safe_action": "suggest_only_do_not_apply",
+            "prompt": (
+                "Give one bounded, actionable remediation suggestion for this accessibility finding "
+                "identified by the trained graph specialist. Use the supplied selector and model "
+                "evidence. Do not claim the suggestion has been applied or validated. If the correct "
+                "semantic value cannot be known from the evidence, require human review."
+            ),
+            "citations": [],
+            "original_finding": {
+                "finding_id": finding_id,
+                "site_id": hostname,
+                "rule_id": rule_id,
+                "criterion_id": finding.get("criterion_id"),
+                "impact": axe.get("impact"),
+                "help": axe.get("help") or rule_id.replace("-", " ").title(),
+                "help_url": axe.get("help_url"),
+                "detector": finding["detector_id"],
+                "confidence": probability,
+                "routing_status": finding["routing_status"],
+                "evidence": {
+                    "target": [selector],
+                    "html": str(evidence.get("html", ""))[:3000],
+                    "text": str(evidence.get("text", ""))[:500],
+                    "visual": evidence.get("visual"),
+                    "failure_summary": (
+                        f"The frozen {finding['architecture']} {finding['graph_view']} specialist "
+                        f"predicted {rule_id} with probability {probability:.6f}, above its "
+                        f"validation-frozen threshold {threshold:.6f}. The routed status is "
+                        f"{finding['routing_status']}."
+                    ),
+                    "model_probability": probability,
+                    "model_threshold": threshold,
+                    "graph_view": finding["graph_view"],
+                    "architecture": finding["architecture"],
+                    "axe_used_for_prediction": False,
+                },
+            },
+            "model_evidence": finding,
+        })
+        if len(values) >= limit:
+            break
+    return values
+
+
 def generate_live_suggestions(
     scan: dict[str, Any], *, max_suggestions: int,
     generator_factory=OpenAIRepairGenerator,
+    specialist_report: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Call the configured LLM once per selected finding and preserve failures."""
 
@@ -230,7 +301,12 @@ def generate_live_suggestions(
         return {"status": "scan_failed", "site": site, "suggestions": []}
     generator = generator_factory()
     suggestions = []
-    for generator_input in _suggestion_inputs(site, max_suggestions):
+    generator_inputs = (
+        _specialist_suggestion_inputs(site, specialist_report, max_suggestions)
+        if specialist_report is not None
+        else _suggestion_inputs(site, max_suggestions)
+    )
+    for generator_input in generator_inputs:
         finding = generator_input["original_finding"]
         try:
             generated = generator.generate(generator_input)
@@ -249,6 +325,7 @@ def generate_live_suggestions(
                 "requires_human_review": proposal["requires_human_review"],
                 "human_review_reasons": proposal["human_review_reasons"],
                 "validation_steps": proposal["validation_steps"],
+                "model_evidence": generator_input.get("model_evidence"),
                 "model": generated.model,
                 "response_id": generated.response_id,
                 "usage": generated.usage,
@@ -273,6 +350,13 @@ def generate_live_suggestions(
         "violations_by_impact": site.get("violations_by_impact", {}),
         "suggestion_count": len(suggestions),
         "suggestions": suggestions,
+        "specialist": {
+            "architecture": specialist_report.get("architecture"),
+            "training_artifacts": specialist_report.get("training_artifacts"),
+            "fusion_policy": specialist_report.get("fusion_policy"),
+            "model_runs": specialist_report.get("model_runs", []),
+            "finding_count": len(specialist_report.get("findings", [])),
+        } if specialist_report is not None else None,
         "safety": "Suggestions only. No source HTML was changed and no operation was applied.",
     }
 
@@ -331,6 +415,7 @@ def create_app(
     *, generator_inputs: Path = DEFAULT_INPUTS, corpus_dir: Path = DEFAULT_CORPUS,
     axe_js: Path = DEFAULT_AXE, runs_dir: Path = DEFAULT_RUNS,
     suggestion_scanner=scan_sites, suggestion_generator_factory=OpenAIRepairGenerator,
+    suggestion_specialist_runner=run_live_specialists,
 ) -> FastAPI:
     app = FastAPI(
         title="Accessibility Research API", version="1.0.0",
@@ -389,9 +474,15 @@ def create_app(
 
         def task(run_dir: Path, source_url: str, maximum: int, timeout: float) -> dict[str, Any]:
             scan = suggestion_scanner([source_url], app.state.axe_js, timeout, run_dir)
+            specialist_report = None
+            if scan.get("sites") and scan["sites"][0].get("status") == "completed":
+                specialist_report = suggestion_specialist_runner(
+                    run_dir / "live_page", run_dir / "learning_v2_graphs",
+                )
             result = generate_live_suggestions(
                 scan, max_suggestions=maximum,
                 generator_factory=suggestion_generator_factory,
+                specialist_report=specialist_report,
             )
             result["run_id"] = run_dir.name
             if result.get("screenshot_artifact"):
