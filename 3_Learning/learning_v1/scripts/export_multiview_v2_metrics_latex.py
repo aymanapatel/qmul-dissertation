@@ -12,8 +12,9 @@ import json
 from pathlib import Path
 
 
-DEFAULT_MODEL_DIR = Path("3_Learning/models_multiview_v2")
-DEFAULT_OUTPUT = Path("3_Learning/reports/model_metrics/models_multiview_v2_metrics.tex")
+LEARNING_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_MODEL_DIR = LEARNING_ROOT / "models_multiview_v2"
+DEFAULT_OUTPUT = LEARNING_ROOT / "reports/model_metrics/models_multiview_v2_metrics.tex"
 
 
 def load_json(path: Path) -> dict:

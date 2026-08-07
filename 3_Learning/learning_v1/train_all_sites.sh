@@ -1,14 +1,15 @@
 #!/bin/bash
 # train_all_sites.sh - Full training on all 700 sites with multi-label GAT
 
-cd /Users/aymanpatel/Desktop/Uni/Dissertation/3_Learning
-source .venv/bin/activate
+SCRIPT_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+cd "$SCRIPT_DIR" || exit 1
+source ../.venv/bin/activate
 
 # Use MPS (Apple GPU) for faster training
 python scripts/train_multi_site.py \
-  --data-dir /Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core \
-  --output-dir ./graphs_multi \
-  --model-dir ./models_multi \
+  --data-dir ../../2_Data/browser-use/outputs/axe-core \
+  --output-dir ../graphs_multi \
+  --model-dir ../models_multi \
   --epochs 100 \
   --batch-size 8 \
   --hidden 256 \

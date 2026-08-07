@@ -1,6 +1,11 @@
 """Source-owned rule metadata shared by training and reporting."""
 
-from src.wcag_rules import INDEX_TO_RULE, RULE_BY_ID, rule_ids_for_graph_source, rule_indices_for_graph_source
+from learning_v1.src.wcag_rules import (
+    INDEX_TO_RULE,
+    RULE_BY_ID,
+    rule_ids_for_graph_source,
+    rule_indices_for_graph_source,
+)
 
 
 def rules_for_source(graph_source: str) -> tuple[tuple[str, ...], tuple[int, ...]]:
@@ -23,4 +28,3 @@ def rule_metadata(rule_id: str) -> dict:
 
 
 __all__ = ["INDEX_TO_RULE", "rule_metadata", "rules_for_source"]
-
