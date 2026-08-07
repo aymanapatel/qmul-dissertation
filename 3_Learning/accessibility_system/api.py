@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import ipaddress
 import json
 import logging
@@ -18,10 +19,12 @@ from typing import Any, Literal
 from urllib.parse import urlparse
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 from .phase9 import _configure_logging, run as run_phase9
+from .repair.generator import OpenAIRepairGenerator
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,6 +53,14 @@ class RepairRunRequest(StrictRequest):
     base_url: str | None = Field(default=None, max_length=500)
     skip_browser: bool = False
     generation_retries: int = Field(default=1, ge=0, le=3)
+
+
+class SuggestionAuditRequest(StrictRequest):
+    """One public page to scan and send to the structured LLM adapter."""
+
+    url: HttpUrl
+    max_suggestions: int = Field(default=5, ge=1, le=8)
+    timeout_seconds: float = Field(default=30.0, ge=5.0, le=120.0)
 
 
 def _now() -> str:
@@ -99,7 +110,10 @@ def _normalise_violations(report: dict[str, Any]) -> list[dict[str, Any]]:
     return output
 
 
-def scan_sites(urls: list[str], axe_js: Path, timeout_seconds: float) -> dict[str, Any]:
+def scan_sites(
+    urls: list[str], axe_js: Path, timeout_seconds: float,
+    screenshot_dir: Path | None = None,
+) -> dict[str, Any]:
     """Scan public URLs with axe-core in one isolated Chromium session."""
     from playwright.sync_api import sync_playwright
 
@@ -131,12 +145,17 @@ def scan_sites(urls: list[str], axe_js: Path, timeout_seconds: float) -> dict[st
                   resultTypes: ['violations'], rules: {'region': {enabled: false}}
                 })""")
                 violations = _normalise_violations(report)
+                screenshot_artifact = None
+                if screenshot_dir is not None:
+                    screenshot_dir.mkdir(parents=True, exist_ok=True)
+                    screenshot_artifact = f"page-{len(sites) + 1}.png"
+                    page.screenshot(path=screenshot_dir / screenshot_artifact, full_page=True)
                 sites.append({
                     "url": url, "final_url": page.url, "status": "completed", "started_at": started,
                     "completed_at": _now(), "violation_count": len(violations),
                     "affected_node_count": sum(len(item["nodes"]) for item in violations),
                     "violations_by_impact": dict(Counter(str(item["impact"] or "unknown") for item in violations)),
-                    "violations": violations,
+                    "violations": violations, "screenshot_artifact": screenshot_artifact,
                 })
             except Exception as exc:
                 sites.append({
@@ -151,6 +170,110 @@ def scan_sites(urls: list[str], axe_js: Path, timeout_seconds: float) -> dict[st
     return {
         "schema_version": 1, "status": "completed", "site_count": len(sites),
         "completed_count": sum(item["status"] == "completed" for item in sites), "sites": sites,
+    }
+
+
+IMPACT_ORDER = {"critical": 0, "serious": 1, "moderate": 2, "minor": 3, None: 4}
+
+
+def _suggestion_inputs(site: dict[str, Any], limit: int) -> list[dict[str, Any]]:
+    """Create bounded LLM inputs from the highest-impact axe node findings."""
+
+    candidates: list[tuple[dict[str, Any], dict[str, Any]]] = []
+    for violation in site.get("violations", []):
+        for node in violation.get("nodes", []):
+            candidates.append((violation, node))
+    candidates.sort(key=lambda item: IMPACT_ORDER.get(item[0].get("impact"), 4))
+    hostname = urlparse(str(site.get("final_url") or site.get("url") or "")).hostname or "unknown"
+    values = []
+    for index, (violation, node) in enumerate(candidates[:limit], 1):
+        rule_id = str(violation.get("id") or "unknown-rule")
+        target = [str(item) for item in node.get("target", []) if str(item).strip()]
+        identity = f"{hostname}:{rule_id}:{index}:{'|'.join(target)}"
+        finding_id = "live-" + hashlib.sha256(identity.encode("utf-8")).hexdigest()[:16]
+        query_id = f"suggest-{finding_id}"
+        values.append({
+            "query_id": query_id,
+            "condition": "no_rag",
+            "safe_action": "suggest_only_do_not_apply",
+            "prompt": (
+                "Give one bounded, actionable accessibility remediation suggestion for this observed "
+                "finding. Do not claim the suggestion has been applied or validated. If the correct "
+                "semantic value cannot be known from the evidence, require human review."
+            ),
+            "citations": [],
+            "original_finding": {
+                "finding_id": finding_id,
+                "site_id": hostname,
+                "rule_id": rule_id,
+                "impact": violation.get("impact"),
+                "help": violation.get("help"),
+                "help_url": violation.get("help_url"),
+                "evidence": {
+                    "target": target,
+                    "html": str(node.get("html", ""))[:3000],
+                    "failure_summary": str(node.get("failure_summary", ""))[:3000],
+                },
+            },
+        })
+    return values
+
+
+def generate_live_suggestions(
+    scan: dict[str, Any], *, max_suggestions: int,
+    generator_factory=OpenAIRepairGenerator,
+) -> dict[str, Any]:
+    """Call the configured LLM once per selected finding and preserve failures."""
+
+    site = scan["sites"][0]
+    if site.get("status") != "completed":
+        return {"status": "scan_failed", "site": site, "suggestions": []}
+    generator = generator_factory()
+    suggestions = []
+    for generator_input in _suggestion_inputs(site, max_suggestions):
+        finding = generator_input["original_finding"]
+        try:
+            generated = generator.generate(generator_input)
+            proposal = generated.proposal.model_dump(mode="json")
+            suggestions.append({
+                "finding_id": finding["finding_id"],
+                "rule_id": finding["rule_id"],
+                "impact": finding.get("impact"),
+                "target": finding["evidence"]["target"],
+                "help": finding.get("help"),
+                "decision": proposal["decision"],
+                "rationale": proposal["rationale"],
+                "expected_resolution": proposal["expected_resolution"],
+                "operations": proposal["operations"],
+                "confidence": proposal["confidence"],
+                "requires_human_review": proposal["requires_human_review"],
+                "human_review_reasons": proposal["human_review_reasons"],
+                "validation_steps": proposal["validation_steps"],
+                "model": generated.model,
+                "response_id": generated.response_id,
+                "usage": generated.usage,
+                "generation_status": "completed",
+            })
+        except Exception as exc:
+            LOGGER.exception("suggestion_generation_failed finding_id=%s", finding["finding_id"])
+            suggestions.append({
+                "finding_id": finding["finding_id"], "rule_id": finding["rule_id"],
+                "impact": finding.get("impact"), "target": finding["evidence"]["target"],
+                "help": finding.get("help"), "generation_status": "failed",
+                "error": f"{type(exc).__name__}: {exc}"[:1000],
+            })
+    return {
+        "schema_version": 1,
+        "status": "completed" if all(item["generation_status"] == "completed" for item in suggestions) else "partial",
+        "source_url": site.get("url"),
+        "final_url": site.get("final_url"),
+        "screenshot_artifact": site.get("screenshot_artifact"),
+        "violation_count": site.get("violation_count", 0),
+        "affected_node_count": site.get("affected_node_count", 0),
+        "violations_by_impact": site.get("violations_by_impact", {}),
+        "suggestion_count": len(suggestions),
+        "suggestions": suggestions,
+        "safety": "Suggestions only. No source HTML was changed and no operation was applied.",
     }
 
 
@@ -207,10 +330,17 @@ class JobStore:
 def create_app(
     *, generator_inputs: Path = DEFAULT_INPUTS, corpus_dir: Path = DEFAULT_CORPUS,
     axe_js: Path = DEFAULT_AXE, runs_dir: Path = DEFAULT_RUNS,
+    suggestion_scanner=scan_sites, suggestion_generator_factory=OpenAIRepairGenerator,
 ) -> FastAPI:
     app = FastAPI(
         title="Accessibility Research API", version="1.0.0",
         description="Run axe scans, inspect Phase 8 RAG evidence, and execute structured Phase 9 repairs.",
+    )
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://127.0.0.1:5173", "http://localhost:5173"],
+        allow_methods=["GET", "POST"],
+        allow_headers=["Content-Type"],
     )
     store = JobStore(runs_dir)
     app.state.generator_inputs = generator_inputs.resolve()
@@ -246,6 +376,33 @@ def create_app(
             return result
 
         return store.submit("scan", task, urls, request.timeout_seconds)
+
+    @app.post("/v1/suggestion-audits", status_code=202)
+    def create_suggestion_audit(request: SuggestionAuditRequest) -> dict[str, Any]:
+        """Scan exactly one public URL and request structured LLM suggestions."""
+
+        url = str(request.url)
+        try:
+            _safe_public_url(url)
+        except ValueError as exc:
+            raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+        def task(run_dir: Path, source_url: str, maximum: int, timeout: float) -> dict[str, Any]:
+            scan = suggestion_scanner([source_url], app.state.axe_js, timeout, run_dir)
+            result = generate_live_suggestions(
+                scan, max_suggestions=maximum,
+                generator_factory=suggestion_generator_factory,
+            )
+            result["run_id"] = run_dir.name
+            if result.get("screenshot_artifact"):
+                result["screenshot_url"] = (
+                    f"/v1/jobs/{run_dir.name}/artifacts/{result['screenshot_artifact']}"
+                )
+            return result
+
+        return store.submit(
+            "suggest", task, url, request.max_suggestions, request.timeout_seconds,
+        )
 
     @app.get("/v1/rag/inputs")
     def rag_inputs(

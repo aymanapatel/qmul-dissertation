@@ -101,6 +101,19 @@ Interactive OpenAPI documentation is available at `http://127.0.0.1:8000/docs`.
 Slow browser and LLM operations return `202 Accepted` with a `job_id`; poll
 `GET /v1/jobs/{job_id}` and then fetch `GET /v1/jobs/{job_id}/result`.
 
+Generate reviewable suggestions for one explicitly supplied webpage:
+
+```bash
+curl -X POST http://127.0.0.1:8000/v1/suggestion-audits \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://www.w3.org/","max_suggestions":5}'
+```
+
+The job captures that page, runs axe-core, and makes a structured LLM call for
+each selected finding. Its result contains a screenshot and ordered
+suggestions. No proposed operation is applied to the source page. The focused
+interface for this route is in `4_UI/learning-v2-demo`.
+
 Scan public sites:
 
 ```bash
