@@ -7,7 +7,7 @@ from types import SimpleNamespace
 
 from fastapi.testclient import TestClient
 
-from accessibility_system.api import create_app
+from accessibility_system.api import _specialist_suggestion_inputs, create_app
 from accessibility_system.repair.contracts import RepairProposal
 
 
@@ -45,6 +45,24 @@ def test_scan_rejects_private_network_targets(tmp_path):
     response = client.post("/v1/scans", json={"urls": ["http://127.0.0.1/admin"]})
     assert response.status_code == 422
     assert "blocked" in response.json()["detail"]
+
+
+def test_architecture_specific_findings_remain_separate():
+    site = {"final_url": "https://example.com", "violations": []}
+    finding = {
+        "rule_id": "image-alt", "criterion_id": "1.1.1", "graph_view": "a11y-tree",
+        "detector_id": "a11y-tree:graphsage:image-alt", "probability": 0.9,
+        "threshold": 0.7, "routing_status": "fail", "routing_confidence": 0.8,
+        "architecture": "graphsage", "evidence": {"selector": "#hero", "html": "<img>"},
+    }
+    second = {
+        **finding, "architecture": "gat", "detector_id": "a11y-tree:gat:image-alt",
+        "probability": 0.85,
+    }
+    values = _specialist_suggestion_inputs(site, {"findings": [finding, second]}, 5)
+    assert len(values) == 2
+    assert values[0]["original_finding"]["finding_id"] != values[1]["original_finding"]["finding_id"]
+    assert [item["model_evidence"]["architecture"] for item in values] == ["graphsage", "gat"]
 
 
 def test_job_and_artifact_endpoints_are_traversal_safe(tmp_path):
@@ -98,9 +116,12 @@ def test_live_suggestion_endpoint_scans_input_and_returns_structured_llm_output(
                 ),
             )
 
-    def fake_specialist_runner(site_dir, output_dir):
+    def fake_specialist_runner(site_dir, output_dir, progress=None):
+        if progress:
+            progress("build_a11y_tree", "running", "Build accessibility-tree graph", {})
+            progress("build_a11y_tree", "completed", "Build accessibility-tree graph", {"node_count": 8})
         return {
-            "architecture": "graphsage",
+            "architectures": ["mlp", "graphsage", "gat"],
             "training_artifacts": "frozen/phase5",
             "fusion_policy": "frozen/policy.json",
             "model_runs": [{
@@ -144,5 +165,13 @@ def test_live_suggestion_endpoint_scans_input_and_returns_structured_llm_output(
     assert result["suggestions"][0]["decision"] == "requires_human_review"
     assert result["suggestions"][0]["operations"] == []
     assert result["suggestions"][0]["model_evidence"]["graph_view"] == "a11y-tree"
-    assert result["specialist"]["architecture"] == "graphsage"
+    assert result["specialist"]["architectures"] == ["mlp", "graphsage", "gat"]
     assert result["specialist"]["model_runs"][0]["axe_used_for_prediction"] is False
+    assert result["suggestions"][0]["api_trace"]["request"]["system_prompt"]
+    assert result["suggestions"][0]["api_trace"]["request"]["user_prompt"]["immutable_identity"]["finding_id"]
+    assert result["application_api"]["submit"]["request_body"]["url"] == "https://input.example/page"
+    assert {event["event_id"] for event in job["progress"]["events"]} >= {
+        "capture_page", "build_a11y_tree", "call_llm_01", "finalise_result",
+    }
+    assert "run_dir" not in job and "result_path" not in job
+    assert job["links"]["result"] == f"/v1/jobs/{job_id}/result"

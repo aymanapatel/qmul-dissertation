@@ -10,6 +10,7 @@ import hashlib
 import json
 import logging
 from typing import Any
+from urllib.parse import urlsplit, urlunsplit
 
 import httpx
 from openai import OpenAI
@@ -54,6 +55,54 @@ label uses insert_label_before when exact visible label text is verified; color-
 set_style_property/color only when the exact replacement colour is verified. For
 insert_label_before, attribute_name and css_property must be null. For set_attribute,
 attribute_name and new_value must be non-null and css_property must be null."""
+
+
+def build_prompt_messages(generator_input: dict[str, Any]) -> tuple[list[dict[str, str]], dict[str, Any]]:
+    """Build the exact public prompts sent to the structured-output provider."""
+
+    finding = generator_input.get("original_finding", {})
+    public_finding = {
+        key: value for key, value in finding.items()
+        if not key.startswith("oracle_") and key not in {"semantic_verified", "visual_verified"}
+    }
+    user_payload = {
+        "task_prompt": str(generator_input["prompt"]),
+        "immutable_identity": {
+            "query_id": str(generator_input.get("query_id", "")),
+            "finding_id": str(finding.get("finding_id", "")),
+        },
+        "allowed_cited_record_ids": [
+            str(item.get("record_id")) for item in generator_input.get("citations", [])
+        ],
+        "allowed_selectors": [
+            str(item) for item in finding.get("evidence", {}).get("target", [])
+            if isinstance(item, str)
+        ],
+        "original_finding": public_finding,
+    }
+    retry_feedback = str(generator_input.get("_schema_retry_feedback", "")).strip()
+    if retry_feedback:
+        user_payload["schema_correction"] = (
+            "The previous response failed local schema validation. Correct only the schema/cross-field issue and "
+            f"return a complete proposal: {retry_feedback[:1500]}"
+        )
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": json.dumps(user_payload, sort_keys=True)},
+    ]
+    return messages, user_payload
+
+
+def _safe_endpoint(base_url: str | None, api_mode: str) -> str:
+    """Return a display-safe endpoint without credentials, query, or fragment."""
+
+    raw = str(base_url or "https://api.openai.com/v1").rstrip("/")
+    parsed = urlsplit(raw)
+    hostname = parsed.hostname or "api.openai.com"
+    port = f":{parsed.port}" if parsed.port else ""
+    safe_base = urlunsplit((parsed.scheme or "https", f"{hostname}{port}", parsed.path.rstrip("/"), "", ""))
+    resource = "responses" if api_mode == "responses" else "chat/completions"
+    return f"{safe_base}/{resource}"
 
 
 
@@ -178,38 +227,11 @@ class OpenAIRepairGenerator:
         self.client = client
         self.model = resolved_model
         self.api_mode = resolved_api_mode
+        known_base_url = resolved_base_url if "resolved_base_url" in locals() else getattr(client, "base_url", None)
+        self.endpoint = _safe_endpoint(str(known_base_url) if known_base_url else None, resolved_api_mode)
 
     def generate(self, generator_input: dict[str, Any]) -> GenerationResult:
-        finding = generator_input.get("original_finding", {})
-        public_finding = {
-            key: value for key, value in finding.items()
-            if not key.startswith("oracle_") and key not in {"semantic_verified", "visual_verified"}
-        }
-        user_payload = {
-            "task_prompt": str(generator_input["prompt"]),
-            "immutable_identity": {
-                "query_id": str(generator_input.get("query_id", "")),
-                "finding_id": str(finding.get("finding_id", "")),
-            },
-            "allowed_cited_record_ids": [
-                str(item.get("record_id")) for item in generator_input.get("citations", [])
-            ],
-            "allowed_selectors": [
-                str(item) for item in finding.get("evidence", {}).get("target", [])
-                if isinstance(item, str)
-            ],
-            "original_finding": public_finding,
-        }
-        retry_feedback = str(generator_input.get("_schema_retry_feedback", "")).strip()
-        if retry_feedback:
-            user_payload["schema_correction"] = (
-                "The previous response failed local schema validation. Correct only the schema/cross-field issue and "
-                f"return a complete proposal: {retry_feedback[:1500]}"
-            )
-        messages = [
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": json.dumps(user_payload, sort_keys=True)},
-        ]
+        messages, user_payload = build_prompt_messages(generator_input)
         refusal = None
         if self.api_mode == "responses":
             response = self.client.responses.parse(
@@ -245,4 +267,13 @@ class OpenAIRepairGenerator:
             model=str(getattr(response, "model", self.model)),
             usage=_model_dump(getattr(response, "usage", None)),
             refusal=refusal,
+            request_trace={
+                "method": "POST",
+                "endpoint": self.endpoint,
+                "api_mode": self.api_mode,
+                "model": self.model,
+                "system_prompt": SYSTEM_PROMPT,
+                "user_prompt": user_payload,
+                "response_format": "RepairProposal (strict structured output)",
+            },
         )

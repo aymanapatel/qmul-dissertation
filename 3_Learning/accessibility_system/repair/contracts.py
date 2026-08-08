@@ -82,6 +82,7 @@ class GenerationResult(StrictModel):
     model: str
     usage: dict[str, Any]
     refusal: str | None
+    request_trace: dict[str, Any] = Field(default_factory=dict)
 
 
 class ValidationResult(StrictModel):

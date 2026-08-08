@@ -13,6 +13,7 @@ def sampled_binary_cross_entropy(
     negative_ratio: float = 8.0,
     minimum_negatives: int = 1024,
     valid_mask: torch.Tensor | None = None,
+    generator: torch.Generator | None = None,
 ) -> tuple[torch.Tensor, dict[str, int]]:
     if logits.shape != targets.shape:
         raise ValueError("logits and targets must have the same shape")
@@ -30,7 +31,19 @@ def sampled_binary_cross_entropy(
     desired_negatives = max(minimum_negatives, int(positive_indices.numel() * negative_ratio))
     desired_negatives = min(desired_negatives, int(negative_indices.numel()))
     if desired_negatives and desired_negatives < negative_indices.numel():
-        order = torch.randperm(negative_indices.numel(), device=negative_indices.device)[:desired_negatives]
+        if generator is None:
+            order = torch.randperm(
+                negative_indices.numel(),
+                device=negative_indices.device,
+            )[:desired_negatives]
+        else:
+            # Use a CPU generator so deterministic validation sampling behaves
+            # identically on CPU, MPS, and CUDA, then move only the indices.
+            order = torch.randperm(
+                negative_indices.numel(),
+                generator=generator,
+                device="cpu",
+            )[:desired_negatives].to(negative_indices.device)
         negative_indices = negative_indices[order]
     else:
         negative_indices = negative_indices[:desired_negatives]
@@ -42,4 +55,3 @@ def sampled_binary_cross_entropy(
         "positive_pairs": int(positive_indices.numel()),
         "negative_pairs": int(negative_indices.numel()),
     }
-

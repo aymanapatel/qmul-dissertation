@@ -24,7 +24,7 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 from .phase9 import _configure_logging, run as run_phase9
-from .repair.generator import OpenAIRepairGenerator
+from .repair.generator import OpenAIRepairGenerator, SYSTEM_PROMPT, build_prompt_messages
 from learning_v2.live_inference import capture_aligned_page, run_live_specialists
 
 
@@ -228,16 +228,23 @@ def _specialist_suggestion_inputs(
     axe_by_rule = {str(item.get("id")): item for item in site.get("violations", [])}
     hostname = urlparse(str(site.get("final_url") or site.get("url") or "")).hostname or "unknown"
     values = []
-    seen: set[tuple[str, str]] = set()
+    seen: set[tuple[str, str, str, str]] = set()
     for finding in specialist_report.get("findings", []):
         rule_id = str(finding["rule_id"])
         evidence = finding.get("evidence", {})
         selector = str(evidence.get("selector") or "html")
-        issue_key = (rule_id, selector)
+        issue_key = (
+            rule_id, selector,
+            str(finding.get("graph_view", "")),
+            str(finding.get("architecture", "")),
+        )
         if issue_key in seen:
             continue
         seen.add(issue_key)
-        identity = f"{hostname}:{rule_id}:{finding.get('criterion_id')}:{selector}:{len(values) + 1}"
+        identity = (
+            f"{hostname}:{rule_id}:{finding.get('criterion_id')}:{selector}:"
+            f"{finding.get('graph_view')}:{finding.get('architecture')}"
+        )
         finding_id = "gnn-" + hashlib.sha256(identity.encode("utf-8")).hexdigest()[:16]
         axe = axe_by_rule.get(rule_id, {})
         probability = float(finding["probability"])
@@ -293,6 +300,7 @@ def generate_live_suggestions(
     scan: dict[str, Any], *, max_suggestions: int,
     generator_factory=OpenAIRepairGenerator,
     specialist_report: dict[str, Any] | None = None,
+    progress=None,
 ) -> dict[str, Any]:
     """Call the configured LLM once per selected finding and preserve failures."""
 
@@ -306,11 +314,34 @@ def generate_live_suggestions(
         if specialist_report is not None
         else _suggestion_inputs(site, max_suggestions)
     )
-    for generator_input in generator_inputs:
+    for index, generator_input in enumerate(generator_inputs, 1):
         finding = generator_input["original_finding"]
+        event_id = f"call_llm_{index:02d}"
+        label = (
+            f"Call LLM for {finding.get('rule_id')} · "
+            f"{finding.get('evidence', {}).get('architecture', 'detector')}"
+        )
+        if progress is not None:
+            progress(event_id, "running", label, {
+                "finding_id": finding["finding_id"], "rule_id": finding.get("rule_id"),
+                "architecture": finding.get("evidence", {}).get("architecture"),
+                "graph_view": finding.get("evidence", {}).get("graph_view"),
+                "index": index, "total": len(generator_inputs),
+            })
+        _, user_payload = build_prompt_messages(generator_input)
+        fallback_trace = {
+            "method": "POST",
+            "endpoint": str(getattr(generator, "endpoint", "configured OpenAI-compatible endpoint")),
+            "api_mode": str(getattr(generator, "api_mode", "structured_output")),
+            "model": str(getattr(generator, "model", "configured model")),
+            "system_prompt": SYSTEM_PROMPT,
+            "user_prompt": user_payload,
+            "response_format": "RepairProposal (strict structured output)",
+        }
         try:
             generated = generator.generate(generator_input)
             proposal = generated.proposal.model_dump(mode="json")
+            request_trace = dict(getattr(generated, "request_trace", {}) or fallback_trace)
             suggestions.append({
                 "finding_id": finding["finding_id"],
                 "rule_id": finding["rule_id"],
@@ -329,18 +360,45 @@ def generate_live_suggestions(
                 "model": generated.model,
                 "response_id": generated.response_id,
                 "usage": generated.usage,
+                "api_trace": {
+                    "request": request_trace,
+                    "response": {
+                        "response_id": generated.response_id,
+                        "model": generated.model,
+                        "usage": generated.usage,
+                        "structured_output": proposal,
+                    },
+                },
                 "generation_status": "completed",
             })
+            if progress is not None:
+                progress(event_id, "completed", label, {
+                    "finding_id": finding["finding_id"], "rule_id": finding.get("rule_id"),
+                    "architecture": finding.get("evidence", {}).get("architecture"),
+                    "graph_view": finding.get("evidence", {}).get("graph_view"),
+                    "model": generated.model, "response_id": generated.response_id,
+                    "index": index, "total": len(generator_inputs),
+                })
         except Exception as exc:
             LOGGER.exception("suggestion_generation_failed finding_id=%s", finding["finding_id"])
+            safe_error = f"{type(exc).__name__}: {exc}"[:1000]
             suggestions.append({
                 "finding_id": finding["finding_id"], "rule_id": finding["rule_id"],
                 "impact": finding.get("impact"), "target": finding["evidence"]["target"],
                 "help": finding.get("help"), "generation_status": "failed",
-                "error": f"{type(exc).__name__}: {exc}"[:1000],
+                "model_evidence": generator_input.get("model_evidence"),
+                "api_trace": {"request": fallback_trace, "response": {"error": safe_error}},
+                "error": safe_error,
             })
+            if progress is not None:
+                progress(event_id, "failed", label, {
+                    "finding_id": finding["finding_id"], "rule_id": finding.get("rule_id"),
+                    "architecture": finding.get("evidence", {}).get("architecture"),
+                    "graph_view": finding.get("evidence", {}).get("graph_view"),
+                    "error": safe_error, "index": index, "total": len(generator_inputs),
+                })
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "completed" if all(item["generation_status"] == "completed" for item in suggestions) else "partial",
         "source_url": site.get("url"),
         "final_url": site.get("final_url"),
@@ -351,7 +409,7 @@ def generate_live_suggestions(
         "suggestion_count": len(suggestions),
         "suggestions": suggestions,
         "specialist": {
-            "architecture": specialist_report.get("architecture"),
+            "architectures": specialist_report.get("architectures", []),
             "training_artifacts": specialist_report.get("training_artifacts"),
             "fusion_policy": specialist_report.get("fusion_policy"),
             "model_runs": specialist_report.get("model_runs", []),
@@ -372,7 +430,11 @@ class JobStore:
     def submit(self, kind: str, function, *args) -> dict[str, Any]:
         job_id = f"{kind}-{uuid.uuid4().hex[:16]}"
         run_dir = self.root / job_id
-        job = {"job_id": job_id, "kind": kind, "status": "queued", "created_at": _now(), "run_dir": str(run_dir)}
+        job = {
+            "job_id": job_id, "kind": kind, "status": "queued", "created_at": _now(),
+            "run_dir": str(run_dir),
+            "progress": {"current_stage": "queued", "label": "Queued", "events": []},
+        }
         self._write(job)
         self.pool.submit(self._execute, job_id, function, run_dir, *args)
         return self.public(job_id)
@@ -383,17 +445,63 @@ class JobStore:
             _atomic_json(Path(job["run_dir"]) / "job.json", job)
 
     def _execute(self, job_id: str, function, run_dir: Path, *args) -> None:
-        job = self.jobs[job_id]
+        job = json.loads(json.dumps(self.jobs[job_id]))
         job.update(status="running", started_at=_now())
         self._write(job)
         try:
-            result = function(run_dir, *args)
+            result = function(run_dir, self.reporter(job_id), *args)
             _atomic_json(run_dir / "result.json", result)
+            job = json.loads(json.dumps(self.jobs[job_id]))
             job.update(status="completed", completed_at=_now(), result_path=str(run_dir / "result.json"))
         except Exception as exc:
             LOGGER.exception("job_failed job_id=%s", job_id)
-            job.update(status="failed", completed_at=_now(), error=f"{type(exc).__name__}: {exc}"[:4000])
+            job = json.loads(json.dumps(self.jobs[job_id]))
+            safe_error = f"{type(exc).__name__}: {exc}"[:4000]
+            running = next(
+                (item for item in reversed(job.get("progress", {}).get("events", [])) if item.get("status") == "running"),
+                None,
+            )
+            if running is not None:
+                self.reporter(job_id)(
+                    str(running["event_id"]), "failed", str(running["label"]),
+                    {**dict(running.get("details", {})), "error": safe_error},
+                )
+                job = json.loads(json.dumps(self.jobs[job_id]))
+            job.update(status="failed", completed_at=_now(), error=safe_error)
         self._write(job)
+
+    def reporter(self, job_id: str):
+        """Return a thread-safe stage reporter for one background job."""
+
+        def report(event_id: str, status: str, label: str, details: dict[str, Any] | None = None) -> None:
+            if status not in {"running", "completed", "failed", "skipped"}:
+                raise ValueError(f"Unsupported progress status: {status}")
+            job = json.loads(json.dumps(self.jobs[job_id]))
+            progress = job.setdefault("progress", {"events": []})
+            events = progress.setdefault("events", [])
+            now = _now()
+            event = next((item for item in events if item["event_id"] == event_id), None)
+            if event is None:
+                event = {
+                    "event_id": event_id, "label": label,
+                    "status": status, "started_at": now,
+                }
+                events.append(event)
+            event.update(label=label, status=status, details=details or {})
+            if status in {"completed", "failed", "skipped"}:
+                event["completed_at"] = now
+                started = datetime.fromisoformat(event["started_at"])
+                completed = datetime.fromisoformat(now)
+                event["duration_ms"] = max(0, round((completed - started).total_seconds() * 1000))
+            progress.update(
+                current_stage=event_id,
+                label=label,
+                completed=sum(item["status"] in {"completed", "failed", "skipped"} for item in events),
+                total=len(events),
+            )
+            self._write(job)
+
+        return report
 
     def public(self, job_id: str) -> dict[str, Any]:
         job = self.jobs.get(job_id)
@@ -402,7 +510,16 @@ class JobStore:
             if not path.is_file():
                 raise KeyError(job_id)
             job = json.loads(path.read_text(encoding="utf-8"))
-        return {key: value for key, value in job.items() if key != "run_dir"}
+        public = {
+            key: value for key, value in job.items()
+            if key not in {"run_dir", "result_path"}
+        }
+        public["links"] = {
+            "self": f"/v1/jobs/{job_id}",
+            "result": f"/v1/jobs/{job_id}/result",
+            "artifacts": f"/v1/jobs/{job_id}/artifacts/{{artifact_path}}",
+        }
+        return public
 
     def list(self) -> list[dict[str, Any]]:
         discovered = {path.parent.name for path in self.root.glob("*/job.json")}
@@ -455,8 +572,12 @@ def create_app(
             except ValueError as exc:
                 raise HTTPException(status_code=422, detail=str(exc)) from exc
 
-        def task(run_dir: Path, values: list[str], timeout: float) -> dict[str, Any]:
+        def task(run_dir: Path, progress, values: list[str], timeout: float) -> dict[str, Any]:
+            progress("capture_page", "running", "Capture and scan pages", {"site_count": len(values)})
             result = scan_sites(values, app.state.axe_js, timeout)
+            progress("capture_page", "completed", "Capture and scan pages", {
+                "site_count": len(values), "completed_count": result.get("completed_count", 0),
+            })
             result["run_id"] = run_dir.name
             return result
 
@@ -472,23 +593,62 @@ def create_app(
         except ValueError as exc:
             raise HTTPException(status_code=422, detail=str(exc)) from exc
 
-        def task(run_dir: Path, source_url: str, maximum: int, timeout: float) -> dict[str, Any]:
+        def task(run_dir: Path, progress, source_url: str, maximum: int, timeout: float) -> dict[str, Any]:
+            progress("capture_page", "running", "Capture page and aligned evidence", {"url": source_url})
             scan = suggestion_scanner([source_url], app.state.axe_js, timeout, run_dir)
             specialist_report = None
             if scan.get("sites") and scan["sites"][0].get("status") == "completed":
+                site = scan["sites"][0]
+                progress("capture_page", "completed", "Capture page and aligned evidence", {
+                    "source_url": source_url, "final_url": site.get("final_url"),
+                    "violation_count": site.get("violation_count", 0),
+                    "affected_node_count": site.get("affected_node_count", 0),
+                    "screenshot_artifact": site.get("screenshot_artifact"),
+                })
                 specialist_report = suggestion_specialist_runner(
                     run_dir / "live_page", run_dir / "learning_v2_graphs",
+                    progress=progress,
                 )
+            else:
+                error = str(scan.get("sites", [{}])[0].get("error", "Page capture failed"))
+                progress("capture_page", "failed", "Capture page and aligned evidence", {"error": error})
             result = generate_live_suggestions(
                 scan, max_suggestions=maximum,
                 generator_factory=suggestion_generator_factory,
                 specialist_report=specialist_report,
+                progress=progress,
             )
+            progress("finalise_result", "running", "Finalise audit result", {
+                "suggestion_count": result.get("suggestion_count", 0),
+            })
             result["run_id"] = run_dir.name
             if result.get("screenshot_artifact"):
                 result["screenshot_url"] = (
                     f"/v1/jobs/{run_dir.name}/artifacts/{result['screenshot_artifact']}"
                 )
+            result["application_api"] = {
+                "submit": {
+                    "method": "POST", "endpoint": "/v1/suggestion-audits",
+                    "request_body": {
+                        "url": source_url, "max_suggestions": maximum,
+                        "timeout_seconds": timeout,
+                    },
+                    "response_body": {
+                        "job_id": run_dir.name, "kind": "suggest", "status": "queued",
+                    },
+                },
+                "poll": {
+                    "method": "GET", "endpoint": f"/v1/jobs/{run_dir.name}",
+                    "response": "Live job state and progress events",
+                },
+                "result": {
+                    "method": "GET", "endpoint": f"/v1/jobs/{run_dir.name}/result",
+                    "response": "Schema-v2 structured suggestion audit",
+                },
+            }
+            progress("finalise_result", "completed", "Finalise audit result", {
+                "status": result.get("status"), "suggestion_count": result.get("suggestion_count", 0),
+            })
             return result
 
         return store.submit(
@@ -529,7 +689,10 @@ def create_app(
         if not values:
             raise HTTPException(status_code=422, detail="No matching generator inputs")
 
-        def task(run_dir: Path, selected: list[dict[str, Any]], config: dict[str, Any]) -> dict[str, Any]:
+        def task(run_dir: Path, progress, selected: list[dict[str, Any]], config: dict[str, Any]) -> dict[str, Any]:
+            progress("run_repair_study", "running", "Run structured repair study", {
+                "proposal_count": len(selected), "condition": config["condition"],
+            })
             inputs_path = run_dir / "generator_inputs.json"
             _atomic_json(inputs_path, selected)
             output_dir = run_dir / "phase_9"
@@ -541,7 +704,11 @@ def create_app(
                 generation_retries=config["generation_retries"], repair_truth=None,
             )
             _configure_logging(output_dir, "INFO")
-            return run_phase9(args)
+            result = run_phase9(args)
+            progress("run_repair_study", "completed", "Run structured repair study", {
+                "proposal_count": len(selected), "condition": config["condition"],
+            })
+            return result
 
         return store.submit("repair", task, values, request.model_dump())
 
