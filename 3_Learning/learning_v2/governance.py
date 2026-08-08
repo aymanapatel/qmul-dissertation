@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import hashlib
 import json
 import random
 from collections import Counter, defaultdict
@@ -92,4 +91,3 @@ def write_governance_artifacts(corpus_dir: Path, output_dir: Path, *, seed: int 
     inventory_path.write_text(json.dumps(inventory, indent=2), encoding="utf-8")
     split_path.write_text(json.dumps(split, indent=2), encoding="utf-8")
     return inventory_path, split_path
-

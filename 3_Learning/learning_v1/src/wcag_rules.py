@@ -10,7 +10,7 @@ The rule registry is intentionally the single source of truth for:
 """
 
 from dataclasses import dataclass
-from typing import Dict, Iterable, List, Tuple
+from typing import Dict, Iterable, Tuple
 
 import torch
 
@@ -158,25 +158,3 @@ def graph_source_for_rule(rule_id: str) -> str | None:
         return "rendered-visual"
     return None
 
-
-def rules_with_metadata(rule_probs, threshold: float = 0.1, top_k: int = 3) -> List[dict]:
-    """Convert a rule-probability vector into JSON-ready top rule entries."""
-    top_indices = rule_probs.argsort(descending=True)[:top_k]
-    rules = []
-    for idx in top_indices:
-        idx_int = int(idx.item())
-        probability = float(rule_probs[idx_int].item())
-        if probability <= threshold:
-            continue
-        rule_id = INDEX_TO_RULE[idx_int]
-        spec = RULE_BY_INDEX[idx_int]
-        rules.append(
-            {
-                "rule_id": rule_id,
-                "axe_rule_id": rule_id,
-                "probability": round(probability, 4),
-                "source_view": graph_source_for_rule(rule_id),
-                "wcag_ids": list(spec.wcag_ids),
-            }
-        )
-    return rules

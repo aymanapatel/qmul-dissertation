@@ -1,7 +1,6 @@
 """Source-owned rule metadata shared by training and reporting."""
 
 from learning_v1.src.wcag_rules import (
-    INDEX_TO_RULE,
     RULE_BY_ID,
     rule_ids_for_graph_source,
     rule_indices_for_graph_source,

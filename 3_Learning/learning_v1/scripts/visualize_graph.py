@@ -15,7 +15,6 @@ import torch
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import networkx as nx
-from torch_geometric.utils import to_networkx
 
 from feature_extractor import ProcessedPage
 from models import DOMGCN

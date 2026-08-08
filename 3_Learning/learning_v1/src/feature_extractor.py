@@ -10,7 +10,7 @@ Extracts node features from DOM elements:
 import json
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 
 import torch
 from playwright.sync_api import sync_playwright
