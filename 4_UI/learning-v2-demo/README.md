@@ -1,10 +1,12 @@
 # Live accessibility suggestion demo
 
 This demo accepts one public webpage URL, captures aligned HTML, visual and
-accessibility-tree evidence, runs the frozen `learning_v2` GraphSAGE
-specialists and routing policy, and calls the configured LLM for each routed
-finding. The model returns strictly structured, bounded remediation
-suggestions. Suggestions are never applied to the source page.
+accessibility-tree evidence, then runs frozen `learning_v2` MLP, GraphSAGE and
+GAT specialists over both graph views. Architecture-specific findings remain
+separate through calibrated routing and structured LLM generation. The UI shows
+live stages, all six model runs, exact safe prompts, formatted API payloads and
+strictly structured remediation suggestions. Suggestions are never applied to
+the source page.
 
 ## Start the FastAPI backend
 
@@ -42,11 +44,17 @@ suggestions to generate, and select **Generate suggestions**.
    tree in the same session; axe is retained as separate audit evidence.
 3. The accessibility-tree and rendered-visual graphs are built with the exact
    training feature contracts.
-4. Frozen GraphSAGE checkpoints, calibration thresholds and fusion policy
-   produce the suggestion candidates without using axe as a model input.
-5. The configured OpenAI-compatible client requests a strict `RepairProposal`
-   for each routed finding.
-6. The UI polls `/v1/jobs/{job_id}` and displays the screenshot, GNN evidence
-   and suggestions.
+4. Frozen MLP, GraphSAGE and GAT checkpoints run on both views using their own
+   validation-frozen thresholds; axe is not a model input.
+5. Architecture/view findings are routed and ordered independently, so matching
+   findings are not hidden by cross-model deduplication.
+6. The configured OpenAI-compatible client requests a strict `RepairProposal`
+   for each selected finding.
+7. The UI polls `/v1/jobs/{job_id}` and displays live stage events, the six-run
+   comparison, screenshot, system prompt, user JSON, safe API metadata and
+   structured response.
+
+The public job payload contains no run-directory path, API key, authorization
+header, cookie, or hidden model reasoning.
 
 Private, loopback, link-local and credential-bearing destinations are rejected.
