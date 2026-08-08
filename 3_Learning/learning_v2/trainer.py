@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 import torch
+import torch.nn.functional as F
 
 from .losses import sampled_binary_cross_entropy
 from .models import ModelConfig, NodeRuleModel, build_model
@@ -63,3 +64,94 @@ def train_epoch(model, loader, optimizer, config: TrainingConfig, device: str) -
         loss.backward(); torch.nn.utils.clip_grad_norm_(model.parameters(), 5.0); optimizer.step()
         total += float(loss.detach()); batches += 1; positives += counts["positive_pairs"]; negatives += counts["negative_pairs"]
     return {"loss": total / max(1, batches), "sampled_positive_pairs": positives, "sampled_negative_pairs": negatives}
+
+
+@torch.no_grad()
+def validation_loss(
+    model,
+    loader,
+    config: TrainingConfig,
+    device: str,
+    *,
+    sampling_seed: int,
+) -> dict:
+    """Calculate full and training-matched validation BCE in one model pass.
+
+    The sampled loss uses the training negative ratio and minimum but resets a
+    CPU random generator to the same seed on every call. Consequently, every
+    epoch is evaluated against the same validation pairs on every device. The
+    full valid-pair BCE is retained as a deterministic audit measure.
+    """
+    model.eval()
+    full_loss_sum = 0.0
+    full_pairs = 0
+    full_positive_pairs = 0
+    full_negative_pairs = 0
+    sampled_loss_sum = 0.0
+    sampled_batches = 0
+    sampled_positive_pairs = 0
+    sampled_negative_pairs = 0
+    generator = torch.Generator(device="cpu").manual_seed(sampling_seed)
+
+    for data in loader:
+        data = data.to(device)
+        logits = model(data.x, data.edge_index, data.tag_indices)
+        targets = data.rule_y
+        if logits.shape != targets.shape:
+            raise ValueError("logits and validation targets must have the same shape")
+
+        allowed = torch.ones_like(targets, dtype=torch.bool)
+        label_mask = getattr(data, "label_mask", None)
+        if label_mask is not None:
+            if label_mask.dim() == 1:
+                label_mask = label_mask[:, None].expand_as(targets)
+            if label_mask.shape != targets.shape:
+                raise ValueError("validation label_mask is incompatible with targets")
+            allowed &= label_mask.bool()
+
+        pair_count = int(allowed.sum().item())
+        if not pair_count:
+            continue
+        selected_targets = targets[allowed].float()
+        full_loss_sum += float(
+            F.binary_cross_entropy_with_logits(
+                logits[allowed],
+                selected_targets,
+                reduction="sum",
+            ).detach()
+        )
+        full_pairs += pair_count
+        batch_positive_pairs = int(selected_targets.bool().sum().item())
+        full_positive_pairs += batch_positive_pairs
+        full_negative_pairs += pair_count - batch_positive_pairs
+
+        sampled_loss, sampled_counts = sampled_binary_cross_entropy(
+            logits,
+            targets,
+            negative_ratio=config.negative_ratio,
+            minimum_negatives=config.minimum_negatives,
+            valid_mask=label_mask,
+            generator=generator,
+        )
+        sampled_loss_sum += float(sampled_loss.detach())
+        sampled_batches += 1
+        sampled_positive_pairs += sampled_counts["positive_pairs"]
+        sampled_negative_pairs += sampled_counts["negative_pairs"]
+
+    return {
+        # `loss` remains an alias for backward compatibility with the first
+        # validation-loss history schema.
+        "loss": full_loss_sum / max(1, full_pairs),
+        "loss_type": "full_valid_pair_bce",
+        "valid_pairs": full_pairs,
+        "positive_pairs": full_positive_pairs,
+        "negative_pairs": full_negative_pairs,
+        "sampled_loss": sampled_loss_sum / max(1, sampled_batches),
+        "sampled_loss_type": "fixed_sample_training_matched_bce",
+        "sampled_batches": sampled_batches,
+        "sampled_positive_pairs": sampled_positive_pairs,
+        "sampled_negative_pairs": sampled_negative_pairs,
+        "negative_ratio": config.negative_ratio,
+        "minimum_negatives": config.minimum_negatives,
+        "sampling_seed": sampling_seed,
+    }

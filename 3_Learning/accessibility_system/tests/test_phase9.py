@@ -113,6 +113,10 @@ def test_openai_adapter_uses_responses_parse_and_pydantic_format():
     assert payload["allowed_selectors"] == ["meta[name=viewport]"]
     assert "oracle_operations" not in payload["original_finding"]
     assert "semantic_verified" not in payload["original_finding"]
+    assert result.request_trace["system_prompt"]
+    assert result.request_trace["user_prompt"] == payload
+    assert result.request_trace["endpoint"] == "https://api.openai.com/v1/responses"
+    assert "authorization" not in json.dumps(result.request_trace).lower()
 
 
 def test_openai_adapter_passes_only_schema_feedback_on_retry():

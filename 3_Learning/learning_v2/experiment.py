@@ -27,7 +27,7 @@ from .metrics import collect_predictions, metrics_from_predictions
 from .models import ModelConfig, build_model
 from .rules import rule_metadata, rules_for_source
 from .schema import FeatureContract
-from .trainer import TrainingConfig, save_checkpoint, train_epoch
+from .trainer import TrainingConfig, save_checkpoint, train_epoch, validation_loss
 
 
 def _stable_order(site_id: str, seed: int) -> str:
@@ -241,11 +241,24 @@ def _train_one(view: str, architecture: str, split: dict, cache_paths: dict[str,
     history = []; best_metric = float("-inf"); best_epoch = 0; epochs_since_best = 0; stopped_early = False
     for epoch in range(1, args.epochs + 1):
         training = train_epoch(model, train_loader, optimizer, train_config, args.device)
+        validation = validation_loss(
+            model,
+            val_loader,
+            train_config,
+            args.device,
+            sampling_seed=args.seed,
+        )
         val_arrays = collect_predictions(model, val_loader, args.device)
         val_metrics = metrics_from_predictions(val_arrays, rule_ids=rule_ids)
         selection = validation_rule_average_precision(val_arrays, rule_ids)
         metric = float(selection["value"])
-        history.append({"epoch": epoch, "training": training, "validation_at_0_5": val_metrics, "validation_selection": selection})
+        history.append({
+            "epoch": epoch,
+            "training": training,
+            "validation": validation,
+            "validation_at_0_5": val_metrics,
+            "validation_selection": selection,
+        })
         if metric > best_metric:
             # Strict improvement only: a tie must not move "best" to a later epoch.
             best_metric = metric; best_epoch = epoch; epochs_since_best = 0
@@ -307,6 +320,15 @@ def _train_one(view: str, architecture: str, split: dict, cache_paths: dict[str,
         "rules": [rule_metadata(rule_id) for rule_id in rule_ids], "best_epoch": checkpoint["epoch"],
         "selection_metric": "rule_macro_average_precision",
         "best_validation_rule_average_precision": checkpoint["best_metric"], "stopped_early": stopped_early,
+        "validation_loss": {
+            "recorded_per_epoch": True,
+            "primary_comparison_loss": "fixed_sample_training_matched_bce",
+            "negative_ratio": train_config.negative_ratio,
+            "minimum_negatives": train_config.minimum_negatives,
+            "sampling_seed": args.seed,
+            "same_validation_sample_each_epoch": True,
+            "audit_loss": "full_valid_pair_bce",
+        },
         "calibration_floor_policy": calibration_floor_policy,
         "unmet_precision_floor": unmet_precision_floor,
         "test_metrics": "test_metrics.json",

@@ -4,6 +4,7 @@ from types import SimpleNamespace
 
 import torch
 from torch_geometric.data import Data
+from torch_geometric.loader import DataLoader
 
 from learning_v2.calibration import calibrate_predictions
 from learning_v2.data import (
@@ -21,10 +22,48 @@ from learning_v2.trainer import (
     TrainingConfig,
     load_checkpoint,
     save_checkpoint,
+    validation_loss,
 )
 
 
 VISUAL_RULE_INDICES = (17, 20, 31, 37, 41)
+
+
+class FixedLogitModel(torch.nn.Module):
+    def forward(self, x, edge_index, tag_indices):
+        return x
+
+
+def test_validation_loss_records_full_and_repeatable_training_matched_losses():
+    logits = torch.tensor([[0.0, 1.0], [4.0, -4.0], [-1.0, 2.0], [0.5, -0.5]])
+    targets = torch.tensor([[0.0, 1.0], [1.0, 0.0], [1.0, 0.0], [0.0, 0.0]])
+    graph = Data(
+        x=logits,
+        edge_index=torch.empty((2, 0), dtype=torch.long),
+        tag_indices=torch.zeros(4, dtype=torch.long),
+        rule_y=targets,
+        label_mask=torch.tensor([True, False, True, True]),
+    )
+
+    config = TrainingConfig(negative_ratio=0.5, minimum_negatives=0)
+    loader = DataLoader([graph], batch_size=1)
+    result = validation_loss(FixedLogitModel(), loader, config, "cpu", sampling_seed=17)
+    repeated = validation_loss(FixedLogitModel(), loader, config, "cpu", sampling_seed=17)
+    allowed = graph.label_mask[:, None].expand_as(targets)
+    expected = torch.nn.functional.binary_cross_entropy_with_logits(
+        logits[allowed], targets[allowed], reduction="mean"
+    )
+
+    assert abs(result["loss"] - float(expected)) < 1e-7
+    assert result["loss_type"] == "full_valid_pair_bce"
+    assert result["valid_pairs"] == 6
+    assert result["positive_pairs"] == 2
+    assert result["negative_pairs"] == 4
+    assert result["sampled_loss"] == repeated["sampled_loss"]
+    assert result["sampled_loss_type"] == "fixed_sample_training_matched_bce"
+    assert result["sampled_positive_pairs"] == 2
+    assert result["sampled_negative_pairs"] == 1
+    assert result["sampling_seed"] == 17
 
 
 def raw_graph(*, positive: bool = True) -> Data:
