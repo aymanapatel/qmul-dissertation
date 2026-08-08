@@ -35,8 +35,41 @@ export interface Suggestion {
   model?: string;
   response_id?: string | null;
   usage?: Record<string, unknown>;
+  api_trace?: {
+    request: {
+      method: string;
+      endpoint: string;
+      api_mode: string;
+      model: string;
+      system_prompt: string;
+      user_prompt: Record<string, unknown>;
+      response_format: string;
+    };
+    response: Record<string, unknown>;
+  };
   generation_status: "completed" | "failed";
   error?: string;
+}
+
+export interface ModelRule {
+  rule_id: string;
+  probability: number;
+  threshold: number;
+  predicted_fail: boolean;
+  node_index: number;
+  wcag_ids?: string[];
+}
+
+export interface ModelRun {
+  view: "a11y-tree" | "rendered-visual";
+  architecture: "mlp" | "graphsage" | "gat";
+  axe_used_for_prediction: boolean;
+  node_count: number;
+  edge_count: number;
+  checkpoint_sha256: string;
+  feature_contract?: Record<string, unknown>;
+  rules: ModelRule[];
+  findings: Array<Record<string, unknown>>;
 }
 
 export interface SuggestionResult {
@@ -52,20 +85,24 @@ export interface SuggestionResult {
   suggestion_count: number;
   suggestions: Suggestion[];
   specialist: {
-    architecture: string;
+    architectures: string[];
     training_artifacts: string;
     fusion_policy: string;
     finding_count: number;
-    model_runs: Array<{
-      view: string;
-      architecture: string;
-      axe_used_for_prediction: boolean;
-      node_count: number;
-      edge_count: number;
-      checkpoint_sha256: string;
-    }>;
+    model_runs: ModelRun[];
   };
+  application_api: Record<string, unknown>;
   safety: string;
+}
+
+export interface ProgressEvent {
+  event_id: string;
+  label: string;
+  status: "running" | "completed" | "failed" | "skipped";
+  started_at: string;
+  completed_at?: string;
+  duration_ms?: number;
+  details: Record<string, unknown>;
 }
 
 export interface Job {
@@ -73,4 +110,12 @@ export interface Job {
   kind: string;
   status: "queued" | "running" | "completed" | "failed";
   error?: string;
+  progress?: {
+    current_stage: string;
+    label: string;
+    completed?: number;
+    total?: number;
+    events: ProgressEvent[];
+  };
+  links?: { self: string; result: string; artifacts: string };
 }
