@@ -12,7 +12,6 @@ import hashlib
 import json
 import random
 import time
-from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable

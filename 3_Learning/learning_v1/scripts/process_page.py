@@ -17,11 +17,9 @@ sys.path.insert(0, str(src_path))
 
 import torch
 
-from feature_extractor import FeatureExtractor, ProcessedPage
+from feature_extractor import FeatureExtractor
 from graph_sources import GRAPH_SOURCE_A11Y_TREE, GRAPH_SOURCE_DOM, GRAPH_SOURCE_RENDERED_VISUAL
 from models import DOMGCN
-from train import Trainer
-from torch_geometric.utils import dropout_edge, subgraph
 
 
 def generate_ascii_viz(page, model, device="cpu", max_nodes=50):

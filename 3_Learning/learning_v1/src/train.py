@@ -6,9 +6,8 @@ Supports hard negative mining, MPS (Apple GPU), and per-rule metrics.
 """
 
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, Optional, Tuple
 
-import numpy as np
 import torch
 import torch.nn.functional as F
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
@@ -843,25 +842,3 @@ class Trainer:
         metric_name = checkpoint.get("selection_metric", "val_f1")
         metric_value = checkpoint.get("selection_metric_value", checkpoint.get("val_f1", 0.0))
         print(f"Loaded best model from epoch {checkpoint['epoch']} ({metric_name}={metric_value:.4f})")
-
-
-def create_data_loaders(
-    data_list: List[Data],
-    batch_size: int = 1,
-    train_ratio: float = 0.8,
-    val_ratio: float = 0.1,
-) -> Tuple[DataLoader, DataLoader, DataLoader]:
-    """Split data into train/val/test and create loaders."""
-    n = len(data_list)
-    n_train = int(n * train_ratio)
-    n_val = int(n * val_ratio)
-    
-    train_data = data_list[:n_train]
-    val_data = data_list[n_train:n_train + n_val]
-    test_data = data_list[n_train + n_val:]
-    
-    train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_data, batch_size=batch_size, shuffle=False)
-    test_loader = DataLoader(test_data, batch_size=batch_size, shuffle=False)
-    
-    return train_loader, val_loader, test_loader

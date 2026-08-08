@@ -10,7 +10,7 @@ from importlib.metadata import version
 from pathlib import Path
 
 from .baselines import deterministic_findings, run_corpus_baseline
-from .evidence import collect_many, collect_static_evidence, write_evidence
+from .evidence import collect_many
 from .governance import write_governance_artifacts
 
 
@@ -72,4 +72,3 @@ def main() -> None:
 
 
 if __name__ == "__main__": main()
-

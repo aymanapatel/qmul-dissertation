@@ -127,18 +127,3 @@ class FusedFinding:
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
-
-
-@dataclass
-class RunManifest:
-    run_id: str
-    phase: str
-    config: dict[str, Any]
-    inputs: dict[str, Any]
-    outputs: dict[str, Any]
-    environment: dict[str, Any]
-    metrics: dict[str, Any] = field(default_factory=dict)
-    schema_version: int = CONTRACT_SCHEMA_VERSION
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
