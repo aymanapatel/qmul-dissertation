@@ -222,27 +222,47 @@ def plot_precision_recall(study: dict, output_dir: Path, dpi: int) -> None:
 
 def plot_per_criterion_f1(study: dict, output_dir: Path, dpi: int) -> None:
     methods = study["methods"]
-    order = ["axe_alone", "mlp_specialist", "graphsage_specialist", "gat_specialist"]
-    labels = ["axe-core", "MLP", "GraphSAGE", "GAT"]
-    colors = [GREY, BLUE, TEAL, PURPLE]
+    order = ["mlp_specialist", "graphsage_specialist", "gat_specialist"]
+    labels = ["MLP", "GraphSAGE", "GAT"]
+    colors = [BLUE, TEAL, PURPLE]
     criteria = ["1.1.1", "1.4.3", "2.4.4", "4.1.2"]
-    criterion_labels = ["1.1.1\nNon-text content", "1.4.3\nContrast", "2.4.4\nLink purpose", "4.1.2\nName, role, value"]
+    criterion_labels = [
+        "1.1.1\nNon-text",
+        "1.4.3\nContrast",
+        "2.4.4\nLink\npurpose",
+        "4.1.2\nName, role,\nvalue",
+    ]
 
-    fig, ax = plt.subplots(figsize=(7.2, 4.3))
+    # Sized for direct placement at \columnwidth in an IEEE two-column paper.
+    fig, ax = plt.subplots(figsize=(3.5, 3.05))
     x = np.arange(len(criteria))
-    width = 0.19
+    width = 0.24
     for index, (key, label, color) in enumerate(zip(order, labels, colors)):
         values = [methods[key]["per_criterion"][criterion]["f1"] for criterion in criteria]
-        bars = ax.bar(x + (index - 1.5) * width, values, width, label=label, color=color, edgecolor="white")
-        add_bar_labels(ax, bars, digits=2, padding=2)
+        bars = ax.bar(x + (index - 1) * width, values, width, label=label, color=color, edgecolor="white")
+        add_bar_labels(ax, bars, digits=2, padding=1.5)
     ax.set_xticks(x, criterion_labels)
     ax.set_ylim(0, 1.08)
-    ax.set_ylabel("F1 score")
-    ax.set_title("Final per-criterion F1 against independent manual truth")
-    ax.legend(ncol=4, loc="upper center")
+    ax.set_ylabel("F1 score", fontsize=8)
+    ax.tick_params(axis="both", labelsize=7)
+    handles, legend_labels = ax.get_legend_handles_labels()
+    # Matplotlib fills multi-column legends down each column. Reorder inputs so
+    # the visible first row is MLP + GraphSAGE, followed by GAT on row two.
+    legend_order = [0, 2, 1]
+    fig.legend(
+        [handles[index] for index in legend_order],
+        [legend_labels[index] for index in legend_order],
+        ncol=2,
+        loc="upper right",
+        bbox_to_anchor=(0.98, 0.99),
+        fontsize=7,
+        handlelength=1.5,
+        columnspacing=0.8,
+    )
     ax.grid(axis="y")
     ax.grid(axis="x", visible=False)
-    fig.tight_layout()
+    fig.subplots_adjust(left=0.16, right=0.98, top=0.81, bottom=0.35)
+    fig.text(0.5, 0.15, "Per-criterion F1 (manual truth)", ha="center", fontsize=7.5)
     save_figure(fig, output_dir, "final_per_criterion_f1", dpi)
 
 
