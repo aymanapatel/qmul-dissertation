@@ -1,7 +1,8 @@
 import type { RepairOperation, Suggestion } from "../types";
 
 export const architectureLabel = (value: string) =>
-  value === "mlp" ? "MLP" : value === "gat" ? "GAT" : "GraphSAGE";
+  value === "mlp" ? "MLP" : value === "gat" ? "GAT" :
+  value === "browser-measurement" ? "Browser measurement" : "GraphSAGE";
 
 export const viewLabel = (value: string) =>
   value === "a11y-tree" ? "Accessibility tree" : "Rendered visual";

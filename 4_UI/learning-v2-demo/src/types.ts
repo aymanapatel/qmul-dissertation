@@ -18,16 +18,30 @@ export interface Suggestion {
   rationale?: string;
   expected_resolution?: string;
   operations?: RepairOperation[];
+  inspected_visual_elements?: Array<{
+    source: string;
+    selector: string;
+    tag: string;
+    text: string;
+    bounds: { x: number; y: number; width: number; height: number } | null;
+    foreground_rgb: number[] | null;
+    background_rgb: number[] | null;
+    contrast_ratio: number | null;
+    required_contrast_ratio: number | null;
+    contrast_failure: boolean;
+    contrast_failure_source: string | null;
+  }>;
   confidence?: number;
   requires_human_review?: boolean;
   human_review_reasons?: string[];
   validation_steps?: string[];
   model_evidence?: {
+    evidence_kind?: "trained_prediction" | "measured_visual";
     graph_view: "a11y-tree" | "rendered-visual";
     architecture: string;
     detector_id: string;
-    probability: number;
-    threshold: number;
+    probability: number | null;
+    threshold: number | null;
     routing_status: string;
     routing_confidence: number;
     evidence: { selector?: string; visual?: Record<string, unknown> };
@@ -72,6 +86,42 @@ export interface ModelRun {
   findings: Array<Record<string, unknown>>;
 }
 
+export interface VisualElement {
+  snapshot_node_id: string;
+  selector: string;
+  tag: string;
+  text: string;
+  bounds: { x: number; y: number; width: number; height: number };
+  visible: boolean;
+  in_viewport: boolean;
+  clipped: boolean;
+  visual: {
+    foreground_rgb?: number[];
+    background_rgb?: number[];
+    contrast_ratio: number;
+    required_contrast_ratio: number;
+    contrast_deficit?: number;
+    font_size?: number;
+    font_weight?: number;
+    opacity?: number;
+    has_direct_text?: boolean;
+  };
+  numeric_contrast_failure: boolean;
+  contrast_failure: boolean;
+  contrast_failure_source?: string | null;
+}
+
+export interface VisualEvidence {
+  source: string;
+  contrast_highlight_policy: string;
+  viewport: { width?: number; height?: number };
+  canvas: { width: number; height: number };
+  element_count: number;
+  contrast_failure_count: number;
+  elements: VisualElement[];
+  contrast_failures: VisualElement[];
+}
+
 export interface SuggestionResult {
   schema_version: number;
   status: "completed" | "partial" | "scan_failed";
@@ -84,6 +134,7 @@ export interface SuggestionResult {
   violations_by_impact: Record<string, number>;
   suggestion_count: number;
   suggestions: Suggestion[];
+  visual_evidence?: VisualEvidence | null;
   specialist: {
     architectures: string[];
     training_artifacts: string;

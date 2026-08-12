@@ -68,24 +68,35 @@ export function SuggestionDetail({ suggestion }: { suggestion: Suggestion }) {
           <div>
             <Network size={18} />
             <span>
-              <small>TRAINED SPECIALIST</small>
+              <small>
+                {suggestion.model_evidence.evidence_kind === "measured_visual"
+                  ? "MEASURED VISUAL EVIDENCE"
+                  : "TRAINED SPECIALIST"}
+              </small>
               <strong>
                 {architectureLabel(suggestion.model_evidence.architecture)} ·{" "}
                 {viewLabel(suggestion.model_evidence.graph_view)}
               </strong>
             </span>
           </div>
-          <div className="probability">
-            <span
-              style={{ width: `${Math.max(2, suggestion.model_evidence.probability * 100)}%` }}
-            />
-            <i style={{ left: `${Math.min(99, suggestion.model_evidence.threshold * 100)}%` }} />
-          </div>
-          <div className="probability-labels">
-            <span>Probability {(suggestion.model_evidence.probability * 100).toFixed(1)}%</span>
-            <span>Frozen threshold {(suggestion.model_evidence.threshold * 100).toFixed(1)}%</span>
-            <span>Routed: {suggestion.model_evidence.routing_status.replaceAll("_", " ")}</span>
-          </div>
+          {suggestion.model_evidence.probability == null || suggestion.model_evidence.threshold == null ? (
+            <div className="probability-labels">
+              <span>Browser measurement joined to axe-core target</span>
+              <span>Routed: {suggestion.model_evidence.routing_status.replaceAll("_", " ")}</span>
+            </div>
+          ) : (
+            <>
+              <div className="probability">
+                <span style={{ width: `${Math.max(2, suggestion.model_evidence.probability * 100)}%` }} />
+                <i style={{ left: `${Math.min(99, suggestion.model_evidence.threshold * 100)}%` }} />
+              </div>
+              <div className="probability-labels">
+                <span>Probability {(suggestion.model_evidence.probability * 100).toFixed(1)}%</span>
+                <span>Frozen threshold {(suggestion.model_evidence.threshold * 100).toFixed(1)}%</span>
+                <span>Routed: {suggestion.model_evidence.routing_status.replaceAll("_", " ")}</span>
+              </div>
+            </>
+          )}
         </div>
       )}
       {(suggestion.operations || []).length > 0 && (

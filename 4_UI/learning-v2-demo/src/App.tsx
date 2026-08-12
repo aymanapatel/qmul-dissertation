@@ -7,7 +7,7 @@ import type { Job, SuggestionResult } from "./types";
 
 export function App() {
   const [url, setUrl] = useState("https://www.w3.org/");
-  const [maximum, setMaximum] = useState(5);
+  const maximum = 5;
   const [job, setJob] = useState<Job | null>(null);
   const [result, setResult] = useState<SuggestionResult | null>(null);
   const [error, setError] = useState("");
@@ -75,15 +75,6 @@ export function App() {
                 onChange={(event) => setUrl(event.target.value)}
                 placeholder="https://example.com"
               />
-              <select
-                aria-label="Maximum suggestions"
-                value={maximum}
-                onChange={(event) => setMaximum(Number(event.target.value))}
-              >
-                <option value={3}>3 suggestions</option>
-                <option value={5}>5 suggestions</option>
-                <option value={8}>8 suggestions</option>
-              </select>
               <button type="submit" disabled={auditLoading}>
                 {auditLoading ? (
                   <LoaderCircle className="spin" size={18} />
@@ -93,10 +84,6 @@ export function App() {
                 {auditLoading ? "Running pipeline…" : "Generate suggestions"}
               </button>
             </div>
-            <small>
-              Public HTTP(S) pages only. All three architectures run automatically; source pages are
-              never modified.
-            </small>
           </form>
         </section>
         <Workflow job={job} />
@@ -124,10 +111,8 @@ export function App() {
         </section>
       </main>
       <footer>
-        <span>Suggestion-only dissertation prototype</span>
         <span>
-          <ShieldCheck size={14} />
-          API secrets and hidden reasoning are never exposed
+          made by Ayman Patel
         </span>
       </footer>
     </div>

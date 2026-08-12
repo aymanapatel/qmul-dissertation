@@ -1,6 +1,6 @@
 import { Check, ExternalLink, Globe2, Network } from "lucide-react";
-import { useMemo, useState } from "react";
-import { API_BASE } from "../lib/api";
+import { useEffect, useMemo, useState } from "react";
+import { API_BASE, api } from "../lib/api";
 import { architectureLabel, viewLabel } from "../lib/format";
 import type { Job, SuggestionResult } from "../types";
 import { ModelMatrix } from "./ModelMatrix";
@@ -10,6 +10,16 @@ import { TraceInspector } from "./TraceInspector";
 
 function PageEvidence({ result }: { result: SuggestionResult }) {
   const screenshot = result.screenshot_url ? `${API_BASE}${result.screenshot_url}` : null;
+  const [visualEvidence, setVisualEvidence] = useState(result.visual_evidence);
+  useEffect(() => {
+    if (visualEvidence || !result.run_id) return;
+    api<SuggestionResult>(`/v1/jobs/${result.run_id}/result`)
+      .then((updated) => setVisualEvidence(updated.visual_evidence))
+      .catch(() => undefined);
+  }, [result.run_id, visualEvidence]);
+  const contrastFailures = visualEvidence?.contrast_failures || [];
+  const canvasWidth = visualEvidence?.canvas.width || 1;
+  const canvasHeight = visualEvidence?.canvas.height || 1;
 
   return (
     <section className="page-evidence">
@@ -28,11 +38,38 @@ function PageEvidence({ result }: { result: SuggestionResult }) {
       </div>
       <div className="screenshot-frame">
         {screenshot ? (
-          <img src={screenshot} alt={`Captured rendering of ${result.final_url}`} />
+          <div className="screenshot-stage">
+            <img src={screenshot} alt={`Captured rendering of ${result.final_url}`} />
+            {contrastFailures.map((element) => (
+              <span
+                className="contrast-highlight"
+                key={`${element.snapshot_node_id}-${element.selector}`}
+                style={{
+                  left: `${(element.bounds.x / canvasWidth) * 100}%`,
+                  top: `${(element.bounds.y / canvasHeight) * 100}%`,
+                  width: `${(element.bounds.width / canvasWidth) * 100}%`,
+                  height: `${(element.bounds.height / canvasHeight) * 100}%`,
+                }}
+                title={`${element.selector}: ${element.visual.contrast_ratio.toFixed(2)}:1; required ${element.visual.required_contrast_ratio}:1`}
+              />
+            ))}
+          </div>
         ) : (
           <div>No screenshot was captured.</div>
         )}
       </div>
+      {contrastFailures.length > 0 && (
+        <div className="contrast-summary" role="status">
+          <strong>{contrastFailures.length} computed contrast failures highlighted</strong>
+          {contrastFailures.map((element) => (
+            <span key={`summary-${element.snapshot_node_id}-${element.selector}`}>
+              <code>{element.selector}</code>
+              {element.visual.contrast_ratio.toFixed(2)}:1 / required{" "}
+              {element.visual.required_contrast_ratio}:1
+            </span>
+          ))}
+        </div>
+      )}
       <div className="scan-summary">
         <div>
           <strong>{result.specialist.finding_count}</strong>
