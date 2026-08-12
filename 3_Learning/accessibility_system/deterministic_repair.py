@@ -141,6 +141,7 @@ def build_proposal(item: dict[str, Any], source_html: str) -> RepairProposal:
             operations=[], rationale=rationale,
             expected_resolution="The original finding remains unchanged until a reviewer supplies the contextual value.",
             cited_record_ids=[], uncertainty="Required contextual information was not deterministically available.",
+            inspected_visual_elements=[],
             requires_human_review=True, human_review_reasons=["no_safe_deterministic_template"],
             validation_steps=["Review the saved DOM and rendered evidence."], confidence=0.0,
         )
@@ -150,6 +151,7 @@ def build_proposal(item: dict[str, Any], source_html: str) -> RepairProposal:
         operations=[operation], rationale=rationale,
         expected_resolution=f"Resolve {finding.get('rule_id', 'the originating rule')} at the saved target.",
         cited_record_ids=[], uncertainty="The template is limited to explicit local evidence and must pass the complete sandbox gate.",
+        inspected_visual_elements=[],
         requires_human_review=False, human_review_reasons=[],
         validation_steps=["Apply the typed operation to an isolated copy.", "Rerun the originating detector and regression suite."],
         confidence=0.9,

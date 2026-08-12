@@ -37,6 +37,7 @@ def main() -> None:
         expected_resolution="The controlled meta-viewport violation no longer reproduces.",
         cited_record_ids=[],
         uncertainty="",
+        inspected_visual_elements=[],
         requires_human_review=False,
         human_review_reasons=[],
         validation_steps=[
