@@ -36,3 +36,13 @@ table 2 is appendix with justification
 
 - Ablation studies - additional analyses
 
+
+
+# Feedback 2
+
+
+Add Graph in RQ1
+
+Add dataset params such as graph nodes, edges etc
+
+Add in appendix all 4 fixes of the website demo
