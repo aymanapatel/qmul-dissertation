@@ -45,6 +45,43 @@ class RepairOperation(StrictModel):
         return self
 
 
+class VisualBounds(StrictModel):
+    """Rendered CSS-pixel geometry copied from the same-session capture."""
+
+    x: float
+    y: float
+    width: float = Field(ge=0.0)
+    height: float = Field(ge=0.0)
+
+
+class VisualObservation(StrictModel):
+    """A bounded visual fact inspected while proposing a repair."""
+
+    source: str = Field(min_length=1, max_length=200)
+    selector: str = Field(min_length=1, max_length=500)
+    tag: str = Field(max_length=100)
+    text: str = Field(max_length=500)
+    bounds: VisualBounds | None
+    foreground_rgb: list[int] | None
+    background_rgb: list[int] | None
+    contrast_ratio: float | None
+    required_contrast_ratio: float | None
+    contrast_failure: bool
+    contrast_failure_source: str | None = Field(max_length=200)
+
+    @model_validator(mode="after")
+    def rgb_values_are_valid(self) -> "VisualObservation":
+        for name, value in (
+            ("foreground_rgb", self.foreground_rgb),
+            ("background_rgb", self.background_rgb),
+        ):
+            if value is not None and (
+                len(value) != 3 or any(channel < 0 or channel > 255 for channel in value)
+            ):
+                raise ValueError(f"{name} must contain exactly three 0-255 channels")
+        return self
+
+
 class RepairProposal(StrictModel):
     """The only model output accepted by the Phase 9 executor."""
 
@@ -58,6 +95,7 @@ class RepairProposal(StrictModel):
     expected_resolution: str = Field(min_length=1, max_length=1500)
     cited_record_ids: list[str] = Field(max_length=20)
     uncertainty: str = Field(max_length=1500)
+    inspected_visual_elements: list[VisualObservation] = Field(max_length=12)
     requires_human_review: bool
     human_review_reasons: list[str] = Field(max_length=20)
     validation_steps: list[str] = Field(min_length=1, max_length=20)

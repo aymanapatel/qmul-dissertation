@@ -49,11 +49,23 @@ def test_scan_rejects_private_network_targets(tmp_path):
 
 def test_architecture_specific_findings_remain_separate():
     site = {"final_url": "https://example.com", "violations": []}
+    repair_context = {
+        "bounded_candidates": [{
+            "operation": {
+                "operation": "set_attribute", "selector": "#hero",
+                "attribute_name": "alt", "css_property": None, "new_value": "Hero",
+            },
+            "derived_from": "visible_figcaption", "verification_level": "visible_context",
+            "requires_human_review": True,
+        }],
+    }
     finding = {
         "rule_id": "image-alt", "criterion_id": "1.1.1", "graph_view": "a11y-tree",
         "detector_id": "a11y-tree:graphsage:image-alt", "probability": 0.9,
         "threshold": 0.7, "routing_status": "fail", "routing_confidence": 0.8,
-        "architecture": "graphsage", "evidence": {"selector": "#hero", "html": "<img>"},
+        "architecture": "graphsage", "evidence": {
+            "selector": "#hero", "html": "<img>", "repair_context": repair_context,
+        },
     }
     second = {
         **finding, "architecture": "gat", "detector_id": "a11y-tree:gat:image-alt",
@@ -63,6 +75,65 @@ def test_architecture_specific_findings_remain_separate():
     assert len(values) == 2
     assert values[0]["original_finding"]["finding_id"] != values[1]["original_finding"]["finding_id"]
     assert [item["model_evidence"]["architecture"] for item in values] == ["graphsage", "gat"]
+    evidence = values[0]["original_finding"]["evidence"]
+    assert evidence["repair_context"] == repair_context
+    assert "contextual semantic candidate" in values[0]["prompt"]
+
+
+def test_measured_contrast_elements_become_one_visual_llm_request():
+    selector_a = "main > p"
+    selector_b = "main > button"
+
+    def visual_failure(selector, tag, text, ratio):
+        operation = {
+            "operation": "set_style_property", "selector": selector,
+            "attribute_name": None, "css_property": "color", "new_value": "#000000",
+        }
+        return {
+            "source": "same-session-rendered-visual-capture",
+            "selector": selector, "tag": tag, "text": text,
+            "bounds": {"x": 10, "y": 20, "width": 100, "height": 30},
+            "visual": {
+                "foreground_rgb": [200, 200, 200], "background_rgb": [255, 255, 255],
+                "contrast_ratio": ratio, "required_contrast_ratio": 4.5,
+            },
+            "contrast_failure": True,
+            "contrast_failure_source": "axe-core+same-session-rendered-geometry",
+            "repair_context": {
+                "target": {"tag": tag, "selector": selector},
+                "bounded_candidates": [{
+                    "operation": operation, "derived_from": "computed_contrast",
+                    "verification_level": "computed", "requires_human_review": False,
+                }],
+            },
+        }
+
+    failures = [
+        visual_failure(selector_a, "p", "Low paragraph", 1.67),
+        visual_failure(selector_b, "button", "Low button", 1.55),
+    ]
+    site = {
+        "final_url": "https://example.com",
+        "violations": [{
+            "id": "color-contrast", "impact": "serious", "help": "Contrast",
+            "help_url": "https://example.test/contrast",
+        }],
+    }
+    values = _specialist_suggestion_inputs(site, {
+        "findings": [],
+        "visual_evidence": {
+            "source": "same-session-rendered-visual-capture",
+            "elements": failures, "contrast_failures": failures,
+        },
+    }, 5)
+    assert len(values) == 1
+    finding = values[0]["original_finding"]
+    assert finding["rule_id"] == "color-contrast"
+    assert finding["evidence"]["target"] == [selector_a, selector_b]
+    assert finding["evidence"]["visual_elements"] == failures
+    assert len(finding["evidence"]["repair_context"]["bounded_candidates"]) == 2
+    assert values[0]["model_evidence"]["evidence_kind"] == "measured_visual"
+    assert values[0]["model_evidence"]["probability"] is None
 
 
 def test_job_and_artifact_endpoints_are_traversal_safe(tmp_path):
@@ -111,6 +182,7 @@ def test_live_suggestion_endpoint_scans_input_and_returns_structured_llm_output(
                     rationale="Alternative text depends on the image purpose.",
                     expected_resolution="Provide an equivalent text alternative.", cited_record_ids=[],
                     uncertainty="The image purpose is not known.", requires_human_review=True,
+                    inspected_visual_elements=[],
                     human_review_reasons=["Confirm the image purpose and wording."],
                     validation_steps=["Inspect the computed accessible name."], confidence=0.71,
                 ),

@@ -25,7 +25,11 @@ from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 from .phase9 import _configure_logging, run as run_phase9
 from .repair.generator import OpenAIRepairGenerator, SYSTEM_PROMPT, build_prompt_messages
-from learning_v2.live_inference import capture_aligned_page, run_live_specialists
+from learning_v2.live_inference import (
+    _visual_evidence_payload,
+    capture_aligned_page,
+    run_live_specialists,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -223,13 +227,138 @@ def _suggestion_inputs(site: dict[str, Any], limit: int) -> list[dict[str, Any]]
 def _specialist_suggestion_inputs(
     site: dict[str, Any], specialist_report: dict[str, Any], limit: int,
 ) -> list[dict[str, Any]]:
-    """Convert trained-model findings into bounded LLM generator inputs."""
+    """Convert specialist and same-session visual findings into bounded LLM inputs."""
 
     axe_by_rule = {str(item.get("id")): item for item in site.get("violations", [])}
     hostname = urlparse(str(site.get("final_url") or site.get("url") or "")).hostname or "unknown"
     values = []
+    visual_report = specialist_report.get("visual_evidence", {})
+    visual_source = str(visual_report.get("source") or "same-session-rendered-visual-capture")
+    visual_elements = [
+        item for item in visual_report.get("elements", [])
+        if isinstance(item, dict)
+    ] if isinstance(visual_report, dict) else []
+    visual_by_selector = {
+        str(item.get("selector")): item for item in visual_elements
+        if str(item.get("selector", ""))
+    }
+
+    contrast_failures = [
+        item for item in visual_report.get("contrast_failures", [])
+        if isinstance(item, dict) and str(item.get("selector", ""))
+    ] if isinstance(visual_report, dict) else []
+    contrast_candidates = []
+    for item in contrast_failures:
+        context = item.get("repair_context", {})
+        contrast_candidates.extend(
+            candidate for candidate in context.get("bounded_candidates", [])
+            if isinstance(candidate, dict)
+        )
+    if contrast_failures and contrast_candidates and limit > 0:
+        selectors = [str(item["selector"]) for item in contrast_failures]
+        identity = f"{hostname}:color-contrast:1.4.3:{'|'.join(selectors)}:measured-rendered"
+        finding_id = "visual-" + hashlib.sha256(identity.encode("utf-8")).hexdigest()[:16]
+        axe = axe_by_rule.get("color-contrast", {})
+        measurements = ", ".join(
+            f"{item['selector']}={float(item.get('visual', {}).get('contrast_ratio', 0)):.3f}:1"
+            f" (required {float(item.get('visual', {}).get('required_contrast_ratio', 0)):.1f}:1)"
+            for item in contrast_failures
+        )
+        measured_evidence = {
+            "evidence_kind": "measured_visual",
+            "graph_view": "rendered-visual",
+            "architecture": "browser-measurement",
+            "detector_id": "axe-core+same-session-rendered-geometry:color-contrast",
+            "probability": None,
+            "threshold": None,
+            "routing_status": "fail",
+            "routing_confidence": 1.0,
+            "axe_used_for_prediction": False,
+            "evidence": {
+                "selector": selectors[0],
+                "selectors": selectors,
+                "visual": contrast_failures[0].get("visual", {}),
+            },
+        }
+        values.append({
+            "query_id": f"suggest-{finding_id}",
+            "condition": "no_rag",
+            "safe_action": "suggest_only_do_not_apply",
+            "prompt": (
+                "Give one bounded, actionable remediation proposal for all supplied color-contrast "
+                "targets. Inspect visual_tool_result and copy every visual observation into "
+                "inspected_visual_elements. Copy every computed bounded candidate operation exactly, "
+                "so each evidenced failing selector receives a colour fix. These are measured browser "
+                "and axe findings, not trained-model predictions. Do not claim that a suggestion has "
+                "been applied or validated."
+            ),
+            "citations": [],
+            "original_finding": {
+                "finding_id": finding_id,
+                "site_id": hostname,
+                "rule_id": "color-contrast",
+                "criterion_id": "1.4.3",
+                "impact": axe.get("impact"),
+                "help": axe.get("help") or "Elements must meet minimum color contrast ratio thresholds",
+                "help_url": axe.get("help_url"),
+                "detector": measured_evidence["detector_id"],
+                "confidence": 1.0,
+                "routing_status": "fail",
+                "evidence": {
+                    "target": selectors,
+                    "html": "",
+                    "text": " | ".join(str(item.get("text", "")) for item in contrast_failures),
+                    "tag": "multiple",
+                    "attributes": {},
+                    "visual": contrast_failures[0].get("visual", {}),
+                    "visual_source": visual_source,
+                    "visual_elements": contrast_failures,
+                    "repair_context": {
+                        "rule_id": "color-contrast",
+                        "target": None,
+                        "targets": [item.get("repair_context", {}).get("target") for item in contrast_failures],
+                        "accessible_name_signals": {},
+                        "nearby": {},
+                        "current_state": {
+                            "meets_requirement": False,
+                            "measurements": measurements,
+                        },
+                        "bounded_candidates": contrast_candidates,
+                        "candidate_policy": "Copy every computed candidate operation exactly.",
+                    },
+                    "failure_summary": (
+                        f"Same-session rendered measurements and axe-core identify {len(contrast_failures)} "
+                        f"color-contrast failures: {measurements}. The exact replacement colours in the "
+                        "bounded candidates were computed against the captured backgrounds. This is "
+                        "measured evidence, not a trained-model prediction."
+                    ),
+                    "graph_view": "rendered-visual",
+                    "architecture": "browser-measurement",
+                    "axe_used_for_prediction": False,
+                },
+            },
+            "model_evidence": measured_evidence,
+        })
+
+    raw_findings = [
+        item for item in specialist_report.get("findings", []) if isinstance(item, dict)
+    ]
+    primary_findings: list[dict[str, Any]] = []
+    repeated_findings: list[dict[str, Any]] = []
+    primary_keys: set[tuple[str, str]] = set()
+    for finding in raw_findings:
+        evidence = finding.get("evidence", {})
+        key = (str(finding.get("rule_id", "")), str(evidence.get("selector") or "html"))
+        if key in primary_keys:
+            repeated_findings.append(finding)
+        else:
+            primary_keys.add(key)
+            primary_findings.append(finding)
+
     seen: set[tuple[str, str, str, str]] = set()
-    for finding in specialist_report.get("findings", []):
+    for finding in [*primary_findings, *repeated_findings]:
+        if len(values) >= limit:
+            break
         rule_id = str(finding["rule_id"])
         evidence = finding.get("evidence", {})
         selector = str(evidence.get("selector") or "html")
@@ -255,9 +384,19 @@ def _specialist_suggestion_inputs(
             "safe_action": "suggest_only_do_not_apply",
             "prompt": (
                 "Give one bounded, actionable remediation suggestion for this accessibility finding "
-                "identified by the trained graph specialist. Use the supplied selector and model "
-                "evidence. Do not claim the suggestion has been applied or validated. If the correct "
-                "semantic value cannot be known from the evidence, require human review."
+                "identified by the trained graph specialist. Use the supplied selector, model evidence, "
+                "nearby page context, accessible-name signals, and provenance-labelled bounded repair "
+                "candidates. Copy a candidate operation exactly rather than inventing a value. A computed "
+                "candidate may be proposed directly; a contextual semantic candidate may be proposed only "
+                "with requires_human_review=true. For image-alt, use author-supplied semantic context such as "
+                "a caption, referenced description, adjacent descriptive text, accessible-name text on the "
+                "previous or next sibling, local-container prose, matching existing alt, or named parent link. "
+                "Inspect repair_context.nearby explicitly. If no exact candidate exists, synthesise a concise "
+                "purpose-oriented alt from the nearest heading, local ancestors, siblings, and image position; "
+                "do not invent unseen visual details. For image-alt return a proposal without human review. "
+                "Never turn a filename, path, asset ID, or hash into alt text. For other rules, if no bounded "
+                "candidate is supported, require human review with no operations. Do not claim the suggestion "
+                "has been applied or validated."
             ),
             "citations": [],
             "original_finding": {
@@ -275,7 +414,14 @@ def _specialist_suggestion_inputs(
                     "target": [selector],
                     "html": str(evidence.get("html", ""))[:3000],
                     "text": str(evidence.get("text", ""))[:500],
+                    "tag": str(evidence.get("tag", ""))[:100],
+                    "attributes": evidence.get("attributes", {}),
                     "visual": evidence.get("visual"),
+                    "visual_source": visual_source,
+                    "visual_elements": (
+                        [visual_by_selector[selector]] if selector in visual_by_selector else []
+                    ),
+                    "repair_context": evidence.get("repair_context", {}),
                     "failure_summary": (
                         f"The frozen {finding['architecture']} {finding['graph_view']} specialist "
                         f"predicted {rule_id} with probability {probability:.6f}, above its "
@@ -352,6 +498,7 @@ def generate_live_suggestions(
                 "rationale": proposal["rationale"],
                 "expected_resolution": proposal["expected_resolution"],
                 "operations": proposal["operations"],
+                "inspected_visual_elements": proposal["inspected_visual_elements"],
                 "confidence": proposal["confidence"],
                 "requires_human_review": proposal["requires_human_review"],
                 "human_review_reasons": proposal["human_review_reasons"],
@@ -408,6 +555,9 @@ def generate_live_suggestions(
         "violations_by_impact": site.get("violations_by_impact", {}),
         "suggestion_count": len(suggestions),
         "suggestions": suggestions,
+        "visual_evidence": (
+            specialist_report.get("visual_evidence") if specialist_report is not None else None
+        ),
         "specialist": {
             "architectures": specialist_report.get("architectures", []),
             "training_artifacts": specialist_report.get("training_artifacts"),
@@ -732,7 +882,15 @@ def create_app(
             raise HTTPException(status_code=404, detail="Job not found") from exc
         if job["status"] != "completed":
             raise HTTPException(status_code=409, detail={"status": job["status"], "error": job.get("error")})
-        return json.loads((store.root / job_id / "result.json").read_text(encoding="utf-8"))
+        run_dir = store.root / job_id
+        result = json.loads((run_dir / "result.json").read_text(encoding="utf-8"))
+        live_page = run_dir / "live_page"
+        if result.get("visual_evidence") is None and all(
+            (live_page / name).is_file()
+            for name in ("0.html", "0.visual.json", "page-0_home.json")
+        ):
+            result["visual_evidence"] = _visual_evidence_payload(live_page)
+        return result
 
     @app.get("/v1/jobs/{job_id}/artifacts/{artifact_path:path}")
     def get_artifact(job_id: str, artifact_path: str):
