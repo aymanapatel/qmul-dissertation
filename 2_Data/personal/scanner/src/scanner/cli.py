@@ -12,12 +12,15 @@ from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TaskProgressColumn
 from rich.table import Table
 
+from scanner.robots_policy import RobotsPolicy
+
 app = typer.Typer(help="Web accessibility scanner using axe-core + Playwright")
 console = Console()
 
 LOGS_DIR = Path("logs")
 PLAYWRIGHT_LOGS = LOGS_DIR / "playwright"
 AXE_CORE_LOGS = LOGS_DIR / "axe-core-result"
+ROBOTS = RobotsPolicy()
 
 CSV_COLUMNS = [
     "popularity_rank",
@@ -78,6 +81,10 @@ async def _scan_single(domain: str, browser, semaphore, rank: str = "") -> Optio
     safe_name = _safe_filename(domain, rank)
 
     async with semaphore:
+        if not await ROBOTS.can_fetch(url):
+            console.print(f"[yellow]Skipping {url}: disallowed by robots.txt or robots.txt unavailable[/yellow]")
+            return None
+
         page = await browser.new_page()
         try:
             await page.goto(url, timeout=45000, wait_until="domcontentloaded")
@@ -267,6 +274,10 @@ def single(
     console.print(f"[bold]Scanning {url}[/bold]")
 
     async def _run():
+        if not await ROBOTS.can_fetch(url):
+            console.print(f"[yellow]Skipping {url}: disallowed by robots.txt or robots.txt unavailable[/yellow]")
+            return None
+
         async with async_playwright() as p:
             browser = await p.chromium.launch()
             page = await browser.new_page()
@@ -294,6 +305,9 @@ def single(
     safe_name = _safe_filename(domain)
 
     async def _save_html():
+        if not await ROBOTS.can_fetch(url):
+            return
+
         async with async_playwright() as p:
             browser = await p.chromium.launch()
             page = await browser.new_page()

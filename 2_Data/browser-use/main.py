@@ -18,6 +18,7 @@ from dotenv import load_dotenv
 from auth import generate_random_password, get_saved_password, login, make_password, save_password, signup
 from axe import accept_cookies, inject_axe, run_axe, save_report, slug_from_url, summarize_reports
 from rendered_snapshot import capture_rendered_snapshot
+from robots_policy import RobotsPolicy
 
 BASE_DIR = Path(__file__).resolve().parent
 INPUT_CSV = BASE_DIR / "domains.csv"
@@ -27,6 +28,7 @@ MAX_PAGES = 15
 PAGE_LOAD_TIMEOUT_MS = 10_000
 NOT_RENDERED_STATUS = "yes_but_not_rendered"
 CLOUDFLARE_CHALLENGE_TIMEOUT_SECONDS = 30.0
+ROBOTS = RobotsPolicy()
 
 load_dotenv(BASE_DIR / ".env")
 
@@ -357,6 +359,7 @@ def signup_looks_broken(output: str, result) -> bool:
 async def login_and_extract_task(domain: str, email: str, password: str) -> str:
     return (
         f"Go to https://{domain} and log in to an existing account. "
+        f"Respect the site's robots.txt throughout and do not open URLs disallowed for QMULAccessibilityResearchBot. "
         f"Use the email {email} and the password {password}. "
         f"After logging in, extract all unique navigation links visible on the page "
         f"(header nav, sidebar, footer links, main menu items). "
@@ -369,6 +372,7 @@ async def login_and_extract_task(domain: str, email: str, password: str) -> str:
 async def login_only_task(domain: str, email: str, password: str) -> str:
     return (
         f"Go to https://{domain} and log in to an existing account. "
+        f"Respect the site's robots.txt throughout and do not open URLs disallowed for QMULAccessibilityResearchBot. "
         f"Use the email {email} and the password {password}. "
         f"After logging in, stop. Do nothing else."
     )
@@ -378,6 +382,7 @@ async def login_only_task(domain: str, email: str, password: str) -> str:
 async def signup_and_extract_task(domain: str, email: str, password: str) -> str:
     return (
         f"Go to https://{domain} and create a new account. "
+        f"Respect the site's robots.txt throughout and do not open URLs disallowed for QMULAccessibilityResearchBot. "
         f"Use the email {email} and the password {password}. "
         f"Fill out the signup form completely. "
         f"IMPORTANT: If the form rejects the password (e.g., too weak, too short, missing special characters), "
@@ -393,6 +398,7 @@ async def signup_and_extract_task(domain: str, email: str, password: str) -> str
 async def signup_only_task(domain: str, email: str, password: str) -> str:
     return (
         f"Go to https://{domain} and create a new account. "
+        f"Respect the site's robots.txt throughout and do not open URLs disallowed for QMULAccessibilityResearchBot. "
         f"Use the email {email} and the password {password}. "
         f"Fill out the signup form completely. "
         f"IMPORTANT: If the form rejects the password (e.g., too weak, too short, missing special characters), "
@@ -504,6 +510,10 @@ async def analyze_page(
     capture_ready_timeout: float,
     capture_stable_seconds: float,
 ) -> tuple[dict | None, bool]:
+    if not await ROBOTS.can_fetch(url):
+        print(f"  Skipping {url}: disallowed by robots.txt or robots.txt unavailable")
+        return None, False
+
     try:
         has_response, content_type = await navigate_page(page, url, timeout_ms=timeout_ms)
     except Exception as e:
@@ -570,6 +580,12 @@ async def process_domain(domain: str, args, llm, update_csv_status: bool, csv_lo
     domain_dir.mkdir(parents=True, exist_ok=True)
     all_reports: list[dict] = []
     first_status: str | None = None
+
+    landing_url = f"https://{domain}"
+    if not await ROBOTS.can_fetch(landing_url):
+        print(f"[{domain}] Skipping: disallowed by robots.txt or robots.txt unavailable")
+        save_domain_summary(all_reports, domain_dir / "summary.json", first_status)
+        return
 
     if args.no_auth:
         print(f"[{domain}] --no-nav-landing-page set, analyzing landing page only")
