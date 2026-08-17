@@ -97,14 +97,30 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
     requested_model = getattr(args, "model", None)
     generator = generator or OpenAIRepairGenerator(
         model=requested_model, base_url=base_url, api_mode=api_mode,
+        temperature=getattr(args, "temperature", None),
+        top_p=getattr(args, "top_p", None),
+        seed=getattr(args, "generation_seed", None),
+        max_output_tokens=getattr(args, "max_output_tokens", None),
+        reasoning_effort=getattr(args, "reasoning_effort", None),
+        verbosity=getattr(args, "verbosity", None),
         request_timeout_seconds=getattr(args, "request_timeout_seconds", None),
         http_logger=LOGGER,
         log_http_bodies=bool(getattr(args, "log_http_bodies", False)),
     )
     effective_model = str(getattr(generator, "model", requested_model or "provider_default"))
+    generation_config = dict(getattr(generator, "generation_config", {
+        "temperature": getattr(args, "temperature", None),
+        "top_p": getattr(args, "top_p", None),
+        "seed": getattr(args, "generation_seed", None),
+        "seed_applied": api_mode == "chat_completions" and getattr(args, "generation_seed", None) is not None,
+        "max_output_tokens": getattr(args, "max_output_tokens", None),
+        "reasoning_effort": getattr(args, "reasoning_effort", None),
+        "verbosity": getattr(args, "verbosity", None),
+    }))
     LOGGER.info(
-        "run_start model=%s api_mode=%s endpoint=%s condition=%s selected=%d browser=%s",
+        "run_start model=%s api_mode=%s endpoint=%s condition=%s selected=%d browser=%s generation_config=%s",
         effective_model, api_mode, base_url or "official_openai", args.condition, len(selected), not args.skip_browser,
+        json.dumps(generation_config, sort_keys=True),
     )
     attempts: list[dict[str, Any]] = []
     seen_proposal_ids: set[str] = set()
@@ -234,6 +250,7 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
         "api": "OpenAI-compatible structured output API",
         "api_mode": api_mode,
         "endpoint": base_url or "official_openai",
+        "generation_config": generation_config,
         "structured_output_contract": "accessibility_system.repair.contracts.RepairProposal",
         "condition": args.condition,
         "attempt_count": len(attempts),
@@ -282,6 +299,7 @@ def run(args: argparse.Namespace, *, generator: Any | None = None) -> dict[str, 
             "stop_on_non_rejected": bool(getattr(args, "stop_on_non_rejected", False)),
             "stop_on_accepted": bool(getattr(args, "stop_on_accepted", False)),
             "request_timeout_seconds": getattr(args, "request_timeout_seconds", None),
+            "generation_config": generation_config,
             "log_http_bodies": bool(getattr(args, "log_http_bodies", False)),
         },
         "outputs": output_hashes,
@@ -300,6 +318,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model")
     parser.add_argument("--api-mode", choices=("responses", "chat_completions"), default="responses")
     parser.add_argument("--base-url", help="OpenAI-compatible API root, for example https://provider.example/v1; never include /chat/completions")
+    parser.add_argument("--temperature", type=float, help="Sampling temperature; default 0.0 or OPENAI_TEMPERATURE")
+    parser.add_argument("--top-p", type=float, help="Nucleus-sampling mass; default 1.0 or OPENAI_TOP_P")
+    parser.add_argument(
+        "--generation-seed", type=int,
+        help="Best-effort sampling seed; default 42 or OPENAI_SEED. Applied only in Chat Completions mode.",
+    )
+    parser.add_argument(
+        "--max-output-tokens", type=int,
+        help="Maximum generated tokens; default 3000 or OPENAI_MAX_OUTPUT_TOKENS",
+    )
+    parser.add_argument(
+        "--reasoning-effort", choices=("none", "minimal", "low", "medium", "high", "xhigh", "max"),
+        help="Reasoning effort; default medium or OPENAI_REASONING_EFFORT",
+    )
+    parser.add_argument(
+        "--verbosity", choices=("low", "medium", "high"),
+        help="Output verbosity; default low or OPENAI_VERBOSITY",
+    )
     parser.add_argument("--max-proposals", type=int, default=10)
     parser.add_argument("--generation-retries", type=int, default=1, help="Retry schema-invalid provider output; authentication and other fatal errors are never retried")
     parser.add_argument(

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from typing import Any
 
 from dotenv import load_dotenv
 
@@ -70,7 +71,63 @@ def api_mode() -> str:
     return os.getenv("OPENAI_API_MODE", "chat_completions").strip() or "chat_completions"
 
 
-def load_all() -> dict[str, str | None]:
+def _float_setting(name: str, default: float, *, minimum: float, maximum: float) -> float:
+    raw = os.getenv(name, str(default)).strip()
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise EnvConfigError(f"{name} must be a number, received {raw!r}") from exc
+    if not minimum <= value <= maximum:
+        raise EnvConfigError(f"{name} must be between {minimum} and {maximum}, received {value}")
+    return value
+
+
+def _int_setting(name: str, default: int, *, minimum: int, maximum: int) -> int:
+    raw = os.getenv(name, str(default)).strip()
+    try:
+        value = int(raw)
+    except ValueError as exc:
+        raise EnvConfigError(f"{name} must be an integer, received {raw!r}") from exc
+    if not minimum <= value <= maximum:
+        raise EnvConfigError(f"{name} must be between {minimum} and {maximum}, received {value}")
+    return value
+
+
+def _choice_setting(name: str, default: str, allowed: set[str]) -> str:
+    value = os.getenv(name, default).strip().lower() or default
+    if value not in allowed:
+        raise EnvConfigError(f"{name} must be one of {sorted(allowed)}, received {value!r}")
+    return value
+
+
+def temperature() -> float:
+    return _float_setting("OPENAI_TEMPERATURE", 0.0, minimum=0.0, maximum=2.0)
+
+
+def top_p() -> float:
+    return _float_setting("OPENAI_TOP_P", 1.0, minimum=0.0, maximum=1.0)
+
+
+def seed() -> int:
+    return _int_setting("OPENAI_SEED", 42, minimum=0, maximum=2_147_483_647)
+
+
+def max_output_tokens() -> int:
+    return _int_setting("OPENAI_MAX_OUTPUT_TOKENS", 3000, minimum=1, maximum=100_000)
+
+
+def reasoning_effort() -> str:
+    return _choice_setting(
+        "OPENAI_REASONING_EFFORT", "medium",
+        {"none", "minimal", "low", "medium", "high", "xhigh", "max"},
+    )
+
+
+def verbosity() -> str:
+    return _choice_setting("OPENAI_VERBOSITY", "low", {"low", "medium", "high"})
+
+
+def load_all() -> dict[str, Any]:
     """Load .env once and return every OpenAI-compatible setting as a dict."""
     load_env()
     return {
@@ -78,6 +135,12 @@ def load_all() -> dict[str, str | None]:
         "base_url": base_url(),
         "model": model(),
         "api_mode": api_mode(),
+        "temperature": temperature(),
+        "top_p": top_p(),
+        "seed": seed(),
+        "max_output_tokens": max_output_tokens(),
+        "reasoning_effort": reasoning_effort(),
+        "verbosity": verbosity(),
     }
 
 
@@ -90,4 +153,10 @@ __all__ = [
     "base_url",
     "model",
     "api_mode",
+    "temperature",
+    "top_p",
+    "seed",
+    "max_output_tokens",
+    "reasoning_effort",
+    "verbosity",
 ]

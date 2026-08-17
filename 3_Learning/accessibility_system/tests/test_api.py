@@ -40,6 +40,18 @@ def test_health_and_rag_endpoints(tmp_path):
     assert client.get("/v1/rag/inputs/missing").status_code == 404
 
 
+def test_app_owns_live_model_bundle_configuration(tmp_path):
+    phase5 = tmp_path / "trained" / "phase_5_multiview_final_v2"
+    policy = tmp_path / "trained" / "phase_6_7_final" / "phase_6_fusion_policy.json"
+    app = create_app(
+        generator_inputs=tmp_path / "inputs.json", corpus_dir=tmp_path / "corpus",
+        axe_js=tmp_path / "axe.js", runs_dir=tmp_path / "runs",
+        phase5_dir=phase5, fusion_policy_path=policy,
+    )
+    assert app.state.phase5_dir == phase5.resolve()
+    assert app.state.fusion_policy_path == policy.resolve()
+
+
 def test_scan_rejects_private_network_targets(tmp_path):
     client = make_client(tmp_path)
     response = client.post("/v1/scans", json={"urls": ["http://127.0.0.1/admin"]})

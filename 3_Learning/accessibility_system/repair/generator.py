@@ -20,6 +20,12 @@ from ..env_import import EnvConfigError, load_all
 
 
 DEFAULT_MODEL = "gpt-5.6-sol"
+DEFAULT_TEMPERATURE = 0.0
+DEFAULT_TOP_P = 1.0
+DEFAULT_SEED = 42
+DEFAULT_MAX_OUTPUT_TOKENS = 3000
+DEFAULT_REASONING_EFFORT = "medium"
+DEFAULT_VERBOSITY = "low"
 PLACEHOLDER_KEY = "REPLACE_WITH_OPENAI_API_KEY"
 SENSITIVE_HTTP_HEADERS = frozenset({"authorization", "proxy-authorization", "cookie", "set-cookie", "x-api-key"})
 SENSITIVE_PAYLOAD_KEYS = frozenset({"api_key", "apikey", "authorization", "token", "secret", "password"})
@@ -344,6 +350,35 @@ def _validate_key(api_key: str | None) -> str:
     return key
 
 
+def _bounded_float(name: str, raw: Any, *, minimum: float, maximum: float) -> float:
+    try:
+        value = float(raw)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be a number, received {raw!r}") from exc
+    if not minimum <= value <= maximum:
+        raise ValueError(f"{name} must be between {minimum} and {maximum}, received {value}")
+    return value
+
+
+def _bounded_int(name: str, raw: Any, *, minimum: int, maximum: int) -> int:
+    if isinstance(raw, bool):
+        raise ValueError(f"{name} must be an integer, received {raw!r}")
+    try:
+        value = int(raw)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{name} must be an integer, received {raw!r}") from exc
+    if not minimum <= value <= maximum:
+        raise ValueError(f"{name} must be between {minimum} and {maximum}, received {value}")
+    return value
+
+
+def _choice(name: str, raw: str, allowed: set[str]) -> str:
+    value = str(raw).strip().lower()
+    if value not in allowed:
+        raise ValueError(f"{name} must be one of {sorted(allowed)}, received {value!r}")
+    return value
+
+
 def _model_dump(value: Any) -> dict[str, Any]:
     if value is None:
         return {}
@@ -423,12 +458,18 @@ class OpenAIRepairGenerator:
         base_url: str | None = None,
         api_mode: str | None = None,
         model: str | None = None,
+        temperature: float | None = None,
+        top_p: float | None = None,
+        seed: int | None = None,
+        max_output_tokens: int | None = None,
+        reasoning_effort: str | None = None,
+        verbosity: str | None = None,
         request_timeout_seconds: float | None = None,
         http_logger: logging.Logger | None = None,
         log_http_bodies: bool = False,
     ) -> None:
+        env: dict[str, Any] = {}
         if client is None:
-            env: dict[str, str | None] = {}
             try:
                 env = load_all()
             except EnvConfigError:
@@ -458,6 +499,49 @@ class OpenAIRepairGenerator:
         self.client = client
         self.model = resolved_model
         self.api_mode = resolved_api_mode
+        self.temperature = _bounded_float(
+            "temperature", temperature if temperature is not None else env.get("temperature", DEFAULT_TEMPERATURE),
+            minimum=0.0, maximum=2.0,
+        )
+        self.top_p = _bounded_float(
+            "top_p", top_p if top_p is not None else env.get("top_p", DEFAULT_TOP_P),
+            minimum=0.0, maximum=1.0,
+        )
+        self.seed = _bounded_int(
+            "seed", seed if seed is not None else env.get("seed", DEFAULT_SEED),
+            minimum=0, maximum=2_147_483_647,
+        )
+        self.max_output_tokens = _bounded_int(
+            "max_output_tokens",
+            max_output_tokens if max_output_tokens is not None else env.get("max_output_tokens", DEFAULT_MAX_OUTPUT_TOKENS),
+            minimum=1, maximum=100_000,
+        )
+        self.reasoning_effort = _choice(
+            "reasoning_effort",
+            reasoning_effort or str(env.get("reasoning_effort") or DEFAULT_REASONING_EFFORT),
+            {"none", "minimal", "low", "medium", "high", "xhigh", "max"},
+        )
+        self.verbosity = _choice(
+            "verbosity", verbosity or str(env.get("verbosity") or DEFAULT_VERBOSITY),
+            {"low", "medium", "high"},
+        )
+        self.generation_config = {
+            "temperature": self.temperature,
+            "top_p": self.top_p,
+            "seed": self.seed,
+            "seed_applied": self.api_mode == "chat_completions",
+            "seed_support": (
+                "best_effort_chat_completions"
+                if self.api_mode == "chat_completions"
+                else "not_supported_by_responses_api"
+            ),
+            "max_output_tokens": self.max_output_tokens,
+            "reasoning_effort": self.reasoning_effort,
+            "verbosity": self.verbosity,
+            "n": 1,
+            "store": False,
+            "structured_output": "RepairProposal",
+        }
         known_base_url = resolved_base_url if "resolved_base_url" in locals() else getattr(client, "base_url", None)
         self.endpoint = _safe_endpoint(str(known_base_url) if known_base_url else None, resolved_api_mode)
 
@@ -469,9 +553,12 @@ class OpenAIRepairGenerator:
                 model=self.model,
                 input=messages,
                 text_format=RepairProposal,
-                reasoning={"effort": "medium"},
+                reasoning={"effort": self.reasoning_effort},
                 store=False,
-                max_output_tokens=3000,
+                max_output_tokens=self.max_output_tokens,
+                temperature=self.temperature,
+                top_p=self.top_p,
+                verbosity=self.verbosity,
             )
             parsed = getattr(response, "output_parsed", None)
             if parsed is None:
@@ -485,6 +572,14 @@ class OpenAIRepairGenerator:
                 model=self.model,
                 messages=messages,
                 response_format=RepairProposal,
+                temperature=self.temperature,
+                top_p=self.top_p,
+                seed=self.seed,
+                max_completion_tokens=self.max_output_tokens,
+                reasoning_effort=self.reasoning_effort,
+                verbosity=self.verbosity,
+                n=1,
+                store=False,
             )
             message = response.choices[0].message
             parsed = getattr(message, "parsed", None)
@@ -509,6 +604,7 @@ class OpenAIRepairGenerator:
                 "endpoint": self.endpoint,
                 "api_mode": self.api_mode,
                 "model": self.model,
+                "generation_config": self.generation_config,
                 "system_prompt": SYSTEM_PROMPT,
                 "user_prompt": user_payload,
                 "response_format": "RepairProposal (strict structured output)",
