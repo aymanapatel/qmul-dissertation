@@ -28,6 +28,8 @@ MAX_PAGES = 15
 PAGE_LOAD_TIMEOUT_MS = 10_000
 NOT_RENDERED_STATUS = "yes_but_not_rendered"
 CLOUDFLARE_CHALLENGE_TIMEOUT_SECONDS = 30.0
+LLM_TEMPERATURE = 0.2
+LLM_TOP_K = 40
 ROBOTS = RobotsPolicy()
 
 load_dotenv(BASE_DIR / ".env")
@@ -799,9 +801,13 @@ async def main():
     llm = None
     if not args.no_auth:
         llm = ChatOpenRouter(
-            model="kimi-k2.6",
+            model="deepseek/deepseek-v4-flash",
             base_url=os.getenv("OPENCODE_GO_URL"),
             api_key=os.getenv("AI_API_KEY"),
+            temperature=LLM_TEMPERATURE,
+            # ChatOpenRouter passes OpenRouter-only request fields through the
+            # OpenAI client's extra_body parameter.
+            extra_body={"extra_body": {"top_k": LLM_TOP_K}},
         )
 
     if args.site:
