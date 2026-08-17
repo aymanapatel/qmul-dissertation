@@ -116,6 +116,12 @@ def test_openai_adapter_uses_responses_parse_and_pydantic_format():
     assert responses.kwargs["text_format"] is RepairProposal
     assert responses.kwargs["model"] == "gpt-5.6-sol"
     assert responses.kwargs["store"] is False
+    assert responses.kwargs["temperature"] == 0.0
+    assert responses.kwargs["top_p"] == 1.0
+    assert responses.kwargs["max_output_tokens"] == 3000
+    assert responses.kwargs["reasoning"] == {"effort": "medium"}
+    assert responses.kwargs["verbosity"] == "low"
+    assert "seed" not in responses.kwargs
     assert responses.kwargs["input"][0]["role"] == "system"
     payload = json.loads(responses.kwargs["input"][1]["content"])
     assert payload["immutable_identity"] == {"query_id": "query-1", "finding_id": "finding-1"}
@@ -126,6 +132,9 @@ def test_openai_adapter_uses_responses_parse_and_pydantic_format():
     assert result.request_trace["system_prompt"]
     assert result.request_trace["user_prompt"] == payload
     assert result.request_trace["endpoint"] == "https://api.openai.com/v1/responses"
+    assert result.request_trace["generation_config"]["seed"] == 42
+    assert result.request_trace["generation_config"]["seed_applied"] is False
+    assert result.request_trace["generation_config"]["seed_support"] == "not_supported_by_responses_api"
     assert "authorization" not in json.dumps(result.request_trace).lower()
 
 
@@ -272,6 +281,51 @@ def test_openai_compatible_chat_adapter_uses_json_schema_parse():
     assert result.proposal == expected
     assert completions.kwargs["response_format"] is RepairProposal
     assert completions.kwargs["messages"][0]["role"] == "system"
+    assert completions.kwargs["temperature"] == 0.0
+    assert completions.kwargs["top_p"] == 1.0
+    assert completions.kwargs["seed"] == 42
+    assert completions.kwargs["max_completion_tokens"] == 3000
+    assert completions.kwargs["reasoning_effort"] == "medium"
+    assert completions.kwargs["verbosity"] == "low"
+    assert completions.kwargs["n"] == 1
+    assert completions.kwargs["store"] is False
+    assert result.request_trace["generation_config"]["seed_applied"] is True
+
+
+def test_generation_configuration_can_be_overridden_and_is_validated():
+    expected = proposal()
+
+    class Completions:
+        def __init__(self):
+            self.kwargs = None
+
+        def parse(self, **kwargs):
+            self.kwargs = kwargs
+            return SimpleNamespace(
+                id="chat-config", model="compatible-model",
+                choices=[SimpleNamespace(message=SimpleNamespace(parsed=expected, refusal=None))],
+                usage={},
+            )
+
+    completions = Completions()
+    generator = OpenAIRepairGenerator(
+        client=SimpleNamespace(chat=SimpleNamespace(completions=completions)),
+        model="compatible-model", api_mode="chat_completions",
+        temperature=0.2, top_p=0.8, seed=7, max_output_tokens=2048,
+        reasoning_effort="low", verbosity="medium",
+    )
+    generator.generate(generator_input())
+    assert completions.kwargs["temperature"] == 0.2
+    assert completions.kwargs["top_p"] == 0.8
+    assert completions.kwargs["seed"] == 7
+    assert completions.kwargs["max_completion_tokens"] == 2048
+    assert generator.generation_config["reasoning_effort"] == "low"
+    assert generator.generation_config["verbosity"] == "medium"
+
+    with pytest.raises(ValueError, match="temperature"):
+        OpenAIRepairGenerator(client=SimpleNamespace(), temperature=2.1)
+    with pytest.raises(ValueError, match="seed"):
+        OpenAIRepairGenerator(client=SimpleNamespace(), seed=-1)
 
 
 def test_live_client_receives_explicit_string_and_placeholder_is_rejected(monkeypatch):
@@ -532,9 +586,22 @@ def test_phase9_passes_request_timeout_to_live_generator(monkeypatch, tmp_path):
         output_dir=tmp_path / "phase9", condition="graph_constrained_rag", model="mock",
         api_mode="responses", base_url="https://example.invalid/v1", max_proposals=1,
         skip_browser=True, request_timeout_seconds=37.5,
+        temperature=0.1, top_p=0.9, generation_seed=17, max_output_tokens=2048,
+        reasoning_effort="low", verbosity="medium",
     )
-    run_phase9(args)
+    report = run_phase9(args)
     assert captured["request_timeout_seconds"] == 37.5
+    assert captured["temperature"] == 0.1
+    assert captured["top_p"] == 0.9
+    assert captured["seed"] == 17
+    assert captured["max_output_tokens"] == 2048
+    assert captured["reasoning_effort"] == "low"
+    assert captured["verbosity"] == "medium"
+    assert report["generation_config"] == {
+        "temperature": 0.1, "top_p": 0.9, "seed": 17,
+        "seed_applied": False, "max_output_tokens": 2048,
+        "reasoning_effort": "low", "verbosity": "medium",
+    }
 
 
 def test_phase9_logs_redacted_root_cause_and_skips_after_auth_failure(tmp_path):

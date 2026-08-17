@@ -13,6 +13,7 @@ import uuid
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
+from functools import partial
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, Literal
@@ -23,6 +24,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
+from .inference_config import DEFAULT_FUSION_POLICY, DEFAULT_PHASE5
 from .phase9 import _configure_logging, run as run_phase9
 from .repair.generator import OpenAIRepairGenerator, SYSTEM_PROMPT, build_prompt_messages
 from learning_v2.live_inference import (
@@ -56,6 +58,13 @@ class RepairRunRequest(StrictRequest):
     model: str | None = Field(default=None, max_length=200)
     api_mode: Literal["responses", "chat_completions"] = "chat_completions"
     base_url: str | None = Field(default=None, max_length=500)
+    temperature: float = Field(default=0.0, ge=0.0, le=2.0)
+    top_p: float = Field(default=1.0, ge=0.0, le=1.0)
+    seed: int = Field(default=42, ge=0, le=2_147_483_647)
+    max_output_tokens: int = Field(default=3000, ge=1, le=100_000)
+    reasoning_effort: Literal["none", "minimal", "low", "medium", "high", "xhigh", "max"] = "medium"
+    verbosity: Literal["low", "medium", "high"] = "low"
+    request_timeout_seconds: float = Field(default=90.0, ge=1.0, le=600.0)
     skip_browser: bool = False
     generation_retries: int = Field(default=1, ge=0, le=3)
 
@@ -681,8 +690,9 @@ class JobStore:
 def create_app(
     *, generator_inputs: Path = DEFAULT_INPUTS, corpus_dir: Path = DEFAULT_CORPUS,
     axe_js: Path = DEFAULT_AXE, runs_dir: Path = DEFAULT_RUNS,
+    phase5_dir: Path = DEFAULT_PHASE5, fusion_policy_path: Path = DEFAULT_FUSION_POLICY,
     suggestion_scanner=scan_sites, suggestion_generator_factory=OpenAIRepairGenerator,
-    suggestion_specialist_runner=run_live_specialists,
+    suggestion_specialist_runner=None,
 ) -> FastAPI:
     app = FastAPI(
         title="Accessibility Research API", version="1.0.0",
@@ -699,6 +709,13 @@ def create_app(
     app.state.corpus_dir = corpus_dir.resolve()
     app.state.axe_js = axe_js.resolve()
     app.state.store = store
+    app.state.phase5_dir = phase5_dir.resolve()
+    app.state.fusion_policy_path = fusion_policy_path.resolve()
+    specialist_runner = suggestion_specialist_runner or partial(
+        run_live_specialists,
+        phase5_dir=app.state.phase5_dir,
+        fusion_policy_path=app.state.fusion_policy_path,
+    )
 
     def load_inputs() -> list[dict[str, Any]]:
         path = app.state.generator_inputs
@@ -755,7 +772,7 @@ def create_app(
                     "affected_node_count": site.get("affected_node_count", 0),
                     "screenshot_artifact": site.get("screenshot_artifact"),
                 })
-                specialist_report = suggestion_specialist_runner(
+                specialist_report = specialist_runner(
                     run_dir / "live_page", run_dir / "learning_v2_graphs",
                     progress=progress,
                 )
@@ -850,6 +867,10 @@ def create_app(
                 generator_inputs=inputs_path, corpus_dir=app.state.corpus_dir, axe_js=app.state.axe_js,
                 output_dir=output_dir, condition=config["condition"], model=config["model"],
                 api_mode=config["api_mode"], base_url=config["base_url"],
+                temperature=config["temperature"], top_p=config["top_p"],
+                generation_seed=config["seed"], max_output_tokens=config["max_output_tokens"],
+                reasoning_effort=config["reasoning_effort"], verbosity=config["verbosity"],
+                request_timeout_seconds=config["request_timeout_seconds"],
                 max_proposals=len(selected), skip_browser=config["skip_browser"],
                 generation_retries=config["generation_retries"], repair_truth=None,
             )
