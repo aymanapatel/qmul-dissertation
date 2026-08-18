@@ -1,0 +1,122 @@
+{
+  "html_path": "../2_Data/browser-use/outputs/axe-core/www.impots.gouv.fr/0.html",
+  "model_path": "models_a11y_v5/best_model.pt",
+  "summary": {
+    "total_nodes": 326,
+    "actionable_nodes": 324,
+    "graph_violation_probability": 0.4582,
+    "node_evidence_probability": 0.2074,
+    "page_violation_probability": 0.4582,
+    "graph_threshold": 0.35,
+    "page_prediction": "likely_violation",
+    "node_predictions_suppressed_by_page_gate": false,
+    "node_predictions_gated": false,
+    "predicted_violation_count": 0,
+    "candidate_warning_count": 1,
+    "threshold": 0.45,
+    "node_threshold": 0.45,
+    "rule_threshold": 0.25,
+    "graph_source": "a11y-tree"
+  },
+  "predicted_violations": [],
+  "candidate_warnings": [
+    {
+      "node_id": 320,
+      "tag": "dialog",
+      "probability": 0.2074,
+      "predicted_violation": false,
+      "status": "candidate_warning",
+      "attributes": {
+        "aria-labelledby": "fr-theme-modal-title",
+        "role": "dialog",
+        "id": "fr-theme-modal",
+        "class": [
+          "fr-modal"
+        ],
+        "data-fr-js-modal": "true",
+        "aria-label": "Param\u00e8tres d\u2019affichage"
+      },
+      "text_preview": "Param\u00e8tres d\u2019affichage",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.1866
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1822
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1109
+        }
+      ],
+      "node_threshold": 0.45
+    }
+  ],
+  "raw_top_predictions": [
+    {
+      "node_id": 320,
+      "tag": "dialog",
+      "probability": 0.2074,
+      "predicted_violation": false,
+      "status": "raw_candidate",
+      "attributes": {
+        "aria-labelledby": "fr-theme-modal-title",
+        "role": "dialog",
+        "id": "fr-theme-modal",
+        "class": [
+          "fr-modal"
+        ],
+        "data-fr-js-modal": "true",
+        "aria-label": "Param\u00e8tres d\u2019affichage"
+      },
+      "text_preview": "Param\u00e8tres d\u2019affichage",
+      "predicted_rules": [
+        {
+          "rule_id": "image-alt",
+          "probability": 0.1866
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1822
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1109
+        }
+      ],
+      "node_threshold": 0.45,
+      "rank": 1
+    }
+  ],
+  "axe_summary": {
+    "available": true,
+    "violation_count": 0,
+    "pass_count": 27,
+    "incomplete_count": 2,
+    "inapplicable_count": 34,
+    "incomplete": [
+      {
+        "rule_id": "aria-valid-attr-value",
+        "impact": "critical",
+        "help": "ARIA attributes must conform to valid values",
+        "nodes": 1
+      },
+      {
+        "rule_id": "color-contrast",
+        "impact": "serious",
+        "help": "Elements must meet minimum color contrast ratio thresholds",
+        "nodes": 81
+      }
+    ]
+  },
+  "ground_truth": {
+    "true_violations": 0,
+    "true_positives": 0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "precision": 0,
+    "recall": 0
+  }
+}

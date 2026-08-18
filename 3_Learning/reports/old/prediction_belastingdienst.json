@@ -1,0 +1,593 @@
+{
+  "html_path": "/Users/aymanpatel/Desktop/Uni/Dissertation/2_Data/browser-use/outputs/axe-core/www.belastingdienst.nl/0.html",
+  "model_path": "models_graph-source-a11y/best_model.pt",
+  "summary": {
+    "total_nodes": 323,
+    "actionable_nodes": 321,
+    "graph_violation_probability": 0.4892,
+    "predicted_violation_count": 8,
+    "threshold": 0.5,
+    "graph_source": "a11y-tree"
+  },
+  "predicted_violations": [
+    {
+      "node_id": 11,
+      "tag": "a",
+      "probability": 0.885,
+      "predicted_violation": true,
+      "attributes": {
+        "tabindex": "9",
+        "href": "/wps/wcm/connect/nl/home/home",
+        "role": "link"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.5725
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2752
+        },
+        {
+          "rule_id": "aria-required-parent",
+          "probability": 0.2467
+        }
+      ]
+    },
+    {
+      "node_id": 13,
+      "tag": "nav",
+      "probability": 0.6431,
+      "predicted_violation": true,
+      "attributes": {
+        "aria-label": "hoofdnavigatie",
+        "class": [
+          "navbar"
+        ],
+        "role": "navigation"
+      },
+      "text_preview": "hoofdnavigatie",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2669
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.176
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1703
+        }
+      ]
+    },
+    {
+      "node_id": 10,
+      "tag": "section",
+      "probability": 0.5852,
+      "predicted_violation": true,
+      "attributes": {
+        "data-type": "top-logo",
+        "class": [
+          "bld-logo"
+        ],
+        "role": "region"
+      },
+      "text_preview": "",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2061
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1599
+        },
+        {
+          "rule_id": "aria-hidden-focus",
+          "probability": 0.1332
+        }
+      ]
+    },
+    {
+      "node_id": 241,
+      "tag": "section",
+      "probability": 0.5597,
+      "predicted_violation": true,
+      "attributes": {
+        "data-type": "actual",
+        "id": "actueel_home",
+        "aria-labelledby": "actual-head",
+        "class": [
+          "bld-news-items"
+        ],
+        "data-doelgroep": "Ondernemer,Particulier,Werkgever",
+        "data-aantalnieuwsberichtentonen": "3",
+        "data-aantalverstoringentonen": "3",
+        "data-aantalbelangrijkedatumstonen": "3",
+        "data-json": "/wps/wcm/connect/bldcontentnl/berichten/berichten_uitgebreid.json",
+        "role": "region",
+        "aria-label": "Actueel"
+      },
+      "text_preview": "Actueel",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.2432
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2327
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1542
+        }
+      ]
+    },
+    {
+      "node_id": 275,
+      "tag": "h2",
+      "probability": 0.555,
+      "predicted_violation": true,
+      "attributes": {
+        "id": "campaign-head",
+        "class": [
+          "animation-element",
+          "slide-left",
+          "in-view"
+        ],
+        "role": "heading",
+        "aria-label": "Grote plannen? Of verandert er iets?"
+      },
+      "text_preview": "Grote plannen? Of verandert er iets?",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.3456
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.2113
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.2092
+        }
+      ]
+    },
+    {
+      "node_id": 196,
+      "tag": "section",
+      "probability": 0.5484,
+      "predicted_violation": true,
+      "attributes": {
+        "data-type": "important-themes",
+        "id": "themalaag",
+        "aria-labelledby": "important-themes-head",
+        "class": [
+          "bld-layer-theme",
+          "bld-section-arrow"
+        ],
+        "role": "region",
+        "aria-label": "Belangrijke thema's"
+      },
+      "text_preview": "Belangrijke thema's",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2393
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.2378
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1594
+        }
+      ]
+    },
+    {
+      "node_id": 272,
+      "tag": "section",
+      "probability": 0.537,
+      "predicted_violation": true,
+      "attributes": {
+        "data-type": "campaign",
+        "data-bld-bg-image": "/wps/wcm/connect/nl/home/resources/b/a/ba507c06-467f-4421-9080-dac5a11f4d2b/handig-onderneming-starten-beeldhouwen-filterpagina.jpg",
+        "id": "campagne-verandering",
+        "aria-labelledby": "campaign-head",
+        "class": [
+          "bld-bg-image",
+          "bld-layer-campaign",
+          "bld-bg-image-center"
+        ],
+        "style": "background-image: url(\"/wps/wcm/connect/nl/home/resources/b/a/ba507c06-467f-4421-9080-dac5a11f4d2b/handig-onderneming-starten-beeldhouwen-filterpagina.jpg\");",
+        "role": "region",
+        "aria-label": "Grote plannen? Of verandert er iets?"
+      },
+      "text_preview": "Grote plannen? Of verandert er iets?",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2351
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.2332
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1561
+        }
+      ]
+    },
+    {
+      "node_id": 183,
+      "tag": "section",
+      "probability": 0.5324,
+      "predicted_violation": true,
+      "attributes": {
+        "data-type": "featured",
+        "id": "uitgelicht-home",
+        "aria-labelledby": "featured-head",
+        "class": [
+          "bld-layer-featured"
+        ],
+        "style": "height: 712px;",
+        "role": "region",
+        "aria-label": "Uitgelicht"
+      },
+      "text_preview": "Uitgelicht",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2479
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.2396
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1719
+        }
+      ]
+    },
+    {
+      "node_id": 185,
+      "tag": "h2",
+      "probability": 0.4088,
+      "predicted_violation": false,
+      "attributes": {
+        "id": "featured-head",
+        "class": [
+          "bld-layer-title",
+          "sr-only"
+        ],
+        "role": "heading",
+        "aria-label": "Uitgelicht"
+      },
+      "text_preview": "Uitgelicht",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2775
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.2016
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1697
+        }
+      ]
+    },
+    {
+      "node_id": 2,
+      "tag": "header",
+      "probability": 0.3987,
+      "predicted_violation": false,
+      "attributes": {
+        "class": [
+          "header"
+        ],
+        "data-type": "header",
+        "role": "banner",
+        "aria-label": "Ga naar hoofdinhoud Ga direct naar hoofdnavigatie Ga direct naar footer Hoofdnavigatie Home Menu Sluiten menu Aangifte Belastingaangifte Aftrekposten en kortingen Eigen woning Box 3 (vermogensrendementsheffing) Belastingdienst buitenland Betalen en ontvangen Auto en woon-werkverkeer Schenken en schenkbelasting Erfbelasting Btw (omzetbelasting) Voorlopige aanslag Toeslagen Toeslagen Zorgtoeslag Huurtoeslag Kindgebonden budget Kinderopvangtoeslag Jongeren Met pensioen gaan Toeslagen na een overlijden Toeslag terugbetalen Contact met Dienst Toeslagen Gedupeerden kinderopvangtoeslag Ondernemen Arbeidsrelaties: zzp - ja of nee Betalen en ontvangen Btw (omzetbelasting) Loonheffingen: voor werkgevers en salarisadministrateurs Ondernemers Startende ondernemers Stoppende ondernemers Vennootschapsbelasting Alle thema's Aftrekposten en kortingen Arbeidsrelaties: zzp - ja of nee Auto en woon-werkverkeer Belastingaangifte Belastingdienst buitenland Betalen en ontvangen Bezwaar, beroep en klacht Box 3 (vermogensrendementsheffing) Bpm Btw (omzetbelasting) Contact Coronamaatregelen Belastingdienst Eigen woning Erfbelasting Intermediairs Jongeren Kennisgroepen Kennisnetwerk belastingen en toeslagen Loonheffingen: voor werkgevers en salarisadministrateurs Met pensioen gaan Na een overlijden Nieuwe bank Belastingdienst Ondernemers Overige belastingen Relatie, familie, gezondheid Scheiden of uit elkaar gaan Schenken en schenkbelasting Startende ondernemers Stoppende ondernemers Vennootschapsbelasting Voorlopige aanslag Werk en inkomen Formulieren en brochures Open zoeken Waar bent u naar op zoek? zoek Inloggen Mijn Belastingdienst Mijn toeslagen Voor ondernemers Naar hoofdmenu Submenu kop Sluiten menu"
+      },
+      "text_preview": "Ga naar hoofdinhoud Ga direct naar hoofdnavigatie Ga direct naar footer Hoofdnavigatie Home Menu Slu",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2216
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1308
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1217
+        }
+      ]
+    },
+    {
+      "node_id": 243,
+      "tag": "h2",
+      "probability": 0.3715,
+      "predicted_violation": false,
+      "attributes": {
+        "class": [
+          "bld-layer-title"
+        ],
+        "id": "actual-head",
+        "role": "heading",
+        "aria-label": "Actueel"
+      },
+      "text_preview": "Actueel",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2736
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1875
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1649
+        }
+      ]
+    },
+    {
+      "node_id": 14,
+      "tag": "h2",
+      "probability": 0.3659,
+      "predicted_violation": false,
+      "attributes": {
+        "class": [
+          "sr-only"
+        ],
+        "role": "heading",
+        "aria-label": "Hoofdnavigatie"
+      },
+      "text_preview": "Hoofdnavigatie",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2064
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1136
+        }
+      ]
+    },
+    {
+      "node_id": 180,
+      "tag": "main",
+      "probability": 0.3412,
+      "predicted_violation": false,
+      "attributes": {
+        "id": "mainContentSkip",
+        "tabindex": "-1",
+        "role": "main",
+        "aria-label": "Belastingdienst Waarmee kunnen we u helpen? Lees voor Uitgelicht Ik heb aangifte 2025 gedaan, wanneer hoor ik iets? Lees wanneer u bericht krijgt Ik kan mijn belasting niet op tijd betalen Lees wat u in uw situatie kunt doen Nieuw rekeningnummer Belastingdienst We zijn 1 mei overgestapt van ING naar Rabobank. Lees wat dit voor u betekent Uitbetalen voorlopige aanslag 15 jul Op woensdag 15 juli wordt het geld voor 12 uur 's nachts overgemaakt. Alle betaaldagen Lees voor Belangrijke thema's Aangifte inkomstenbelasting Toeslagen Betalen en ontvangen Auto en woon-werkverkeer Ondernemers Aftrekposten en kortingen Voorlopige aanslag Erfbelasting Schenkbelasting Herstel kinderopvangtoeslag Loonheffingen Box 3 Btw Eigen woning Startende ondernemers Buitenland Vennootschapsbelasting Arbeidsrelaties Jongeren Contact Lees voor Actueel Nieuws Herstel belastingrente vennootschapsbelasting gestart 1-7-2026 17:00 Geen Eurovignet meer in Nederland 1-7-2026 9:00 Veranderingen motorrijtuigenbelasting sinds 1 juli 2026 1-7-2026 9:00 Meer... Lees meer over nieuws Verstoringen - onderhoud Bedrag ten onrechte 2 keer uitbetaald 9-6-2026 10:15 Verkeerde datum in afwijsbrief Opgaaf werkelijk rendement 2020 13-5-2026 8:30 Ontbrekende betaalinformatie over naheffing teruggaaf bijdrage Zvw 6-5-2026 17:00 Meer... Lees meer over verstoringen - onderhoud Belangrijke datums Uitbetaling voorlopige aanslag juli 15 jul Uitbetaling voorlopige aanslag augustus 17 aug Uitbetaling voorlopige aanslag september 15 sep Lees voor Grote plannen? Of verandert er iets? Wij helpen u op weg met tips, hulpmiddelen en meer informatie. Handig, van de Belastingdienst. Bekijk veelvoorkomende veranderingen"
+      },
+      "text_preview": "Belastingdienst Waarmee kunnen we u helpen? Lees voor Uitgelicht Ik heb aangifte 2025 gedaan, wannee",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2046
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1851
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1473
+        }
+      ]
+    },
+    {
+      "node_id": 278,
+      "tag": "h2",
+      "probability": 0.3227,
+      "predicted_violation": false,
+      "attributes": {
+        "class": [
+          "sr-only"
+        ],
+        "role": "heading",
+        "aria-label": "Algemene informatie"
+      },
+      "text_preview": "Algemene informatie",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2454
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1588
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1303
+        }
+      ]
+    },
+    {
+      "node_id": 181,
+      "tag": "header",
+      "probability": 0.3121,
+      "predicted_violation": false,
+      "attributes": {
+        "role": "banner",
+        "aria-label": "Belastingdienst Waarmee kunnen we u helpen?"
+      },
+      "text_preview": "Belastingdienst Waarmee kunnen we u helpen?",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1996
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1266
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1119
+        }
+      ]
+    },
+    {
+      "node_id": 182,
+      "tag": "h1",
+      "probability": 0.3043,
+      "predicted_violation": false,
+      "attributes": {
+        "role": "heading",
+        "aria-label": "Belastingdienst"
+      },
+      "text_preview": "Belastingdienst",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2068
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1673
+        },
+        {
+          "rule_id": "image-alt",
+          "probability": 0.1483
+        }
+      ]
+    },
+    {
+      "node_id": 276,
+      "tag": "a",
+      "probability": 0.2981,
+      "predicted_violation": false,
+      "attributes": {
+        "href": "/wps/wcm/connect/nl/veranderingen-in-mijn-leven/veranderingen-in-mijn-leven",
+        "class": [
+          "bld-knop-algemeen"
+        ],
+        "role": "link",
+        "aria-label": "Bekijk veelvoorkomende veranderingen"
+      },
+      "text_preview": "Bekijk veelvoorkomende veranderingen",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.2386
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1296
+        },
+        {
+          "rule_id": "aria-required-parent",
+          "probability": 0.1244
+        }
+      ]
+    },
+    {
+      "node_id": 186,
+      "tag": "h3",
+      "probability": 0.2813,
+      "predicted_violation": false,
+      "attributes": {
+        "role": "heading",
+        "aria-label": "Ik heb aangifte 2025 gedaan, wanneer hoor ik iets?"
+      },
+      "text_preview": "Ik heb aangifte 2025 gedaan, wanneer hoor ik iets?",
+      "predicted_rules": [
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.2338
+        },
+        {
+          "rule_id": "link-name",
+          "probability": 0.1758
+        },
+        {
+          "rule_id": "button-name",
+          "probability": 0.1364
+        }
+      ]
+    },
+    {
+      "node_id": 195,
+      "tag": "a",
+      "probability": 0.2798,
+      "predicted_violation": false,
+      "attributes": {
+        "href": "/wps/wcm/connect/nl/home/content/betaaldatums-voorlopige-aanslag",
+        "role": "link",
+        "aria-label": "Alle betaaldagen"
+      },
+      "text_preview": "Alle betaaldagen",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.2103
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1291
+        },
+        {
+          "rule_id": "aria-required-parent",
+          "probability": 0.1226
+        }
+      ]
+    },
+    {
+      "node_id": 187,
+      "tag": "a",
+      "probability": 0.2707,
+      "predicted_violation": false,
+      "attributes": {
+        "href": "/wps/wcm/connect/nl/belastingaangifte/content/wanneer-hoor-ik-iets",
+        "role": "link",
+        "aria-label": "Lees wanneer u bericht krijgt"
+      },
+      "text_preview": "Lees wanneer u bericht krijgt",
+      "predicted_rules": [
+        {
+          "rule_id": "link-name",
+          "probability": 0.2242
+        },
+        {
+          "rule_id": "color-contrast",
+          "probability": 0.1311
+        },
+        {
+          "rule_id": "aria-required-parent",
+          "probability": 0.1196
+        }
+      ]
+    }
+  ],
+  "ground_truth": {
+    "true_violations": 0,
+    "true_positives": 0,
+    "false_positives": 8,
+    "false_negatives": 0,
+    "precision": 0.0,
+    "recall": 0
+  }
+}

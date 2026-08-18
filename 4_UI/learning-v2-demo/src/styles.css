@@ -1,0 +1,310 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+  color: #1f2937;
+  background: #f6f8fb;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main,
+footer,
+.hero,
+.workspace,
+.empty-state,
+.result-stack,
+.pipeline-live,
+.event-list,
+.model-section,
+.suggestions-panel,
+.trace-section,
+.suggestion-list,
+.suggestion-detail,
+.code-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+main {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+footer {
+  margin-top: auto;
+  padding: 1rem max(1rem, calc((100% - 1280px) / 2));
+  border-top: 1px solid #d1d5db;
+  background: #fff;
+  color: #4b5563;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.url-form,
+.workflow,
+.empty-state,
+.pipeline-live,
+.model-section,
+.page-evidence,
+.suggestions-panel,
+.trace-section {
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.url-form label,
+.url-form small {
+  display: block;
+}
+
+.url-form label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.url-form small,
+.event-row small,
+.checkpoint {
+  color: #4b5563;
+}
+
+.url-input,
+.workflow,
+.pipeline-live-heading,
+.event-row,
+.panel-heading,
+.results-grid,
+.model-matrix,
+.model-card-heading,
+.graph-stats,
+.rule-table > div,
+.scan-summary,
+.suggestion-list button,
+.detail-heading,
+.gnn-evidence,
+.probability-labels,
+.operations h3,
+.operation,
+.review-box,
+.model-proof,
+.trace-tabs,
+.empty-graphic,
+.boundaries,
+.completed-runs {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.url-input,
+.workflow,
+.results-grid,
+.model-matrix,
+.graph-stats,
+.scan-summary,
+.trace-tabs,
+.boundaries,
+.completed-runs {
+  flex-wrap: wrap;
+}
+
+.url-input input {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.url-input input,
+.url-input select,
+.url-input button,
+.trace-tabs button,
+.suggestion-list button,
+.code-panel button {
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.url-input button {
+  border-color: #2563eb;
+  background: #2563eb;
+  color: #fff;
+}
+
+.results-grid > * {
+  flex: 1 1 24rem;
+}
+
+.model-card {
+  flex: 1 1 18rem;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+}
+
+.workflow {
+  justify-content: space-between;
+}
+
+.workflow-step {
+  flex: 1 1 8rem;
+  align-items: center;
+  text-align: center;
+}
+
+.workflow-step > span {
+  color: #2563eb;
+}
+
+.panel-heading,
+.pipeline-live-heading,
+.model-card-heading,
+.detail-heading {
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.event-row {
+  padding: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+}
+
+.event-row > div {
+  flex: 1;
+}
+
+.empty-state {
+  align-items: center;
+  text-align: center;
+}
+
+.empty-state p {
+  max-width: 52rem;
+  margin: 0;
+}
+
+.suggestion-list button {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.suggestion-title {
+  flex: 1;
+}
+
+.suggestion-detail,
+.code-panel {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #f8fafc;
+}
+
+.trace-tabs button.active,
+.suggestion-list button.selected {
+  border-color: #2563eb;
+  background: #dbeafe;
+}
+
+.screenshot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.screenshot-stage {
+  position: relative;
+  width: 100%;
+}
+
+.contrast-highlight {
+  position: absolute;
+  z-index: 2;
+  border: 3px solid #dc2626;
+  background: rgb(220 38 38 / 16%);
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 90%);
+  pointer-events: none;
+}
+
+.contrast-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.75rem;
+  border-left: 4px solid #dc2626;
+  background: #fef2f2;
+}
+
+.contrast-summary span {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.workflow-step,
+.event-row > div,
+.suggestion-title,
+.gnn-evidence > div,
+.operation > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.probability {
+  position: relative;
+  height: 1rem;
+  border: 1px solid currentColor;
+}
+
+.probability span {
+  display: block;
+  height: 100%;
+  background: currentColor;
+}
+
+.probability i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid;
+}
+
+.screenshot-frame img,
+.code-panel pre {
+  max-width: 100%;
+  overflow: auto;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

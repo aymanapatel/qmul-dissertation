@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "blinded": true,
+  "adjudicated": false,
+  "ratings": [
+    {
+      "condition": "graph_constrained_rag",
+      "query_id": "replace-with-query-id",
+      "rater_id": "rater-1",
+      "contextual_correctness": 1,
+      "safety": 1,
+      "helpfulness": 1,
+      "acceptable": false,
+      "notes": "Explain the rating without guessing the retrieval condition."
+    }
+  ]
+}

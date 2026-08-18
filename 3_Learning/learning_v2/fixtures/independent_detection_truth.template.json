@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "annotation_protocol": "dual_independent_then_adjudicated",
+  "pairs": [
+    {
+      "site_id": "replace-with-frozen-test-site",
+      "criterion_id": "1.1.1",
+      "status": "fail",
+      "annotator_ids": ["annotator-1", "annotator-2"],
+      "adjudicated": true,
+      "evidence": "Reference the saved DOM, rendered state, accessibility tree, and applicable exception decision."
+    }
+  ]
+}
