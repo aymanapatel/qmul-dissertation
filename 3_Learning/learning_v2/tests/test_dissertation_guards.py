@@ -133,6 +133,23 @@ def test_detection_annotation_finalizer_emits_complete_truth(tmp_path):
     assert output.is_file()
 
 
+def test_detection_annotation_finalizer_accepts_completed_top_level_rater_sheets(tmp_path):
+    (tmp_path / "coordinator").mkdir(); (tmp_path / "rater_packets").mkdir()
+    identity = {"case_id": "c1", "site_id": "site", "criterion_id": "1.1.1"}
+    (tmp_path / "coordinator/identity_map.json").write_text(
+        json.dumps({"cases": [identity]}), encoding="utf-8",
+    )
+    (tmp_path / "coordinator/independent_detection_truth.json").write_text(
+        json.dumps({"pairs": [{**identity, "status": None, "adjudicated": False, "evidence": ""}]}),
+        encoding="utf-8",
+    )
+    row = {"case_id": "c1", "status": "pass", "confidence": 4, "evidence_notes": "Named image."}
+    for index in (1, 2):
+        (tmp_path / f"rater_packets/rater_{index}.json").write_text(json.dumps([row]), encoding="utf-8")
+    result = finalize_packet(tmp_path, tmp_path / "final.json")
+    assert result["pairs"][0]["status"] == "pass"
+
+
 def test_multiview_bundle_mapping_rejects_duplicate_views():
     assert _mapping(["a11y-tree=/one", "rendered-visual=/two"])["a11y-tree"] == Path("/one")
     with pytest.raises(ValueError, match="unique"):

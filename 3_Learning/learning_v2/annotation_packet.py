@@ -562,9 +562,12 @@ def _capture_site(source: Path, axe_report: Path, site_id: str, destination: Pat
 
 def build_packet(args: argparse.Namespace) -> dict[str, Any]:
     split = json.loads(args.split.read_text(encoding="utf-8"))
-    sites = list(split.get("test", []))
+    partition = str(getattr(args, "partition", "test"))
+    if partition not in {"val", "test"}:
+        raise ValueError("Annotation partition must be val or test")
+    sites = list(split.get(partition, []))
     if not sites:
-        raise ValueError("Frozen split has no test sites")
+        raise ValueError(f"Frozen split has no {partition} sites")
     criteria = _criterion_records(args.registry, args.rule_ids)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     captures = {}
@@ -631,6 +634,7 @@ def build_packet(args: argparse.Namespace) -> dict[str, Any]:
     coordinator.mkdir(exist_ok=True); raters.mkdir(exist_ok=True)
     identity_path = coordinator / "identity_map.json"
     identity_path.write_text(json.dumps({"schema_version": 1, "cases": cases}, indent=2), encoding="utf-8")
+    # ayman: rater is used here for producing two independent, blinded pass/fail judgements; the selected partition is validation or test, never training.
     for rater_index in (1, 2):
         rows = [_rater_case(case) for case in cases]
         random.Random(args.seed + rater_index).shuffle(rows)
@@ -670,6 +674,7 @@ def build_packet(args: argparse.Namespace) -> dict[str, Any]:
         "status": "blinded_detection_annotation_packet",
         "split": str(args.split.resolve()), "split_sha256": _sha256(args.split), "split_hash": split.get("split_hash"),
         "registry": str(args.registry.resolve()), "registry_sha256": _sha256(args.registry),
+        "partition": partition,
         "rule_ids": args.rule_ids, "criteria": sorted(criteria), "site_count": len(sites), "case_count": len(cases),
         "capture_failures": failures,
         "capture_contract": "frozen_dom_live_resource_hydration_v2",
@@ -682,25 +687,49 @@ def build_packet(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def _cohen_kappa(left: list[str], right: list[str]) -> float:
+    # Cohen's kappa reports rater agreement beyond the agreement expected by
+    # chance from each rater's pass/fail label distribution.
     if not left:
         return 0.0
     observed = sum(a == b for a, b in zip(left, right)) / len(left)
-    labels = ("pass", "fail")
+    labels = tuple(sorted(set(left) | set(right)))
     expected = sum((left.count(label) / len(left)) * (right.count(label) / len(right)) for label in labels)
     return (observed - expected) / (1 - expected) if expected < 1 else 1.0
+
+
+def _rater_cases(payload: Any, annotator_index: int) -> list[dict[str, Any]]:
+    """Read either the generated packet wrapper or a frozen completed sheet.
+
+    Raters may return the packet's ``{"cases": [...]}`` JSON object or the
+    extracted top-level case array. Both preserve the same case records; this
+    function deliberately does not coerce decisions or alter evidence.
+    """
+
+    if isinstance(payload, dict):
+        rows = payload.get("cases")
+    elif isinstance(payload, list):
+        rows = payload
+    else:
+        rows = None
+    if not isinstance(rows, list) or not all(isinstance(item, dict) for item in rows):
+        raise ValueError(
+            f"annotator-{annotator_index} sheet must be a case array or an object containing 'cases'"
+        )
+    return rows
 
 
 def finalize_packet(packet_dir: Path, output: Path) -> dict[str, Any]:
     identity_rows = json.loads((packet_dir / "coordinator/identity_map.json").read_text(encoding="utf-8"))["cases"]
     identities = {item["case_id"]: item for item in identity_rows}
+    # ayman: rater is used here for building the reference labels: agreements are retained and disagreements must be resolved by the adjudicator.
     rater_rows = {}
     for index in (1, 2):
         payload = json.loads((packet_dir / f"rater_packets/rater_{index}.json").read_text(encoding="utf-8"))
-        rows = {item["case_id"]: item for item in payload["cases"]}
+        rows = {item["case_id"]: item for item in _rater_cases(payload, index)}
         if set(rows) != set(identities):
             raise ValueError(f"annotator-{index} sheet does not match the frozen case universe")
         for case_id, row in rows.items():
-            if row.get("status") not in {"pass", "fail"}:
+            if row.get("status") not in {"pass", "fail", "needs_human_review"}:
                 raise ValueError(f"annotator-{index} has an incomplete status for {case_id}")
             confidence = row.get("confidence")
             if not isinstance(confidence, (int, float)) or not 1 <= confidence <= 5:
@@ -709,7 +738,14 @@ def finalize_packet(packet_dir: Path, output: Path) -> dict[str, Any]:
     ordered_ids = sorted(identities)
     left = [rater_rows[1][case_id]["status"] for case_id in ordered_ids]
     right = [rater_rows[2][case_id]["status"] for case_id in ordered_ids]
-    disagreements = [case_id for case_id in ordered_ids if rater_rows[1][case_id]["status"] != rater_rows[2][case_id]["status"]]
+    coordination_required = [
+        case_id for case_id in ordered_ids
+        if (
+            rater_rows[1][case_id]["status"] != rater_rows[2][case_id]["status"]
+            or rater_rows[1][case_id]["status"] == "needs_human_review"
+            or rater_rows[2][case_id]["status"] == "needs_human_review"
+        )
+    ]
     adjudication_path = packet_dir / "coordinator/independent_detection_truth.json"
     adjudication_rows = {
         item["case_id"]: item
@@ -718,10 +754,10 @@ def finalize_packet(packet_dir: Path, output: Path) -> dict[str, Any]:
     final_rows = []
     for case_id in ordered_ids:
         identity = identities[case_id]
-        if case_id in disagreements:
+        if case_id in coordination_required:
             adjudicated = adjudication_rows.get(case_id, {})
             if adjudicated.get("status") not in {"pass", "fail"} or not adjudicated.get("adjudicated") or not str(adjudicated.get("evidence", "")).strip():
-                raise ValueError(f"Disagreement requires completed adjudication with evidence: {case_id}")
+                raise ValueError(f"Disagreement or non-binary rating requires completed adjudication with evidence: {case_id}")
             status = adjudicated["status"]
             evidence = str(adjudicated["evidence"])
         else:
@@ -743,7 +779,11 @@ def finalize_packet(packet_dir: Path, output: Path) -> dict[str, Any]:
             "pair_count": len(ordered_ids),
             "raw_agreement": sum(a == b for a, b in zip(left, right)) / len(ordered_ids),
             "cohen_kappa": _cohen_kappa(left, right),
-            "disagreement_count": len(disagreements),
+            "disagreement_count": sum(
+                rater_rows[1][case_id]["status"] != rater_rows[2][case_id]["status"]
+                for case_id in ordered_ids
+            ),
+            "coordination_required_count": len(coordination_required),
         },
         "pairs": final_rows,
     }
@@ -759,6 +799,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--registry", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--rule-ids", nargs="+", required=True)
+    parser.add_argument("--partition", choices=("val", "test"), default="test")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--network-timeout-ms", type=int, default=60_000)
     parser.add_argument("--capture-attempts", type=int, default=2, help="Attempts per site before recording a capture failure.")
