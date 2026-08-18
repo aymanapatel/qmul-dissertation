@@ -125,36 +125,11 @@ python3 scripts/process_page.py \
 └── visualizations/              # Output plots
 ```
 
-## Key Design Decisions
 
-1. **Class Imbalance**: Accessibility violations are rare (~0.6% of nodes). We use class-weighted cross-entropy loss.
 
-2. **Single-Page Training**: With only one page, we create augmented variants via edge dropout, feature masking, and subgraph sampling.
-
-3. **No GRASP/AAA Reuse**: This is an original implementation. GRASP was used for research inspiration only.
-
-4. **Modality Choice**: We use sentence-transformers (MiniLM) instead of full BERT for speed, with option to upgrade.
-
-## Future Extensions
-
-- Multi-page site graphs with hyperlink edges
-- Visual features via ViT on screenshots
-- Heterogeneous graphs with separate element/text/visual nodes
-- Self-supervised pre-training (masked element prediction)
-- Integration with MLLM copilots (MaC-style)
-
-## Dependencies
-
-- PyTorch + PyTorch Geometric
-- BeautifulSoup4 + lxml
-- sentence-transformers
-- Playwright (for rendering)
-- scikit-learn, matplotlib, pandas
 
 
 # Python running
-
-
 
 
 ## Single page training
