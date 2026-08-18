@@ -26,15 +26,24 @@ AAA
 
 
 **node_modules**
+4_UI/learning-v2-demo/dist/
 *gnn_batch_100*
 *ignore*
 *PLANS*
+*5_images*
+*misc*
+*pdf*
+*png*
+report
+*outputs*
+*rater-packet-viewer*
+*todo*
+
 
 # Hugging face ignore
 ## These are uploaded to Huggingface
 *runs*
 *artifacts*
 *dataset_v3.0*
-
 
 

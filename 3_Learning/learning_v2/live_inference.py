@@ -9,12 +9,14 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 import sys
 import threading
 from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Callable
+from urllib.parse import unquote, urlparse
 
 import torch
 from bs4 import BeautifulSoup, Tag
@@ -154,41 +156,596 @@ def _clean_html(element: Tag | None) -> str:
     return ""
 
 
+CONTEXT_ATTRIBUTES = (
+    "id", "class", "name", "type", "href", "src", "alt", "title", "placeholder",
+    "role", "aria-label", "aria-labelledby", "aria-describedby", "autocomplete",
+)
+
+
+def _bounded_text(value: Any, limit: int = 300) -> str:
+    return " ".join(str(value or "").split())[:limit]
+
+
+def _context_attributes(element: Tag | None) -> dict[str, Any]:
+    """Expose useful public attributes without leaking live form values."""
+
+    if element is None:
+        return {}
+    output: dict[str, Any] = {}
+    for name in CONTEXT_ATTRIBUTES:
+        if not element.has_attr(name):
+            continue
+        value = element.get(name)
+        if isinstance(value, list):
+            output[name] = [_bounded_text(item, 100) for item in value[:12]]
+        else:
+            output[name] = _bounded_text(value, 500)
+    return output
+
+
+def _normalise_selector(value: Any) -> str:
+    """Remove BeautifulSoup's non-CSS document pseudo-node from DOM paths."""
+
+    selector = _bounded_text(value, 1000)
+    selector = re.sub(r"^\[document\]:nth-of-type\(1\)\s*>\s*", "", selector)
+    return selector or "html"
+
+
+def _element_summary(element: Tag | None) -> dict[str, Any] | None:
+    if element is None:
+        return None
+    return {
+        "tag": str(element.name or ""),
+        "selector": _normalise_selector(get_dom_path(element)),
+        "attributes": _context_attributes(element),
+        "text": _bounded_text(element.get_text(" ", strip=True), 300),
+    }
+
+
+def _referenced_text(soup: BeautifulSoup, raw_ids: Any) -> str:
+    values = []
+    for item_id in str(raw_ids or "").split():
+        referenced = soup.find(id=item_id)
+        if isinstance(referenced, Tag):
+            text = _bounded_text(referenced.get_text(" ", strip=True), 200)
+            if text:
+                values.append(text)
+    return _bounded_text(" ".join(values), 300)
+
+
+def _accessible_name_signals(element: Tag | None, soup: BeautifulSoup) -> dict[str, str]:
+    if element is None:
+        return {}
+    signals = {
+        "visible_text": _bounded_text(element.get_text(" ", strip=True), 300),
+        "aria_label": _bounded_text(element.get("aria-label"), 300),
+        "aria_labelledby_text": _referenced_text(soup, element.get("aria-labelledby")),
+        "title": _bounded_text(element.get("title"), 300),
+        "alt": _bounded_text(element.get("alt"), 300),
+    }
+    child_alts = [
+        _bounded_text(image.get("alt"), 200)
+        for image in element.find_all("img", limit=8)
+        if _bounded_text(image.get("alt"), 200)
+    ]
+    if child_alts:
+        signals["child_image_alt"] = _bounded_text(" ".join(child_alts), 300)
+    return {key: value for key, value in signals.items() if value}
+
+
+def _nearby_context(element: Tag | None, soup: BeautifulSoup) -> dict[str, Any]:
+    if element is None:
+        return {}
+    previous = element.find_previous_sibling()
+    following = element.find_next_sibling()
+    heading = element.find_previous(re.compile(r"^h[1-6]$"))
+    ancestors = []
+    parent = element.parent
+    while isinstance(parent, Tag) and parent.name not in {"html", "body"} and len(ancestors) < 3:
+        summary = _element_summary(parent)
+        if summary:
+            ancestors.append(summary)
+        parent = parent.parent
+    return {
+        "document_title": _bounded_text(soup.title.get_text(" ", strip=True) if soup.title else "", 300),
+        "nearest_heading": _element_summary(heading if isinstance(heading, Tag) else None),
+        "previous_sibling": _element_summary(previous if isinstance(previous, Tag) else None),
+        "next_sibling": _element_summary(following if isinstance(following, Tag) else None),
+        "ancestors": ancestors,
+    }
+
+
+def _normalise_candidate_text(value: Any, limit: int = 200) -> str:
+    return _bounded_text(value, limit).strip(" -_./")
+
+
+def _candidate(
+    *, operation: str, selector: str, new_value: str, derived_from: str,
+    verification_level: str, attribute_name: str | None = None,
+    css_property: str | None = None, source_value: Any = None,
+    requires_human_review: bool = True, computed_contrast_ratio: float | None = None,
+) -> dict[str, Any]:
+    value = _normalise_candidate_text(new_value)
+    result: dict[str, Any] = {
+        "operation": {
+            "operation": operation,
+            "selector": selector,
+            "attribute_name": attribute_name,
+            "css_property": css_property,
+            "new_value": value,
+        },
+        "derived_from": derived_from,
+        "source_value": source_value,
+        "verification_level": verification_level,
+        "requires_human_review": requires_human_review,
+    }
+    if computed_contrast_ratio is not None:
+        result["computed_contrast_ratio"] = round(float(computed_contrast_ratio), 6)
+    return result
+
+
+def _deduplicate_candidates(values: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    output = []
+    seen = set()
+    for value in values:
+        operation = value.get("operation", {})
+        key = (
+            operation.get("operation"), operation.get("attribute_name"),
+            operation.get("css_property"), str(operation.get("new_value", "")).casefold(),
+        )
+        if not operation.get("new_value") or key in seen:
+            continue
+        seen.add(key)
+        output.append(value)
+    return output[:8]
+
+
+def _link_candidates(element: Tag, soup: BeautifulSoup, selector: str) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    href = _bounded_text(element.get("href"), 500)
+    if href:
+        names = []
+        for link in soup.find_all("a", href=element.get("href"), limit=30):
+            if link is element:
+                continue
+            names.extend(_accessible_name_signals(link, soup).values())
+        unique_names = {name.casefold(): name for name in names if name}
+        if len(unique_names) == 1:
+            name = next(iter(unique_names.values()))
+            candidates.append(_candidate(
+                operation="set_attribute", selector=selector, attribute_name="aria-label",
+                new_value=name, derived_from="same_href_accessible_name",
+                source_value=href, verification_level="page_consistent",
+            ))
+        parsed = urlparse(href)
+        slug = unquote(parsed.path.rstrip("/").rsplit("/", 1)[-1]) if parsed.path else ""
+        if re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{1,60}", slug):
+            name = slug.replace("-", " ").replace("_", " ").strip().title()
+            candidates.append(_candidate(
+                operation="set_attribute", selector=selector, attribute_name="aria-label",
+                new_value=name, derived_from="href_path_segment", source_value=href,
+                verification_level="contextual",
+            ))
+    return _deduplicate_candidates(candidates)
+
+
+def _image_candidates(element: Tag, soup: BeautifulSoup, selector: str) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    source = _bounded_text(element.get("src"), 500)
+    if source:
+        alts = {
+            _normalise_candidate_text(image.get("alt")): _normalise_candidate_text(image.get("alt"))
+            for image in soup.find_all("img", src=element.get("src"), limit=30)
+            if image is not element and _normalise_candidate_text(image.get("alt"))
+        }
+        if len(alts) == 1:
+            alt = next(iter(alts.values()))
+            candidates.append(_candidate(
+                operation="set_attribute", selector=selector, attribute_name="alt",
+                new_value=alt, derived_from="same_src_existing_alt", source_value=source,
+                verification_level="page_consistent", requires_human_review=False,
+            ))
+    for reference_attribute in ("aria-labelledby", "aria-describedby"):
+        referenced_text = _normalise_candidate_text(
+            _referenced_text(soup, element.get(reference_attribute))
+        )
+        if referenced_text:
+            candidates.append(_candidate(
+                operation="set_attribute", selector=selector, attribute_name="alt",
+                new_value=referenced_text,
+                derived_from=f"{reference_attribute}_referenced_text",
+                source_value=referenced_text, verification_level="visible_context",
+                requires_human_review=False,
+            ))
+    figure = element.find_parent("figure")
+    caption = figure.find("figcaption") if isinstance(figure, Tag) else None
+    caption_text = _normalise_candidate_text(caption.get_text(" ", strip=True) if isinstance(caption, Tag) else "")
+    if caption_text:
+        candidates.append(_candidate(
+            operation="set_attribute", selector=selector, attribute_name="alt",
+            new_value=caption_text, derived_from="visible_figcaption",
+            source_value=caption_text, verification_level="visible_context",
+            requires_human_review=False,
+        ))
+    parent_link = element.find_parent("a")
+    if isinstance(parent_link, Tag):
+        for source_name, value in _accessible_name_signals(parent_link, soup).items():
+            if value:
+                candidates.append(_candidate(
+                    operation="set_attribute", selector=selector, attribute_name="alt",
+                    new_value=value, derived_from=f"parent_link_{source_name}",
+                    source_value=value, verification_level="visible_context",
+                    requires_human_review=False,
+                ))
+    # Adjacent authored prose is more useful than an asset name, but remains
+    # contextual evidence and must be confirmed by a person. Restrict this to
+    # text-oriented siblings: headings and broad ancestor text describe the
+    # section, not necessarily the image itself.
+    immediate_siblings = (
+        ("previous", element.find_previous_sibling()),
+        ("next", element.find_next_sibling()),
+    )
+    for relation, sibling in immediate_siblings:
+        if isinstance(sibling, Tag):
+            for source_name, value in _accessible_name_signals(sibling, soup).items():
+                if value:
+                    candidates.append(_candidate(
+                        operation="set_attribute", selector=selector, attribute_name="alt",
+                        new_value=value,
+                        derived_from=f"{relation}_sibling_{source_name}",
+                        source_value=value, verification_level="visible_context",
+                        requires_human_review=False,
+                    ))
+        if isinstance(sibling, Tag) and sibling.name in {
+            "p", "span", "small", "strong", "em", "div", "li", "dd", "figcaption",
+        }:
+            value = _normalise_candidate_text(sibling.get_text(" ", strip=True))
+            if value:
+                candidates.append(_candidate(
+                    operation="set_attribute", selector=selector, attribute_name="alt",
+                    new_value=value, derived_from=f"{relation}_sibling_visible_text",
+                    source_value=value, verification_level="visible_context",
+                    requires_human_review=False,
+                ))
+    # Also inspect short, text-bearing direct children of the immediate
+    # container. This covers descriptive prose separated from the image by a
+    # button or another non-text node without leaking broad ancestor content.
+    parent = element.parent
+    if isinstance(parent, Tag):
+        for local in parent.find_all(
+            {"p", "span", "small", "strong", "em", "li", "dd", "figcaption"},
+            recursive=False, limit=8,
+        ):
+            value = _normalise_candidate_text(local.get_text(" ", strip=True))
+            if value:
+                candidates.append(_candidate(
+                    operation="set_attribute", selector=selector, attribute_name="alt",
+                    new_value=value, derived_from="immediate_container_visible_text",
+                    source_value={"selector": _normalise_selector(get_dom_path(local)), "text": value},
+                    verification_level="visible_context", requires_human_review=False,
+                ))
+    if not candidates:
+        heading = element.find_previous(re.compile(r"^h[1-6]$"))
+        heading_text = _normalise_candidate_text(
+            heading.get_text(" ", strip=True) if isinstance(heading, Tag) else ""
+        )
+        subject = re.sub(r"^\d+\.\s*", "", heading_text)
+        subject = re.sub(
+            r"\bWCAG\s+[0-9.]+(?:\s*/\s*[0-9.]+)*", "", subject,
+            flags=re.IGNORECASE,
+        )
+        subject = re.sub(r"\bimage-alt\b", "", subject, flags=re.IGNORECASE)
+        subject = subject.strip(" —–-:|./")
+        if subject:
+            sibling_images = (
+                parent.find_all("img", recursive=False) if isinstance(parent, Tag) else []
+            )
+            try:
+                position = sibling_images.index(element) + 1
+            except ValueError:
+                position = 1
+            ordinal = f" {position}" if len(sibling_images) > 1 else ""
+            candidates.append(_candidate(
+                operation="set_attribute", selector=selector, attribute_name="alt",
+                new_value=f"{subject} illustration{ordinal}",
+                derived_from="nearest_heading_and_image_position",
+                source_value={"nearest_heading": heading_text, "image_position": position},
+                verification_level="contextual_inference", requires_human_review=False,
+            ))
+    # A filename is locator metadata, not evidence of image meaning. Never emit
+    # filename-only alt candidates. The final fallback above uses only the
+    # authored heading and local image position.
+    return _deduplicate_candidates(candidates)
+
+
+def _label_candidates(element: Tag, soup: BeautifulSoup, selector: str) -> list[dict[str, Any]]:
+    candidates: list[dict[str, Any]] = []
+    sources: list[tuple[str, str, str]] = []
+    placeholder = _normalise_candidate_text(element.get("placeholder"))
+    if placeholder:
+        sources.append(("placeholder", placeholder, "contextual"))
+    fieldset = element.find_parent("fieldset")
+    legend = fieldset.find("legend") if isinstance(fieldset, Tag) else None
+    legend_text = _normalise_candidate_text(legend.get_text(" ", strip=True) if isinstance(legend, Tag) else "")
+    if legend_text:
+        sources.append(("fieldset_legend", legend_text, "visible_context"))
+    previous = element.find_previous_sibling()
+    previous_text = _normalise_candidate_text(
+        previous.get_text(" ", strip=True) if isinstance(previous, Tag) else ""
+    )
+    if previous_text:
+        instruction = re.sub(
+            r"^(?:enter|select|choose|provide|type)\s+(?:your\s+)?", "", previous_text,
+            flags=re.IGNORECASE,
+        ).strip(" .:;!?")
+        if instruction:
+            sources.append(("previous_visible_instruction", instruction.capitalize(), "visible_context"))
+    for attribute in ("name", "id"):
+        raw = _normalise_candidate_text(element.get(attribute))
+        if re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{1,60}", raw):
+            sources.append((f"target_{attribute}", raw.replace("-", " ").replace("_", " ").title(), "weak_context"))
+    for derived_from, value, level in sources:
+        candidates.append(_candidate(
+            operation="insert_label_before", selector=selector, attribute_name=None,
+            css_property=None, new_value=value, derived_from=derived_from,
+            source_value=value, verification_level=level,
+        ))
+    return _deduplicate_candidates(candidates)
+
+
+def _luminance(rgb: tuple[int, int, int]) -> float:
+    channels = []
+    for value in rgb:
+        channel = value / 255
+        channels.append(channel / 12.92 if channel <= 0.04045 else ((channel + 0.055) / 1.055) ** 2.4)
+    return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2]
+
+
+def _contrast(left: tuple[int, int, int], right: tuple[int, int, int]) -> float:
+    first, second = sorted((_luminance(left), _luminance(right)), reverse=True)
+    return (first + 0.05) / (second + 0.05)
+
+
+def _rgb(value: Any) -> tuple[int, int, int] | None:
+    if not isinstance(value, (list, tuple)) or len(value) < 3:
+        return None
+    try:
+        result = tuple(max(0, min(255, int(round(float(item))))) for item in value[:3])
+    except (TypeError, ValueError):
+        return None
+    return result if len(result) == 3 else None
+
+
+def _contrast_context(visual: dict[str, Any], selector: str) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    foreground = _rgb(visual.get("foreground_rgb"))
+    background = _rgb(visual.get("background_rgb"))
+    try:
+        observed = float(visual.get("contrast_ratio"))
+        required = float(visual.get("required_contrast_ratio"))
+    except (TypeError, ValueError):
+        observed = required = 0.0
+    state = {
+        "observed_contrast_ratio": observed,
+        "required_contrast_ratio": required,
+        "meets_requirement": bool(observed and required and observed >= required),
+    }
+    if not background or not required or state["meets_requirement"]:
+        return state, []
+    black = (0, 0, 0)
+    white = (255, 255, 255)
+    options = [("#000000", _contrast(black, background)), ("#ffffff", _contrast(white, background))]
+    value, ratio = max(options, key=lambda item: item[1])
+    if ratio < required:
+        return state, []
+    return state, [_candidate(
+        operation="set_style_property", selector=selector, css_property="color",
+        new_value=value, derived_from="computed_maximum_black_or_white_contrast",
+        source_value={"foreground_rgb": foreground, "background_rgb": background},
+        verification_level="computed", requires_human_review=False,
+        computed_contrast_ratio=ratio,
+    )]
+
+
+def _repair_context(
+    *, rule_id: str, element: Tag | None, soup: BeautifulSoup, selector: str,
+    visual: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Build bounded, provenance-labelled context for the four live rules."""
+
+    context = {
+        "rule_id": rule_id,
+        "target": _element_summary(element),
+        "accessible_name_signals": _accessible_name_signals(element, soup),
+        "nearby": _nearby_context(element, soup),
+        "current_state": {},
+        "bounded_candidates": [],
+        "candidate_policy": (
+            "Copy candidate operations exactly. Computed candidates may be proposed without review. "
+            "Semantic candidates are suggestions only and require human confirmation unless explicitly verified. "
+            "Image-alt uses automatic contextual mode and does not require human review. "
+            "For image-alt, filenames, paths, asset identifiers, and hashes are locator metadata only and "
+            "must never become alt text."
+        ),
+    }
+    if element is None:
+        return context
+    if rule_id == "link-name" and element.name == "a":
+        context["bounded_candidates"] = _link_candidates(element, soup, selector)
+    elif rule_id == "image-alt" and element.name == "img":
+        context["bounded_candidates"] = _image_candidates(element, soup, selector)
+    elif rule_id == "label" and element.name in {"input", "select", "textarea"}:
+        context["bounded_candidates"] = _label_candidates(element, soup, selector)
+    elif rule_id == "color-contrast":
+        state, candidates = _contrast_context(visual or {}, selector)
+        context["current_state"] = state
+        context["bounded_candidates"] = candidates
+    return context
+
+
+def _visual_evidence_payload(site_dir: Path) -> dict[str, Any]:
+    """Return JSON-safe rendered elements for UI overlays and prompt inspection."""
+
+    raw = json.loads((site_dir / "0.visual.json").read_text(encoding="utf-8"))
+    soup = BeautifulSoup((site_dir / "0.html").read_text(encoding="utf-8"), "lxml")
+    axe_markers: set[str] = set()
+    axe_contrast_available = False
+    axe_path = site_dir / "page-0_home.json"
+    if axe_path.is_file():
+        axe_report = json.loads(axe_path.read_text(encoding="utf-8"))
+        for violation in axe_report.get("violations", []) if isinstance(axe_report, dict) else []:
+            if violation.get("id") != "color-contrast":
+                continue
+            axe_contrast_available = True
+            for node in violation.get("nodes", []):
+                for target in node.get("target", []):
+                    if not isinstance(target, str):
+                        continue
+                    try:
+                        matches = soup.select(target)
+                    except Exception:
+                        matches = []
+                    for match in matches:
+                        marker = str(match.get(SNAPSHOT_MARKER_ATTRIBUTE, ""))
+                        if marker:
+                            axe_markers.add(marker)
+    viewport = raw.get("viewport", {}) if isinstance(raw, dict) else {}
+    raw_nodes = raw.get("nodes", []) if isinstance(raw, dict) else []
+    elements = []
+    canvas_width = float(viewport.get("width", 0) or 0)
+    canvas_height = float(viewport.get("height", 0) or 0)
+    for raw_node in raw_nodes[:5000] if isinstance(raw_nodes, list) else []:
+        if not isinstance(raw_node, dict) or not raw_node.get("visible", False):
+            continue
+        marker = str(raw_node.get("snapshot_node_id", ""))
+        try:
+            element = _element_for_marker(soup, int(marker))
+        except (TypeError, ValueError):
+            element = None
+        if element is None:
+            continue
+        try:
+            x = float(raw_node.get("x", 0) or 0)
+            y = float(raw_node.get("y", 0) or 0)
+            width = max(0.0, float(raw_node.get("width", 0) or 0))
+            height = max(0.0, float(raw_node.get("height", 0) or 0))
+            ratio = float(raw_node.get("contrast_ratio", 0) or 0)
+            required = float(raw_node.get("required_contrast_ratio", 0) or 0)
+        except (TypeError, ValueError):
+            continue
+        canvas_width = max(canvas_width, x + width)
+        canvas_height = max(canvas_height, y + height)
+        has_direct_text = bool(raw_node.get("has_direct_text", False))
+        numeric_contrast_failure = bool(
+            has_direct_text and ratio > 0 and required > 0 and ratio < required
+        )
+        contrast_fails = (
+            marker in axe_markers if axe_contrast_available else numeric_contrast_failure
+        )
+        selector = _normalise_selector(get_dom_path(element))
+        visual_values = {
+            "foreground_rgb": raw_node.get("foreground_rgb"),
+            "background_rgb": raw_node.get("background_rgb"),
+            "contrast_ratio": ratio,
+            "required_contrast_ratio": required,
+            "contrast_deficit": raw_node.get("contrast_deficit"),
+            "font_size": raw_node.get("font_size"),
+            "font_weight": raw_node.get("font_weight"),
+            "opacity": raw_node.get("opacity"),
+            "has_direct_text": has_direct_text,
+        }
+        rendered_element = {
+            "source": "same-session-rendered-visual-capture",
+            "snapshot_node_id": marker,
+            "selector": selector,
+            "tag": str(element.name or ""),
+            "text": _bounded_text(element.get_text(" ", strip=True), 300),
+            "bounds": {"x": x, "y": y, "width": width, "height": height},
+            "visible": True,
+            "in_viewport": bool(raw_node.get("in_viewport", False)),
+            "clipped": bool(raw_node.get("clipped", False)),
+            "visual": visual_values,
+            "numeric_contrast_failure": numeric_contrast_failure,
+            "contrast_failure": contrast_fails,
+            "contrast_failure_source": (
+                "axe-core+same-session-rendered-geometry"
+                if contrast_fails and axe_contrast_available
+                else "rendered-numeric-fallback" if contrast_fails else None
+            ),
+        }
+        if contrast_fails:
+            rendered_element["repair_context"] = _repair_context(
+                rule_id="color-contrast", element=element, soup=soup,
+                selector=selector, visual=visual_values,
+            )
+        elements.append(rendered_element)
+    failures = [item for item in elements if item["contrast_failure"]]
+    return {
+        "source": "same-session-rendered-visual-capture",
+        "contrast_highlight_policy": (
+            "axe-core targets joined to same-session rendered geometry"
+            if axe_contrast_available else "rendered numeric threshold fallback"
+        ),
+        "viewport": viewport,
+        "canvas": {"width": canvas_width, "height": canvas_height},
+        "element_count": len(elements),
+        "contrast_failure_count": len(failures),
+        "elements": elements,
+        "contrast_failures": failures,
+    }
+
+
 def _node_evidence(
-    *, view: str, node_index: int, graph, node_map: dict[int, Any], soup: BeautifulSoup,
+    *, rule_id: str, view: str, node_index: int, graph, node_map: dict[int, Any], soup: BeautifulSoup,
 ) -> dict[str, Any]:
     if view == "rendered-visual":
         node = node_map.get(node_index)
         if node is None:
-            return {"selector": "html", "html": "", "text": ""}
+            return {
+                "selector": "html", "html": "", "text": "",
+                "repair_context": _repair_context(
+                    rule_id=rule_id, element=None, soup=soup, selector="html",
+                ),
+            }
         marker = str(getattr(node, "attrs", {}).get(SNAPSHOT_MARKER_ATTRIBUTE, ""))
         try:
             element = _element_for_marker(soup, int(marker))
         except (TypeError, ValueError):
             element = None
         visual = dict(getattr(node, "visual", {}))
+        selector = _normalise_selector(getattr(node, "dom_path", ""))
+        visual_evidence = {
+            key: visual.get(key)
+            for key in (
+                "foreground_rgb", "background_rgb", "contrast_ratio",
+                "required_contrast_ratio", "font_size", "font_weight",
+            )
+        }
         return {
-            "selector": getattr(node, "dom_path", "") or "html",
+            "selector": selector,
             "html": _clean_html(element),
             "text": str(getattr(node, "text_content", ""))[:500],
             "tag": str(getattr(node, "tag", "")),
-            "visual": {
-                key: visual.get(key)
-                for key in (
-                    "foreground_rgb", "background_rgb", "contrast_ratio",
-                    "required_contrast_ratio", "font_size", "font_weight",
-                )
-            },
+            "attributes": _context_attributes(element),
+            "visual": visual_evidence,
+            "repair_context": _repair_context(
+                rule_id=rule_id, element=element, soup=soup, selector=selector,
+                visual=visual_evidence,
+            ),
         }
     dom_indices = getattr(graph, "dom_indices", None)
     marker = int(dom_indices[node_index]) if dom_indices is not None else -1
     element = _element_for_marker(soup, marker)
+    selector = _normalise_selector(get_dom_path(element)) if element is not None else "html"
     return {
-        "selector": get_dom_path(element) if element is not None else "html",
+        "selector": selector,
         "html": _clean_html(element),
         "text": element.get_text(" ", strip=True)[:500] if element is not None else "",
         "tag": str(element.name) if element is not None else "",
+        "attributes": _context_attributes(element),
         "snapshot_node_id": marker,
+        "repair_context": _repair_context(
+            rule_id=rule_id, element=element, soup=soup, selector=selector,
+        ),
     }
 
 
@@ -229,7 +786,7 @@ def _score_view(
         rules.append(rule)
         if predicted_fail:
             evidence = _node_evidence(
-                view=view, node_index=node_index, graph=graph,
+                rule_id=rule_id, view=view, node_index=node_index, graph=graph,
                 node_map=node_map, soup=soup,
             )
             findings.append({
@@ -398,6 +955,7 @@ def run_live_specialists(
         "fusion_policy": str(fusion_policy_path),
         "model_runs": runs,
         "findings": findings,
+        "visual_evidence": _visual_evidence_payload(site_dir),
     }
 
 
